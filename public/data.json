@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "nombre": "Pedro Altamirano",
+      "usuario": "Pedro",
+      "correo": "pedroaal@hotmail.com",
+      "perfil": "Root",
+      "horario": "Matutino",
+      "pencil": 1
+    },
+    {
+      "nombre": "Samuel Altamirano",
+      "usuario": "Samuel",
+      "correo": "samuel_ap@hotmail.com",
+      "perfil": "Root",
+      "horario": "Matutino",
+      "pencil": 1
+    }
+  ]
+}
