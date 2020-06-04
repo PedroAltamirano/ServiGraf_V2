@@ -3,20 +3,24 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="keywords" content="imprenta, quito, gto, tarjetas, facturas, retenciones, papeleria roll ups, gigantografias, marketing impreso">
     <meta name="desription" content="Imprenta con mas de 20 años de experinecia, ubicada en Quito-Ecuador. Realizamos facturas, retenciones, marketing impreso, diseño gráfico.">
+
     <meta name="autor" content="Pedro Andrés Altamirano López">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>ServiGraf</title>
+    <!-- tab icon -->
+    <link href="{{ asset('img/sg-2.png') }}" rel="icon" type="text/css">
     
-    <link rel="icon" href="{{ asset('img/sg-2.png') }}">
-    <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <!-- Fonts -->
+    <title>ServiGraf</title>
+
+    <!-- vue -->
+    {{-- <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}"> --}}
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=ABeeZee" rel="stylesheet">
+    
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -56,7 +60,7 @@
         </div>
     </nav>
 
-    <div id="app">
+    <div id="app" class="h-100">
         @yield('home-content')
     </div>
 
@@ -71,6 +75,7 @@
         </footer>
     </div>
     </div><!-- div for vue -->
+
 </body>
 
 </html>

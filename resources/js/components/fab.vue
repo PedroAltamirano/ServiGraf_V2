@@ -10,13 +10,15 @@
             :main-icon="mainIcon"
             :main-tooltip="mainTooltip"
             :actions="[
-                {name: 'ot', icon: firstIcon, tooltip: firstTooltip, color:'rgba(59, 89, 152, 0.8)'},
-                {name: 'facctura', icon: secondIcon, tooltip: secondTooltip, color:'rgba(59, 89, 152, 0.8)'},
-                {name: 'libro', icon: thirdIcon, tooltip: thirdTooltip, color:'rgba(59, 89, 152, 0.8)'}
+                {name: 'pedido', icon: firstIcon, tooltip: firstTooltip, color:'rgba(59, 89, 152, 0.8)'},
+                {name: 'factura', icon: secondIcon, tooltip: secondTooltip, color:'rgba(59, 89, 152, 0.8)'},
+                {name: 'entrada', icon: thirdIcon, tooltip: thirdTooltip, color:'rgba(59, 89, 152, 0.8)'}
             ]"
-            @alertMe="alert"
             :fixed-tooltip="fixedTooltip"
             :enable-rotation="enableRotation"
+            @pedido="newPedido"
+            @factura="newFactura"
+            @entrada="newEntrada"
         ></fab>
     </div>
 </template>
@@ -64,13 +66,13 @@
                 mainIcon: 'add',
                 mainTooltip: 'Agregado rápido',
                 //first elem
-                firstIcon: 'build',
-                firstTooltip: 'Nueva Ot',
+                firstIcon: 'settings',
+                firstTooltip: 'Nuevo pedido',
                 //second elem
-                secondIcon: 'show_chart',
+                secondIcon: 'post_add',
                 secondTooltip: 'Nueva factura',
                 //third elem
-                thirdIcon: 'menu_book',
+                thirdIcon: 'compare_arrows',
                 thirdTooltip: 'Nueva entrada',
                 enableRotation: true
             }
@@ -81,8 +83,14 @@
             }
         },
         methods: {
-            alert(){
-                alert('You have clicked me :)');
+            newPedido(){
+                $(location).attr('href', '/pedido/nuevo');
+            },
+            newFactura(){
+                alert('You have clicked factura :)');
+            },
+            newEntrada(){
+                alert('You have clicked libro :)');
             }
         }
     }

@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    Haz entrado como admin!
+                    Haz entrado como admin! <br>
                 </div>
             </div>
         </div>

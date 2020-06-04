@@ -17,7 +17,7 @@
               con la infraestructura necesaria para desarrollar sus proyectos gráficos, mas una respuesta rápida y de exelente calidad, nos ha significado el reconocimiento de nuestros clientes.</p>
           <div class="tarjeta p-1 p-md-2 pl-md-4" style="color: grey;">
               <h5>Samuel Altamirano</h5>
-              <h5>Grente</h5>
+              <h5>Gerente</h5>
           </div>
       </div>
   </div>

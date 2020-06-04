@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Models\Sistema;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Horario extends Model
+{
+    protected $connection = 'DDBBempresas';
+    protected $table = 'horarios';
+    protected $primaryKey = 'id';
+
+    protected $attributes = [
+        'espera' => 10, 'gracia' => 5
+    ];
+
+    protected $fillable = [
+        'nombre', 'llegada_ma', 'salida_ma', 'llegada_ta', 'salida_ta'
+    ];
+
+    protected $hidden = [
+        'empresa_id'
+    ];
+}

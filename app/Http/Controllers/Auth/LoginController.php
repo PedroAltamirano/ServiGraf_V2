@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Usuarios\ModPerfRol;
+use App\Models\Usuarios\Usuario;
+
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Illuminate\Http\Request;
-use App;
-use Auth;
 use Log;
 use Session;
 
@@ -20,30 +24,48 @@ class LoginController extends Controller
 
   public function __construct()
   {
-    $this->middleware('guest')->except('logout');
+    $this->middleware('guest', ['only'=>'show'])->except('logout');
   }
 
   public function show(){
-    if(Auth::check()){
-      return redirect('desktop');
-    } else {
-      return view('auth.login');
-    }
+    return view('auth.login');
+  }
+
+  public function getInfo(Request $request){
+    $ModPerfRol = ModPerfRol::where('perfil_id', Auth::user()->perfil_id)->get();
+    $request->session()->put('ModPerfRol', $ModPerfRol);
+    
+    $user = Usuario::find(Auth::id());
+    $userInfo = [];
+    $userInfo['nomina'] = $user->nomina->nombre;
+    $userInfo['empresa'] = $user->empresa->nombre;
+    $userInfo['empresa_tipo'] = $user->empresa->tipoEmpresa->nombre;
+    $request->session()->put('userInfo', $userInfo);
   }
 
   public function login(Request $request){
-    $credentials = array(
-      'usuario' => $request->get('usuario'),
-      'password' => $request->get('password'), 
-      'cedula' => $request->get('cedula'), 
-      'activo' => 1 
-    );
-    if(Auth::guard('usuario')->attempt($credentials)){
+    $credentials = $request->validate([
+      'usuario' => 'string|required|max:20',
+      'password' => 'string|required|max:128',
+      'cedula' => 'int|required|max:2499999999', 
+    ]);
+    $credentials['status'] = 1;
+    $rememberMe = $request->get('remember');
+
+    if(Auth::viaRemember()){
+      Self::getInfo($request);
+      return redirect()->route('desktop');
+    }
+    if(Auth::attempt($credentials, $rememberMe)){
+      Self::getInfo($request);
       return redirect()->route('desktop');
     } else {
-      $request->session()->flash('message', "Invalid Credentials , Please try again.");
-      $request->session()->flash('old', array('usuario'=>$request->get('usuario'), 'pasword'=>$request->get('password'), 'cedula'=>$request->get('cedula'), 'remember'=>$request->get('remember')) );
-      return view('auth.login');
+      return back()->withErrors(['usuario' => 'Autorizacion fallida'])->withInput();
     }
+  }
+
+  public function logout(Request $request){
+    Auth::logout();
+    return redirect()->route('login');
   }
 }

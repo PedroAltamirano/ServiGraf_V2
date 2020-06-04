@@ -1,0 +1,75 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateNominaTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::connection('DDBBempresas')->create('nomina', function (Blueprint $table) {
+            $table->timestamps();
+            $table->unsignedBigInteger('empresa_id');
+            $table->foreign('empresa_id')->references('id')->on('empresas-v2.empresas');
+
+            //DATOS PERSONALES
+            $table->string('foto')->nullable($value = true);
+            $table->unsignedInteger('cedula')->primary();
+            $table->date('fecha_nacimiento');
+            $table->string('lugar_nacimiento', 100);
+            $table->string('nacionalidad', 50);
+            $table->string('idioma_nativo', 50);
+            $table->string('nombre', 20);
+            $table->string('apellido', 20);
+            $table->string('direccion', 256);
+            $table->string('sector', 30);
+            $table->boolean('visita_domiciliaria')->default(0);
+            $table->date('fecha_visita')->nullable($value = true);
+            $table->unsignedInteger('telefono')->nullable($value = true);
+            $table->unsignedInteger('celular');
+            $table->string('correo', 50)->unique();
+            $table->unsignedTinyInteger('tipo_sangre'); //1A+, 2...
+            $table->text('padecimientos_medicos')->nullable($value = true);
+            $table->unsignedTinyInteger('genero'); //1masculino, 2femenino
+            //estado civil
+            $table->unsignedTinyInteger('estado_civil'); //1soltero, 2casado, 3divo, 4viudo, 5union libre
+            $table->unsignedTinyInteger('cant_hijos')->nullable($value = true);
+            
+            //DATOS RMPRESARIALES
+            $table->date('inicio_labor');
+            $table->date('fin_labor')->nullable($value = true);
+            $table->string('cargo', 50);
+            $table->unsignedTinyInteger('centro_costos'); //1administracion, 2produccion, 3ventas
+            $table->date('ingreso_iess')->nullable($value = true);
+            $table->boolean('iess_asumido_empleador');
+            $table->unsignedDecimal('sueldo', 6, 2);
+            $table->boolean('liquidacion_mensual')->default(1); //pago de decimos mes a mes
+            //pago
+            $table->unsignedTinyInteger('banco_id');
+            $table->unsignedTinyInteger('tipo_cuenta_banco'); //1ahorros, 2corriente
+            $table->string('numero_cuenta_bancaria', 20);
+            $table->string('observaciones', 250)->nullable($value = true);
+            //permisos adicionales
+            $table->boolean('status')->default(1); //estado del empeado
+            $table->unsignedMediumInteger('horario_id')->default(0);
+            $table->foreign('horario_id')->references('id')->on('horarios');
+            $table->boolean('Txhoras')->default(0);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::connection('DDBBempresas')->dropIfExists('nomina');
+    }
+}

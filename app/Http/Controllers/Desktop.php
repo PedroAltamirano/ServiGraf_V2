@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Security;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -27,22 +28,15 @@ class Desktop extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function admin_index(){
-		//if(Auth::user()->'modulo' == 10){
-		//return view('Produccion.desktop', ['nombre_empresa' => $this->nombre_empresa()]);
-		return view('desktop', ['nombre_empresa' => 'ServiGraf']);
-		/*} else {
-				index();
-		}*/
+	public function showAdmin(){
+		if(Security::hasModule('10')){
+			return view('desktop');
+		} else {
+			return redirect('tablero');
+		}
 	}
 
-	public function index(){
-		return view('tablero', ['nombre_empresa' => 'ServiGraf']);
+	public function show(){
+		return view('tablero');
 	}
-	
-	/*public function nombre_empresa(){
-		$nombre_empresa = App\Empresas::where('id', Auth::user()->empresa_id)->value('nombre');
-		return $nombre_empresa;
-	}*/
-
 }

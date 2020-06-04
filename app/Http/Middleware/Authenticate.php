@@ -18,7 +18,7 @@ class Authenticate
 
     public function handle($request, Closure $next)
     {
-        if(Auth::guard('usuario')->user()){
+        if(Auth::user()){
             return $next($request);
         }
         return redirect('login')->with('error', "No logged user.");
