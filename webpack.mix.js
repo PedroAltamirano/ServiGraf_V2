@@ -5,7 +5,12 @@ var webpackConfig = {
    //    new VuetifyLoaderPlugin(),
    //    new CaseSensitivePathsPlugin()
    // ]
-   // other webpack config ...
+   
+   // resolve: {
+   //    alias: {
+   //       'vue$': 'vue/dist/vue.runtime.common.js'
+   //    }
+   // }
 }
 
 mix.webpackConfig(webpackConfig);

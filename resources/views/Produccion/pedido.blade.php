@@ -25,13 +25,16 @@
     {text:'{{ $action }}', href:'#', id:'formSubmit', tipo: 'link'}
   ]"
 >
-
-
   <form action="{{ $path }}" method="POST" id="form">
     @csrf
     @include('Produccion.formPedido')
   </form>
 </blue-board>
+@endsection
+
+@section('modals')
+  @yield('modals1')
+  @yield('modals2')
 @endsection
 
 @section('scripts')

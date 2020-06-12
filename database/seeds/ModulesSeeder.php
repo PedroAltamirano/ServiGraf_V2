@@ -85,6 +85,14 @@ class ModulesSeeder extends Seeder
                 'nombre' => 'Anual',
                 'principal' => 0,
             ],
+            [
+                'id' => 19,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+                'empresa_id' => 1709636664001,
+                'nombre' => 'Utilidades',
+                'principal' => 0,
+            ],
             //ADMINISTRACION
             [
                 'id' => 20,

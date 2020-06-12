@@ -16,8 +16,8 @@ class CreateOtTintas extends Migration
         Schema::connection('DDBBproduccion')->create('ot_tintas', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->unsignedDecimal('pedidos_id', 18, 5);
-            $table->foreign('pedidos_id')->references('id')->on('pedidos');
+            $table->unsignedDecimal('pedido_id', 18, 5);
+            $table->foreign('pedido_id')->references('id')->on('pedidos');
             $table->unsignedSmallInteger('tinta_id');
             $table->foreign('tinta_id')->references('id')->on('tintas');
         });

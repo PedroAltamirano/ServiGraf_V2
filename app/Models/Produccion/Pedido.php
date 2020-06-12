@@ -38,11 +38,29 @@ class Pedido extends Model
         return $this->belongsTo('App\Models\Ventas\Cliente', 'cliente_id');
     }
 
+    public function material()
+    {
+        return $this->hasMany('App\Models\Produccion\Solicitud_material');
+    }
+
     public function servicios()
     {
         return $this->hasMany('App\Models\Produccion\Pedido_servicio');
     }
 
+    public function tintas()
+    {
+        return $this->hasMany('App\Models\Produccion\Pedido_tintas');
+    }
+
+    public function abonos()
+    {
+        return $this->hasMany('App\Models\Produccion\Abono');
+    }
+
+    /**
+     * @return App\Model\Produccion\Pedido que no esten terminados
+     */
     public static function incompletas()
     {
         $incompletos = Pedido_servicio::where([['empresa_id', '=', Auth::user()->empresa_id], ['status', '=', '0']])
@@ -54,7 +72,7 @@ class Pedido extends Model
             $pedidos_inc[] = $e->pedido_id;
         }
         
-        return Pedido::whereIn('id', $pedidos_inc)->select('id', 'cliente_id', 'detalle', 'cantidad')->get();
+        return Pedido::whereIn('id', $pedidos_inc)->select('id', 'numero', 'cliente_id', 'detalle', 'cantidad')->get();
     }
 
     /*
@@ -62,15 +80,15 @@ class Pedido extends Model
     */
     public static function serviciosIncompletos($pedido_id)
     {
-        $OS = Pedido_servicio::where('pedido_id', $pedido_id)->get();
+        $OS = Pedido_servicio::where('pedido_id', strval($pedido_id))->get();
         $list = [];
         foreach ($OS as $servicio) {
-        $serv = Servicio::where('id', $servicio->servicio_id)->value('servicio');
-        if($servicio->subservicio_id != null){
-            $serv = $serv.'-';
-            $serv = $serv.Sub_servicio::where('id', $servicio->subservicio_id)->value('subservicio');
-        }
-        $list[] = $serv;
+            $serv = Servicio::where('id', $servicio->servicio_id)->value('servicio');
+            if($servicio->subservicio_id != null){
+                $serv = $serv.'-';
+                $serv = $serv.Sub_servicio::where('id', $servicio->subservicio_id)->value('subservicio');
+            }
+            $list[] = $serv;
         }
         return $list;
     }
@@ -85,8 +103,7 @@ class Pedido extends Model
         foreach ($incompletas as $pedido){
             $temp = [];
             $cli = $pedido->cliente;
-            $num = explode('.', $pedido->id);
-            $temp['numero'] = $num[1];
+            $temp['numero'] = $pedido->numero;
             $temp['detalle'] = $pedido->detalle;
             $temp['cantidad'] = $pedido->cantidad;
             $temp['servicios'] = $pedido->serviciosIncompletos($pedido->id);

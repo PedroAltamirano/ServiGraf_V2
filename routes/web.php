@@ -55,10 +55,11 @@ Route::get('/rrhh', 'Administracion\RRHH@show')->name('rrhh');
 //PRODUCCION
 Route::get('/pedidos', 'Produccion\Pedidos@show')->name('pedidos');
 Route::get('/pedidos/get', 'Produccion\Pedidos@get')->name('pedidos.get');
-Route::get('/pedido/nuevo', 'Produccion\Pedidos@newGet')->name('pedido.nuevo');
-Route::post('/pedido/nuevo', 'Produccion\Pedidos@newPost')->name('pedido.nuevo');
-Route::get('/pedido/modificar/{pedido_id}', 'Produccion\Pedidos@modGet')->name('pedido.modificar');
-Route::post('/pedido/modificar/{pedido_id}', 'Produccion\Pedidos@modPost')->name('pedido.modificar');
+Route::get('/pedido/nuevo', 'Produccion\Pedidos@create')->name('pedido.create');
+Route::post('/pedido/nuevo', 'Produccion\Pedidos@store')->name('pedido.post');
+Route::get('/pedido/modificar/{pedido_id}', 'Produccion\Pedidos@edit')->name('pedido.edit');
+Route::post('/pedido/modificar/{pedido_id}', 'Produccion\Pedidos@update')->name('pedido.update');
+Route::post('/abonos/{pedido_id}', 'Produccion\Pedidos@abonos')->name('abonos');
 
 Route::get('/reporte/pedidos', 'Produccion\Reportes@showPedidos')->name('reporte.pedidos');
 Route::get('/reporte/pagos', 'Produccion\Reportes@showPagos')->name('reporte.pagos');
@@ -67,8 +68,12 @@ Route::get('/reporte/maquinas', 'Produccion\Reportes@showMaquinas')->name('repor
 Route::get('/procesos', 'Produccion\Procesos@show')->name('procesos');
 Route::get('/materiales', 'Produccion\Materiales@show')->name('materiales');
 
+Route::post('/proveedor', 'Produccion\Proveedores@store')->name('proveedor.post');
+
 //VENTAS
+// Route::get('/ventas', '')->name('crm');
 Route::post('/ventas/telefono', 'Ventas\Clientes@telefono')->name('cliente.telefono');
+Route::post('/ventas/cliente', 'Ventas\Clientes@store')->name('contacto.cliente.post');
 
 //USUARIOS;
 Route::get('/perfiles', 'Usuarios\Perfiles@show')->name('perfiles');

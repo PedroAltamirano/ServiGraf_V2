@@ -25,6 +25,7 @@ class CreatePedidosTable extends Migration
             $table->foreign('usuario_cob_id')->references('cedula')->on('usuarios-v2.usuarios');
             $table->unsignedMediumInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes-v2.clientes');
+            $table->unsignedInteger('numero');
             $table->unsignedDecimal('id', 18, 5)->primary(); //ver en migracion
             $table->date('fecha_entrada');
             $table->date('fecha_salida');

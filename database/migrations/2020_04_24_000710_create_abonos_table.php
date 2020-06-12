@@ -16,8 +16,8 @@ class CreateAbonosTable extends Migration
         Schema::connection('DDBBproduccion')->create('abonos', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->unsignedDecimal('pedidos_id', 18, 5);
-            $table->foreign('pedidos_id')->references('id')->on('pedidos');
+            $table->unsignedDecimal('pedido_id', 18, 5);
+            $table->foreign('pedido_id')->references('id')->on('pedidos');
             $table->unsignedInteger('usuario_id');
             $table->foreign('usuario_id')->references('cedula')->on('usuarios-v2.usuarios');
             $table->string('forma_pago', 20);

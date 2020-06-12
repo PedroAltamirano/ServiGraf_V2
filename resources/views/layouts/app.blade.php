@@ -302,8 +302,8 @@
   @endif
 
   <!-- ERRORS ALERT -->
-  @if ($errors->any())
-  <div class="errorDiv">
+  <div class="errorDiv" id="errorDiv">
+    {{-- {{ session()->all() }} --}}
     @foreach ($errors->all() as $error)
     <div class="alert alert-danger alert-dismissible fade show errorAlert" role="alert">
       {{ $error }}
@@ -313,7 +313,8 @@
     </div>
     @endforeach
   </div>
-  @endif
+
+  @yield('modals')
 
   <!-- JavaScript -->
   {{-- <script src="{{ asset('js/jquery.min.js') }}"></script> --}}
@@ -330,7 +331,7 @@
       
 
       @if($errors->any())
-      $(".alert").fadeTo(5000, 0.5).slideUp(4000);
+      $(".alert").fadeTo(10000, 0.5).slideUp(8000);
       @endif
 
       @yield('document.ready')

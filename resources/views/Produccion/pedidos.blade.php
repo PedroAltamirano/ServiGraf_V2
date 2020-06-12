@@ -25,13 +25,27 @@
       <tr>
         <th scope="col">Numero</th>
         <th scope="col">Cliente</th>
-        <th scope="col">Detalle</th>
+        <th scope="col" style="width: 25%">Detalle</th>
         <th scope="col">Cant</th>
-        <th scope="col">Procesos</th>
+        <th scope="col" style="width: 40%">Procesos</th>
         <th scope="col" class="crudCol">Crud</th>
       </tr>
     </thead>
     <tbody>
+      @foreach ($pedidos as $item)
+      @php
+        $cli = $item->cliente;
+        $cli = $cli->empresa->nombre.' / '.$cli->contacto->nombre.' '.$cli->contacto->apellido;
+      @endphp
+      <tr>
+        <td>{{ $item->numero }}</td>
+        <td>{{ $cli }}</td>
+        <td>{{ $item->detalle }}</td>
+        <td>{{ $item->cantidad }}</td>
+        <td>{{ implode(', ', $item->serviciosIncompletos($item->id)) }}</td>
+        <td><a class='fa fa-edit' href='{{route('pedido.edit', $item->numero)}}'></a> <a class='fa fa-eye verPedido' id="{{ $item->numero }}"></a></td>
+      </tr>
+      @endforeach
     </tbody>
     <tfoot>
     </tfoot>
@@ -46,30 +60,30 @@
       "paging":   true,
       "ordering": true,
       "info":     false,
-      "ajax": {
-        "url": "{{url('/pedidos/get')}}",
-        "method": 'get',
-        "error": function(reason) {
-          alert('Ha ocurrido un error al cargar los datos!');
-          console.log('error -> ');
-          console.log(reason);
-        }
-      },
-      "columns": [
-        {"name":"numero", "data":"numero"},
-        {"name":"cliente", "data":"cliente"},
-        {"name":"detalle", "data":"detalle", "sortable": "false"},
-        {"name":"cantidad", "data":"cantidad", "sortable": "false"},
-        {"name":"servicios", "data":"servicios[, ]", "sortable": "false"},
-        {"name":"crud", "data":"numero", "sortable": "false",
-          "render": function ( data, type, full, meta ) {
-            return "<a class='fa fa-edit' href='ot/modificar/"+data+"'></a> <a class='fa fa-eye' href='#' onClick='openOt("+data+")'></a>"
-          }
-        }
-      ],
-      "columnDefs": [
-        { "responsivePriority": 1, "targets": [0, 1, -1] }
-      ],
+      // "ajax": {
+      //   "url": "{{url('/pedidos/get')}}",
+      //   "method": 'get',
+      //   "error": function(reason) {
+      //     alert('Ha ocurrido un error al cargar los datos!');
+      //     console.log('error -> ');
+      //     console.log(reason);
+      //   }
+      // },
+      // "columns": [
+      //   {"name":"numero", "data":"numero"},
+      //   {"name":"cliente", "data":"cliente"},
+      //   {"name":"detalle", "data":"detalle", "sortable": "false"},
+      //   {"name":"cantidad", "data":"cantidad", "sortable": "false"},
+      //   {"name":"servicios", "data":"servicios[, ]", "sortable": "false"},
+      //   {"name":"crud", "data":"numero", "sortable": "false",
+      //     "render": function ( data, type, full, meta ) {
+      //       return "<a class='fa fa-edit' href='ot/modificar/"+data+"'></a> <a class='fa fa-eye' href='#' onClick='openOt("+data+")'></a>"
+      //     }
+      //   }
+      // ],
+      // "columnDefs": [
+      //   { "responsivePriority": 1, "targets": [0, 1, -1] }
+      // ],
       responsive: true,
     });
   });

@@ -32,8 +32,8 @@ class LoginController extends Controller
   }
 
   public function getInfo(Request $request){
-    $ModPerfRol = ModPerfRol::where('perfil_id', Auth::user()->perfil_id)->get();
-    $request->session()->put('ModPerfRol', $ModPerfRol);
+    // $ModPerfRol = ModPerfRol::where('perfil_id', Auth::user()->perfil_id)->get();
+    // $request->session()->put('ModPerfRol', $ModPerfRol);
     
     $user = Usuario::find(Auth::id());
     $userInfo = [];
