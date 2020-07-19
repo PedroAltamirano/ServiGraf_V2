@@ -62,6 +62,7 @@ Route::post('/pedido/modificar/{pedido_id}', 'Produccion\Pedidos@update')->name(
 Route::post('/abonos/{pedido_id}', 'Produccion\Pedidos@abonos')->name('abonos');
 
 Route::get('/reporte/pedidos', 'Produccion\Reportes@showPedidos')->name('reporte.pedidos');
+Route::get('/reporte/ajaxpedidos', 'Produccion\Reportes@ajaxPedidos')->name('reporte.pedidos.ajax');
 Route::get('/reporte/pagos', 'Produccion\Reportes@showPagos')->name('reporte.pagos');
 Route::get('/reporte/maquinas', 'Produccion\Reportes@showMaquinas')->name('reporte.maquinas');
 

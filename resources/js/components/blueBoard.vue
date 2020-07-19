@@ -9,7 +9,7 @@
             <div v-for='e in links' :key="e.href" class="mr-2 mr-md-3"><a :id="e.id" :href="e.href" class="text-blue-8">{{e.text}} <i class="fas fa-arrow-alt-circle-right fa-md"></i></a></div>
           </div>
           <div v-for='e in buttons' :key="e.href" class="ml-2 ml-md-3">
-            <a :onclick="e.href" :class="e.text"></a>
+            <a :onclick="e.href" :class="e.text" :id="e.id"></a>
           </div>
         </div>
       </template>

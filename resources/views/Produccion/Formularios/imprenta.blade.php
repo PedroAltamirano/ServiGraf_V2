@@ -296,7 +296,7 @@
           </button>
       </div>
       <div class="modal-body">
-        <form action="{{route('abonos', $pedido->id)}}" method="POST" role="form">
+        <form action="{{route('abonos', isset($pedido->id))}}" method="POST" role="form">
         @csrf
         <table id="table-abonos" class="table table-sm table-responsive">
           <thead>

@@ -3,7 +3,8 @@
 namespace App\Models\Produccion;
 
 use Illuminate\Database\Eloquent\Model;
-use Auth;
+use Auth; 
+use Illuminate\Support\Facades\DB;
 use App\Models\Produccion\Pedido_servicio;
 use App\Models\Produccion\Servicio;
 use App\Models\Produccion\Sub_servicio;
@@ -72,7 +73,7 @@ class Pedido extends Model
             $pedidos_inc[] = $e->pedido_id;
         }
         
-        return Pedido::whereIn('id', $pedidos_inc)->select('id', 'numero', 'cliente_id', 'detalle', 'cantidad')->get();
+        return Pedido::whereIn('id', $pedidos_inc)->where('estado',  '!=', '3')->select('id', 'numero', 'cliente_id', 'detalle', 'cantidad')->get();
     }
 
     /*
@@ -111,6 +112,10 @@ class Pedido extends Model
             $list[] = $temp;
         }
         return $list;
+    }
+
+    public static function reporteAreas($id){
+        return Pedido_servicio::where('pedido_id', $id)->join('servicios', 'pedido_servicios.servicio_id' ,'=', 'servicios.id')->select('area_id', DB::raw('sum(total) as totalArea'))->groupBy('area_id')->get()->toArray();
     }
     
     // public function material()
