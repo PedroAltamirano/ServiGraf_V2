@@ -17,9 +17,9 @@ class CreateNominaFamiliaTable extends Migration
             $table->unsignedMediumInteger('id');
             $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas-v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
             $table->unsignedInteger('nomina_id');
-            $table->foreign('nomina_id')->references('cedula')->on('empresas-v2.nomina');
+            $table->foreign('nomina_id')->references('cedula')->on('empresas_v2.nomina');
             $table->unsignedTinyInteger('relacion'); //1padre, 2madre, 3conyuge, 4hijo, 5otros
             $table->string('nombre', 100);
             $table->date('fecha_nacimiento');

@@ -17,7 +17,7 @@ class CreateRetencionsTable extends Migration
             $table->mediumIncrements('id');
             $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas-v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
             $table->boolean('tipo');
             $table->unsignedTinyInteger('porcentaje');
             $table->string('descripcion', 140);

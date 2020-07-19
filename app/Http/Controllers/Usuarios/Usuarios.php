@@ -191,7 +191,7 @@ class Usuarios extends Controller
 	//get todos los perfiles
 	public function get(){
 		if(Security::hasRol(70, 1)){
-			$data['data'] = Usuario::join('empresas-v2.nomina as N', 'N.cedula', '=', 'usuarios.cedula')
+			$data['data'] = Usuario::join('empresas_v2.nomina as N', 'N.cedula', '=', 'usuarios.cedula')
 											->where('N.empresa_id', 1709636664001)
 											->select(['usuarios.cedula', 'usuarios.status', 'perfil'=>Perfil::select('perfil')->whereColumn('id', 'usuarios.perfil_id'), 'N.nombre', 'N.apellido'])
 											->get();

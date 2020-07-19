@@ -17,9 +17,9 @@ class CreateNominaReferTable extends Migration
             $table->unsignedMediumInteger('id');
             $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas-v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
             $table->unsignedInteger('nomina_id');
-            $table->foreign('nomina_id')->references('cedula')->on('empresas-v2.nomina');
+            $table->foreign('nomina_id')->references('cedula')->on('empresas_v2.nomina');
             $table->boolean('tipo_refer');
             $table->string('empresa', 50)->nullable($value = true);
             $table->string('contacto', 100);

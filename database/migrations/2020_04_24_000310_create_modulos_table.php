@@ -17,7 +17,7 @@ class CreateModulosTable extends Migration
             $table->unsignedTinyInteger('id');
             $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas-v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
             $table->string('nombre', 30);
             $table->boolean('principal');
         });

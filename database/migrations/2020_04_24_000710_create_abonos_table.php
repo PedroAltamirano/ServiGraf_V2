@@ -19,7 +19,7 @@ class CreateAbonosTable extends Migration
             $table->unsignedDecimal('pedido_id', 18, 5);
             $table->foreign('pedido_id')->references('id')->on('pedidos');
             $table->unsignedInteger('usuario_id');
-            $table->foreign('usuario_id')->references('cedula')->on('usuarios-v2.usuarios');
+            $table->foreign('usuario_id')->references('cedula')->on('usuarios_v2.usuarios');
             $table->string('forma_pago', 20);
             $table->decimal('valor', 8, 2)->default(0.0);
         });

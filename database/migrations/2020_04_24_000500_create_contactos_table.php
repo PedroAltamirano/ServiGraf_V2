@@ -17,9 +17,9 @@ class CreateContactosTable extends Migration
           $table->increments('id');
           $table->timestamps();
           $table->unsignedBigInteger('empresa_id');
-          $table->foreign('empresa_id')->references('id')->on('empresas-v2.empresas');
+          $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
           $table->unsignedInteger('usuario_id');
-          $table->foreign('usuario_id')->references('cedula')->on('usuarios-v2.usuarios');
+          $table->foreign('usuario_id')->references('cedula')->on('usuarios_v2.usuarios');
           $table->unsignedMediumInteger('cliente_empresa_id');
           $table->foreign('cliente_empresa_id')->references('id')->on('cliente_empresas');
           $table->string('actividad', 200);

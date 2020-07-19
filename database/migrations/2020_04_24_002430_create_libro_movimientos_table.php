@@ -17,7 +17,7 @@ class CreateLibroMovimientosTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->unsignedInteger('usuario_id');
-            $table->foreign('usuario_id')->references('cedula')->on('usuarios-v2.usuarios');
+            $table->foreign('usuario_id')->references('cedula')->on('usuarios_v2.usuarios');
             $table->unsignedMediumInteger('libro_id');
             $table->foreign('libro_id')->references('id')->on('libros');
             $table->unsignedSmallInteger('libro_ref_id');
