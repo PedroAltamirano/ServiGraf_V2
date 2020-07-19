@@ -17,7 +17,7 @@ class CreatePerfilsTable extends Migration
             $table->mediumIncrements('id');
             $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas-v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
             $table->string('perfil', 50);
             $table->string('descripcion', 140);
             $table->boolean('status')->default(1);

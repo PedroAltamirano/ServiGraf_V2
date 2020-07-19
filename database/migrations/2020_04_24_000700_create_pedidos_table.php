@@ -16,15 +16,15 @@ class CreatePedidosTable extends Migration
         Schema::connection('DDBBproduccion')->create('pedidos', function (Blueprint $table) {
             $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas-v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
             $table->unsignedInteger('usuario_id');
-            $table->foreign('usuario_id')->references('cedula')->on('usuarios-v2.usuarios');
+            $table->foreign('usuario_id')->references('cedula')->on('usuarios_v2.usuarios');
             $table->unsignedInteger('usuario_mod_id');
-            $table->foreign('usuario_mod_id')->references('cedula')->on('usuarios-v2.usuarios');
+            $table->foreign('usuario_mod_id')->references('cedula')->on('usuarios_v2.usuarios');
             $table->unsignedInteger('usuario_cob_id')->nullable();
-            $table->foreign('usuario_cob_id')->references('cedula')->on('usuarios-v2.usuarios');
+            $table->foreign('usuario_cob_id')->references('cedula')->on('usuarios_v2.usuarios');
             $table->unsignedMediumInteger('cliente_id');
-            $table->foreign('cliente_id')->references('id')->on('clientes-v2.clientes');
+            $table->foreign('cliente_id')->references('id')->on('clientes_v2.clientes');
             $table->unsignedDecimal('id', 18, 5)->primary(); //ver en migracion
             $table->date('fecha_entrada');
             $table->date('fecha_salida');

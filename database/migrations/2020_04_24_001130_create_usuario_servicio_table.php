@@ -19,7 +19,7 @@ class CreateUsuarioServicioTable extends Migration
             $table->unsignedInteger('usuario_id');
             $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->unsignedMediumInteger('servicio_id');
-            $table->foreign('servicio_id')->references('id')->on('produccion-v2.servicios');
+            $table->foreign('servicio_id')->references('id')->on('produccion_v2.servicios');
         });
     }
 

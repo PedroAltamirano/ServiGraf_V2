@@ -17,7 +17,7 @@ class CreateServiciosTable extends Migration
             $table->mediumIncrements('id');
             $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas-v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
             $table->unsignedMediumInteger('area_id');
             $table->foreign('area_id')->references('id')->on('areas');
             $table->string('servicio', 140);

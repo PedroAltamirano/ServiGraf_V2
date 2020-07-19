@@ -18,7 +18,7 @@ class CreateClienteEmpresasTable extends Migration
             $table->string('nombre');
             $table->bigInteger('ruc')->unique()->nullable($value = true);
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas-v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
             $table->timestamps();
         });
     }

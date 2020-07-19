@@ -19,7 +19,7 @@ class CreateUsuarioCliSegTable extends Migration
             $table->unsignedInteger('usuario_id');
             $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->unsignedMediumInteger('cliente_id');
-            $table->foreign('cliente_id')->references('id')->on('clientes-v2.clientes');
+            $table->foreign('cliente_id')->references('id')->on('clientes_v2.clientes');
         });
     }
 

@@ -16,7 +16,7 @@ class CreateNominaTable extends Migration
         Schema::connection('DDBBempresas')->create('nomina', function (Blueprint $table) {
             $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas-v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
 
             //DATOS PERSONALES
             $table->string('foto')->nullable($value = true);

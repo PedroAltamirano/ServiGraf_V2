@@ -19,7 +19,7 @@ class CreateUsuarioLibroTable extends Migration
             $table->unsignedInteger('usuario_id');
             $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->unsignedMediumInteger('libro_id');
-            $table->foreign('libro_id')->references('id')->on('contabilidad-v2.libros');
+            $table->foreign('libro_id')->references('id')->on('contabilidad_v2.libros');
         });
     }
 

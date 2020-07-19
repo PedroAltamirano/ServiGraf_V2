@@ -17,14 +17,14 @@ class CreateFacturasTable extends Migration
             $table->mediumIncrements('id');
             $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas-v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
             $table->unsignedInteger('usuario_id');
-            $table->foreign('usuario_id')->references('cedula')->on('usuarios-v2.usuarios');
+            $table->foreign('usuario_id')->references('cedula')->on('usuarios_v2.usuarios');
             $table->unsignedMediumInteger('numero')->unique();
             $table->unsignedMediumInteger('fact_emp_id');
             $table->foreign('fact_emp_id')->references('id')->on('fact_empresa');
             $table->unsignedMediumInteger('cliente_id');
-            $table->foreign('cliente_id')->references('id')->on('clientes-v2.clientes');
+            $table->foreign('cliente_id')->references('id')->on('clientes_v2.clientes');
             $table->date('emision');
             $table->date('vencimiento');
             $table->unsignedTinyInteger('tipo');
