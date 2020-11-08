@@ -13,13 +13,13 @@ class CreateDotacionTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBempresas')->create('dotacion', function (Blueprint $table) {
+        Schema::create('dotacion', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->string('dotacion');
             $table->boolean('status')->default(1);
+            $table->timestamps();
         });
     }
 
@@ -30,6 +30,6 @@ class CreateDotacionTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBempresas')->dropIfExists('dotacion');
+        Schema::dropIfExists('dotacion');
     }
 }

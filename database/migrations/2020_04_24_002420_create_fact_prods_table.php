@@ -13,9 +13,8 @@ class CreateFactProdsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBcontabilidad')->create('fact_prods', function (Blueprint $table) {
+        Schema::create('fact_prods', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->unsignedMediumInteger('factura_id');
             $table->foreign('factura_id')->references('id')->on('facturas');
             $table->unsignedSmallInteger('cantidad');
@@ -24,6 +23,7 @@ class CreateFactProdsTable extends Migration
             $table->foreign('iva_id')->references('id')->on('ivas');
             $table->decimal('valor_unitario', 9, 3)->unsigned();
             $table->decimal('subtotal', 9, 3)->unsigned();
+            $table->timestamps();
         });
     }
 
@@ -34,6 +34,6 @@ class CreateFactProdsTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBcontabilidad')->dropIfExists('fact_prods');
+        Schema::dropIfExists('fact_prods');
     }
 }

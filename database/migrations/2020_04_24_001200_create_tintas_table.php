@@ -13,12 +13,12 @@ class CreateTintasTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBproduccion')->create('tintas', function (Blueprint $table) {
+        Schema::create('tintas', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->string('color', 50);
+            $table->timestamps();
         });
     }
 
@@ -29,6 +29,6 @@ class CreateTintasTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBproduccion')->dropIfExists('tintas');
+        Schema::dropIfExists('tintas');
     }
 }

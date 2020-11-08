@@ -13,9 +13,8 @@ class CreateNominaDotacionTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBempresas')->create('nomina_dotacion', function (Blueprint $table){
+        Schema::create('nomina_dotacion', function (Blueprint $table){
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedInteger('nomina_id');
@@ -23,6 +22,7 @@ class CreateNominaDotacionTable extends Migration
             $table->date('entrega');
             $table->unsignedMediumInteger('dotacion_id');
             $table->foreign('dotacion_id')->references('id')->on('dotacion');
+            $table->timestamps();
         });
     }
 
@@ -33,6 +33,6 @@ class CreateNominaDotacionTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBempresas')->dropIfExists('nomina_dotacion');
+        Schema::dropIfExists('nomina_dotacion');
     }
 }

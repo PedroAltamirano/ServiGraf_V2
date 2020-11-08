@@ -13,18 +13,17 @@ class CreateFacturasTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBcontabilidad')->create('facturas', function (Blueprint $table) {
+        Schema::create('facturas', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedInteger('usuario_id');
-            $table->foreign('usuario_id')->references('cedula')->on('usuarios_v2.usuarios');
+            $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->unsignedMediumInteger('numero')->unique();
             $table->unsignedMediumInteger('fact_emp_id');
             $table->foreign('fact_emp_id')->references('id')->on('fact_empresa');
             $table->unsignedMediumInteger('cliente_id');
-            $table->foreign('cliente_id')->references('id')->on('clientes_v2.clientes');
+            $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->date('emision');
             $table->date('vencimiento');
             $table->unsignedTinyInteger('tipo');
@@ -44,6 +43,7 @@ class CreateFacturasTable extends Migration
             $table->unsignedDecimal('ret_fuente', 8, 2);
             $table->unsignedDecimal('total_pagar', 8, 2);
             $table->string('notas', 140);
+            $table->timestamps();
         });
     }
 
@@ -54,6 +54,6 @@ class CreateFacturasTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBcontabilidad')->dropIfExists('facturas');
+        Schema::dropIfExists('facturas');
     }
 }

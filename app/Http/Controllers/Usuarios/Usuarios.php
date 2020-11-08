@@ -40,8 +40,8 @@ class Usuarios extends Controller
 			return view('Usuarios/usuarios');
 		} else {
 			$data = [
-				'type'=>'danger', 
-				'title'=>'NO AUTORIZADO', 
+				'type'=>'danger',
+				'title'=>'NO AUTORIZADO',
 				'message'=>'No estas autorizado a realizar esta operacion'
 			];
 			return redirect('tablero')->with(['actionStatus' => json_encode($data)]);
@@ -54,8 +54,8 @@ class Usuarios extends Controller
 			$nomina = Nomina::availables();
 			$perfiles = Perfil::where('empresa_id', Auth::user()->empresa_id)->select('id', 'perfil')->get();
 			$data = [
-				'path'=>'/usuario/nuevo', 
-				'text'=>'Nuevo usuario', 
+				'path'=>'/usuario/nuevo',
+				'text'=>'Nuevo usuario',
 				'action'=>'Crear',
 				'nomina'=>json_decode($nomina),
 				'perfiles'=>json_decode($perfiles)
@@ -63,15 +63,15 @@ class Usuarios extends Controller
 			return view('Usuarios/usuario')->with($data);
 		} else {
 			$data = [
-				'type'=>'danger', 
-				'title'=>'NO AUTORIZADO', 
+				'type'=>'danger',
+				'title'=>'NO AUTORIZADO',
 				'message'=>'No estas autorizado a realizar esta operacion'
 			];
 			return redirect('usuarios')->with(['actionStatus' => json_encode($data)]);
 		}
 	}
 
-	 //crear nuevo 
+	 //crear nuevo
 	 public function newPost(Request $request){
 		if(Security::hasRol(70, 2)){
 			$messages = [
@@ -90,7 +90,7 @@ class Usuarios extends Controller
 			if ($validator->fails()) {
 				return back()->withErrors($validator)->withInput();
 			}
-	
+
 			$usuario = new Usuario;
 			$usuario->cedula = $request->nomina;
 			$usuario->empresa_id = Auth::user()->empresa_id;
@@ -100,14 +100,14 @@ class Usuarios extends Controller
 			$usuario->reservarot = $request->reservarot ? 1:0;
 			$usuario->libro = $request->libro ? 1:0;
 			$usuario->save();
-	
+
 			$data = [
 				'type'=>'success',
 				'title'=>'Acción completada',
 				'message'=>'El usuario se ha creado con éxito'
 			];
 			return redirect('usuario/modificar/'.$usuario->cedula)->withInput()->with(['actionStatus' => json_encode($data)]);
-		 
+
 		} else {
 			$data = [
 				'type'=>'danger',
@@ -117,7 +117,7 @@ class Usuarios extends Controller
 			return redirect('usuarios')->with(['actionStatus' => json_encode($data)]);
 		}
 	}
- 
+
 	//ver modificar usuario
 	public function modGet(Request $request, $user_id){
 		if(Security::hasRol(70, 3)){
@@ -160,7 +160,7 @@ class Usuarios extends Controller
 			if ($validator->fails()) {
 				return back()->withErrors($validator)->withInput();
 			}
-	
+
 			$usuario = Usuario::find($user_id);
 			$usuario->usuario = $request->usuario;
 			$usuario->perfil_id = $request->perfil_id;
@@ -168,14 +168,14 @@ class Usuarios extends Controller
 			$usuario->reservarot = $request->reservarot ? 1:0;
 			$usuario->libro = $request->libro ? 1:0;
 			$usuario->save();
-	
+
 			$data = [
 				'type'=>'success',
 				'title'=>'Acción completada',
 				'message'=>'El usuario se ha modificado con éxito'
 			];
 			return redirect('usuario/modificar/'.$user_id)->with(['actionStatus' => json_encode($data)]);
-		 
+
 		} else {
 			$data = [
 				'type'=>'danger',
@@ -185,13 +185,13 @@ class Usuarios extends Controller
 			return redirect('usuarios')->with(['actionStatus' => json_encode($data)]);
 		}
 	}
- 
-	
+
+
 	//AJAX
 	//get todos los perfiles
 	public function get(){
 		if(Security::hasRol(70, 1)){
-			$data['data'] = Usuario::join('empresas_v2.nomina as N', 'N.cedula', '=', 'usuarios.cedula')
+			$data['data'] = Usuario::join('nomina as N', 'N.cedula', '=', 'usuarios.cedula')
 											->where('N.empresa_id', 1709636664001)
 											->select(['usuarios.cedula', 'usuarios.status', 'perfil'=>Perfil::select('perfil')->whereColumn('id', 'usuarios.perfil_id'), 'N.nombre', 'N.apellido'])
 											->get();

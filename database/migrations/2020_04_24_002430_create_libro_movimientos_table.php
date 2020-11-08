@@ -13,11 +13,10 @@ class CreateLibroMovimientosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBcontabilidad')->create('libro_movimientos', function (Blueprint $table) {
+        Schema::create('libro_movimientos', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->unsignedInteger('usuario_id');
-            $table->foreign('usuario_id')->references('cedula')->on('usuarios_v2.usuarios');
+            $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->unsignedMediumInteger('libro_id');
             $table->foreign('libro_id')->references('id')->on('libros');
             $table->unsignedSmallInteger('libro_ref_id');
@@ -31,6 +30,7 @@ class CreateLibroMovimientosTable extends Migration
             $table->foreign('banco_id')->references('id')->on('bancos');
             $table->unsignedInteger('cuenta');
             $table->unsignedInteger('cheque');
+            $table->timestamps();
         });
     }
 
@@ -41,6 +41,6 @@ class CreateLibroMovimientosTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBcontabilidad')->dropIfExists('libro_movimientos');
+        Schema::dropIfExists('libro_movimientos');
     }
 }

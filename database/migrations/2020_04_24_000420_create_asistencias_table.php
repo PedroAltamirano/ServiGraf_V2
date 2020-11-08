@@ -13,11 +13,10 @@ class CreateAsistenciasTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBusuarios')->create('asistencias', function (Blueprint $table) {
+        Schema::create('asistencias', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedInteger('usuario_id');
             $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->date('fecha');
@@ -27,6 +26,7 @@ class CreateAsistenciasTable extends Migration
             $table->time('salida_tarde')->nullable();
             $table->decimal('total', 4, 2)->unsigned()->default(0.0);
             $table->decimal('extras', 4, 2)->unsigned()->default(0.0);
+            $table->timestamps();
         });
     }
 
@@ -37,6 +37,6 @@ class CreateAsistenciasTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBusuarios')->dropIfExists('asistencias');
+        Schema::dropIfExists('asistencias');
     }
 }

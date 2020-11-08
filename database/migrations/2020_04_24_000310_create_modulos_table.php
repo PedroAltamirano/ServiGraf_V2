@@ -13,13 +13,13 @@ class CreateModulosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBusuarios')->create('modulos', function (Blueprint $table) {
+        Schema::create('modulos', function (Blueprint $table) {
             $table->unsignedTinyInteger('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->string('nombre', 30);
             $table->boolean('principal');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +30,6 @@ class CreateModulosTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBusuarios')->dropIfExists('modulos');
+        Schema::dropIfExists('modulos');
     }
 }

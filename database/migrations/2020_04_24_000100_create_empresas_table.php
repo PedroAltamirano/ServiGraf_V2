@@ -13,13 +13,13 @@ class CreateEmpresasTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBempresas')->create('empresas', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary(); //ruc
-            $table->timestamps();
+        Schema::create('empresas', function (Blueprint $table) {
+            $table->bigIncrements('id'); //ruc
             $table->string('nombre', 30);
             $table->unsignedTinyInteger('tipo_empresa_id');
             $table->foreign('tipo_empresa_id')->references('id')->on('tipo_empresa');
             $table->boolean('status'); //status-instatus
+            $table->timestamps();
         });
     }
 
@@ -30,6 +30,6 @@ class CreateEmpresasTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBempresas')->dropIfExists('empresas');
+        Schema::dropIfExists('empresas');
     }
 }

@@ -13,11 +13,10 @@ class CreatePedidoServiciosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBproduccion')->create('pedido_servicios', function (Blueprint $table) {
+        Schema::create('pedido_servicios', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedDecimal('pedido_id', 18, 5);
             $table->foreign('pedido_id')->references('id')->on('pedidos');
             $table->unsignedMediumInteger('servicio_id');
@@ -30,6 +29,7 @@ class CreatePedidoServiciosTable extends Migration
             $table->unsignedDecimal('valor_unitario', 6, 2);
             $table->unsignedDecimal('total', 6, 2);
             $table->boolean('status')->default(0);
+            $table->timestamps();
         });
     }
 
@@ -40,6 +40,6 @@ class CreatePedidoServiciosTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBproduccion')->dropIfExists('pedido_servicios');
+        Schema::dropIfExists('pedido_servicios');
     }
 }

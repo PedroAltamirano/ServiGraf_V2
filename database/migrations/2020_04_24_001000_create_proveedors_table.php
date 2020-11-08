@@ -13,16 +13,16 @@ class CreateProveedorsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBproduccion')->create('proveedores', function (Blueprint $table) {
+        Schema::create('proveedores', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedInteger('usuario_id');
-            $table->foreign('usuario_id')->references('cedula')->on('usuarios_v2.usuarios');
+            $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->string('proveedor', 50);
             $table->unsignedInteger('telefono');
             $table->string('direccion', 140);
+            $table->timestamps();
         });
     }
 
@@ -33,6 +33,6 @@ class CreateProveedorsTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBproduccion')->dropIfExists('proveedores');
+        Schema::dropIfExists('proveedores');
     }
 }

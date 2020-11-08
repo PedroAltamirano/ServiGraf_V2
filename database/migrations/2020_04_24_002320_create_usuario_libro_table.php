@@ -13,13 +13,13 @@ class CreateUsuarioLibroTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBusuarios')->create('usuario_libro', function (Blueprint $table) {
+        Schema::create('usuario_libro', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedInteger('usuario_id');
             $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->unsignedMediumInteger('libro_id');
-            $table->foreign('libro_id')->references('id')->on('contabilidad_v2.libros');
+            $table->foreign('libro_id')->references('id')->on('libros');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +30,6 @@ class CreateUsuarioLibroTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBusuarios')->dropIfExists('usuario_libro');
+        Schema::dropIfExists('usuario_libro');
     }
 }

@@ -13,11 +13,10 @@ class CreateFactEmprsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBcontabilidad')->create('fact_empresa', function (Blueprint $table) {
+        Schema::create('fact_empresa', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->string('empresa', 50);
             $table->string('representante', 50);
             $table->unsignedBigInteger('ruc');
@@ -27,6 +26,7 @@ class CreateFactEmprsTable extends Migration
             $table->date('valido_a');
             $table->unsignedTinyInteger('impresion');
             $table->string('logo');
+            $table->timestamps();
         });
     }
 
@@ -37,6 +37,6 @@ class CreateFactEmprsTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBcontabilidad')->dropIfExists('fact_empresa');
+        Schema::dropIfExists('fact_empresa');
     }
 }

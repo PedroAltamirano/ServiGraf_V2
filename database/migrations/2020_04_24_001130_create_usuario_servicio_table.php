@@ -13,13 +13,13 @@ class CreateUsuarioServicioTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBusuarios')->create('usuario_servicio', function (Blueprint $table) {
+        Schema::create('usuario_servicio', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedInteger('usuario_id');
             $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->unsignedMediumInteger('servicio_id');
-            $table->foreign('servicio_id')->references('id')->on('produccion_v2.servicios');
+            $table->foreign('servicio_id')->references('id')->on('servicios');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +30,6 @@ class CreateUsuarioServicioTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBusuarios')->dropIfExists('usuario_servicio');
+        Schema::dropIfExists('usuario_servicio');
     }
 }

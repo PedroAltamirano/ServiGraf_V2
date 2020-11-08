@@ -13,12 +13,12 @@ class CreateResetProduccionsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBproduccion')->create('reset_produccions', function (Blueprint $table) {
+        Schema::create('reset_produccions', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->timestamps();
             $table->timestamp('reset');
             $table->unsignedInteger('usuario_id');
-            $table->foreign('usuario_id')->references('cedula')->on('usuarios_v2.usuarios');
+            $table->foreign('usuario_id')->references('cedula')->on('usuarios');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +29,6 @@ class CreateResetProduccionsTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBproduccion')->dropIfExists('reset_produccions');
+        Schema::dropIfExists('reset_produccions');
     }
 }

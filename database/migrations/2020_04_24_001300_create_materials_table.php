@@ -13,11 +13,10 @@ class CreateMaterialsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBproduccion')->create('materiales', function (Blueprint $table) {
+        Schema::create('materiales', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->string('descripcion', 140);
             $table->unsignedSmallInteger('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('categorias');
@@ -26,6 +25,7 @@ class CreateMaterialsTable extends Migration
             $table->unsignedDecimal('precio', 5, 2)->nullable();
             $table->boolean('uv')->default(0);
             $table->boolean('plastificado')->default(0);
+            $table->timestamps();
         });
     }
 
@@ -36,6 +36,6 @@ class CreateMaterialsTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBproduccion')->dropIfExists('materiales');
+        Schema::dropIfExists('materiales');
     }
 }

@@ -13,16 +13,16 @@ class CreateClavesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBempresas')->create('claves', function (Blueprint $table) {
+        Schema::create('claves', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->string('cuenta', 30);
             $table->string('usuario', 30);
             $table->string('clave', 128);
             $table->string('refuerzo', 128)->default('');
             $table->string('url', 50)->default('');
+            $table->timestamps();
         });
     }
 
@@ -33,6 +33,6 @@ class CreateClavesTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBempresas')->dropIfExists('claves');
+        Schema::dropIfExists('claves');
     }
 }

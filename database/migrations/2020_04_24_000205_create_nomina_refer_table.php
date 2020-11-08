@@ -13,13 +13,12 @@ class CreateNominaReferTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBempresas')->create('nomina_refer', function (Blueprint $table) {
+        Schema::create('nomina_refer', function (Blueprint $table) {
             $table->unsignedMediumInteger('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedInteger('nomina_id');
-            $table->foreign('nomina_id')->references('cedula')->on('empresas_v2.nomina');
+            $table->foreign('nomina_id')->references('cedula')->on('nomina');
             $table->boolean('tipo_refer');
             $table->string('empresa', 50)->nullable($value = true);
             $table->string('contacto', 100);
@@ -29,6 +28,7 @@ class CreateNominaReferTable extends Migration
             $table->date('fin_labor')->nullable($value = true);
             $table->string('cargo', 50);
             $table->string('razon_separacion', 250)->nullable($value = true);
+            $table->timestamps();
         });
     }
 
@@ -39,6 +39,6 @@ class CreateNominaReferTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBempresas')->dropIfExists('nomina_refer');
+        Schema::dropIfExists('nomina_refer');
     }
 }

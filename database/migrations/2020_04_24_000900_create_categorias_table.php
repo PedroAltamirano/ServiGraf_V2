@@ -13,12 +13,12 @@ class CreateCategoriasTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBproduccion')->create('categorias', function (Blueprint $table) {
+        Schema::create('categorias', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->string('categoria');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +29,6 @@ class CreateCategoriasTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBproduccion')->dropIfExists('categorias');
+        Schema::dropIfExists('categorias');
     }
 }

@@ -13,15 +13,15 @@ class CreateAbonosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBproduccion')->create('abonos', function (Blueprint $table) {
+        Schema::create('abonos', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->unsignedDecimal('pedido_id', 18, 5);
             $table->foreign('pedido_id')->references('id')->on('pedidos');
             $table->unsignedInteger('usuario_id');
-            $table->foreign('usuario_id')->references('cedula')->on('usuarios_v2.usuarios');
+            $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->string('forma_pago', 20);
             $table->decimal('valor', 8, 2)->default(0.0);
+            $table->timestamps();
         });
     }
 
@@ -32,6 +32,6 @@ class CreateAbonosTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBproduccion')->dropIfExists('abonos');
+        Schema::dropIfExists('abonos');
     }
 }

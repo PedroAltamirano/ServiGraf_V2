@@ -13,11 +13,10 @@ class CreateServiciosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBproduccion')->create('servicios', function (Blueprint $table) {
+        Schema::create('servicios', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedMediumInteger('area_id');
             $table->foreign('area_id')->references('id')->on('areas');
             $table->string('servicio', 140);
@@ -25,6 +24,7 @@ class CreateServiciosTable extends Migration
             $table->boolean('tipo')->default(1); //interno o externo
             $table->boolean('subprocesos')->default(0);
             $table->boolean('seguimiento')->default(0);
+            $table->timestamps();
         });
     }
 
@@ -35,6 +35,6 @@ class CreateServiciosTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBproduccion')->dropIfExists('servicios');
+        Schema::dropIfExists('servicios');
     }
 }

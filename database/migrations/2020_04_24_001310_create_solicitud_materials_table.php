@@ -13,11 +13,10 @@ class CreateSolicitudMaterialsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBproduccion')->create('solicitud_materials', function (Blueprint $table) {
+        Schema::create('solicitud_materials', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas-v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedDecimal('pedido_id', 18, 5);
             $table->foreign('pedido_id')->references('id')->on('pedidos');
             $table->unsignedMediumInteger('material_id');
@@ -30,6 +29,7 @@ class CreateSolicitudMaterialsTable extends Migration
             $table->foreign('proveedor_id')->references('id')->on('proveedores');
             $table->unsignedMediumInteger('factura')->nullable();
             $table->unsignedDecimal('total', 8, 2);
+            $table->timestamps();
         });
     }
 
@@ -40,6 +40,6 @@ class CreateSolicitudMaterialsTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBproduccion')->dropIfExists('solicitud_materials');
+        Schema::dropIfExists('solicitud_materials');
     }
 }

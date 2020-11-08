@@ -13,13 +13,13 @@ class CreateUsuarioCliSegTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBusuarios')->create('usuario_cli-seg', function (Blueprint $table) {
+        Schema::create('usuario_cli-seg', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedInteger('usuario_id');
             $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->unsignedMediumInteger('cliente_id');
-            $table->foreign('cliente_id')->references('id')->on('clientes_v2.clientes');
+            $table->foreign('cliente_id')->references('id')->on('clientes');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +30,6 @@ class CreateUsuarioCliSegTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBusuarios')->dropIfExists('usuario_cli-seg');
+        Schema::dropIfExists('usuario_cli-seg');
     }
 }

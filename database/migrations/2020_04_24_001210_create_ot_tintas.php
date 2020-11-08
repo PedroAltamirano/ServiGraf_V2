@@ -13,13 +13,13 @@ class CreateOtTintas extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBproduccion')->create('ot_tintas', function (Blueprint $table) {
+        Schema::create('ot_tintas', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->unsignedDecimal('pedido_id', 18, 5);
             $table->foreign('pedido_id')->references('id')->on('pedidos');
             $table->unsignedSmallInteger('tinta_id');
             $table->foreign('tinta_id')->references('id')->on('tintas');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +30,6 @@ class CreateOtTintas extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBproduccion')->dropIfExists('ot_tintas');
+        Schema::dropIfExists('ot_tintas');
     }
 }

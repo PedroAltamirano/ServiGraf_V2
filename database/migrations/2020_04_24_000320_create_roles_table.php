@@ -13,10 +13,10 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBusuarios')->create('roles', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->tinyIncrements('id');
-            $table->timestamps();
             $table->string('rol', 20);
+            $table->timestamps();
         });
     }
 
@@ -27,6 +27,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBusuarios')->dropIfExists('roles');
+        Schema::dropIfExists('roles');
     }
 }

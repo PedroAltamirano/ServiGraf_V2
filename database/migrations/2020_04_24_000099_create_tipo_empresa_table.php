@@ -13,10 +13,10 @@ class CreateTipoEmpresaTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBempresas')->create('tipo_empresa', function (Blueprint $table) {
+        Schema::create('tipo_empresa', function (Blueprint $table) {
             $table->tinyIncrements('id');
-            $table->timestamps();
             $table->string('nombre', 20);
+            $table->timestamps();
         });
     }
 
@@ -27,6 +27,6 @@ class CreateTipoEmpresaTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBempresas')->dropIfExists('tipo_empresa');
+        Schema::dropIfExists('tipo_empresa');
     }
 }

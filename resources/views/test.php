@@ -43,10 +43,10 @@ use Illuminate\Support\Facades\DB;
 
 // echo json_encode($data);
 
-// $data = DB::connection('DDBBempresas')->select('SELECT cedula, nombre, apellido, (SELECT `perfil` FROM `usuarios_v2`.perfiles WHERE `id`=`perfil_id`) as perfil FROM `empresas_v2`.nomina n JOIN `usuarios_v2`.usuarios u USING (cedula)');
+// $data = DB::select('SELECT cedula, nombre, apellido, (SELECT `perfil` FROM `usuarios_v2`.perfiles WHERE `id`=`perfil_id`) as perfil FROM `empresas_v2`.nomina n JOIN `usuarios_v2`.usuarios u USING (cedula)');
 // // echo json_encode($data);
 
-// $usuarios = Usuario::join('empresas_v2.nomina as N', 'N.cedula', '=', 'usuarios.cedula')
+// $usuarios = Usuario::join('nomina as N', 'N.cedula', '=', 'usuarios.cedula')
 // ->where('N.empresa_id', 1709636664001)
 // ->select(['usuarios.cedula', 'usuarios.status', 'perfil'=>Perfil::select('perfil')->whereColumn('id', 'usuarios.perfil_id'), 'N.nombre', 'N.apellido'])
 // ->get();

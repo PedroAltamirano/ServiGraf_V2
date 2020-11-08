@@ -13,12 +13,12 @@ class CreateSubServiciosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBproduccion')->create('sub_servicios', function (Blueprint $table) {
+        Schema::create('sub_servicios', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedMediumInteger('servicio_id');
             $table->foreign('servicio_id')->references('id')->on('servicios');
             $table->string('subservicio', 30);
+            $table->timestamps();
         });
     }
 
@@ -29,6 +29,6 @@ class CreateSubServiciosTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBproduccion')->dropIfExists('sub_servicios');
+        Schema::dropIfExists('sub_servicios');
     }
 }

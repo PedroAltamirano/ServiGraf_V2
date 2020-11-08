@@ -13,13 +13,13 @@ class CreateAreasTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBproduccion')->create('areas', function (Blueprint $table) {
+        Schema::create('areas', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->string('area', 30);
             $table->unsignedTinyInteger('orden');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +30,6 @@ class CreateAreasTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBproduccion')->dropIfExists('areas');
+        Schema::dropIfExists('areas');
     }
 }

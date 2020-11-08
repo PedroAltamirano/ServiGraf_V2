@@ -13,15 +13,15 @@ class CreateModuloPerfilTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBusuarios')->create('modulo_perfil', function (Blueprint $table) {
+        Schema::create('modulo_perfil', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedMediumInteger('perfil_id');
             $table->foreign('perfil_id')->references('id')->on('perfiles');
             $table->unsignedTinyInteger('modulo_id');
             // $table->foreign('modulo_id')->references('id')->on('modulos');
             $table->unsignedTinyInteger('rol_id');
             $table->foreign('rol_id')->references('id')->on('roles');
+            $table->timestamps();
         });
     }
 
@@ -32,6 +32,6 @@ class CreateModuloPerfilTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBusuarios')->dropIfExists('modulo_perfil');
+        Schema::dropIfExists('modulo_perfil');
     }
 }

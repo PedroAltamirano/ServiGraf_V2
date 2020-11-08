@@ -13,15 +13,15 @@ class CreateBancosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBcontabilidad')->create('bancos', function (Blueprint $table) {
+        Schema::create('bancos', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedInteger('usuario_id');
-            $table->foreign('usuario_id')->references('cedula')->on('usuarios_v2.usuarios');
+            $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->string('banco');
             $table->unsignedBigInteger('cuenta');
+            $table->timestamps();
         });
     }
 
@@ -32,6 +32,6 @@ class CreateBancosTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBcontabilidad')->dropIfExists('bancos');
+        Schema::dropIfExists('bancos');
     }
 }

@@ -32,9 +32,9 @@ class Facturacion extends Controller
 	public function show(){
 		return view('Administracion/facturas', ['nombre_empresa' => 'ServiGraf']);
 	}
-  
+
 	public function getFacts(){
-    $data = DB::connection('DDBBcontabilidad')->select('SELECT numero, cliente_id, emision, tipo, estado, id FROM `facturas` WHERE `empresa_id`= ? AND `emision` BETWEEN ? AND ? ? ? ? ORDER BY `numero` DESC', ['SVGF', '2020-4-8', '2020-4-11', '', '', '']);
+    $data = DB::select('SELECT numero, cliente_id, emision, tipo, estado, id FROM `facturas` WHERE `empresa_id`= ? AND `emision` BETWEEN ? AND ? ? ? ? ORDER BY `numero` DESC', ['SVGF', '2020-4-8', '2020-4-11', '', '', '']);
 		return response()->json(array('data' => $data));
 	}
 

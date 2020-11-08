@@ -13,23 +13,23 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBusuarios')->create('usuarios', function (Blueprint $table) {
-            $table->timestamps();
+        Schema::create('usuarios', function (Blueprint $table) {
             //datos de usuario
             $table->unsignedInteger('cedula')->unique();
-            $table->foreign('cedula')->references('cedula')->on('empresas_v2.nomina');
+            $table->foreign('cedula')->references('cedula')->on('nomina');
             //datos de validacion
             $table->rememberToken();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->string('usuario', 20)->unique();
             $table->string('password', 128);
             $table->unsignedMediumInteger('perfil_id');
-            $table->foreign('perfil_id')->references('id')->on('usuarios_v2.perfiles');
+            $table->foreign('perfil_id')->references('id')->on('perfiles');
             //permisos adicionales
             $table->boolean('status')->default(1);
             $table->boolean('reservarot')->default(0);
             $table->boolean('libro')->default(1);
+            $table->timestamps();
         });
     }
 
@@ -40,6 +40,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBusuarios')->dropIfExists('usuarios');
+        Schema::dropIfExists('usuarios');
     }
 }

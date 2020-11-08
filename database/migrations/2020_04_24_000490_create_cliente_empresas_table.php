@@ -13,12 +13,12 @@ class CreateClienteEmpresasTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBclientes')->create('cliente_empresas', function (Blueprint $table) {
+        Schema::create('cliente_empresas', function (Blueprint $table) {
             $table->mediumIncrements('id');
             $table->string('nombre');
             $table->bigInteger('ruc')->unique()->nullable($value = true);
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateClienteEmpresasTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBclientes')->dropIfExists('cliente_empresas');
+        Schema::dropIfExists('cliente_empresas');
     }
 }

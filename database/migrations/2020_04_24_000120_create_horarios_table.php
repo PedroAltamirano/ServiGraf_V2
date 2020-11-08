@@ -13,11 +13,10 @@ class CreateHorariosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBempresas')->create('horarios', function (Blueprint $table) {
+        Schema::create('horarios', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->string('nombre', 30);
             $table->time('llegada_ma');
             $table->time('salida_ma');
@@ -25,6 +24,7 @@ class CreateHorariosTable extends Migration
             $table->time('salida_ta');
             $table->unsignedTinyInteger('espera');
             $table->unsignedTinyInteger('gracia');
+            $table->timestamps();
         });
     }
 
@@ -35,6 +35,6 @@ class CreateHorariosTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBempresas')->dropIfExists('horarios');
+        Schema::dropIfExists('horarios');
     }
 }

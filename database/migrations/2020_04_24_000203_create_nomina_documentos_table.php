@@ -13,13 +13,12 @@ class CreateNominaDocumentosTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBempresas')->create('nomina_docs', function (Blueprint $table) {
+        Schema::create('nomina_docs', function (Blueprint $table) {
             $table->unsignedMediumInteger('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedInteger('nomina_id');
-            $table->foreign('nomina_id')->references('cedula')->on('empresas_v2.nomina');
+            $table->foreign('nomina_id')->references('cedula')->on('nomina');
             $table->boolean('aviso_entrada')->default(0);
             $table->boolean('contrato_trabajo')->default(0);
             $table->boolean('solicitud_empleo')->default(0);
@@ -38,6 +37,7 @@ class CreateNominaDocumentosTable extends Migration
             $table->boolean('aviso_salida')->default(0);
             $table->boolean('acta_finiquito')->default(0);
             $table->boolean('recivo_pago_acta_fini')->default(0);
+            $table->timestamps();
         });
     }
 
@@ -48,6 +48,6 @@ class CreateNominaDocumentosTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBempresas')->dropIfExists('nomina_docs');
+        Schema::dropIfExists('nomina_docs');
     }
 }

@@ -13,13 +13,13 @@ class CreateIvasTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBcontabilidad')->create('ivas', function (Blueprint $table) {
+        Schema::create('ivas', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas_v2.empresas');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedTinyInteger('porcentaje');
             $table->boolean('defecto')->default(0);
+            $table->timestamps();
         });
     }
 
@@ -30,6 +30,6 @@ class CreateIvasTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBcontabilidad')->dropIfExists('ivas');
+        Schema::dropIfExists('ivas');
     }
 }

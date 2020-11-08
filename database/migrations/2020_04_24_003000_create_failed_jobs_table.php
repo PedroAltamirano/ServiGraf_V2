@@ -13,14 +13,14 @@ class CreateFailedJobsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('DDBBusuarios')->create('failed_jobs', function (Blueprint $table) {
+        Schema::create('failed_jobs', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->text('connection');
             $table->text('queue');
             $table->longText('payload');
             $table->longText('exception');
             $table->timestamp('failed_at')->useCurrent();
+            $table->timestamps();
         });
     }
 
@@ -31,6 +31,6 @@ class CreateFailedJobsTable extends Migration
      */
     public function down()
     {
-        Schema::connection('DDBBusuarios')->dropIfExists('failed_jobs');
+        Schema::dropIfExists('failed_jobs');
     }
 }
