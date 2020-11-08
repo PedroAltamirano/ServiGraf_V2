@@ -15,8 +15,7 @@ class CreateOtTintas extends Migration
     {
         Schema::create('ot_tintas', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedDecimal('pedido_id', 18, 5);
-            $table->foreign('pedido_id')->references('id')->on('pedidos');
+            $table->foreignId('pedido_id')->constrained('pedidos');
             $table->unsignedSmallInteger('tinta_id');
             $table->foreign('tinta_id')->references('id')->on('tintas');
             $table->timestamps();

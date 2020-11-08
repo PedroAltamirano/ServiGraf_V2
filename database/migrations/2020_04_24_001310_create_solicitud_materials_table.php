@@ -17,8 +17,7 @@ class CreateSolicitudMaterialsTable extends Migration
             $table->increments('id');
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
-            $table->unsignedDecimal('pedido_id', 18, 5);
-            $table->foreign('pedido_id')->references('id')->on('pedidos');
+            $table->foreignId('pedido_id')->constrained('pedidos');
             $table->unsignedMediumInteger('material_id');
             $table->foreign('material_id')->references('id')->on('materiales');
             $table->unsignedMediumInteger('cantidad');

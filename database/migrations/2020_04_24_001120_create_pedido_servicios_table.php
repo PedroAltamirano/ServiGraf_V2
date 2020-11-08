@@ -17,8 +17,7 @@ class CreatePedidoServiciosTable extends Migration
             $table->increments('id');
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
-            $table->unsignedDecimal('pedido_id', 18, 5);
-            $table->foreign('pedido_id')->references('id')->on('pedidos');
+            $table->foreignId('pedido_id')->constrained('pedidos');
             $table->unsignedMediumInteger('servicio_id');
             $table->foreign('servicio_id')->references('id')->on('servicios');
             $table->unsignedMediumInteger('subservicio_id')->nullable();

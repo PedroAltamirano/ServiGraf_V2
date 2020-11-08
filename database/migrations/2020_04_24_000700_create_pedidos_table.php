@@ -14,8 +14,12 @@ class CreatePedidosTable extends Migration
     public function up()
     {
         Schema::create('pedidos', function (Blueprint $table) {
+            // Cpmposite id empresa_id + id
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
+            $table->unsignedMediumInteger('numero');
+            $table->index(['empresa_id', 'numero']); //ver en migracion
             $table->unsignedInteger('usuario_id');
             $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->unsignedInteger('usuario_mod_id');
@@ -24,7 +28,6 @@ class CreatePedidosTable extends Migration
             $table->foreign('usuario_cob_id')->references('cedula')->on('usuarios');
             $table->unsignedMediumInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes');
-            $table->unsignedDecimal('id', 18, 5)->primary(); //ver en migracion
             $table->date('fecha_entrada');
             $table->date('fecha_salida');
             $table->boolean('prioridad')->default(0);
