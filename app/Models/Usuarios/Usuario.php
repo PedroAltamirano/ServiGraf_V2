@@ -10,7 +10,6 @@ class Usuario extends Authenticatable
 {
     use Notifiable;
 
-    protected $connection = 'DDBBusuarios';
     protected $table = 'usuarios';
     protected $primaryKey = 'cedula';
     public $incrementing = false;

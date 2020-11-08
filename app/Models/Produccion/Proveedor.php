@@ -6,16 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Proveedor extends Model
 {
-    protected $connection = 'DDBBproduccion';
     protected $table = 'proveedores';
-  
+
     // public $attributes =[
     // ];
-  
+
     protected $fillable = [
-        'proveedor', 'telefono', 'direccion' 
+        'proveedor', 'telefono', 'direccion'
     ];
-  
+
     protected $hidden = [
         'created_at', 'updated_at', 'empresa_id', 'usuario_id'
     ];

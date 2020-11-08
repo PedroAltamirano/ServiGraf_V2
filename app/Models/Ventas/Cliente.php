@@ -7,17 +7,16 @@ use Auth;
 
 class Cliente extends Model
 {
-    protected $connection = 'DDBBclientes';
     protected $table = 'clientes';
-  
+
     public $attributes =[
         'seguimiento' => 1
     ];
-  
+
     protected $fillable = [
         'usuario_id', 'contacto_id', 'id', 'seguimiento'
     ];
-  
+
     protected $hidden = [
         'created_at', 'updated_at', 'empresa_id'
     ];

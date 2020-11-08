@@ -8,7 +8,6 @@ use App\Models\Usuarios\Usuario;
 
 class Nomina extends Model
 {
-    protected $connection = 'DDBBempresas';
     protected $table = 'nomina';
     protected $primaryKey = 'cedula';
     public $incrementing = false;
@@ -28,7 +27,7 @@ class Nomina extends Model
     public function usuario() {
         return $this->hasOne('App\Models\Usuarios\Usuario', 'cedula');
     }
-    
+
     public static function todos(){
 		return Nomina::where('empresa_id', Auth::user()->empresa_id)->select('nombre', 'apellido', 'cedula')->get();
     }

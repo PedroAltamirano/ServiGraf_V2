@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Horario extends Model
 {
-    protected $connection = 'DDBBempresas';
     protected $table = 'horarios';
     protected $primaryKey = 'id';
 

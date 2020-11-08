@@ -318,7 +318,7 @@ class ModulesSeeder extends Seeder
                 'principal' => 0,
             ],
         ]);
-        
+
         DB::table('roles')->insert([
           [
             'id' => 1,
@@ -345,7 +345,7 @@ class ModulesSeeder extends Seeder
             'rol' => 'Eliminar',
           ]
         ]);
-        
+
         DB::table('modulo_perfil')->insert([
           [
             'created_at' => date('Y-m-d H:i:s'),

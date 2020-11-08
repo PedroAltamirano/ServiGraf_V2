@@ -3,7 +3,7 @@
 namespace App\Models\Produccion;
 
 use Illuminate\Database\Eloquent\Model;
-use Auth; 
+use Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Produccion\Pedido_servicio;
 use App\Models\Produccion\Servicio;
@@ -11,22 +11,21 @@ use App\Models\Produccion\Sub_servicio;
 
 class Pedido extends Model
 {
-    protected $connection = 'DDBBproduccion';
     protected $table = 'pedidos';
     public $incrementing = false;
-  
+
     public $attributes =[
         'total_material' => 0.00
     ];
-  
+
     protected $fillable = [
         'usuario_mod_id', 'usuario_cobro_id', 'cliente_id', 'id', 'fecha_entrada', 'fecha_salida', 'prioridad', 'estado', 'fecha_cobro', 'detalle', 'papel', 'cantidad', 'corte_alto', 'corte_ancho', 'numerado_inicio', 'numerado_fin', 'total_material', 'total_pedido', 'abono', 'saldo', 'notas'
     ];
-  
+
     protected $hidden = [
         'created_at', 'updated_at', 'empresa_id', 'usuario_id'
     ];
-  
+
     protected $casts = [
     ];
 
@@ -72,7 +71,7 @@ class Pedido extends Model
         foreach ($incompletos as $e){
             $pedidos_inc[] = $e->pedido_id;
         }
-        
+
         return Pedido::whereIn('id', $pedidos_inc)->where('estado',  '!=', '3')->select('id', 'numero', 'cliente_id', 'detalle', 'cantidad')->get();
     }
 
@@ -117,7 +116,7 @@ class Pedido extends Model
     public static function reporteAreas($id){
         return Pedido_servicio::where('pedido_id', $id)->join('servicios', 'pedido_servicios.servicio_id' ,'=', 'servicios.id')->select('area_id', DB::raw('sum(total) as totalArea'))->groupBy('area_id')->get()->toArray();
     }
-    
+
     // public function material()
     // {
     //     return $this->belongsTo('App\Models\Ventas\Cliente');

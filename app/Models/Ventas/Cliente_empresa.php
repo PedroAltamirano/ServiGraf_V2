@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cliente_empresa extends Model
 {
-    protected $connection = 'DDBBclientes';
     protected $table = 'cliente_empresas';
 
     public function clientes()

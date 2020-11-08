@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ModPerfRol extends Model
 {
-  protected $connection = 'DDBBusuarios';
   protected $table = 'modulo_perfil';
   protected $primaryKey = 'id';
 

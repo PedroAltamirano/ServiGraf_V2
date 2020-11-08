@@ -7,7 +7,6 @@ use Auth;
 
 class Perfil extends Model
 {
-  protected $connection = 'DDBBusuarios';
   protected $table = 'perfiles';
   protected $primaryKey = 'id';
 

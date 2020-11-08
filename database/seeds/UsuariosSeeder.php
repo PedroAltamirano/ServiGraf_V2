@@ -58,7 +58,7 @@ class UsuariosSeeder extends Seeder
         $perfil->perfil = 'RootPerf';
         $perfil->descripcion = 'Perfil de desarrollo';
         $perfil->save();
-        
+
         //usuario
         $usuario = new App\Models\Usuarios\Usuario;
         $usuario->cedula = 1010101010;

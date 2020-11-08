@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pedido_servicio extends Model
 {
-    protected $connection = 'DDBBproduccion';
     protected $table = 'pedido_servicios';
 
     public $attributes =[
@@ -35,5 +34,5 @@ class Pedido_servicio extends Model
     {
         return $this->belongsTo('App\Models\Produccion\Sub_servicio', 'subservicio_id');
     }
-    
+
 }

@@ -5,7 +5,6 @@ namespace App\Models\Sistema;
 use Illuminate\Database\Eloquent\Model;
 
 class Empresas extends Model{
-    protected $connection = 'DDBBempresas';
     protected $table = 'empresas';
     public $incrementing = false;
 

@@ -7,7 +7,6 @@ use Auth;
 
 class Modulo extends Model
 {
-  protected $connection = 'DDBBusuarios';
   protected $table = 'modulos';
   public $incrementing = false;
 
