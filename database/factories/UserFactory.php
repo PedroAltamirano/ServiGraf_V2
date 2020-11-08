@@ -29,7 +29,7 @@ use Illuminate\Support\Str;
 $factory->define(Cliente_empresa::class, function (Faker $faker) {
     return [
         'nombre' => $faker->company,
-        'ruc' => $faker->numberBetween(1010101011, 1010101013),
+        'ruc' => (Cliente_empresa::count() > 0) ? (Cliente_empresa::orderBy('ruc', 'desc')->first()->ruc + 1) : 1010101011,
         'empresa_id' => 1709636664001,
     ];
 });
@@ -84,10 +84,10 @@ $factory->define(Servicio::class, function (Faker $faker) {
 $factory->define(Pedido::class, function (Faker $faker) {
     return [
         'empresa_id' => 1709636664001,
+        'numero' => (Pedido::count() > 0) ? (Pedido::orderBy('numero', 'desc')->first()->numero + 1) : 1,
         'usuario_id' => 1010101010,
         'usuario_mod_id' => 1010101010,
         'cliente_id' => $faker->numberBetween(1, 10),
-        'id' => '1709636664001.'.$faker->numberBetween(1, 9),
         'fecha_entrada' => now(),
         'fecha_salida' => now(),
         'prioridad' => $faker->boolean(25), //1-0
@@ -109,7 +109,7 @@ $factory->define(Pedido::class, function (Faker $faker) {
 $factory->define(Pedido_servicio::class, function (Faker $faker) {
     return [
         'empresa_id' => 1709636664001,
-        'pedido_id' => '1709636664001.'.$faker->numberBetween(1, 9),
+        'pedido_id' => $faker->numberBetween(1, 10),
         'servicio_id' => $faker->numberBetween(1, 10),
         'tiro'=> $faker->numberBetween(1, 5),
         'retiro' => $faker->numberBetween(0, 5),

@@ -19,7 +19,7 @@ class CreatePedidosTable extends Migration
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedMediumInteger('numero');
-            $table->index(['empresa_id', 'numero']); //ver en migracion
+            $table->unique(['empresa_id', 'numero']); //ver en migracion
             $table->unsignedInteger('usuario_id');
             $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->unsignedInteger('usuario_mod_id');

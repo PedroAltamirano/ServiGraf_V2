@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -15,7 +16,9 @@ class DatabaseSeeder extends Seeder
             EmpresasSeeder::class,
             UsuariosSeeder::class,
             ModulesSeeder::class,
-            PedidosSeeder::class,
+            ClientesSeeder::class,
+            AreasSeeder::class,
+            // PedidosSeeder::class,
         ]);
     }
 }
