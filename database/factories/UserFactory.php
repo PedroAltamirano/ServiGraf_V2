@@ -11,6 +11,7 @@ use App\Models\Produccion\Pedido_servicio;
 use App\Models\Produccion\Area;
 use App\Models\Produccion\Servicio;
 use App\Models\Produccion\Sub_servicio;
+use App\Models\Produccion\Tinta;
 
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
@@ -78,6 +79,13 @@ $factory->define(Servicio::class, function (Faker $faker) {
         'area_id' => $faker->numberBetween(1, 5),
         'servicio' => 'testServicio',
         'meta' => $faker->numberBetween(0.00, 600.00),
+    ];
+});
+
+$factory->define(Tinta::class, function (Faker $faker) {
+    return [
+        'empresa_id' => 1709636664001,
+        'color' => 'cmyk',
     ];
 });
 

@@ -32,6 +32,7 @@ class CreatePedidosTable extends Migration
             $table->date('fecha_salida');
             $table->boolean('prioridad')->default(0);
             $table->unsignedTinyInteger('estado'); //pendiente, pagado
+            $table->unsignedDecimal('cotizado', 6, 2);
             $table->date('fecha_cobro')->nullable();
             $table->string('detalle', 256);
             $table->string('papel', 140);

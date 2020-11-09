@@ -21,7 +21,7 @@
           {{ $group =  $cli->cliente_empresa_id }}
           <optgroup label="{{ $cli->empresa->nombre }}">
           @endif
-          <option value="{{ $cli->id }}" 
+          <option value="{{ $cli->id }}"
             {{ old('cliente', $pedido->cliente_id) == $cli->id ? 'selected' : '' }}
           >
             {{ $cli->contacto->nombre.' '.$cli->contacto->apellido }}
@@ -77,7 +77,7 @@
 </section id="notas">
   <div class="form-group">
     <label for="notas"><i class="far fa-sticky-note"></i> Observaciones</label>
-    <textarea class="form-control form-control-lg" name="notas" id="notas" rows="1"> {{ old('notas', $pedido->notas) }} </textarea>
+    <textarea class="form-control form-control-sm" name="notas" id="notas" rows="2"> {{ old('notas', $pedido->notas) }} </textarea>
   </div>
 </section>
 

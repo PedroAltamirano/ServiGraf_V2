@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers\Produccion;
 
+use Auth;
 use App\Security;
+use Carbon\Carbon;
 
 use App\Models\Produccion\Pedido;
 use App\Models\Produccion\Tinta;
@@ -17,8 +19,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Auth;
-use App\Http\Requests;
+use App\Http\Requests\Produccion\StorePedidoImprentaPost;
 
 class Pedidos extends Controller
 {
@@ -59,7 +60,7 @@ class Pedidos extends Controller
   */
   public function create(){
     if(Security::hasRol(30, 2)){
-      $pedido = new Pedido();
+      $pedido = new Pedido;
       $data = [
       'path' => route('pedido.create'),
       'text' => 'Nuevo Pedido',
@@ -77,69 +78,32 @@ class Pedidos extends Controller
     }
   }
 
-  // crear nuevo 
-  public function store(Request $request){
-    // dd($request);
-    
+  // crear nuevo
+  public function store(StorePedidoImprentaPost $request){
     if(Security::hasRol(30, 2)){
-      $messages = [
-        'required' => 'El campo :attribute es requerido.',
-        'max' => 'El campo :attribute debe ser menor a :max.',
-        'min' => 'El campo :attribute debe ser mayor a :min.',
-        'numeric' => 'El campo :attribute debe ser numerico',
-        'boolean' => 'El campo :attribute debe ser booleano',
-        'string' => 'El campo :attribute debe ser textual',
-        'exists' => 'El campo :attribute debe existir',
-      ];
-      $validator = Validator::make($request->all(), Requests\StorePedidoImprentaPost::rules(), $messages);
-      if ($validator->fails()) {
-        return back()->withErrors($validator)->withInput();
-      }
-
+      $validator = $request->validated();
       $num = Pedido::where('empresa_id', Auth::user()->empresa_id)->orderBy('numero', 'desc')->first()->numero;
-      $num += 1;
-      $number = str_pad($num, 5, "0", STR_PAD_LEFT);
-      $id = Auth::user()->empresa_id.'.'.$number;
-
-      $model = new Pedido;
-      $model->empresa_id = Auth::user()->empresa_id;
-      $model->numero = $num;
-      $model->usuario_id = Auth::id();
-      $model->usuario_mod_id = Auth::id();
-      $model->cliente_id = $request->cliente;
-      $model->id = $id;
-      $model->fecha_entrada = $request->inicio;
-      $fecha_salida = date('Y-m-d', strtotime('+3 days', strtotime($request->inicio)));
-      $model->fecha_salida = $fecha_salida;
-      $model->prioridad = $request->prioridad;
-      $model->estado = $request->estado;
-      $model->cotizado = $request->cotizado;
-      $model->detalle = $request->descripcion;
-      $model->papel = $request->papel;
-      $model->cantidad = $request->cantidad;
-      $model->corte_alto = $request->corte_alto;
-      $model->corte_ancho = $request->corte_ancho;
-      $model->numerado_inicio = $request->numerado_inicio;
-      $model->numerado_fin = $request->numerado_fin;
-      $model->total_material = $request->totalMaterial;
-      $model->total_pedido = $request->totalProcesos;
-      $model->abono = $request->totalAbonos;
-      $model->saldo = $request->totalSaldo;
-      $model->notas = $request->notas;
+      $validator['num'] = $num + 1;
+      $validator['empresa_id'] = Auth::user()->empresa_id;
+      $validator['usuario_id'] = Auth::id();
+      $validator['usuario_mod_id'] = Auth::id();
+      $fecha_salida = Carbon::create($validator['inicio'])->addDays(3)->format('Y-m-d');
+      $validator['fecha_salida'] = $fecha_salida;
       if($request->estado == 2){
-        $model->usuario_cob_id = Auth::id();
-        $model->fecha_cobro = date('Y-m-d');
+        $validator['usuario_cob_id'] = Auth::id();
+        $validator['fecha_cobro'] = date('Y-m-d');
       }
-      $model->save();
+      $model = Pedido::create($validator);
+      // dd($validator['proceso']);
 
-      foreach($request->tinta_tiro as $ttiro){
+      foreach($validator['tinta_tiro'] as $ttiro){
         $tinta = new Pedido_tintas;
         $tinta->tinta_id = $ttiro;
         $tinta->pedido_id = $model->id;
         $tinta->lado = 1;
         $tinta->save();
       }
-      foreach($request->tinta_retiro as $tretiro){
+      foreach($validator['tinta_retiro'] as $tretiro){
         $tinta = new Pedido_tintas;
         $tinta->tinta_id = $tretiro;
         $tinta->pedido_id = $model->id;
@@ -147,25 +111,25 @@ class Pedidos extends Controller
         $tinta->save();
       }
 
-      $matSize = sizeof($request->material['id']);
-      for($i=0; $i<$matSize; $i++){
+      $matSize = sizeof($validator['material']['id'] ?? []);
+      for($i=0; $i < $matSize; $i++){
         $material = new Solicitud_material;
         $material->empresa_id = Auth::user()->empresa_id;
         $material->pedido_id = $model->id;
-        $material->material_id = $request->material['id'][$i];
-        $material->cantidad = $request->material['cantidad'][$i];
-        $material->corte_alto = $request->material['corte_alt'][$i];
-        $material->corte_ancho = $request->material['corte_anc'][$i];
-        $material->tamanos = $request->material['tamanios'][$i];
-        $material->proveedor_id = $request->material['proveedor'][$i];
-        $material->factura = $request->material['factura'][$i];
-        $material->total = $request->material['total'][$i];
-        $material->save();
+        $material->material_id = $validator['material']['id'][$i];
+        $material->cantidad = $validator['material']['cantidad'][$i];
+        $material->corte_alto = $validator['material']['corte_alt'][$i];
+        $material->corte_ancho = $validator['material']['corte_anc'][$i];
+        $material->tamanos = $validator['material']['tamanios'][$i];
+        $material->proveedor_id = $validator['material']['proveedor'][$i];
+        $material->factura = $validator['material']['factura'][$i];
+        $material->total = $validator['material']['total'][$i];
+        // $material->save();
       }
 
-      $proSize = sizeof($request->proceso['id']);
-      for($i=0; $i<$proSize; $i++){
-        $servicio = $request->proceso['id'][$i];
+      $proSize = sizeof($validator['proceso']['id'] ?? []);
+      for($i=0; $i < $proSize; $i++){
+        $servicio = $validator['proceso']['id'][$i];
         $subservicio = null;
         if(strpos($servicio, '.') !== false){
           $serv = explode('.', $servicio);
@@ -178,12 +142,12 @@ class Pedidos extends Controller
         $proceso->pedido_id = $model->id;
         $proceso->servicio_id = $servicio;
         $proceso->subservicio_id = $subservicio;
-        $proceso->tiro = $request->proceso['tiro'][$i];
-        $proceso->retiro = $request->proceso['retiro'][$i];
-        $proceso->millares = $request->proceso['millar'][$i];
-        $proceso->valor_unitario = $request->proceso['valor'][$i];
-        $proceso->total = $request->proceso['total'][$i];
-        $proceso->status = $request->proceso['terminado'][$i];
+        $proceso->tiro = $validator['proceso']['tiro'][$i];
+        $proceso->retiro = $validator['proceso']['retiro'][$i];
+        $proceso->millares = $validator['proceso']['millar'][$i];
+        $proceso->valor_unitario = $validator['proceso']['valor'][$i];
+        $proceso->total = $validator['proceso']['total'][$i];
+        $proceso->status = $validator['proceso']['terminado'][$i];
         $proceso->save();
       }
 
@@ -192,8 +156,8 @@ class Pedidos extends Controller
         'title'=>'Acción completada',
         'message'=>'El pedido se ha creado con éxito'
       ];
-      return redirect()->route('pedido.edit', $model->numero)->with(['actionStatus' => json_encode($data)]);
-    
+      return redirect()->route('pedido.edit', $model->id)->with(['actionStatus' => json_encode($data)]);
+
     } else {
       $data = [
         'type'=>'danger',
@@ -203,14 +167,14 @@ class Pedidos extends Controller
       return redirect()->route('tablero')->with(['actionStatus' => json_encode($data)]);
     }
   }
- 
-  //ver modificar 
-  public function edit(Request $request, $data_id){
+
+  //ver modificar
+  public function edit(Pedido $pedido){
     if(Security::hasRol(30, 3)){
-      $pedido = Pedido::where('empresa_id', Auth::user()->empresa_id)->where('numero', $data_id)->first();
+      // $pedido = Pedido::where('empresa_id', Auth::user()->empresa_id)->where('numero', $data_id)->first();
       $data = [
         'path'=> route('pedido.update', $pedido->id),
-        'text'=>'Modificar Pedido '.$data_id,
+        'text'=>'Modificar Pedido '.$pedido->numero,
         'action'=>'Modificar',
         'mod' => 1,
         'pedido' => $pedido
@@ -226,19 +190,10 @@ class Pedidos extends Controller
       return redirect('')->with(['actionStatus' => json_encode($data)]);
     }
   }
-  
+
   //modificar perfil
-  public function update(Request $request, $data_id){
+  public function update(Pedido $pedido){
     if(Security::hasRol(30, 3)){
-      $messages = [
-        'required' => 'El campo :attribute es requerido.',
-        'max' => 'El campo :attribute debe ser menor a :max.',
-        'min' => 'El campo :attribute debe ser mayor a :min.',
-        'numeric' => 'El campo :attribute debe ser numerico',
-        'boolean' => 'El campo :attribute debe ser booleano',
-        'string' => 'El campo :attribute debe ser textual',
-        'exists' => 'El campo :attribute debe existir',
-      ];
       $validator = Validator::make($request->all(), Requests\StorePedidoImprentaPost::rules(), $messages);
       if ($validator->fails()) {
         return back()->withErrors($validator)->withInput();
@@ -335,7 +290,7 @@ class Pedidos extends Controller
         'message'=>'El pedido se ha modificado con éxito'
       ];
       return redirect()->route('pedido.edit', $model->numero)->with(['actionStatus' => json_encode($data)]);
-    
+
     } else {
       $data = [
         'type'=>'danger',

@@ -12,18 +12,17 @@ use App\Models\Produccion\Sub_servicio;
 class Pedido extends Model
 {
     protected $table = 'pedidos';
-    public $incrementing = false;
 
     public $attributes =[
         'total_material' => 0.00
     ];
 
     protected $fillable = [
-        'usuario_mod_id', 'usuario_cobro_id', 'cliente_id', 'id', 'fecha_entrada', 'fecha_salida', 'prioridad', 'estado', 'fecha_cobro', 'detalle', 'papel', 'cantidad', 'corte_alto', 'corte_ancho', 'numerado_inicio', 'numerado_fin', 'total_material', 'total_pedido', 'abono', 'saldo', 'notas'
+        'empresa_id', 'numero', 'usuario_id', 'usuario_mod_id', 'usuario_cob_id', 'cliente_id', 'fecha_entrada', 'fecha_salida', 'prioridad', 'estado', 'cotizado', 'fecha_cobro', 'detalle', 'papel', 'cantidad', 'corte_alto', 'corte_ancho', 'numerado_inicio', 'numerado_fin', 'total_material', 'total_pedido', 'abono', 'saldo', 'notas'
     ];
 
     protected $hidden = [
-        'created_at', 'updated_at', 'empresa_id', 'usuario_id'
+        'created_at', 'updated_at'
     ];
 
     protected $casts = [
@@ -63,16 +62,13 @@ class Pedido extends Model
      */
     public static function incompletas()
     {
-        $incompletos = Pedido_servicio::where([['empresa_id', '=', Auth::user()->empresa_id], ['status', '=', '0']])
+        $incompletos = Pedido_servicio::where([['empresa_id', '=', auth()->user()->empresa_id], ['status', '=', '0']])
                                         ->groupBy('pedido_id')
                                         ->select('pedido_id')
                                         ->get();
-        $pedidos_inc = [];
-        foreach ($incompletos as $e){
-            $pedidos_inc[] = $e->pedido_id;
-        }
+        $incompletos = $incompletos->map(function($incompletos){return $incompletos->pedido_id;});
 
-        return Pedido::whereIn('id', $pedidos_inc)->where('estado',  '!=', '3')->select('id', 'numero', 'cliente_id', 'detalle', 'cantidad')->get();
+        return Pedido::whereIn('id', $incompletos)->where('estado',  '!=', '3')->select('id', 'numero', 'cliente_id', 'detalle', 'cantidad')->get();
     }
 
     /*
@@ -93,9 +89,9 @@ class Pedido extends Model
         return $list;
     }
 
-    /*
-    * @return lista con todos los servicios sin terminar
-    */
+    /**
+     * @return lista con todos los servicios sin terminar
+     */
     public static function todos()
     {
         $incompletas = Pedido::incompletas();
@@ -115,6 +111,14 @@ class Pedido extends Model
 
     public static function reporteAreas($id){
         return Pedido_servicio::where('pedido_id', $id)->join('servicios', 'pedido_servicios.servicio_id' ,'=', 'servicios.id')->select('area_id', DB::raw('sum(total) as totalArea'))->groupBy('area_id')->get()->toArray();
+    }
+
+    /**
+     * @return id de las tintas del retiro
+     */
+    public function tintasTiro($query){
+        // return $query->tintas->reject(function($tinta){return $tinta->lado == 0;})->map(function($tintas){return $tintas->tinta_id;})->toArray()
+        return $query->tintas->toArray();
     }
 
     // public function material()

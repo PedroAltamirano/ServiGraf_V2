@@ -57,9 +57,9 @@ Route::get('/pedidos', 'Produccion\Pedidos@show')->name('pedidos');
 Route::get('/pedidos/get', 'Produccion\Pedidos@get')->name('pedidos.get');
 Route::get('/pedido/nuevo', 'Produccion\Pedidos@create')->name('pedido.create');
 Route::post('/pedido/nuevo', 'Produccion\Pedidos@store')->name('pedido.post');
-Route::get('/pedido/modificar/{pedido_id}', 'Produccion\Pedidos@edit')->name('pedido.edit');
-Route::post('/pedido/modificar/{pedido_id}', 'Produccion\Pedidos@update')->name('pedido.update');
-Route::post('/abonos/{pedido_id}', 'Produccion\Pedidos@abonos')->name('abonos');
+Route::get('/pedido/modificar/{pedido}', 'Produccion\Pedidos@edit')->name('pedido.edit');
+Route::post('/pedido/modificar/{pedido}', 'Produccion\Pedidos@update')->name('pedido.update');
+Route::post('/abonos/{pedido}', 'Produccion\Pedidos@abonos')->name('abonos');
 
 Route::get('/reporte/pedidos', 'Produccion\Reportes@showPedidos')->name('reporte.pedidos');
 Route::get('/reporte/ajaxpedidos', 'Produccion\Reportes@ajaxPedidos')->name('reporte.pedidos.ajax');

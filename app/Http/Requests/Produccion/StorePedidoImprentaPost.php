@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Produccion;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +13,7 @@ class StorePedidoImprentaPost extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +25,7 @@ class StorePedidoImprentaPost extends FormRequest
     {
         return [
             'inicio' => 'required|date',
-            'cliente' => 'required|numeric|exists:DDBBclientes.contactos,id',
+            'cliente' => 'required|numeric|exists:contactos,id',
             'prioridad' => 'required|boolean',
             'estado' => 'required|numeric|min:1|max:4',
             'cotizado' => 'required|numeric|min:0',
@@ -43,16 +43,16 @@ class StorePedidoImprentaPost extends FormRequest
             'totalAbonos' => 'required|numeric|min:0',
             'totalSaldo' => 'required|numeric|min:0.01',
             'notas' => 'nullable|string|max:256',
-            
-            'material.id.*' => 'required|numeric|exists:DDBBproduccion.materiales,id',
+
+            'material.id.*' => 'required|numeric|exists:materiales,id',
             'material.cantidad.*' => 'required|numeric|min:1',
             'material.corte_alt.*' => 'required|numeric|min:0',
             'material.corte_anc.*' => 'required|numeric|min:0',
             'material.tamanios.*' => 'required|numeric|min:1',
-            'material.proveedor.*' => 'required|numeric|exists:DDBBproduccion.proveedores,id',
+            'material.proveedor.*' => 'required|numeric|exists:proveedores,id',
             'material.factura.*' => 'nullable|numeric',
             'material.total.*' => 'required|numeric|min:0.01',
-            
+
             'proceso.id.*' => 'required|numeric',
             'proceso.tiro.*' => 'required|numeric|min:1',
             'proceso.retiro.*' => 'required|numeric|min:0',

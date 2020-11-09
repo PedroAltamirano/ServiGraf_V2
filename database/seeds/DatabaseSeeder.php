@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             ModulesSeeder::class,
             ClientesSeeder::class,
             AreasSeeder::class,
-            // PedidosSeeder::class,
+            PedidosSeeder::class,
         ]);
     }
 }

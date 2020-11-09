@@ -8,9 +8,9 @@
   $oldMaterial = $pedido->material ?? json_encode(new stdClass);
   $oldProcesos = $pedido->servicios ?? json_encode(new stdClass);
   $oldAbonos = $pedido->abonos ?? json_encode(new stdClass);
-  $matCount = count(old("material.id") ?? []) > 0 ? count(old("material.id") ?? []) : $oldMaterial->count();
-  $proCount = count(old("proceso.id") ?? []) > 0 ? count(old("proceso.id") ?? []) : $oldProcesos->count();
-  $aboCount = count(old("abono.valor") ?? []) > 0 ? count(old("avono.valor") ?? []) : $oldAbonos->count();
+  $matCount = count(old("material.id", $oldMaterial) ?? []);
+  $proCount = count(old("proceso.id", $oldProcesos) ?? []);
+  $aboCount = count(old("abono.valor", $oldAbonos) ?? []);
 @endphp
 
 <section id="descripcion">
@@ -23,7 +23,7 @@
     </div>
     <div class="form-group col-8 col-md-4">
       <label for="papel">Papel</label>
-      <input type="text" name="papel" id="papel" class="form-control form-control-sm" value="{{ old('papel', $pedido->papel) }}">
+      <textarea class="form-control form-control-sm" name="papel" id="papel" rows="1">{{ old('papel', $pedido->papel) }}</textarea>
     </div>
     <div class="form-group col-4 col-md-2">
       <label for="cantidad">Cantidad</label>
@@ -106,8 +106,8 @@
         <td>
           <select class="form-control form-control-sm selectMaterial" name="material[id][]">
             <option selected value="null">Seleccione uno...</option>
-            {{ $group =  $materiales->first()->categoria_id }}
-            <optgroup label="{{ $materiales->first()->categoria->categoria }}">
+            {{ $group =  $materiales->first()->categoria_id ?? '' }}
+            <optgroup label="{{ $materiales->first()->categoria->categoria ?? '' }}">
             @foreach($materiales as $mat)
             @if ($group != $mat->categoria_id)
             {{ $group =  $mat->categoria_id }}
@@ -357,7 +357,7 @@ $('.selectProceso').select2();
     $('#addMaterial').click(function(){
       $('#table-materiales > tbody').append('<tr id="row-material-'+i+'">'+
         '<td><i type="button" name="remove" id="material-'+i+'" class="fas fa-times removeRow"></i></td>'+
-        '<td><select class="form-control form-control-sm selectMaterial" name="material[id][]"><option selected value="null">Seleccione uno...</option>{{ $group =  $materiales->first()->categoria_id }}<optgroup label="{{ $materiales->first()->categoria->categoria }}">@foreach($materiales as $mat)@if ($group != $mat->categoria_id){{ $group =  $mat->categoria_id }}<optgroup label="{{ $mat->categoria->categoria }}">@endif<option value="{{ $mat->id }}">{{ $mat->descripcion }}</option>@endforeach</select></td>'+
+        '<td><select class="form-control form-control-sm selectMaterial" name="material[id][]"><option selected value="null">Seleccione uno...</option>{{ $group =  $materiales->first()->categoria_id ?? "" }}<optgroup label="{{ $materiales->first()->categoria->categoria ?? "" }}">@foreach($materiales as $mat)@if ($group != $mat->categoria_id){{ $group =  $mat->categoria_id }}<optgroup label="{{ $mat->categoria->categoria }}">@endif<option value="{{ $mat->id }}">{{ $mat->descripcion }}</option>@endforeach</select></td>'+
         '<td><input type="number" name="material[cantidad][]" class="form-control form-control-sm text-center" value="0" min="0" /></td>'+
         '<td><input type="number" name="material[corte_alt][]" class="form-control form-control-sm fixFloat text-center" value="0.00" step="0.01" min="0" /></td>'+
         '<td><input type="number" name="material[corte_anc][]" class="form-control form-control-sm fixFloat text-center" value="0.00" step="0.01" min="0" /></td>'+
