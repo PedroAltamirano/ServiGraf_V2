@@ -28,7 +28,7 @@ class CreateUsersTable extends Migration
             //permisos adicionales
             $table->boolean('status')->default(1);
             $table->boolean('reservarot')->default(0);
-            $table->boolean('libro')->default(1);
+            $table->boolean('libro')->default(0);
             $table->timestamps();
         });
     }

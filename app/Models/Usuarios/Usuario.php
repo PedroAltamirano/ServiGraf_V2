@@ -15,15 +15,16 @@ class Usuario extends Authenticatable
     public $incrementing = false;
 
     public $attributes =[
-        'status' => 1, 'reservarot' => 1, 'libro' => 1
+        'status' => 1,
+        // 'reservarot' => 1, 'libro' => 1
     ];
 
     protected $fillable = [
-        'cedula', 'empresa_id', 'usuario', 'perfil_id', 'reservarot', 'libro', 'status'
+        'cedula', 'empresa_id', 'usuario', 'perfil_id', 'reservarot', 'libro', 'status', 'password'
     ];
 
     protected $hidden = [
-        'created_at', 'updated_at', 'remember_token', 'password'
+        'created_at', 'updated_at', 'remember_token'
     ];
 
     protected $casts = [

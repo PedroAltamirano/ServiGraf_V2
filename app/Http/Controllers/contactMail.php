@@ -10,27 +10,29 @@ use App\Mail\SendMailResponse;
 class contactMail extends Controller{
 
   function send(Request $request){
-    $this->validate($request, [
+    $data = $this->validate($request, [
       'nombre' => 'required',
       'email' => 'required|email',
       'asunto' => 'required',
       'mensaje' => 'required'
     ]);
-    $data = array(
-      'nombre' => $request->nombre,
-      'email' => $request->email,
-      'asunto' => $request->asunto,
-      'mensaje' => $request->mensaje
-    );
     
-    Mail::to('pedroaal@hotmail.com')->send(new SendMail($data));
+    /**
+     * Mensaje que alguien ha escrito por paguina web
+     */
+    Mail::to('info@servigraf.com')->send(new SendMail($data));
     if(Mail::failures()){
       return back()->with('danger', 'Correo no enviado, error!');  
     }
+
+    /**
+     * Respuesta automatica
+     */
     Mail::to('pedroaal@hotmail.com')->send(new SendMailResponse($data));
     if(Mail::failures()){
       return back()->with('danger', 'Correo no enviado, error!');  
     }
+    
     return back()->with('success', 'Gracias por contactarnos! Revisa tu correo para mas información');
   }
 }

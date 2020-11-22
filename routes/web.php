@@ -62,7 +62,7 @@ Route::post('/pedido/modificar/{pedido}', 'Produccion\Pedidos@update')->name('pe
 Route::post('/abonos/{pedido}', 'Produccion\Pedidos@abonos')->name('abonos');
 
 Route::get('/reporte/pedidos', 'Produccion\Reportes@showPedidos')->name('reporte.pedidos');
-Route::get('/reporte/ajaxpedidos', 'Produccion\Reportes@ajaxPedidos')->name('reporte.pedidos.ajax');
+Route::get('/reporte/ajaxpedidos', 'Produccion\Reportes@ajaxPedidos')->name('reporte.pedidos.ajax');    
 Route::get('/reporte/pagos', 'Produccion\Reportes@showPagos')->name('reporte.pagos');
 Route::get('/reporte/maquinas', 'Produccion\Reportes@showMaquinas')->name('reporte.maquinas');
 
@@ -77,19 +77,19 @@ Route::post('/ventas/telefono', 'Ventas\Clientes@telefono')->name('cliente.telef
 Route::post('/ventas/cliente', 'Ventas\Clientes@store')->name('contacto.cliente.post');
 
 //USUARIOS;
-Route::get('/perfiles', 'Usuarios\Perfiles@show')->name('perfiles');
-Route::get('/perfiles/get', 'Usuarios\Perfiles@get')->name('perfiles.get');
-Route::get('/perfil/nuevo', 'Usuarios\Perfiles@newGet')->name('perfil.nuevo');
-Route::post('/perfil/nuevo', 'Usuarios\Perfiles@newPost')->name('perfil.nuevo');
-Route::get('/perfil/modificar/{perfil_id}', 'Usuarios\Perfiles@modGet')->name('perfil.modificar');
-Route::post('/perfil/modificar/{perfil_id}', 'Usuarios\Perfiles@modPost')->name('perfil.modificar');
+Route::get('perfiles', 'Usuarios\Perfiles@show')->name('perfiles');
+Route::get('perfiles/get', 'Usuarios\Perfiles@get')->name('perfiles.get');
+Route::get('perfil/nuevo', 'Usuarios\Perfiles@create')->name('perfil.nuevo');
+Route::post('perfil/nuevo', 'Usuarios\Perfiles@store')->name('perfil.nuevo');
+Route::get('perfil/modificar/{perfil}', 'Usuarios\Perfiles@edit')->name('perfil.modificar');
+Route::put('perfil/modificar/{perfil}', 'Usuarios\Perfiles@update')->name('perfil.modificar');
 
-Route::get('/usuarios', 'Usuarios\Usuarios@show')->name('usuarios');
-Route::get('/usuarios/get', 'Usuarios\Usuarios@get')->name('usuarios.get');
-Route::get('/usuario/nuevo', 'Usuarios\Usuarios@newGet')->name('usuario.nuevo');
-Route::post('/usuario/nuevo', 'Usuarios\Usuarios@newPost')->name('usuario.nuevo');
-Route::get('/usuario/modificar/{usuario_id}', 'Usuarios\Usuarios@modGet')->name('usuario.modificar');
-Route::post('/usuario/modificar/{usuario_id}', 'Usuarios\Usuarios@modPost')->name('usuario.modificar');
+Route::get('usuarios', 'Usuarios\Usuarios@show')->name('usuarios');
+Route::get('usuarios/get', 'Usuarios\Usuarios@get')->name('usuarios.get');
+Route::get('usuario/nuevo', 'Usuarios\Usuarios@create')->name('usuario.nuevo');
+Route::post('usuario/nuevo', 'Usuarios\Usuarios@store')->name('usuario.nuevo');
+Route::get('usuario/modificar/{usuario}', 'Usuarios\Usuarios@edit')->name('usuario.modificar');
+Route::put('usuario/modificar/{usuario}', 'Usuarios\Usuarios@update')->name('usuario.modificar');
 
 //SISTEMA
 Route::get('/horarios', 'Horarios@show')->name('horarios');

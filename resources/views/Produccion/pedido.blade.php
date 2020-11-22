@@ -4,32 +4,32 @@
 @endsection
 
 @section('desktop-content')
-<path-route
+<x-path
   :items="[
-    {
-      text: 'Pedidos',
-      current: false,
-      href: '/pedidos',
-    },
-    {
-      text: '{{ $text }}',
-      current: true,
-      href: '{{ $path }}',
-    }
+    [
+      'text' => 'Pedidos',
+      'current' => false,
+      'href' => route('pedidos'),
+    ],
+    [
+      'text' => $text,
+      'current' => true,
+      'href' => $path,
+    ]
   ]"
-></path-route>
+/>
 
-<blue-board
-  title='{{ $text }}'
+<x-blueBoard
+  :title=$text
   :foot="[
-    {text:'{{ $action }}', href:'#', id:'formSubmit', tipo: 'link'}
+    ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=> 'link']
   ]"
 >
   <form action="{{ $path }}" method="POST" id="form">
     @csrf
     @include('Produccion.formPedido')
   </form>
-</blue-board>
+</x-blueBoard>
 @endsection
 
 @section('modals')

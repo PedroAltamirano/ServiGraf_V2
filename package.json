@@ -37,6 +37,7 @@
         "jszip": "^3.4.0",
         "npm": "^6.14.6",
         "pdfmake": "^0.1.65",
+        "select2": "^4.0.13",
         "vue-color": "^2.7.1",
         "vue-fab": "^2.3.1",
         "vue-owl-carousel": "^2.0.3",

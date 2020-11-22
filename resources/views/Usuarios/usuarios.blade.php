@@ -4,20 +4,20 @@
 @endsection
 
 @section('desktop-content')
-<path-route
+<x-path
   :items="[
-    {
-      text: 'Usuarios',
-      current: true,
-      href: 'usuarios',
-    }
+    [
+      'text' => 'Usuarios',
+      'current' => true,
+      'href' => route('usuarios'),
+    ]
   ]"
-></path-route>
+/>
 
-<blue-board
+<x-blueBoard
   title='Listado'
   :foot="[
-    {text:'Nuevo', href:'usuario/nuevo', id:'nuevo', tipo: 'link'}
+    ['text'=>'Nuevo', 'href'=>route('usuario.nuevo'), 'id'=>'nuevo', 'tipo'=> 'link']
   ]"
 >
 
@@ -35,7 +35,7 @@
     <tfoot>
     </tfoot>
   </table>
-</blue-board>
+</x-blueBoard>
 @endsection
 
 @section('scripts')

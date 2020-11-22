@@ -4,20 +4,20 @@
 @endsection
 
 @section('desktop-content')
-<path-route
+<x-path
   :items="[
-    {
-      text: 'Perfiles',
-      current: true,
-      href: 'perfiles',
-    }
+    [
+      'text' => 'Perfiles',
+      'current' => true,
+      'href' => route('perfiles'),
+    ]
   ]"
-></path-route>
+/>
 
-<blue-board
+<x-blueBoard
   title='Listado'
   :foot="[
-    {text:'Nuevo', href:'perfil/nuevo', id:'nuevo', tipo: 'link'}
+    ['text'=>'Nuevo', 'href'=>route('perfil.nuevo'), 'id'=>'nuevo', 'tipo'=> 'link']
   ]"
 >
 
@@ -34,7 +34,7 @@
     <tfoot>
     </tfoot>
   </table>
-</blue-board>
+</x-blueBoard>
 @endsection
 
 @section('scripts')
@@ -53,11 +53,11 @@
         }
       },
       "columns": [
-        {"name":"perfil", "data":"perfil"},
+        {"name":"nombre", "data":"nombre"},
         {"name":"descripcion", "data":"descripcion", "sortable": "false"},
         {"name":"crud", "data":"id", "sortable": "false",
-          "render": function ( data, type, full, meta ) { 
-            return "<a class='fa fa-edit' href='perfil/modificar/"+data+"'></a>"
+          "render": function ( data, type, full, meta ) {
+            return "<a class='fa fa-edit' href='perfil/modificar/"+data+"'></a>";
           }
         }
       ],

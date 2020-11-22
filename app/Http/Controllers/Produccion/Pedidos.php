@@ -192,14 +192,14 @@ class Pedidos extends Controller
   }
 
   //modificar perfil
-  public function update(Pedido $pedido){
+  public function update(Request $request, Pedido $pedido){
     if(Security::hasRol(30, 3)){
-      $validator = Validator::make($request->all(), Requests\StorePedidoImprentaPost::rules(), $messages);
+      $validator = Validator::make($request->all(), StorePedidoImprentaPost::rules());
       if ($validator->fails()) {
         return back()->withErrors($validator)->withInput();
       }
 
-      $model = Pedido::find($data_id);
+      $model = Pedido::find($pedido->id);
       $model->usuario_mod_id = Auth::id();
       // $model->cliente_id = $request->cliente;
       $model->fecha_entrada = $request->inicio;

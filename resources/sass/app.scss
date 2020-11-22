@@ -1,14 +1,38 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
-// Variables
-@import 'variables';
+// Import Custom SB Admin 2 Variables (Overrides Default Bootstrap Variables)
+@import 'variables.scss';
 
-// Bootstrap
+// Import Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// Import Custom SB Admin 2 Mixins and Components
+@import 'mixins.scss';
+@import 'global.scss';
+@import 'utilities.scss';
+
+// Custom Components
+@import 'dropdowns.scss';
+@import 'navs.scss';
+@import 'buttons.scss';
+@import 'cards.scss';
+@import 'charts.scss';
+@import 'login.scss';
+@import 'error.scss';
+@import 'footer.scss';
 
 //Font awesome
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 @import '~@fortawesome/fontawesome-free/scss/regular';
 @import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~@fortawesome/fontawesome-free/scss/brands';
+
+// Node Modules
+@import '~select2/dist/css/select2.min.css';
+@import '~datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+@import '~datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css';
+@import '~datatables.net-fixedheader-bs4/css/fixedHeader.bootstrap4.min.css';
+@import '~datatables.net-keytable-bs4/css/keyTable.bootstrap4.min.css';
+@import '~datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css';
+@import '~datatables.net-rowgroup-bs4/css/rowGroup.bootstrap4.min.css';

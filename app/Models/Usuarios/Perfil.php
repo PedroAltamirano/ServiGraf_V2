@@ -15,14 +15,19 @@ class Perfil extends Model
   ];
 
   protected $fillable = [
-    'id', 'perfil', 'descripcion', 'status'
+    'id', 'nombre', 'descripcion', 'status'
   ];
 
   protected $hidden = [
     'created_at', 'updated_at', 'empresa_id'
   ];
 
+  public function modulos()
+  {
+      return $this->hasMany('App\Models\Usuarios\ModPerfRol');
+  }
+
   public static function todos(){
-    return Perfil::select('id', 'perfil', 'descripcion', 'status')->where('empresa_id', '=', Auth::user()->empresa_id)->get();
+    return Perfil::select('id', 'nombre', 'descripcion', 'status')->where('empresa_id', '=', Auth::user()->empresa_id)->get();
   }
 }

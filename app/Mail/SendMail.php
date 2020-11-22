@@ -17,6 +17,6 @@ class SendMail extends Mailable
     }
 
     public function build(){
-        return $this->from('pedroaal04@gmail.com', 'ServiGraf web')->subject('Contacto establecido')->view('templates/contactMail')->with('data', $this->data);
+        return $this->from('pedroaal04@gmail.com', 'ServiGraf web')->subject('Contacto establecido')->view('mails/contactMail')->with('data', $this->data);
     }
 }

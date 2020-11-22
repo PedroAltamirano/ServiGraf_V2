@@ -6,16 +6,16 @@
 @section('desktop-content')
 <path-route
   :items="[
-    {
-      text: 'Pedidos',
-      current: false,
-      href: '{{route("pedidos")}}',
-    },
-    {
-      text: 'Reporte de pedidos',
-      current: true,
-      href: '#',
-    }
+    [
+      'text' => 'Pedidos',
+      'current' => false,
+      'href' => route('pedidos'),
+    ],
+    [
+      'text' => 'Reporte de pedidos',
+      'current' => true,
+      'href' => '#',
+    ]
   ]"
 ></path-route>
 

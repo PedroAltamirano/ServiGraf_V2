@@ -17,6 +17,6 @@ class SendMailResponse extends Mailable
     }
 
     public function build(){
-        return $this->from('pedroaal04@gmail.com', 'ServiGraf')->subject('Carta de presentación')->view('templates/contactResponse')->with('data', $this->data);
+        return $this->from('pedroaal04@gmail.com', 'ServiGraf')->subject('Carta de presentación')->view('mails/contactResponse')->with('data', $this->data);
     }
 }

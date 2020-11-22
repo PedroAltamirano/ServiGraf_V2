@@ -1,9 +1,8 @@
 require('./bootstrap');
 require('jquery');
+require('select2/dist/js/select2.min.js');
 
-window.Vue = require('vue');
-
-//librerias
+// Node Modules
 import 'popper.js';
 import 'animate.css';
 
@@ -18,6 +17,7 @@ import 'datatables.net-keytable-bs4';
 import 'datatables.net-responsive-bs4';
 import 'datatables.net-rowgroup-bs4';
 
+require('../../resources/js/sb-admin-2.min.js');
 
 //components
 import blueBoard from './components/blueBoard.vue';
@@ -29,10 +29,16 @@ Vue.component('fab-comp', require('./components/fab.vue').default);
 Vue.component('path-route', pathRoute);
 Vue.component('blue-board', blueBoard);
 
-const app = new Vue({
-	el: '#app',
-});
+if (document.querySelector('#app')) {
+	window.Vue = require('vue');
+	const app = new Vue({
+		el: '#app',
+	});
+}
 
-const fab = new Vue({
-	el: '#fab',
-});
+if (document.querySelector('#fab')) {
+	window.Vue = require('vue');
+	const fab = new Vue({
+		el: '#fab',
+	});
+}

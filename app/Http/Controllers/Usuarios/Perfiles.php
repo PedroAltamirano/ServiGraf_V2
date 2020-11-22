@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Usuarios;
 
 use App\Security;
-use App\Models\Usuarios\Perfil;
-use App\Models\Usuarios\Modulo;
-use App\Models\Usuarios\ModPerfRol;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Auth;
+
+use App\Models\Usuarios\Perfil;
+use App\Models\Usuarios\Modulo;
+use App\Models\Usuarios\ModPerfRol;
+use App\Http\Requests\Usuarios\StorePerfil;
+use App\Http\Requests\Usuarios\UpdatePerfil;
 
 class Perfiles extends Controller
 {
@@ -48,49 +51,39 @@ class Perfiles extends Controller
 	}
 
 	//vista nuevo perfil
-	public function newGet(){
+	public function create(){
 		if(Security::hasRol(71, 2)){
 			$modules = Modulo::todos();
+			$perfil = new Perfil;
+			$modPerf = '';
 			$data = [
-				'path'=>'/perfil/nuevo', 
+				'path'=>route('perfil.nuevo'), 
 				'text'=>'Nuevo perfil', 
 				'action'=>'Crear',
-				'modules'=>json_decode($modules)
+				'method'=>'POST',
+				// 'modules'=>json_decode($modules)
 			];
-			return view('Usuarios/perfil')->with($data);
+			return view('Usuarios/perfil', compact('modules', 'perfil', 'modPerf'))->with($data);
 		} else {
 			$data = [
 				'type'=>'danger', 
 				'title'=>'NO AUTORIZADO', 
 				'message'=>'No estas autorizado a realizar esta operacion'
 			];
-			return redirect('perfiles')->with(['actionStatus' => json_encode($data)]);
+			return redirect()->route('perfiles')->with(['actionStatus' => json_encode($data)]);
 		}
 	}
 
 	//crear nuevo perfil
-	public function newPost(Request $request){
+	public function store(StorePerfil $request){
 		if(Security::hasRol(71, 2)){
-			$messages = [
-				'required' => 'El campo :attribute es requerido.',
-				'max' => 'El campo :attribute debe ser menor a :max caracteres.',
-				'unique' => 'Este nombre de perfil ya existe.'
-			];
-			$validator = Validator::make($request->all(), [
-        'perfil' => 'required|max:50|unique:perfiles,perfil,empresa_id',
-        'descripcion' => 'required|max:140',
-        'status' => 'required',
-			], $messages);
-			if ($validator->fails()) {
-				return back()->withErrors($validator)->withInput();
-      }
+			$validator = $request->validated();
 
 			$perfil = new Perfil;
 			$perfil->empresa_id = Auth::user()->empresa_id;
 			$perfil->perfil = $request->perfil;
 			$perfil->descripcion = $request->descripcion;
 			$perfil->save();
-
 
 			ModPerfRol::where('perfil_id', $perfil->id)->delete();
 			$filtered = $request->except(['_token', 'perfil', 'descripcion', 'status']);
@@ -125,31 +118,20 @@ class Perfiles extends Controller
 	}
 
 	//ver modificar perfil
-	public function modGet(Request $request, $perfil_id){
+	public function edit(Perfil $perfil){
 		if(Security::hasRol(71, 3)){
 			$modules = Modulo::todos();
 			$data = [
-				'path'=>'/perfil/modificar/'.$perfil_id, 
+				'path'=>route('perfil.modificar', $perfil->id), 
 				'text'=>'Modificar perfil', 
 				'action'=>'Modificar',
-				'modules'=>json_decode($modules)
+				'method'=>'PUT',
 			];
-			$perfil = Perfil::select(['perfil', 'descripcion', 'status'])->where('id', $perfil_id)->get();
-			$modPerf = ModPerfRol::where('perfil_id', $perfil_id)->get();
-			$old = [];
-			$perfiles = $perfil->first();
-			$old['perfil'] = $perfiles->perfil;
-			$old['descripcion'] = $perfiles->descripcion;
-			$old['status'] = $perfiles->status?'on':'';
-			foreach($modPerf as $e){
-				for($i=1; $i<=$e->rol_id; $i++){
-					$index = $e->modulo_id.'-'.$i;
-					$old[$index] = 'on';
-				}
-			}
-			$request->session()->flash('current', $old);
-			return view('Usuarios/perfil')->with($data)->withInput($old);
-			// return session('current.perfil');
+			
+			$modPerf = $perfil->modulos;
+			$modPerf = $modPerf->map(function($modPerf){ return $modPerf->modulo_id.'-'.$modPerf->rol_id; });
+			
+			return view('Usuarios/perfil', compact('modules', 'perfil', 'modPerf'))->with($data);
 		} else {
 			$data = [
 				'type'=>'danger', 
@@ -161,7 +143,7 @@ class Perfiles extends Controller
 	}
 
 	//modificar perfil
-	public function modPost(Request $request, $perfil_id){
+	public function update(Request $request, $perfil_id){
 		if(Security::hasRol(71, 3)){
 			$messages = [
 				'required' => 'El campo :attribute es requerido.',

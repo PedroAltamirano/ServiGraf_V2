@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class ModPerfRol extends Model
 {
   protected $table = 'modulo_perfil';
-  protected $primaryKey = 'id';
 
   protected $fillable = [
     'modulo_id', 'rol_id'
