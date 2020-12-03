@@ -40,15 +40,13 @@
       <div class="form-group col-2 col-md-1 order-2 order-md-3">
         <label for="statusDiv">Activo</label>
         <div class="custom-control custom-switch d-flex justify-content-center" name="statusDiv">
-          <input type="checkbox" class="custom-control-input @error('status') is-invalid @enderror" id="status" name="status" 
-          {{ old('status', $perfil->status) == '1' ? 'checked':'' }}>
+          <input type="checkbox" class="custom-control-input @error('status') is-invalid @enderror" id="status" name="status" value="1"
+          {{ old('status', $perfil->status) == 1 ? 'checked':'' }}>
           <label class="custom-control-label" for="status"></label>
         </div>
       </div>
     </div>
 
-    <div class="dropdown-divider"></div>
-    {{$modPerf}}
     <table id="table" class="table table-striped">
       <thead>
         <tr>
@@ -72,33 +70,37 @@
       </thead>
       <tbody>
         @foreach ($modules as $item)
+        @php
+            $mod = $modPerf->firstWhere('modulo_id', $item->id);
+            $rol = isset($mod) ? (int)$mod->rol_id : null;
+        @endphp
         <tr>
           <td class="m-0 {{ $item->principal ? '':'pl-4' }}">{{ $item->nombre }}</td>
           <td>
             <div class="custom-control custom-switch d-flex justify-content-center">
-              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-1" name="{{ $item->id }}-1" 
-              {{ old($item->id.'-1') ? 'checked':'' }}>
+              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-1" name="mod[{{ $item->id }}][1]" 
+              {{ old($item->id.'-1') ? 'checked':'' }} {{ $rol >= 1 ? 'checked':'' }}>
               <label class="custom-control-label" for="{{ $item->id }}-1"></label>
             </div>
           </td>
           <td>
             <div class="custom-control custom-switch d-flex justify-content-center">
-              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-2" name="{{ $item->id }}-2" 
-              {{ old($item->id.'-2') ? 'checked':'' }}>
+              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-2" name="mod[{{ $item->id }}][2]" 
+              {{ old($item->id.'-2') ? 'checked':'' }} {{ $rol >= 2 ? 'checked':'' }}>
               <label class="custom-control-label" for="{{ $item->id }}-2"></label>
             </div>
           </td>
           <td>
             <div class="custom-control custom-switch d-flex justify-content-center">
-              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-3" name="{{ $item->id }}-3" 
-              {{ old($item->id.'-3') ? 'checked':'' }}>
+              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-3" name="mod[{{ $item->id }}][3]" 
+              {{ old($item->id.'-3') ? 'checked':'' }} {{ $rol >= 3 ? 'checked':'' }}>
               <label class="custom-control-label" for="{{ $item->id }}-3"></label>
             </div>
           </td>
           <td>
             <div class="custom-control custom-switch d-flex justify-content-center">
-              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-4" name="{{ $item->id }}-4" 
-              {{ old($item->id.'-4') ? 'checked':'' }}>
+              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-4" name="mod[{{ $item->id }}][4]" 
+              {{ old($item->id.'-4') ? 'checked':'' }} {{ $rol >= 4 ? 'checked':'' }}>
               <label class="custom-control-label" for="{{ $item->id }}-4"></label>
             </div>
           </td>
@@ -136,8 +138,8 @@
     }
   });
 
-  // $('#formSubmit').click(function(){
-  //   $('#form').submit();
-  // });
+  $('#formSubmit').click(function(){
+    $('#form').submit();
+  });
 </script>
 @endsection

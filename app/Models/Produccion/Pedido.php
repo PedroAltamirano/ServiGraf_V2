@@ -32,6 +32,21 @@ class Pedido extends Model
     * @return Orden_produccion con servicios incompletos
     */
 
+    public function user()
+    {
+        return $this->belongsTo('App\Models\Usuarios\Usuario', 'usuario_id', 'cedula');
+    }
+
+    public function user_mod()
+    {
+        return $this->belongsTo('App\Models\Usuarios\Usuario', 'usuario_mod_id', 'cedula');
+    }
+
+    public function user_cob()
+    {
+        return $this->belongsTo('App\Models\Usuarios\Usuario', 'usuario_cob_id', 'cedula');
+    }
+
     public function cliente()
     {
         return $this->belongsTo('App\Models\Ventas\Cliente', 'cliente_id');

@@ -24,9 +24,10 @@ class UpdatePerfil extends FormRequest
     public static function rules()
     {
         return [
-            'perfil' => 'required|max:50|unique:perfiles,perfil,empresa_id',
+            'nombre' => 'required|max:50',
             'descripcion' => 'required|max:140',
-            'status' => 'required'
+            'status' => 'nullable|boolean',
+            'mod.*.*' => 'string|nullable'
         ];
     }
 }

@@ -27,6 +27,7 @@
 >
   <form action="{{ $path }}" method="POST" id="form">
     @csrf
+    @method($method)
     @include('Produccion.formPedido')
   </form>
 </x-blueBoard>

@@ -19,7 +19,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Http\Requests\Produccion\StorePedidoImprentaPost;
+use App\Http\Requests\Produccion\StorePedidoImprenta;
+use App\Http\Requests\Produccion\UpdatePedidoImprenta;
 
 class Pedidos extends Controller
 {
@@ -31,7 +32,6 @@ class Pedidos extends Controller
   */
   public function __construct()
   {
-    $this->middleware('auth');
   }
 
   /**
@@ -41,16 +41,7 @@ class Pedidos extends Controller
   */
   public function show(){
     $pedidos = Pedido::incompletas();
-    if(Security::hasRol(30, 1)){
-      return view('Produccion/pedidos', compact('pedidos'));
-    } else {
-      $data = [
-        'type'=>'danger',
-        'title'=>'NO AUTORIZADO',
-        'message'=>'No estás autorizado a realizar esta operación'
-      ];
-      return redirect('tablero')->with(['actionStatus' => json_encode($data)]);
-    }
+    return view('Produccion/pedidos', compact('pedidos'));
   }
 
   /**
@@ -59,246 +50,187 @@ class Pedidos extends Controller
   * @return \Illuminate\Http\Response
   */
   public function create(){
-    if(Security::hasRol(30, 2)){
-      $pedido = new Pedido;
-      $data = [
-      'path' => route('pedido.create'),
+    $pedido = new Pedido;
+    $data = [
       'text' => 'Nuevo Pedido',
+      'path' => route('pedido.create'),
+      'method' => 'POST',
       'action' => 'Crear',
       'mod' => 0,
-      ];
-      return view('Produccion.pedido', compact('pedido'))->with($data);
-    } else {
-      $data = [
-        'type'=>'danger',
-        'title'=>'NO AUTORIZADO',
-        'message'=>'No estás autorizado a realizar esta operación'
-      ];
-      return redirect('pedidos')->with(['actionStatus' => json_encode($data)]);
-    }
+    ];
+    return view('Produccion.pedido', compact('pedido'))->with($data);
   }
 
   // crear nuevo
   public function store(StorePedidoImprentaPost $request){
-    if(Security::hasRol(30, 2)){
-      $validator = $request->validated();
-      $num = Pedido::where('empresa_id', Auth::user()->empresa_id)->orderBy('numero', 'desc')->first()->numero;
-      $validator['num'] = $num + 1;
-      $validator['empresa_id'] = Auth::user()->empresa_id;
-      $validator['usuario_id'] = Auth::id();
-      $validator['usuario_mod_id'] = Auth::id();
-      $fecha_salida = Carbon::create($validator['inicio'])->addDays(3)->format('Y-m-d');
-      $validator['fecha_salida'] = $fecha_salida;
-      if($request->estado == 2){
-        $validator['usuario_cob_id'] = Auth::id();
-        $validator['fecha_cobro'] = date('Y-m-d');
-      }
-      $model = Pedido::create($validator);
-      // dd($validator['proceso']);
-
-      foreach($validator['tinta_tiro'] as $ttiro){
-        $tinta = new Pedido_tintas;
-        $tinta->tinta_id = $ttiro;
-        $tinta->pedido_id = $model->id;
-        $tinta->lado = 1;
-        $tinta->save();
-      }
-      foreach($validator['tinta_retiro'] as $tretiro){
-        $tinta = new Pedido_tintas;
-        $tinta->tinta_id = $tretiro;
-        $tinta->pedido_id = $model->id;
-        $tinta->lado = 0;
-        $tinta->save();
-      }
-
-      $matSize = sizeof($validator['material']['id'] ?? []);
-      for($i=0; $i < $matSize; $i++){
-        $material = new Solicitud_material;
-        $material->empresa_id = Auth::user()->empresa_id;
-        $material->pedido_id = $model->id;
-        $material->material_id = $validator['material']['id'][$i];
-        $material->cantidad = $validator['material']['cantidad'][$i];
-        $material->corte_alto = $validator['material']['corte_alt'][$i];
-        $material->corte_ancho = $validator['material']['corte_anc'][$i];
-        $material->tamanos = $validator['material']['tamanios'][$i];
-        $material->proveedor_id = $validator['material']['proveedor'][$i];
-        $material->factura = $validator['material']['factura'][$i];
-        $material->total = $validator['material']['total'][$i];
-        // $material->save();
-      }
-
-      $proSize = sizeof($validator['proceso']['id'] ?? []);
-      for($i=0; $i < $proSize; $i++){
-        $servicio = $validator['proceso']['id'][$i];
-        $subservicio = null;
-        if(strpos($servicio, '.') !== false){
-          $serv = explode('.', $servicio);
-          $servicio = $serv[0];
-          $subservicio = $serv[1];
-        }
-
-        $proceso = new Pedido_servicio;
-        $proceso->empresa_id = Auth::user()->empresa_id;
-        $proceso->pedido_id = $model->id;
-        $proceso->servicio_id = $servicio;
-        $proceso->subservicio_id = $subservicio;
-        $proceso->tiro = $validator['proceso']['tiro'][$i];
-        $proceso->retiro = $validator['proceso']['retiro'][$i];
-        $proceso->millares = $validator['proceso']['millar'][$i];
-        $proceso->valor_unitario = $validator['proceso']['valor'][$i];
-        $proceso->total = $validator['proceso']['total'][$i];
-        $proceso->status = $validator['proceso']['terminado'][$i];
-        $proceso->save();
-      }
-
-      $data = [
-        'type'=>'success',
-        'title'=>'Acción completada',
-        'message'=>'El pedido se ha creado con éxito'
-      ];
-      return redirect()->route('pedido.edit', $model->id)->with(['actionStatus' => json_encode($data)]);
-
-    } else {
-      $data = [
-        'type'=>'danger',
-        'title'=>'NO AUTORIZADO',
-        'message'=>'No estás autorizado a realizar esta operación'
-      ];
-      return redirect()->route('tablero')->with(['actionStatus' => json_encode($data)]);
+    $validator = $request->validated();
+    $num = Pedido::where('empresa_id', Auth::user()->empresa_id)->orderBy('numero', 'desc')->first()->numero;
+    $validator['numero'] = $num + 1;
+    $validator['empresa_id'] = Auth::user()->empresa_id;
+    $validator['usuario_id'] = Auth::id();
+    $validator['usuario_mod_id'] = Auth::id();
+    $fecha_salida = Carbon::create($validator['fecha_entrada'])->addDays(3)->format('Y-m-d');
+    $validator['fecha_salida'] = $fecha_salida;
+    if($request->estado == 2){
+      $validator['usuario_cob_id'] = Auth::id();
+      $validator['fecha_cobro'] = date('Y-m-d');
     }
+    $model = Pedido::create($validator);
+    // dd($validator['proceso']);
+
+    foreach($validator['tinta_tiro'] as $ttiro){
+      $tinta = new Pedido_tintas;
+      $tinta->tinta_id = $ttiro;
+      $tinta->pedido_id = $model->id;
+      $tinta->lado = 1;
+      $tinta->save();
+    }
+    foreach($validator['tinta_retiro'] as $tretiro){
+      $tinta = new Pedido_tintas;
+      $tinta->tinta_id = $tretiro;
+      $tinta->pedido_id = $model->id;
+      $tinta->lado = 0;
+      $tinta->save();
+    }
+
+    $matSize = sizeof($validator['material']['id'] ?? []);
+    for($i=0; $i < $matSize; $i++){
+      $material = new Solicitud_material;
+      $material->empresa_id = Auth::user()->empresa_id;
+      $material->pedido_id = $model->id;
+      $material->material_id = $validator['material']['id'][$i];
+      $material->cantidad = $validator['material']['cantidad'][$i];
+      $material->corte_alto = $validator['material']['corte_alt'][$i];
+      $material->corte_ancho = $validator['material']['corte_anc'][$i];
+      $material->tamanos = $validator['material']['tamanios'][$i];
+      $material->proveedor_id = $validator['material']['proveedor'][$i];
+      $material->factura = $validator['material']['factura'][$i];
+      $material->total = $validator['material']['total'][$i];
+      $material->save();
+    }
+
+    $proSize = sizeof($validator['proceso']['id'] ?? []);
+    for($i=0; $i < $proSize; $i++){
+      $servicio = $validator['proceso']['id'][$i];
+      $subservicio = null;
+      if(strpos($servicio, '.') !== false){
+        $serv = explode('.', $servicio);
+        $servicio = $serv[0];
+        $subservicio = $serv[1];
+      }
+
+      $proceso = new Pedido_servicio;
+      $proceso->empresa_id = Auth::user()->empresa_id;
+      $proceso->pedido_id = $model->id;
+      $proceso->servicio_id = $servicio;
+      $proceso->subservicio_id = $subservicio;
+      $proceso->tiro = $validator['proceso']['tiro'][$i];
+      $proceso->retiro = $validator['proceso']['retiro'][$i];
+      $proceso->millares = $validator['proceso']['millar'][$i];
+      $proceso->valor_unitario = $validator['proceso']['valor'][$i];
+      $proceso->total = $validator['proceso']['total'][$i];
+      $proceso->status = $validator['proceso']['terminado'][$i];
+      $proceso->save();
+    }
+
+    $data = [
+      'type'=>'success',
+      'title'=>'Acción completada',
+      'message'=>'El pedido se ha creado con éxito'
+    ];
+    return redirect()->route('pedido.edit', $model->id)->with(['actionStatus' => json_encode($data)]);
   }
 
   //ver modificar
   public function edit(Pedido $pedido){
-    if(Security::hasRol(30, 3)){
-      // $pedido = Pedido::where('empresa_id', Auth::user()->empresa_id)->where('numero', $data_id)->first();
-      $data = [
-        'path'=> route('pedido.update', $pedido->id),
-        'text'=>'Modificar Pedido '.$pedido->numero,
-        'action'=>'Modificar',
-        'mod' => 1,
-        'pedido' => $pedido
-      ];
-      return view('Produccion.pedido')->with($data);
-      // return session('current.perfil');
-    } else {
-      $data = [
-        'type'=>'danger',
-        'title'=>'NO AUTORIZADO',
-        'message'=>'No estás autorizado a realizar esta operación'
-      ];
-      return redirect('')->with(['actionStatus' => json_encode($data)]);
-    }
+    $data = [
+      'text'=>'Modificar Pedido '.$pedido->numero,
+      'path'=> route('pedido.update', $pedido->id),
+      'method' => 'PUT',
+      'action'=>'Modificar',
+      'mod' => 1,
+    ];
+    return view('Produccion.pedido', compact('pedido'))->with($data);
   }
 
   //modificar perfil
-  public function update(Request $request, Pedido $pedido){
-    if(Security::hasRol(30, 3)){
-      $validator = Validator::make($request->all(), StorePedidoImprentaPost::rules());
-      if ($validator->fails()) {
-        return back()->withErrors($validator)->withInput();
-      }
-
-      $model = Pedido::find($pedido->id);
-      $model->usuario_mod_id = Auth::id();
-      // $model->cliente_id = $request->cliente;
-      $model->fecha_entrada = $request->inicio;
-      $fecha_salida = date('Y-m-d', strtotime('+3 days', strtotime($request->inicio)));
-      $model->fecha_salida = $fecha_salida;
-      $model->prioridad = $request->prioridad;
-      $model->estado = $request->estado;
-      $model->cotizado = $request->cotizado;
-      $model->detalle = $request->descripcion;
-      $model->papel = $request->papel;
-      $model->cantidad = $request->cantidad;
-      $model->corte_alto = $request->corte_alto;
-      $model->corte_ancho = $request->corte_ancho;
-      $model->numerado_inicio = $request->numerado_inicio;
-      $model->numerado_fin = $request->numerado_fin;
-      $model->total_material = $request->totalMaterial;
-      $model->total_pedido = $request->totalProcesos;
-      $model->abono = $request->totalAbonos;
-      $model->saldo = $request->totalSaldo;
-      $model->notas = $request->notas;
-      if($request->estado == 2){
-        $model->usuario_cob_id = Auth::id();
-        $model->fecha_cobro = date('Y-m-d');
-      }
-      $model->save();
-
-      Pedido_tintas::where('pedido_id', $model->id)->delete();
-      foreach($request->tinta_tiro as $ttiro){
-        $tinta = new Pedido_tintas;
-        $tinta->tinta_id = $ttiro;
-        $tinta->pedido_id = $model->id;
-        $tinta->lado = 1;
-        $tinta->save();
-      }
-      foreach($request->tinta_retiro as $tretiro){
-        $tinta = new Pedido_tintas;
-        $tinta->tinta_id = $tretiro;
-        $tinta->pedido_id = $model->id;
-        $tinta->lado = 0;
-        $tinta->save();
-      }
-
-      Solicitud_material::where('empresa_id', Auth::user()->empresa_id)->where('pedido_id', $model->id)->delete();
-      $matSize = sizeof($request->material['id']);
-      for($i=0; $i<$matSize; $i++){
-        $material = new Solicitud_material;
-        $material->empresa_id = Auth::user()->empresa_id;
-        $material->pedido_id = $model->id;
-        $material->material_id = $request->material['id'][$i];
-        $material->cantidad = $request->material['cantidad'][$i];
-        $material->corte_alto = $request->material['corte_alt'][$i];
-        $material->corte_ancho = $request->material['corte_anc'][$i];
-        $material->tamanos = $request->material['tamanios'][$i];
-        $material->proveedor_id = $request->material['proveedor'][$i];
-        $material->factura = $request->material['factura'][$i];
-        $material->total = $request->material['total'][$i];
-        $material->save();
-      }
-
-      Pedido_servicio::where('empresa_id', Auth::user()->empresa_id)->where('pedido_id', $model->id)->delete();
-      $proSize = sizeof($request->proceso['id']);
-      for($i=0; $i<$proSize; $i++){
-        $servicio = $request->proceso['id'][$i];
-        $subservicio = null;
-        if(strpos($servicio, '.') !== false){
-          $serv = explode('.', $servicio);
-          $servicio = $serv[0];
-          $subservicio = $serv[1];
-        }
-
-        $proceso = new Pedido_servicio;
-        $proceso->empresa_id = Auth::user()->empresa_id;
-        $proceso->pedido_id = $model->id;
-        $proceso->servicio_id = $servicio;
-        $proceso->subservicio_id = $subservicio;
-        $proceso->tiro = $request->proceso['tiro'][$i];
-        $proceso->retiro = $request->proceso['retiro'][$i];
-        $proceso->millares = $request->proceso['millar'][$i];
-        $proceso->valor_unitario = $request->proceso['valor'][$i];
-        $proceso->total = $request->proceso['total'][$i];
-        $proceso->status = $request->proceso['terminado'][$i];
-        $proceso->save();
-      }
-
-      $data = [
-        'type'=>'success',
-        'title'=>'Acción completada',
-        'message'=>'El pedido se ha modificado con éxito'
-      ];
-      return redirect()->route('pedido.edit', $model->numero)->with(['actionStatus' => json_encode($data)]);
-
-    } else {
-      $data = [
-        'type'=>'danger',
-        'title'=>'NO AUTORIZADO',
-        'message'=>'No estás autorizado a realizar esta operación'
-      ];
-      return redirect()->route('tablero')->with(['actionStatus' => json_encode($data)]);
+  public function update(UpdatePedidoImprenta $request, Pedido $pedido){
+    $validator = $request->validated();
+    // dd($validator);
+    $validator['usuario_mod_id'] = Auth::id();
+    $fecha_salida = Carbon::create($validator['fecha_entrada'])->addDays(3)->format('Y-m-d');
+    $validator['fecha_salida'] = $fecha_salida;
+    if($request->estado == 2){
+      $validator['usuario_cob_id'] = Auth::id();
+      $validator['fecha_cobro'] = date('Y-m-d');
     }
+
+    $pedido->update($validator);
+
+    Pedido_tintas::where('pedido_id', $pedido->id)->delete();
+    foreach($validator['tinta_tiro'] as $ttiro){
+      $tinta = new Pedido_tintas;
+      $tinta->tinta_id = $ttiro;
+      $tinta->pedido_id = $pedido->id;
+      $tinta->lado = 1;
+      $tinta->save();
+    }
+    foreach($validator['tinta_retiro'] as $tretiro){
+      $tinta = new Pedido_tintas;
+      $tinta->tinta_id = $tretiro;
+      $tinta->pedido_id = $pedido->id;
+      $tinta->lado = 0;
+      $tinta->save();
+    }
+
+    Solicitud_material::where('empresa_id', Auth::user()->empresa_id)->where('pedido_id', $pedido->id)->delete();
+    $matSize = sizeof($validator['material']['id'] ?? []);
+    for($i=0; $i<$matSize; $i++){
+      $material = new Solicitud_material;
+      $material->empresa_id = Auth::user()->empresa_id;
+      $material->pedido_id = $pedido->id;
+      $material->material_id = $validator['material']['id'][$i];
+      $material->cantidad = $validator['material']['cantidad'][$i];
+      $material->corte_alto = $validator['material']['corte_alt'][$i];
+      $material->corte_ancho = $validator['material']['corte_anc'][$i];
+      $material->tamanos = $validator['material']['tamanios'][$i];
+      $material->proveedor_id = $validator['material']['proveedor'][$i];
+      $material->factura = $validator['material']['factura'][$i];
+      $material->total = $validator['material']['total'][$i];
+      $material->save();
+    }
+
+    Pedido_servicio::where('empresa_id', Auth::user()->empresa_id)->where('pedido_id', $pedido->id)->delete();
+    $proSize = sizeof($validator['proceso']['id'] ?? []);
+    for($i=0; $i<$proSize; $i++){
+      $servicio = $validator['proceso']['id'][$i];
+      $subservicio = null;
+      if(strpos($servicio, '.') !== false){
+        $serv = explode('.', $servicio);
+        $servicio = $serv[0];
+        $subservicio = $serv[1];
+      }
+
+      $proceso = new Pedido_servicio;
+      $proceso->empresa_id = Auth::user()->empresa_id;
+      $proceso->pedido_id = $pedido->id;
+      $proceso->servicio_id = $servicio;
+      $proceso->subservicio_id = $subservicio;
+      $proceso->tiro = $validator['proceso']['tiro'][$i];
+      $proceso->retiro = $validator['proceso']['retiro'][$i];
+      $proceso->millares = $validator['proceso']['millar'][$i];
+      $proceso->valor_unitario = $validator['proceso']['valor'][$i];
+      $proceso->total = $validator['proceso']['total'][$i];
+      $proceso->status = $validator['proceso']['terminado'][$i];
+      $proceso->save();
+    }
+
+    $data = [
+      'type'=>'success',
+      'title'=>'Acción completada',
+      'message'=>'El pedido se ha modificado con éxito'
+    ];
+    return redirect()->route('pedido.edit', $pedido->id)->with(['actionStatus' => json_encode($data)]);
   }
 
   public function abonos(Request $request, $data_id){
@@ -329,12 +261,7 @@ class Pedidos extends Controller
   //AJAX
   //get todos los perfiles
   public function get(){
-    if(Security::hasRol(30, 1)){
-      $data['data'] = Pedido::todos();
-      return response()->json($data);
-    } else {
-      return response('Unauthorized.', 401);
-    }
+    $data['data'] = Pedido::todos();
   }
 
 }

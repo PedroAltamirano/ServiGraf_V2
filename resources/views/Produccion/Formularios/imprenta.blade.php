@@ -18,7 +18,7 @@
     <div class="form-group col-12 col-md-6">
       <div class="form-group">
         <label for="descripcion"><b>Descripcion del trabajo</b></label>
-        <textarea class="form-control form-control-sm" name="descripcion" id="descripcion" rows="1">{{ old('descripcion', $pedido->detalle) }}</textarea>
+        <textarea class="form-control form-control-sm" name="detalle" id="descripcion" rows="1">{{ old('detalle', $pedido->detalle) }}</textarea>
       </div>
     </div>
     <div class="form-group col-8 col-md-4">
@@ -151,7 +151,7 @@
         <td colspan="2"><a class="text-muted" href="#">Corte de papel</a></td>
         <td colspan="4" class="text-right"></td>
         <td colspan="2" class="text-right"><i class="fas fa-print pr-2"></i>  Total material $</td>
-        <td class="text-center"><input type="number" name="totalMaterial" id="totalMaterial" value="{{ old('totalMaterial', $pedido->total_material) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
+        <td class="text-center"><input type="number" name="total_material" id="totalMaterial" value="{{ old('total_material', $pedido->total_material) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
       </tr>
     </tfoot>
   </table>
@@ -167,7 +167,7 @@
         <th scope="col" class="text-center">T</th>
         <th scope="col" class="text-center">R</th>
         <th scope="col" class="text-center">Mill</th>
-        <th scope="col" class="text-center">Valor Unitario</th>
+        <th scope="col" class="text-center">V/U</th>
         <th scope="col" class="text-center">Total</th>
         <th scope="col" class="crudCol"><i class="fas fa-check" id="checkall"></i></th>
       </tr>
@@ -228,19 +228,19 @@
       <tr class="font-weight-bold">
         <td colspan="4"></td>
         <td colspan="2" class="text-right">Total Pedido $</td>
-        <td class="text-center"><input type="number" id="totalProcesos" name="totalProcesos" value="{{ old('totalProcesos', $pedido->total_pedido) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
+        <td class="text-center"><input type="number" id="totalProcesos" name="total_pedido" value="{{ old('total_pedido', $pedido->total_pedido) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
         <td></td>
       </tr>
       <tr>
         <td colspan="4"></td>
         <td colspan="2" class="text-right">Abonos $</td>
-        <td class="text-center"><input type="number" id="totalAbonos" name="totalAbonos" value="{{ old('totalAbonos', $pedido->abono) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
+        <td class="text-center"><input type="number" id="totalAbonos" name="abono" value="{{ old('abono', $pedido->abono) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
         <td><i data-toggle="modal" data-target="#modalAbonos" class="fas fa-eye"></i></td>
       </tr>
       <tr>
         <td colspan="4"></td>
         <td colspan="2" class="text-right">Saldo $</td>
-        <td class="text-center"><input type="number" id="totalSaldo" name="totalSaldo" value="{{ old('totalSaldo', $pedido->saldo) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
+        <td class="text-center"><input type="number" id="totalSaldo" name="saldo" value="{{ old('saldo', $pedido->saldo) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
         <td></td>
       </tr>
     </tfoot>
@@ -329,7 +329,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-primary" @if ($method != 'PUT') disabled @endif>Guardar</button>
       </div>
       </form>
     </div>
@@ -337,20 +337,18 @@
 </div>
 @endsection
 
-@section('after.document.ready')
-$('#tinta_tiro').select2({
-  maximumSelectionLength: 4,
-});
-
-$('#tinta_retiro').select2({
-  maximumSelectionLength: 4,
-});
-
-$('.selectProceso').select2();
-@endsection
-
 @section('after.after.scripts')
 <script>
+  $('#tinta_tiro').select2({
+    maximumSelectionLength: 4,
+  });
+
+  $('#tinta_retiro').select2({
+    maximumSelectionLength: 4,
+  });
+
+  $('.selectProceso').select2();
+
   //SOLICITUD DE MATERIALES
   $(function(){
     var i = {{$i += 1}};

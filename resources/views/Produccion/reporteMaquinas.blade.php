@@ -12,7 +12,7 @@
       'href' => route('pedidos'),
     ],
     [
-      'text' => 'Reporte de pedidos',
+      'text' => 'Reporte de maquinas',
       'current' => true,
       'href' => '#',
     ]
@@ -32,7 +32,7 @@
       <label for="fin">Fecha final</label>
       <input type="date" name="fin" id="fin" class="form-control form-control-sm refresh" value="{{date('Y-m-d')}}">
     </div>
-    <div class="col-12 col-md form-group">
+    {{-- <div class="col-12 col-md form-group">
       <label for="cliente">Cliente</label>
       <select name="cliente" id="cliente" class="form-control refresh">
         <option value="none" selected>Selecciona uno...</option>
@@ -48,7 +48,7 @@
           </option>
         @endforeach
       </select>
-    </div>
+    </div> --}}
     <div class="col-6 col-md form-group">
       <label for="cobro">Cobro</label>
       <select class="form-control form-control-sm refresh" name="cobro" id="cobro">
@@ -77,12 +77,10 @@
         <th scope="col">No.</th>
         <th scope="col">Cliente</th>
         <th scope="col">Detalle</th>
-        @foreach ($areas as $area)
-        <th scope="col">{{$area->area}}</th>
+        @foreach ($servicios as $servicio)
+        <th scope="col">{{$servicio->servicio}}</th>
         @endforeach
         <th scope="col">Total $</th>
-        <th scope="col">Abonos $</th>
-        <th scope="col">Saldo $</th>
         <th scope="col" class="crudCol"></th>
         <th scope="col" class="crudCol">Crud</th>
       </tr>
@@ -91,13 +89,11 @@
     </tbody>
     <tfoot>
       <tr>
-        @php
-            $count = count($areas ?? []) + 3;
-        @endphp
-        <td colspan="{{$count}}" class="text-right">Total $</td>
+        <td colspan="3" class="text-right">Total $</td>
+        @foreach ($servicios as $servicio)
+        <th scope="col" id="{{$servicio->servicio.$servicio->id}}"></th>
+        @endforeach
         <td id="clmtotal"></td>
-        <td id="clmabonos"></td>
-        <td id="clmsaldo"></td>
         <td colspan="2"></td>
       </tr>
     </tfoot>
@@ -107,8 +103,11 @@
 
 @section('scripts')
 <script>
-  let areas = @json($areas);
+  let servicios = @json($servicios);
   $('#cliente').select2();
+  @foreach($servicios as $servicio)
+  var {{'runServ'.$servicio->id}};
+  @endforeach
   
   // console.log(areas.length);
   var table = $('#table').DataTable({
@@ -122,13 +121,12 @@
       autoPrint: false
     }],
     "ajax": {
-      "url": "{{route('reporte.pedidos.ajax')}}",
+      "url": "{{route('reporte.maquinas.ajax')}}",
       "method": 'get',
       "dataSrc": '',
       "data": {
         "fechaini": function() { return $('#inicio').val() },
         "fechafin": function() { return $('#fin').val() },
-        "cliente": function() { return $('#cliente').val() },
         "cobro": function() { return $('#cobro').val() }
       },
       // "success": function(data){
@@ -144,15 +142,14 @@
       {"name":"numero", "data": "numero"},
       {"name":"cliente", "data": "cliente_nom"},
       {"name":"detalle", "data": "detalle"},
-      @foreach($areas as $area)
-      {"name":"{{$area->area}}", "data":"areas", "defaultContent": "", "render":function(data, type, full, meta){
-        let area = data.find(record => record.area_id === '{{$area->id}}');
-        return area ? area.totalArea : '';
+      @foreach($servicios as $servicio)
+      {"name":"{{$servicio->servicio.$servicio->id}}", "data":"servicios", "defaultContent": "", "render":function(data, type, full, meta){
+        let servicio = data.find(record => record.servicio_id === '{{ $servicio->id }}');
+        {{'runServ'.$servicio->id}} = {{'runServ'.$servicio->id}} + (servicio ? servicio.totalServicio : 0);
+        return servicio ? servicio.totalServicio : '';
       }},
       @endforeach
       {"name":"total", "data": "total_pedido"},
-      {"name":"abonos", "data": "abono"},
-      {"name":"saldo", "data": "saldo"},
       {"name":"estado", "data": "estado", "sortable": "false",
         "render": function ( data, type, full, meta ) { 
           var rspt;
@@ -185,13 +182,8 @@
 
       // Total over this page
       var totTotal = api.column('total:name', {search: 'applied'}).data().reduce(function (a, b){ return intVal(a) + intVal(b); }, 0);
-      var aboTotal = api.column('abonos:name', {search: 'applied'}).data().reduce(function (a, b){ return intVal(a) + intVal(b); }, 0);
-      var salTotal = api.column('saldo:name', {search: 'applied'}).data().reduce(function (a, b){ return intVal(a) + intVal(b); }, 0);
-
       // Update footer
       $("#clmtotal").html(totTotal.toFixed(2));
-      $("#clmabonos").html(aboTotal.toFixed(2));
-      $("#clmsaldo").html(salTotal.toFixed(2));
     }
   });
 

@@ -12,7 +12,7 @@
       'href' => route('pedidos'),
     ],
     [
-      'text' => 'Reporte de pedidos',
+      'text' => 'Reporte de pagos',
       'current' => true,
       'href' => '#',
     ]
@@ -49,7 +49,7 @@
         @endforeach
       </select>
     </div>
-    <div class="col-6 col-md form-group">
+    {{-- <div class="col-6 col-md form-group">
       <label for="cobro">Cobro</label>
       <select class="form-control form-control-sm refresh" name="cobro" id="cobro">
         <option value="none" selected>Todo</option>
@@ -58,7 +58,7 @@
         <option value="3">Anulado</option>
         <option value="4">Canje</option>
       </select>
-    </div>
+    </div> --}}
     {{-- <div class="col-1 text-center">
       <button type="button" name="refresh" id="refresh" class="btn btn-primary mt-3"><i class="fas fa-sync-alt"></i></button>
     </div> --}}
@@ -76,10 +76,10 @@
       <tr>
         <th scope="col">No.</th>
         <th scope="col">Cliente</th>
+        <th scope="col">Creacion</th>
+        <th scope="col">Pago</th>
         <th scope="col">Detalle</th>
-        @foreach ($areas as $area)
-        <th scope="col">{{$area->area}}</th>
-        @endforeach
+        <th scope="col">Cobro</th>
         <th scope="col">Total $</th>
         <th scope="col">Abonos $</th>
         <th scope="col">Saldo $</th>
@@ -91,10 +91,7 @@
     </tbody>
     <tfoot>
       <tr>
-        @php
-            $count = count($areas ?? []) + 3;
-        @endphp
-        <td colspan="{{$count}}" class="text-right">Total $</td>
+        <td colspan="6" class="text-right">Total $</td>
         <td id="clmtotal"></td>
         <td id="clmabonos"></td>
         <td id="clmsaldo"></td>
@@ -107,10 +104,8 @@
 
 @section('scripts')
 <script>
-  let areas = @json($areas);
   $('#cliente').select2();
   
-  // console.log(areas.length);
   var table = $('#table').DataTable({
     "paging":   true,
     "ordering": true,
@@ -122,14 +117,14 @@
       autoPrint: false
     }],
     "ajax": {
-      "url": "{{route('reporte.pedidos.ajax')}}",
+      "url": "{{route('reporte.pagos.ajax')}}",
       "method": 'get',
       "dataSrc": '',
       "data": {
         "fechaini": function() { return $('#inicio').val() },
         "fechafin": function() { return $('#fin').val() },
         "cliente": function() { return $('#cliente').val() },
-        "cobro": function() { return $('#cobro').val() }
+        // "cobro": function() { return $('#cobro').val() }
       },
       // "success": function(data){
       //   console.log(data);
@@ -143,13 +138,10 @@
     "columns": [
       {"name":"numero", "data": "numero"},
       {"name":"cliente", "data": "cliente_nom"},
+      {"name":"creacion", "data": "fecha_entrada"},
+      {"name":"pago", "data": "fecha_cobro"},
       {"name":"detalle", "data": "detalle"},
-      @foreach($areas as $area)
-      {"name":"{{$area->area}}", "data":"areas", "defaultContent": "", "render":function(data, type, full, meta){
-        let area = data.find(record => record.area_id === '{{$area->id}}');
-        return area ? area.totalArea : '';
-      }},
-      @endforeach
+      {"name":"cobro", "data": "usuario_cobro"},
       {"name":"total", "data": "total_pedido"},
       {"name":"abonos", "data": "abono"},
       {"name":"saldo", "data": "saldo"},

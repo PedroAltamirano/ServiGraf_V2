@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Security;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
 use Illuminate\Http\Request;
-use App;
-use Auth;
 
 class Desktop extends Controller
 {
@@ -20,7 +16,6 @@ class Desktop extends Controller
 	 */
 	public function __construct()
 	{
-		$this->middleware('auth');
 	}
 
 	/**
@@ -29,11 +24,7 @@ class Desktop extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function showAdmin(){
-		if(Security::hasModule('10')){
-			return view('desktop');
-		} else {
-			return redirect('tablero');
-		}
+		return view('desktop');
 	}
 
 	public function show(){

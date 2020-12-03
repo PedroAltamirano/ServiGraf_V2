@@ -4,7 +4,7 @@ namespace App\Http\Requests\Produccion;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePedidoImprentaPost extends FormRequest
+class UpdatePedidoImprenta extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,15 +21,15 @@ class StorePedidoImprentaPost extends FormRequest
      *
      * @return array
      */
-    public static function rules()
+    public function rules()
     {
         return [
-            'inicio' => 'required|date',
-            'cliente' => 'required|numeric|exists:contactos,id',
+            'fecha_entrada' => 'required|date',
+            'cliente_id' => 'required|numeric|exists:contactos,id',
             'prioridad' => 'required|boolean',
             'estado' => 'required|numeric|min:1|max:4',
             'cotizado' => 'required|numeric|min:0',
-            'descripcion' => 'required|string|max:200',
+            'detalle' => 'required|string|max:200',
             'papel' => 'required|string|max:200',
             'cantidad' => 'required|numeric|min:1',
             'corte_ancho' => 'required|numeric|min:0',
@@ -38,10 +38,10 @@ class StorePedidoImprentaPost extends FormRequest
             'tinta_retiro.*' => 'required|numeric',
             'numerado_inicio' => 'required|numeric|min:0',
             'numerado_fin' => 'required|numeric|min:0',
-            'totalMaterial' => 'required|numeric|min:0',
-            'totalProcesos' => 'required|numeric|min:0.01',
-            'totalAbonos' => 'required|numeric|min:0',
-            'totalSaldo' => 'required|numeric|min:0.01',
+            'total_material' => 'required|numeric|min:0',
+            'total_pedido' => 'required|numeric|min:0.01',
+            'abono' => 'required|numeric|min:0',
+            'saldo' => 'required|numeric|min:0.01',
             'notas' => 'nullable|string|max:256',
 
             'material.id.*' => 'required|numeric|exists:materiales,id',

@@ -8,11 +8,11 @@
   <div class="form-row">
     <div class="form-group col-6 col-md-2 order-1">
       <label for="inicio">Inicio</label>
-      <input type="date" name="inicio" id="inicio" class="form-control form-control-sm @error('inicio') is-invalid @enderror" value="{{ old('inicio', $pedido->fecha_entrada) ?? date('Y-m-d') }}">
+      <input type="date" name="fecha_entrada" id="inicio" class="form-control form-control-sm @error('fecha_entrada') is-invalid @enderror" value="{{ old('fecha_entrada', $pedido->fecha_entrada) ?? date('Y-m-d') }}">
     </div>
     <div class="form-group col-12 col-md-3 order-3 order-md-2">
       <label for="cliente">Cliente</label>
-      <select class="form-control form-control-sm @error('cliente') is-invalid @enderror" name="cliente" id="cliente" data-tags="true">
+      <select class="form-control form-control-sm @error('cliente_id') is-invalid @enderror" name="cliente_id" id="cliente" data-tags="true">
         <option disabled selected>Selecciona uno...</option>
         {{ $group =  $clientes->first()->cliente_empresa_id }}
         <optgroup label="{{ $clientes->first()->empresa->nombre }}">
@@ -22,7 +22,7 @@
           <optgroup label="{{ $cli->empresa->nombre }}">
           @endif
           <option value="{{ $cli->id }}"
-            {{ old('cliente', $pedido->cliente_id) == $cli->id ? 'selected' : '' }}
+            {{ old('cliente_id', $pedido->cliente_id) == $cli->id ? 'selected' : '' }}
           >
             {{ $cli->contacto->nombre.' '.$cli->contacto->apellido }}
           </option>
@@ -142,16 +142,17 @@
   $('#formSubmit').click(function(){
     $('#form').submit();
   });
+
+  $(function(){
+    $('#cliente').select2();
+
+    @if (old('cliente_id', $pedido->cliente_id))
+    getPhone();
+    @endif
+  });
 </script>
 
 @yield('after.after.scripts')
 @endsection
 
-@section('document.ready')
-$('#cliente').select2();
 
-  @if (session('current.client'))
-  getPhone();
-  @endif
-
-@endsection

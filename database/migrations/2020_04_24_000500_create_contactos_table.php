@@ -14,7 +14,7 @@ class CreateContactosTable extends Migration
     public function up()
     {
         Schema::create('contactos', function ($table) {
-          $table->increments('id');
+          $table->id();
           $table->unsignedBigInteger('empresa_id');
           $table->foreign('empresa_id')->references('id')->on('empresas');
           $table->unsignedInteger('usuario_id');

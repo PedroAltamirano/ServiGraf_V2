@@ -15,6 +15,7 @@ use App\Models\Usuarios\Modulo;
 use App\Models\Usuarios\ModPerfRol;
 use App\Http\Requests\Usuarios\StorePerfil;
 use App\Http\Requests\Usuarios\UpdatePerfil;
+use Illuminate\Database\Eloquent\Collection;
 
 class Perfiles extends Controller
 {
@@ -38,162 +39,87 @@ class Perfiles extends Controller
 
 	//vista todos los perfiles
 	public function show(){
-		if(Security::hasRol(71, 1)){
-			return view('Usuarios/perfiles');
-		} else {
-			$data = [
-				'type'=>'danger', 
-				'title'=>'NO AUTORIZADO', 
-				'message'=>'No estas autorizado a realizar esta operacion'
-			];
-			return redirect('tablero')->with(['actionStatus' => json_encode($data)]);
-		}
+		return view('Usuarios/perfiles');
 	}
 
 	//vista nuevo perfil
 	public function create(){
-		if(Security::hasRol(71, 2)){
-			$modules = Modulo::todos();
-			$perfil = new Perfil;
-			$modPerf = '';
-			$data = [
-				'path'=>route('perfil.nuevo'), 
-				'text'=>'Nuevo perfil', 
-				'action'=>'Crear',
-				'method'=>'POST',
-				// 'modules'=>json_decode($modules)
-			];
-			return view('Usuarios/perfil', compact('modules', 'perfil', 'modPerf'))->with($data);
-		} else {
-			$data = [
-				'type'=>'danger', 
-				'title'=>'NO AUTORIZADO', 
-				'message'=>'No estas autorizado a realizar esta operacion'
-			];
-			return redirect()->route('perfiles')->with(['actionStatus' => json_encode($data)]);
-		}
+		$modules = Modulo::todos();
+		$perfil = new Perfil;
+		$modPerf = new Collection([]);
+		$data = [
+			'path'=>route('perfil.nuevo'), 
+			'text'=>'Nuevo perfil', 
+			'action'=>'Crear',
+			'method'=>'POST',
+			// 'modules'=>json_decode($modules)
+		];
+		return view('Usuarios/perfil', compact('modules', 'perfil', 'modPerf'))->with($data);
 	}
 
 	//crear nuevo perfil
 	public function store(StorePerfil $request){
-		if(Security::hasRol(71, 2)){
-			$validator = $request->validated();
-
-			$perfil = new Perfil;
-			$perfil->empresa_id = Auth::user()->empresa_id;
-			$perfil->perfil = $request->perfil;
-			$perfil->descripcion = $request->descripcion;
-			$perfil->save();
-
-			ModPerfRol::where('perfil_id', $perfil->id)->delete();
-			$filtered = $request->except(['_token', 'perfil', 'descripcion', 'status']);
-			$data = [];
-			foreach($filtered as $key=>$val){
-				$modRol = explode('-', $key);
-				$data[$modRol[0]] = $modRol[1];
-			}
-			foreach($data as $mod=>$rol){
-				$modPerfRol = new ModPerfRol;
-				$modPerfRol->perfil_id = $perfil->id;
-				$modPerfRol->modulo_id = $mod;
-				$modPerfRol->rol_id = $rol;
-				$modPerfRol->save();
-			}
-
-			$data = [
-				'type'=>'success', 
-				'title'=>'Accion completada', 
-				'message'=>'El perfil se ha creado con exito'
-			];
-			return redirect('perfil/modificar/'.$perfil->id)->withInput()->with(['actionStatus' => json_encode($data)]);
-			
-		} else {
-			$data = [
-				'type'=>'danger', 
-				'title'=>'NO AUTORIZADO', 
-				'message'=>'No estas autorizado a realizar esta operacion'
-			];
-			return redirect('perfiles')->with(['actionStatus' => json_encode($data)]);
+		$validator = $request->validated();
+		$validator['empresa_id'] = Auth::user()->empresa_id;
+		
+		$perfil = Perfil::create($validator);
+		
+		ModPerfRol::where('perfil_id', $perfil->id)->delete();
+		foreach($validator['mod'] as $key => $value){
+			$modPerfRol = new ModPerfRol;
+			$modPerfRol->perfil_id = $perfil->id;
+			$modPerfRol->modulo_id = $key;
+			$modPerfRol->rol_id = count($value);
+			$modPerfRol->save();
 		}
+
+		$data = [
+			'type'=>'success', 
+			'title'=>'Accion completada', 
+			'message'=>'El perfil se ha creado con exito'
+		];
+		return redirect()->route('perfil.modificar', $perfil->id)->withInput()->with(['actionStatus' => json_encode($data)]);
 	}
 
 	//ver modificar perfil
 	public function edit(Perfil $perfil){
-		if(Security::hasRol(71, 3)){
-			$modules = Modulo::todos();
-			$data = [
-				'path'=>route('perfil.modificar', $perfil->id), 
-				'text'=>'Modificar perfil', 
-				'action'=>'Modificar',
-				'method'=>'PUT',
-			];
-			
-			$modPerf = $perfil->modulos;
-			$modPerf = $modPerf->map(function($modPerf){ return $modPerf->modulo_id.'-'.$modPerf->rol_id; });
-			
-			return view('Usuarios/perfil', compact('modules', 'perfil', 'modPerf'))->with($data);
-		} else {
-			$data = [
-				'type'=>'danger', 
-				'title'=>'NO AUTORIZADO', 
-				'message'=>'No estas autorizado a realizar esta operacion'
-			];
-			return redirect('perfiles')->with(['actionStatus' => json_encode($data)]);
-		}
+		$modules = Modulo::todos();
+		$data = [
+			'path'=>route('perfil.modificar', $perfil->id), 
+			'text'=>'Modificar perfil', 
+			'action'=>'Modificar',
+			'method'=>'PUT',
+		];
+		
+		$modPerf = $perfil->modulos;
+		
+		return view('Usuarios/perfil', compact('modules', 'perfil', 'modPerf'))->with($data);
 	}
 
 	//modificar perfil
-	public function update(Request $request, $perfil_id){
-		if(Security::hasRol(71, 3)){
-			$messages = [
-				'required' => 'El campo :attribute es requerido.',
-				'max' => 'El campo :attribute debe ser menor a :max caracteres.'
-			];
-			$validator = Validator::make($request->all(), [
-        'perfil' => 'required|max:50',
-        'descripcion' => 'required|max:140'
-			], $messages);
-			if ($validator->fails()) {
-				return back()->withErrors($validator)->withInput();
-      }
+	public function update(UpdatePerfil $request, Perfil $perfil){
+		$validator = $request->validated();
+		// dd($validator);
 
-			$perfil = Perfil::find($perfil_id);
-			$perfil->perfil = $request->perfil;
-			$perfil->descripcion = $request->descripcion;
-			$perfil->status = $request->status?1:0;
-			$perfil->save();
+		$validator['status'] = $validator['status'] ?? 0;
+		$perfil->update($validator);
 
 
-			ModPerfRol::where('perfil_id', $perfil_id)->delete();
-			$filtered = $request->except(['_token', 'perfil', 'descripcion', 'status']);
-			$data = [];
-			foreach($filtered as $key=>$val){
-				$modRol = explode('-', $key);
-				$data[$modRol[0]] = $modRol[1];
-			}
-			foreach($data as $mod=>$rol){
-				$modPerfRol = new ModPerfRol;
-				$modPerfRol->perfil_id = $perfil_id;
-				$modPerfRol->modulo_id = $mod;
-				$modPerfRol->rol_id = $rol;
-				$modPerfRol->save();
-			}
-
-			$data = [
-				'type'=>'success', 
-				'title'=>'Accion completada', 
-				'message'=>'El perfil se ha modificado con exito'
-			];
-			return redirect('perfil/modificar/'.$perfil_id)->with(['actionStatus' => json_encode($data)]);
-			
-		} else {
-			$data = [
-				'type'=>'danger', 
-				'title'=>'NO AUTORIZADO', 
-				'message'=>'No estas autorizado a realizar esta operacion'
-			];
-			return redirect('perfiles')->with(['actionStatus' => json_encode($data)]);
+		ModPerfRol::where('perfil_id', $perfil->id)->delete();
+		foreach($validator['mod'] as $key => $value){
+			$modPerfRol = new ModPerfRol;
+			$modPerfRol->perfil_id = $perfil->id;
+			$modPerfRol->modulo_id = $key;
+			$modPerfRol->rol_id = count($value);
+			$modPerfRol->save();
 		}
+
+		$data = [
+			'type'=>'success', 
+			'title'=>'Accion completada', 
+			'message'=>'El perfil se ha modificado con exito'
+		];
+		return redirect()->route('perfil.modificar', $perfil->id)->with(['actionStatus' => json_encode($data)]);
 	}
 
 

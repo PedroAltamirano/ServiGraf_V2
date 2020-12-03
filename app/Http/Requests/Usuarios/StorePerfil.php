@@ -24,9 +24,10 @@ class StorePerfil extends FormRequest
     public static function rules()
     {
         return [
-            'perfil' => 'required|max:50|unique:perfiles,perfil,empresa_id',
+            'nombre' => 'required|max:50|unique:perfiles,nombre,empresa_id',
             'descripcion' => 'required|max:140',
-            'status' => 'required'
+            'status' => 'required',
+            'mod.*.*' => 'string|nullable'
         ];
     }
 }

@@ -15,11 +15,11 @@ class Perfil extends Model
   ];
 
   protected $fillable = [
-    'id', 'nombre', 'descripcion', 'status'
+    'id', 'nombre', 'descripcion', 'status', 'empresa_id'
   ];
 
   protected $hidden = [
-    'created_at', 'updated_at', 'empresa_id'
+    'created_at', 'updated_at'
   ];
 
   public function modulos()

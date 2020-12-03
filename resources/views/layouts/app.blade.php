@@ -21,10 +21,27 @@
   <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
   
   @yield('links')
+
+  <style>
+    .floating-action-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+    }
+    .bg-primary-80{
+      background-color: rgba(59, 89, 152, 0.8)!important;
+      border-color: rgba(59, 89, 152, 0.8)!important;
+    }
+    ul.dropdown-menu {
+      box-shadow: none;
+      border: 0;
+      min-width:0;
+      background:transparent
+    }
+  </style>
 </head>
 
 <body class="sidebar-toggled">
-  
   <nav class="navbar navbar-expand navbar-dark bg-primary d-flex justify-content-lg-between sticky-top shadow">
     <button class="btn btn-link btn-sm text-white order-0 mr-3" id="sidebarToggle">
       <i class="fas fa-bars"></i>
@@ -52,9 +69,6 @@
     <!-- WRAPPER -->
     <div  id="content-wrapper" class="d-flex flex-column p-0 m-0">
       <div id="content" style="padding:0 0 40px 0;">
-        {{-- <div class="m-2 m-md-3 p-0">
-          @json(session()->all())
-        </div> --}}
         @yield('desktop-content')
       </div>
 
@@ -71,9 +85,7 @@
   <!-- /#wrapper -->
 
   <!-- floating action button -->
-  <div id="fab" style="position:fixed; bottom:0; right:0;">
-    <fab-comp></fab-comp>
-  </div>
+  <x-fab></x-fab>
 
   <!-- Logout Modal-->
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
