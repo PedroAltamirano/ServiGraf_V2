@@ -119,6 +119,7 @@
   <!-- JavaScript -->
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{ asset('js/helpers.js') }}"></script>
+  <script src="//cdn.datatables.net/plug-ins/1.10.22/api/sum().js"></script>
 
   @yield('scripts')
   @yield('after.scripts')

@@ -184,9 +184,9 @@
       };
 
       // Total over this page
-      var totTotal = api.column('total:name', {search: 'applied'}).data().reduce(function (a, b){ return intVal(a) + intVal(b); }, 0);
-      var aboTotal = api.column('abonos:name', {search: 'applied'}).data().reduce(function (a, b){ return intVal(a) + intVal(b); }, 0);
-      var salTotal = api.column('saldo:name', {search: 'applied'}).data().reduce(function (a, b){ return intVal(a) + intVal(b); }, 0);
+      var totTotal = api.column('total:name', {search: 'applied'}).data().sum();
+      var aboTotal = api.column('abonos:name', {search: 'applied'}).data().sum();
+      var salTotal = api.column('saldo:name', {search: 'applied'}).data().sum();
 
       // Update footer
       $("#clmtotal").html(totTotal.toFixed(2));

@@ -105,9 +105,6 @@
 <script>
   let servicios = @json($servicios);
   $('#cliente').select2();
-  @foreach($servicios as $servicio)
-  var {{'runServ'.$servicio->id}};
-  @endforeach
   
   // console.log(areas.length);
   var table = $('#table').DataTable({
@@ -145,7 +142,6 @@
       @foreach($servicios as $servicio)
       {"name":"{{$servicio->servicio.$servicio->id}}", "data":"servicios", "defaultContent": "", "render":function(data, type, full, meta){
         let servicio = data.find(record => record.servicio_id === '{{ $servicio->id }}');
-        {{'runServ'.$servicio->id}} = {{'runServ'.$servicio->id}} + (servicio ? servicio.totalServicio : 0);
         return servicio ? servicio.totalServicio : '';
       }},
       @endforeach
@@ -181,15 +177,17 @@
       };
 
       // Total over this page
-      var totTotal = api.column('total:name', {search: 'applied'}).data().reduce(function (a, b){ return intVal(a) + intVal(b); }, 0);
+      var totTotal = api.column('total:name', {search: 'applied'}).data().sum();
       // Update footer
       $("#clmtotal").html(totTotal.toFixed(2));
+
+      @foreach($servicios as $servicio)
+      let {{'data'.$servicio->servicio.$servicio->id}} = api.column('{{$servicio->servicio.$servicio->id}}:name', {search: 'applied'}).cache('search');
+      let {{'tot'.$servicio->servicio.$servicio->id}} = {{'data'.$servicio->servicio.$servicio->id}}.length ? {{'data'.$servicio->servicio.$servicio->id}}.sum() : 0;
+      $("#{{$servicio->servicio.$servicio->id}}").html({{'tot'.$servicio->servicio.$servicio->id}}.toFixed(2));
+      @endforeach
     }
   });
-
-  // $('#refresh').on('click', function(){
-  //   table.ajax.reload(null, false);
-  // });
 
   $('.refresh').on('change', function(){
     table.ajax.reload(null, false);
