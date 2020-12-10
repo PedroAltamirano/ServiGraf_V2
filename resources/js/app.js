@@ -1,6 +1,7 @@
 require('./bootstrap');
 require('jquery');
 require('select2/dist/js/select2.min.js');
+require('dropify/dist/js/dropify.min.js');
 
 // Node Modules
 import 'popper.js';
@@ -18,6 +19,7 @@ import 'datatables.net-responsive-bs4';
 import 'datatables.net-rowgroup-bs4';
 
 require('../../resources/js/sb-admin-2.min.js');
+require('../../resources/js/helpers.js');
 
 //components
 // import blueBoard from './components/blueBoard.vue';
