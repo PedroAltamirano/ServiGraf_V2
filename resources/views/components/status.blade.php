@@ -2,7 +2,7 @@
 @if(session('actionStatus'))
 {{-- {{session('actionStatus')}} --}}
 <div class="modal fade modal-status" id="actionStatusModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">{{ json_decode(session('actionStatus'))->title }}</h5>

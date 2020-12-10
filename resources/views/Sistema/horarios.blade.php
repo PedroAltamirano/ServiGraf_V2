@@ -23,6 +23,12 @@
   <table id="table" class="table table-striped table-sm">
     <thead>
       <tr>
+        <td></td>
+        <td colspan="2">Jornada matutina</td>
+        <td colspan="2">Jornada vespertina</td>
+        <td colspan="3"></td>
+      </tr>
+      <tr>
         <th scope="col">Nombre</th>
         <th scope="col">Llegada</th>
         <th scope="col">Salida</th>
