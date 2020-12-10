@@ -9,15 +9,15 @@ class Material extends Model
     protected $table = 'materiales';
 
     public $attributes =[
-        'uv' => 0, 'plastificado' => 0
+        'color' => 0, 'uv' => 0, 'plastificado' => 0
     ];
 
     protected $fillable = [
-        'descripcion', 'categoria_id', 'alto', 'ancho', 'precio', 'uv', 'plastifiacado'
+        'empresa_id', 'descripcion', 'categoria_id', 'color', 'alto', 'ancho', 'precio', 'uv', 'plastificado'
     ];
 
     protected $hidden = [
-        'created_at', 'updated_at', 'empresa_id'
+        'created_at', 'updated_at', 
     ];
 
     public function categoria(){

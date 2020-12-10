@@ -61,7 +61,5 @@ Route::middleware('auth')
     include('usuarios.php');
 
     //SISTEMA
-    Route::get('/horarios', 'Horarios@show')->name('horarios');
-    Route::get('/empresa', 'Empresa@show')->name('empresa');
-    Route::get('/claves', 'Claves@show')->name('claves');
+    include('sistema.php');
 });

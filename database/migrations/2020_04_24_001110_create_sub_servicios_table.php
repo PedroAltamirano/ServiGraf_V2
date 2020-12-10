@@ -17,6 +17,8 @@ class CreateSubServiciosTable extends Migration
             $table->mediumIncrements('id');
             $table->unsignedMediumInteger('servicio_id');
             $table->foreign('servicio_id')->references('id')->on('servicios');
+            $table->time('tmaquina', 0)->nullable();
+            $table->time('toperador', 0)->nullable();
             $table->string('subservicio', 30);
             $table->timestamps();
         });

@@ -22,13 +22,14 @@ class CreateDatosEmpresasTable extends Migration
             $table->string('nombre', 50);
             $table->string('representante', 50);
             $table->string('ruc', 14);
-            $table->string('direccion', 128);
+            $table->string('direccion', 250);
             $table->unsignedInteger('telefono');
             $table->unsignedInteger('celular');
-            $table->string('web', 128);
+            $table->string('web', 250);
             $table->string('correo', 50);
             $table->unsignedMediumInteger('inicio');
             $table->unsignedTinyInteger('iva');
+            $table->string('cloud', 250);
             $table->timestamps();
         });
     }

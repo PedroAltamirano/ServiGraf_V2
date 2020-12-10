@@ -24,8 +24,9 @@ class CreateFactEmprsTable extends Migration
             $table->unsignedMediumInteger('inicio');
             $table->date('valido_de');
             $table->date('valido_a');
-            $table->unsignedTinyInteger('impresion');
+            $table->boolean('impresion');
             $table->string('logo');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

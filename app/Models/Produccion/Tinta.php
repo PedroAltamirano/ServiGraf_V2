@@ -7,4 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tinta extends Model
 {
     protected $table = 'tintas';
+    protected $fillable = [
+        'empresa_id', 'color'
+    ];
 }

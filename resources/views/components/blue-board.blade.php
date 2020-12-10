@@ -8,6 +8,8 @@
                 <div class="mr-2 mr-md-3">
                     @if ($item['tipo'] == 'link')
                     <a id="{{ $item['id'] }}" href="{{ $item['href'] }}" class="text-blue-8">{{ $item['text'] }} <i class="fas fa-arrow-alt-circle-right fa-md"></i></a>
+                    @elseif ($item['tipo'] == 'modal')
+                    <a id="{{ $item['id'] }}" href="{{ $item['href'] }}" class="text-blue-8" data-toggle="modal">{{ $item['text'] }} <i class="fas fa-arrow-alt-circle-right fa-md"></i></a>
                     @endif
                 </div>
                 @endforeach

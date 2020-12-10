@@ -2,7 +2,6 @@
 namespace App\Http\Controllers\Produccion;
 
 use Auth;
-use App\Security;
 use Carbon\Carbon;
 
 use App\Models\Produccion\Pedido;

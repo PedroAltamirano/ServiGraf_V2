@@ -55,6 +55,16 @@ return [
             'visibility' => 'public',
         ],
 
+        'facturas' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/facturas'),
+        ],
+
+        'usuarios' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/usuarios'),
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

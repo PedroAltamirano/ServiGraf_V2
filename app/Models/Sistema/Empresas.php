@@ -16,6 +16,11 @@ class Empresas extends Model{
         'id', 'nombre', 'status'
     ];
 
+    public function datos()
+    {
+        return $this->hasOne('App\Models\Sistema\DatosEmpresa', 'empresa_id');
+    }
+    
     public function nomina() {
         return $this->hasMany('App\Models\Sistema\Nomina', 'empresa_id');
     }

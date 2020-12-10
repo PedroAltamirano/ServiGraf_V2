@@ -14,10 +14,6 @@ class Horario extends Model
     ];
 
     protected $fillable = [
-        'nombre', 'llegada_ma', 'salida_ma', 'llegada_ta', 'salida_ta'
-    ];
-
-    protected $hidden = [
-        'empresa_id'
+        'empresa_id', 'nombre', 'llegada_ma', 'salida_ma', 'llegada_ta', 'salida_ta', 'espera', 'gracia',
     ];
 }

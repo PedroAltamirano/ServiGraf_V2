@@ -141,7 +141,7 @@
     <div class="dropdown-menu collapse" id="collapseSys" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <a class="dropdown-item" href="{{Route('horarios')}}">Horarios</a>
       <a class="dropdown-item" href="{{Route('empresa')}}">Mi empresa</a>
-      <a class="dropdown-item" href="{{Route('claves')}}">Claves</a>
+      <a class="dropdown-item confirmModal" href="#confirmModal" data-route="{{Route('claves')}}" data-toggle="modal">Claves</a>
     </div>
   </li>
   @endif

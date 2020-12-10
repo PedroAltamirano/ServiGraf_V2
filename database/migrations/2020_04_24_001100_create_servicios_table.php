@@ -21,6 +21,8 @@ class CreateServiciosTable extends Migration
             $table->foreign('area_id')->references('id')->on('areas');
             $table->string('servicio', 140);
             $table->unsignedDecimal('meta', 7, 2)->default(0.00);
+            $table->time('tmaquina', 0)->nullable();
+            $table->time('toperador', 0)->nullable();
             $table->boolean('tipo')->default(1); //interno o externo
             $table->boolean('subprocesos')->default(0);
             $table->boolean('seguimiento')->default(0);

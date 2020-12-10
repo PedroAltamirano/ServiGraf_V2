@@ -20,6 +20,7 @@ class CreateMaterialsTable extends Migration
             $table->string('descripcion', 140);
             $table->unsignedSmallInteger('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('categorias');
+            $table->boolean('color');
             $table->unsignedDecimal('alto', 5, 2)->nullable();
             $table->unsignedDecimal('ancho', 5, 2)->nullable();
             $table->unsignedDecimal('precio', 5, 2)->nullable();

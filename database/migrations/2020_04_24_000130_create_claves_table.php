@@ -19,9 +19,9 @@ class CreateClavesTable extends Migration
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->string('cuenta', 30);
             $table->string('usuario', 30);
-            $table->string('clave', 128);
-            $table->string('refuerzo', 128)->default('');
-            $table->string('url', 50)->default('');
+            $table->text('clave');
+            $table->text('refuerzo')->nullable();
+            $table->string('url')->nullable();
             $table->timestamps();
         });
     }
