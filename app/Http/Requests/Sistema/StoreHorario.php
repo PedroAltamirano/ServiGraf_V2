@@ -24,13 +24,13 @@ class StoreHorario extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => [],
-            'llegada_ma' => [],
-            'salida_ma' => [],
-            'llegada_ta' => [],
-            'salida_ta' => [],
-            'espera' => [],
-            'gracia' => [],
+            'nombre' => ['required', 'string', 'max:30'],
+            'llegada_ma' => ['required', 'date_format:H:i'],
+            'salida_ma' => ['required', 'date_format:H:i'],
+            'llegada_ta' => ['required', 'date_format:H:i'],
+            'salida_ta' => ['required', 'date_format:H:i'],
+            'espera' => ['required', 'numeric', 'max:60', 'min:0'],
+            'gracia' => ['required', 'numeric', 'max:60', 'min:0'],
         ];
     }
 }

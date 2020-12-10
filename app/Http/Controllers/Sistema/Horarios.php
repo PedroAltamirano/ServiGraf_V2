@@ -31,23 +31,6 @@ class Horarios extends Controller
     return view('Sistema.horarios', compact('horarios'));
   }
 
-  /**
-  * Show the application dashboard.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function create(){
-    $horario = new Horario;
-    $data = [
-      'text' => 'Nuevo Horario',
-      'path' => route('horario.create'),
-      'method' => 'POST',
-      'action' => 'Crear',
-      'mod' => 0,
-    ];
-    return view('Sistema.horario', compact('horario'))->with($data);
-  }
-
   // crear nuevo
   public function store(StoreHorario $request){
     $validator = $request->validated();
@@ -59,19 +42,7 @@ class Horarios extends Controller
       'title'=>'Acción completada',
       'message'=>'El horario se ha creado con éxito'
     ];
-    return redirect()->route('horario.edit', $horario->id)->with(['actionStatus' => json_encode($data)]);
-  }
-
-  //ver modificar
-  public function edit(Horario $horario){
-    $data = [
-      'text'=>'Modificar Horario',
-      'path'=> route('horario.update', $horario->id),
-      'method' => 'PUT',
-      'action'=>'Modificar',
-      'mod' => 1,
-    ];
-    return view('Sistema.horario', compact('horario', 'categorias'))->with($data);
+    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
   }
 
   //modificar perfil
@@ -84,6 +55,6 @@ class Horarios extends Controller
       'title'=>'Acción completada',
       'message'=>'El horario se ha modificado con éxito'
     ];
-    return redirect()->route('horario.edit', $horario->id)->with(['actionStatus' => json_encode($data)]);
+    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
   }
 }

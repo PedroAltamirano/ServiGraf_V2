@@ -62,37 +62,45 @@
 </x-blueBoard>
 
 <!-- Modal CATEGORIA -->
-<div id="modalClave" class="modal fade">
+<div id="modalHorario" class="modal fade">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title"></h5>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <form action="{{ route('clave.store') }}" method="post" class="modal-path" enctype="multipart/form-data">
+      <form action="{{ route('horario.store') }}" method="post" class="modal-path">
         @csrf
         @method('POST')
         <div class="modal-body">
           <div class="form-row">
-            <div class="form-group col-6 col-md-6">
-              <label for="cuenta">Cuenta</label>
-              <input type="text" name="cuenta" id="cuenta" class="form-control modal-cuenta @error('cuenta') is-invalid @enderror" value="{{ old('cuenta') }}">
+            <div class="form-group col-12">
+              <label for="nombre">Nombre</label>
+              <input type="text" name="nombre" id="nombre" class="form-control modal-nombre @error('nombre') is-invalid @enderror" value="{{ old('nombre') }}">
             </div>
-            <div class="form-group col-6 col-md-6">
-              <label for="usuario">Usuario</label>
-              <input type="text" name="usuario" id="usuario" class="form-control modal-usuario @error('usuario') is-invalid @enderror" value="{{ old('usuario') }}">
+            <div class="form-group col-6">
+              <label for="tillegada_mame">Llegada mañana</label>
+              <input type="time" name="llegada_ma" id="llegada_ma" class="form-control modal-llegada_ma @error('llegada_ma') is-invalid @enderror" value="{{ old('llegada_ma') }}">
             </div>
-            <div class="form-group col-6 col-md-6">
-              <label for="clave">Clave</label>
-              <input type="text" name="clave" id="clave" class="form-control modal-clave @error('clave') is-invalid @enderror" value="{{ old('clave') }}">
+            <div class="form-group col-6">
+              <label for="salida_ma">Salida mañana</label>
+              <input type="time" name="salida_ma" id="salida_ma" class="form-control modal-salida_ma @error('salida_ma') is-invalid @enderror" value="{{ old('salida_ma') }}">
             </div>
-            <div class="form-group col-12 col-md-6">
-              <label for="refuerzo">Refuerzo</label>
-              <input type="text" name="refuerzo" id="refuerzo" class="form-control modal-refuerzo @error('refuerzo') is-invalid @enderror" value="{{ old('refuerzo') }}">
+            <div class="form-group col-6">
+              <label for="llegada_ta">Llegada tarde</label>
+              <input type="time" name="llegada_ta" id="llegada_ta" class="form-control modal-llegada_ta @error('llegada_ta') is-invalid @enderror" value="{{ old('llegada_ta') }}">
             </div>
-            <div class="form-group col-12 col-md-6">
-              <label for="url">Url</label>
-              <input type="text" name="url" id="url" class="form-control modal-url @error('url') is-invalid @enderror" value="{{ old('url') }}">
+            <div class="form-group col-6">
+              <label for="salida_ta">Salida tarde</label>
+              <input type="time" name="salida_ta" id="salida_ta" class="form-control modal-salida_ta @error('salida_ta') is-invalid @enderror" value="{{ old('salida_ta') }}">
+            </div>
+            <div class="form-group col-6">
+              <label for="espera">Espera</label>
+              <input type="number" max="60" min="" name="espera" id="espera" class="form-control modal-espera @error('espera') is-invalid @enderror" value="{{ old('espera') }}">
+            </div>
+            <div class="form-group col-6">
+              <label for="gracia">gracia</label>
+              <input type="number" max="60" min="" name="gracia" id="gracia" class="form-control modal-gracia @error('gracia') is-invalid @enderror" value="{{ old('gracia') }}">
             </div>
           </div>
         </div>
@@ -103,7 +111,7 @@
       </form>
     </div>
   </div>
-<Horario
+</div>
 @endsection
 
 @section('scripts')
@@ -120,13 +128,15 @@
   // CATEGORIAS
   $('#newHorario').on('click', function (event) {
     var modal = $('#modalHorario');
-    modal.find('.modal-title').html('Nueva Horario');
-    modal.find('.modal-cuenta').val('');
-    modal.find('.modal-usuario').val('');
-    modal.find('.modal-clave').val('');
-    modal.find('.modal-refuerzo').val('');
-    modal.find('.modal-url').val('');
-    modal.find('.modal-path').attr('action', '{{ route("clave.store") }}');
+    modal.find('.modal-title').html('Nuevo Horario');
+    modal.find('.modal-nombre').val('');
+    modal.find('.modal-llegada_ma').val('');
+    modal.find('.modal-salida_ma').val('');
+    modal.find('.modal-llegada_ta').val('');
+    modal.find('.modal-salida_ta').val('');
+    modal.find('.modal-espera').val('');
+    modal.find('.modal-gracia').val('');
+    modal.find('.modal-path').attr('action', '{{ route("horario.store") }}');
     modal.find('input[name="_method"]').val('POST');
   });
 
@@ -134,20 +144,15 @@
     var button = $(this);
     var modal = $('#modalHorario');
     modal.find('.modal-title').html('Modificar Horario');
-    modal.find('.modal-cuenta').val(button.data('cuenta'));
-    modal.find('.modal-usuario').val(button.data('usuario'));
-    modal.find('.modal-clave').val(button.data('clave'));
-    modal.find('.modal-refuerzo').val(button.data('refuerzo'));
-    modal.find('.modal-url').val(button.data('url'));
+    modal.find('.modal-nombre').val(button.data('nombre'));
+    modal.find('.modal-llegada_ma').val(button.data('llegada_ma'));
+    modal.find('.modal-salida_ma').val(button.data('salida_ma'));
+    modal.find('.modal-llegada_ta').val(button.data('llegada_ta'));
+    modal.find('.modal-salida_ta').val(button.data('salida_ta'));
+    modal.find('.modal-espera').val(button.data('espera'));
+    modal.find('.modal-gracia').val(button.data('gracia'));
     modal.find('.modal-path').attr('action', button.data('route'));
     modal.find('input[name="_method"]').val('PUT');
   });
-
-  $('.delClave').on('click', function (event) {
-    var button = $(this);
-    var modal = $('#deleteAlert');
-    modal.find('.modal-path').attr('action', button.data('route'));
-  });
-
 </script>
 @endsection
