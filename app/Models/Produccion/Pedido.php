@@ -3,7 +3,7 @@
 namespace App\Models\Produccion;
 
 use Illuminate\Database\Eloquent\Model;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Produccion\Pedido_servicio;
 use App\Models\Produccion\Servicio;
@@ -11,6 +11,7 @@ use App\Models\Produccion\Sub_servicio;
 
 class Pedido extends Model
 {
+    public static $own = false;
     protected $table = 'pedidos';
 
     public $attributes =[
@@ -80,7 +81,11 @@ class Pedido extends Model
         $incompletos = Pedido_servicio::where([['empresa_id', '=', auth()->user()->empresa_id], ['status', '=', '0']])
                                         ->groupBy('pedido_id')
                                         ->select('pedido_id')
-                                        ->get();
+                                        ->where(function($query) {
+                                            if(self::$own){
+                                              $query->whereIn('servicio_id', Auth::user()->procesos->map(function($c){return $c->id;})->toArray());
+                                            }
+                                        })->get();
         $incompletos = $incompletos->map(function($incompletos){return $incompletos->pedido_id;});
 
         return Pedido::whereIn('id', $incompletos)->where('estado',  '!=', '3')->select('id', 'numero', 'cliente_id', 'detalle', 'cantidad')->get();

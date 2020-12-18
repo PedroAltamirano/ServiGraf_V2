@@ -2,6 +2,7 @@ require('./bootstrap');
 require('jquery');
 require('select2/dist/js/select2.min.js');
 require('dropify/dist/js/dropify.min.js');
+require('chart.js/dist/Chart.js');
 
 // Node Modules
 import 'popper.js';

@@ -17,20 +17,20 @@ class CreateNominaTable extends Migration
             $table->unsignedBigInteger('empresa_id');
             //DATOS PERSONALES
             $table->unsignedInteger('cedula')->primary();
-            $table->string('foto', 100)->nullable();
+            $table->string('foto')->nullable();
             $table->date('fecha_nacimiento');
             $table->string('lugar_nacimiento', 100);
             $table->string('nacionalidad', 50);
             $table->string('idioma_nativo', 50);
-            $table->string('nombre', 20);
-            $table->string('apellido', 20);
-            $table->string('direccion', 256);
+            $table->string('nombre', 30);
+            $table->string('apellido', 30);
+            $table->string('direccion');
             $table->string('sector', 30);
             $table->boolean('visita_domiciliaria')->default(0);
             $table->date('fecha_visita')->nullable();
             $table->unsignedInteger('telefono')->nullable();
             $table->unsignedInteger('celular');
-            $table->string('correo', 50)->unique();
+            $table->string('correo')->unique();
             $table->unsignedTinyInteger('tipo_sangre'); //1A+, 2...
             $table->text('padecimientos_medicos')->nullable();
             $table->unsignedTinyInteger('genero'); //1masculino, 2femenino
@@ -50,7 +50,7 @@ class CreateNominaTable extends Migration
             $table->unsignedTinyInteger('banco_id');
             $table->unsignedTinyInteger('tipo_cuenta_banco'); //1ahorros, 2corriente
             $table->string('numero_cuenta_bancaria', 20);
-            $table->string('observaciones', 250)->nullable();
+            $table->string('observaciones')->nullable();
             //permisos adicionales
             $table->boolean('status')->default(1); //estado del empeado
             $table->unsignedMediumInteger('horario_id')->default(0);

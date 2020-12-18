@@ -20,11 +20,11 @@ class Usuario extends Authenticatable
     ];
 
     protected $fillable = [
-        'cedula', 'empresa_id', 'usuario', 'perfil_id', 'reservarot', 'libro', 'status', 'password'
+        'cedula', 'empresa_id', 'usuario', 'perfil_id', 'reservarot', 'libro', 'status', 'password', 'utilidad',
     ];
 
     protected $hidden = [
-        'created_at', 'updated_at', 'remember_token'
+        'created_at', 'updated_at', 'remember_token',
     ];
 
     protected $casts = [
@@ -37,5 +37,19 @@ class Usuario extends Authenticatable
 
     public function empresa() {
         return $this->belongsTo('App\Models\Sistema\Empresas', 'empresa_id');
+    }
+
+    public function modulos() {
+        return $this->hasMany('App\Models\Usuarios\ModPerfRol', 'perfil_id', 'perfil_id');
+    }
+
+    public function procesos()
+    {
+        return $this->hasManyThrough('App\Models\Produccion\Servicio', 'App\Models\Usuarios\UsuarioServicios', 'usuario_id', 'id', 'cedula', 'servicio_id');
+    }
+
+    public function clientes()
+    {
+        return $this->hasManyThrough('App\Models\Ventas\Cliente', 'App\Models\Usuarios\UsuarioClientes', 'usuario_id', 'id', 'cedula', 'cliente_id');
     }
 }

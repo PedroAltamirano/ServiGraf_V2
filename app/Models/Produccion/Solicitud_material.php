@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Solicitud_material extends Model
 {
-    protected $table = 'solicitud_materials';
+  protected $table = 'solicitud_materials';
+
+  public function material()
+  {
+      return $this->belongsTo('App\Models\Produccion\Material', 'material_id');
+  }
 }

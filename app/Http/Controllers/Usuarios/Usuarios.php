@@ -8,8 +8,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Usuarios\Usuario;
+use App\Models\Usuarios\UsuarioServicios;
+use App\Models\Usuarios\UsuarioClientes;
 use App\Models\Usuarios\Perfil;
 use App\Models\Sistema\Nomina;
+use App\Models\Produccion\Servicio;
+use App\Models\Ventas\Cliente;
 use App\Http\Requests\Usuarios\Store;
 use App\Http\Requests\Usuarios\Update;
 
@@ -33,13 +37,16 @@ class Usuarios extends Controller
 
 	//ver todos los usuarios
 	public function show(){
-			return view('Usuarios/usuarios');
+		return view('Usuarios/usuarios');
 	}
 
 	//crear usuario view
 	public function create(){
 		$nomina = Nomina::availables();
 		$perfiles = Perfil::where('empresa_id', Auth::user()->empresa_id)->select('id', 'nombre')->get();
+		$procesos = Servicio::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
+		$actividades = [];
+		$clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
 		$data = [
 			'path'=>route('usuario.nuevo'),
 			'text'=>'Nuevo usuario',
@@ -50,7 +57,7 @@ class Usuarios extends Controller
 		];
 
 		$usuario = new Usuario;
-		return view('Usuarios/usuario', compact('usuario', 'nomina', 'perfiles'))->with($data);
+		return view('Usuarios/usuario', compact('usuario', 'nomina', 'perfiles', 'procesos', 'actividades', 'clientes'))->with($data);
 	}
 
 	 //crear nuevo
@@ -72,6 +79,9 @@ class Usuarios extends Controller
 	public function edit(Usuario $usuario){
 		$nomina = Nomina::todos();
 		$perfiles = Perfil::where('empresa_id', Auth::user()->empresa_id)->select('id', 'nombre')->get();
+		$procesos = Servicio::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
+		$actividades = [];
+		$clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
 		$data = [
 			'path'=> route('usuario.modificar', [$usuario->cedula]),
 			'text'=>'Modificar usuario',
@@ -81,17 +91,32 @@ class Usuarios extends Controller
 			'method'=>'PUT'
 		];
 
-		return view('Usuarios/usuario', compact('usuario', 'nomina', 'perfiles'))->with($data);
+		return view('Usuarios/usuario', compact('usuario', 'nomina', 'perfiles', 'procesos', 'actividades', 'clientes'))->with($data);
 	}
 
 	//modificar perfil
 	public function update(Update $request, Usuario $usuario){
 		$validator = $request->validated();
-		
 		$validator['reservarot'] = $validator['reservarot'] ?? 0;
 		$validator['libro'] = $validator['libro'] ?? 0;
 		$usuario->update($validator);
 		
+		UsuarioServicios::where('usuario_id', Auth::id())->delete();
+		foreach($validator['procesos'] as $pro){
+			$new = new UsuarioServicios;
+			$new->usuario_id = Auth::id();
+			$new->servicio_id = $pro;
+			$new->save();
+		}
+		
+		UsuarioClientes::where('usuario_id', Auth::id())->delete();
+		foreach($validator['clientes'] as $cli){
+			$new = new UsuarioClientes;
+			$new->usuario_id = Auth::id();
+			$new->cliente_id = $cli;
+			$new->save();
+		}
+
 		$data = [
 			'type'=>'success',
 			'title'=>'Acción completada',

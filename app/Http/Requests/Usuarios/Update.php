@@ -26,8 +26,12 @@ class Update extends FormRequest
         return [
             'cedula' => 'required|numeric',
             'usuario' => 'required|string|max:20',
-            'perfil_id' => 'required|numeric',
+            'perfil_id' => 'required|numeric|exists:perfiles,id',
+            'procesos.*' => 'nullable|numeric|exists:servicios,id',
+            'actividades.*' => 'nullable|numeric',
+            'clientes.*' => 'nullable|numeric|exists:clientes,id',
             'status' => 'required|boolean',
+            'utilidad' => 'nullable|boolean',
             'reservarot' => 'nullable|boolean',
             'libro' => 'nullable|boolean',
         ];

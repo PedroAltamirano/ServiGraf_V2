@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use App\Models\Usuarios\ModPerfRol;
 use App\Models\Usuarios\Usuario;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Illuminate\Http\Request;
@@ -20,7 +17,7 @@ class LoginController extends Controller
 
   use AuthenticatesUsers;
 
-  protected $redirectTo = 'desktop';
+  protected $redirectTo = 'tablero';
 
   public function __construct()
   {
@@ -34,7 +31,7 @@ class LoginController extends Controller
   public function getInfo(Request $request){
     // $ModPerfRol = ModPerfRol::where('perfil_id', Auth::user()->perfil_id)->get();
     // $request->session()->put('ModPerfRol', $ModPerfRol);
-    
+
     $user = Usuario::find(Auth::id());
     $userInfo = [];
     $userInfo['nomina'] = $user->nomina->nombre;
@@ -47,7 +44,7 @@ class LoginController extends Controller
     $credentials = $request->validate([
       'usuario' => 'string|required|max:20',
       'password' => 'string|required|max:128',
-      'cedula' => 'int|required|max:2499999999', 
+      'cedula' => 'int|required|max:2499999999',
     ]);
     $credentials['status'] = 1;
     $rememberMe = $request->get('remember');
@@ -58,7 +55,11 @@ class LoginController extends Controller
     }
     if(Auth::attempt($credentials, $rememberMe)){
       Self::getInfo($request);
-      return redirect()->route('desktop');
+      if(Auth::user()->modulos->where('modulo_id', 10)->count() > 0){
+        return redirect()->route('desktop');
+      } else {
+        return redirect()->route('tablero');
+      }
     } else {
       return back()->withErrors(['usuario' => 'Autorizacion fallida'])->withInput();
     }

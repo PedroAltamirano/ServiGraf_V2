@@ -57,7 +57,7 @@
         <input type="password" class="form-control  @error('passwordVer') is-invalid @enderror" name="password_confirmation" id="password_confirmation" placeholder="Contraseña" 
         value="{{ old('password_confirmation') }}" {{ isset($usuario->password) ? 'disabled':'' }}>
       </div>
-      <div class="form-group col-3 col-md-2">
+      <div class="form-group col-6 col-md-4">
         <label for="perfil_id">Perfil</label>
         <select class="custom-select @error('perfil_id') is-invalid @enderror" name="perfil_id" id="perfil_id">
           <option disabled selected>Select one</option>
@@ -69,11 +69,54 @@
           @endforeach
         </select>
       </div>
+      <div class="form-group col-6 col-md-4">
+        <label for="procesos">Procesos</label>
+        <select class="custom-select select2 @error('procesos') is-invalid @enderror" name="procesos[]" id="procesos" multiple>
+          <option disabled>Select one</option>
+          @php($array = old('procesos') ?? $usuario->procesos->map(function($c){return $c->id;})->toArray())
+          @foreach ($procesos as $item)
+          <option value="{{ $item->id }}" {{ in_array($item->id, $array) ? 'selected':'' }}>
+            {{ $item->servicio }}
+          </option>
+          @endforeach
+        </select>
+      </div>
+      <div class="form-group col-6 col-md-4">
+        <label for="actividades">Actividades</label>
+        <select class="custom-select select2 @error('actividades') is-invalid @enderror" name="actividades[]" id="actividades" disabled multiple>
+          <option disabled>Select one</option>
+          @php($array = old('actividades', $usuario->actividades) ?? [])
+          @foreach ($actividades as $item)
+          <option value="{{ $item->id }}" {{ in_array($item->id, $array) ? 'selected':'' }}>
+            {{ $item->nombre }}
+          </option>
+          @endforeach
+        </select>
+      </div>
+      <div class="form-group col-6 col-md-4">
+        <label for="clientes">Clientes Seguimiento</label>
+        <select class="custom-select select2 @error('clientes') is-invalid @enderror" name="clientes[]" id="clientes" multiple>
+          <option disabled>Select one</option>
+          @php($array = old('clientes') ?? $usuario->clientes->map(function($c){return $c->id;})->toArray())
+          @foreach ($clientes as $item)
+          <option value="{{ $item->id }}" {{ in_array($item->id, $array) ? 'selected':'' }}>
+            {{ $item->contacto->nombre.' '.$item->contacto->apellido.' / '.$item->empresa->nombre }}
+          </option>
+          @endforeach
+        </select>
+      </div>
       <div class="form-group col-3 col-md-2">
         <label for="statusDiv">Activo</label>
         <div class="custom-control custom-switch d-flex justify-content-center" name="statusDiv">
           <input type="checkbox" class="custom-control-input @error('status') is-invalid @enderror" id="status" name="status" {{ old('status', $usuario->status) == '1' ? 'checked':'' }} value='1'>
           <label class="custom-control-label" for="status"></label>
+        </div>
+      </div> 
+      <div class="form-group col-3 col-md-2">
+        <label for="utilidadDiv">Utilidad</label>
+        <div class="custom-control custom-switch d-flex justify-content-center" name="utilidadDiv">
+          <input type="checkbox" class="custom-control-input @error('utilidad') is-invalid @enderror" id="utilidad" name="utilidad" {{ old('utilidad', $usuario->utilidad) == '1' ? 'checked':'' }} value='1'>
+          <label class="custom-control-label" for="utilidad"></label>
         </div>
       </div> 
       <div class="form-group col-3 col-md-2">
@@ -101,5 +144,7 @@
   $('#formSubmit').click(function(){
     $('#form').submit();
   });
+
+  $('.select2').select2({});
 </script>
 @endsection
