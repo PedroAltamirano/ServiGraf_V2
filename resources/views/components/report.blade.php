@@ -1,6 +1,6 @@
 <div class="col-12 col-md-3">
   <h5 class="text-center">{{ $title }}</h5>
-  <h5 class="text-center font-weight-bold">$ {{ $items->sum('totalData') }}</h5>
+  <h5 class="text-center font-weight-bold">$ {{ number_format($items->sum('totalData'), 2) }}</h5>
   <table class="table table-striped table-sm" style="font-size: 12px;">
     <tbody class="tableitems">
       @foreach ($items as $item)
@@ -14,7 +14,7 @@
     <tfoot class="text-right font-weight-bold">
       <tr>
         <td>Total $</td>
-        <td>{{ $items->sum('totalData') }}</td>
+        <td>{{ number_format($items->sum('totalData'), 2) }}</td>
       </tr>
     </tfoot>
   </table>

@@ -18,14 +18,14 @@ Route::namespace('Produccion')
   // REPORTE DE PAGOS
   Route::get('reporte/pagos', 'Reportes@showPagos')->name('reporte.pagos')->middleware('hasModRol:33,1');
   Route::get('reporte/ajaxpagos', 'Reportes@ajaxPagos')->name('reporte.pagos.ajax')->middleware('hasModRol:33,1');
-  
+
   // REPORTE DE MAQUINAS
   Route::get('reporte/maquinas', 'Reportes@showMaquinas')->name('reporte.maquinas')->middleware('hasModRol:34,1');
   Route::get('reporte/ajaxmaquinas', 'Reportes@ajaxMaquinas')->name('reporte.maquinas.ajax')->middleware('hasModRol:34,1');
 
   // PROCESOS
   Route::get('procesos', 'Procesos@show')->name('procesos')->middleware('hasModRol:35,1');
-  
+
   Route::get('servicio/nuevo', 'Servicios@create')->name('servicio.create')->middleware('hasModRol:35,2');
   Route::post('servicio/nuevo', 'Servicios@store')->name('servicio.store')->middleware('hasModRol:35,2');
   Route::get('servicio/modificar/{servicio}', 'Servicios@edit')->name('servicio.edit')->middleware('hasModRol:35,3');
@@ -35,10 +35,10 @@ Route::namespace('Produccion')
   Route::post('subservicio/nuevo', 'Subservicios@store')->name('subservicio.store')->middleware('hasModRol:35,2');
   Route::get('subservicio/modificar/{subservicio}', 'Subservicios@edit')->name('subservicio.edit')->middleware('hasModRol:35,3');
   Route::put('subservicio/modificar/{subservicio}', 'Subservicios@update')->name('subservicio.update')->middleware('hasModRol:35,3');
-  
+
   Route::post('area/nuevo', 'Areas@store')->name('area.store')->middleware('hasModRol:35,2');
   Route::put('area/modificar/{area}', 'Areas@update')->name('area.update')->middleware('hasModRol:35,3');
-  
+
   // MATERIALES
   Route::get('materiales', 'Materiales@show')->name('materiales')->middleware('hasModRol:36,1');
   Route::get('material/nuevo', 'Materiales@create')->name('material.create')->middleware('hasModRol:36,2');
@@ -48,10 +48,10 @@ Route::namespace('Produccion')
 
   Route::post('categoria/nuevo', 'Categorias@store')->name('categoria.store')->middleware('hasModRol:36,2');
   Route::put('categoria/modificar/{categoria}', 'Categorias@update')->name('categoria.update')->middleware('hasModRol:36,3');
-  
+
   Route::post('tinta/nuevo', 'Tintas@store')->name('tinta.store')->middleware('hasModRol:36,2');
   Route::put('tinta/modificar/{tinta}', 'Tintas@update')->name('tinta.update')->middleware('hasModRol:36,3');
 
   // PROVEEDORES
-  Route::post('proveedor', 'Proveedores@store')->name('proveedor.post')->middleware('hasModRol:30,2');
+  Route::post('proveedor', 'Proveedores@store')->name('proveedor.store')->middleware('hasModRol:30,2');
 });

@@ -13,18 +13,18 @@
   <!-- administracion -->
   @if(Security::hasModule('20'))
   <li class="nav-item">
-    <a class="nav-link collapsed" data-toggle="collapsed" data-target="#collapseAdmin" aria-expanded="true">
+    <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseAdmin" aria-expanded="true" aria-controls="collapseTwo">
       <i class="fas fa-fw fa-chart-line"></i>
       <span>Administración</span>
     </a>
-    <div class="dropdown-menu" aria-labelledby="pagesDropdown" id="collapseAdmin">
+    <div class="dropdown-menu collapse" aria-labelledby="pagesDropdown" id="collapseAdmin">
       @if(Security::hasModule('21'))
       <a class="dropdown-item" href="{{Route('facturacion')}}">Facturación</a>
       @endif
       @if(Security::hasModule('22'))
       <a class="dropdown-item" href="{{Route('libro')}}">Libro diario</a>
       @endif
-      @if(Security::hasModule('23'))
+      @if(Security::hasModule('24'))
       <a class="dropdown-item" href="{{Route('rrhh')}}">RRHH</a>
       @endif
     </div>
