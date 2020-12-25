@@ -19,51 +19,7 @@
   ]"
 ></x-path>
 
-<x-blueBoard
-  title='Filtros'
-  :foot="[]"
->
-  <div class="form-row">
-    <div class="col-6 col-md form-group">
-      <label for="inicio">Fecha inicial</label>
-      <input type="date" name="inicio" id="inicio" class="form-control form-control-sm refresh" value="{{date('Y-m-').'01'}}">
-    </div>
-    <div class="col-6 col-md form-group">
-      <label for="fin">Fecha final</label>
-      <input type="date" name="fin" id="fin" class="form-control form-control-sm refresh" value="{{date('Y-m-d')}}">
-    </div>
-    <div class="col-12 col-md form-group">
-      <label for="cliente">Cliente</label>
-      <select name="cliente" id="cliente" class="form-control refresh">
-        <option value="none" selected>Selecciona uno...</option>
-        {{ $group =  $clientes->first()->cliente_empresa_id }}
-        <optgroup label="{{ $clientes->first()->empresa->nombre }}">
-        @foreach ($clientes as $cli)
-          @if ($group != $cli->cliente_empresa_id)
-          {{ $group =  $cli->cliente_empresa_id }}
-          <optgroup label="{{ $cli->empresa->nombre }}">
-          @endif
-          <option value="{{ $cli->id }}">
-            {{ $cli->contacto->nombre.' '.$cli->contacto->apellido }}
-          </option>
-        @endforeach
-      </select>
-    </div>
-    <div class="col-6 col-md form-group">
-      <label for="cobro">Cobro</label>
-      <select class="form-control form-control-sm refresh" name="cobro" id="cobro">
-        <option value="none" selected>Todo</option>
-        <option value="1">Pendiente</option>
-        <option value="2">Pagado</option>
-        <option value="3">Anulado</option>
-        <option value="4">Canje</option>
-      </select>
-    </div>
-    {{-- <div class="col-1 text-center">
-      <button type="button" name="refresh" id="refresh" class="btn btn-primary mt-3"><i class="fas fa-sync-alt"></i></button>
-    </div> --}}
-  </div>
-</x-blueBoard>
+<x-filters :clientes="$clientes" />
 
 <x-blueBoard
   title='Reporte'
@@ -109,7 +65,7 @@
 <script>
   let areas = @json($areas);
   $('#cliente').select2();
-  
+
   // console.log(areas.length);
   var table = $('#table').DataTable({
     "paging":   true,
@@ -154,7 +110,7 @@
       {"name":"abonos", "data": "abono"},
       {"name":"saldo", "data": "saldo"},
       {"name":"estado", "data": "estado", "sortable": "false",
-        "render": function ( data, type, full, meta ) { 
+        "render": function ( data, type, full, meta ) {
           var rspt;
           if(data == '1') rspt = "<em class='fa fa-times'></em>";
           else if(data == '2') rspt = "<em class='fa fa-check'></em>";
@@ -162,7 +118,7 @@
           else if(data == '4') rspt = "<em class='fas fa-exchange-alt'></em>";
           else rspt = "<em class='fa fa-ban'></em>";
           return rspt;
-        }, 
+        },
       },
       {"name":"crud", "data":"id", "sortable": "false",
         "render": function ( data, type, full, meta ) {
