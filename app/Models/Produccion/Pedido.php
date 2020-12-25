@@ -76,19 +76,23 @@ class Pedido extends Model
     /**
      * @return App\Model\Produccion\Pedido que no esten terminados
      */
-    public static function incompletas()
+    public static function incompletas($fecha = null)
     {
-        $incompletos = Pedido_servicio::where([['empresa_id', '=', auth()->user()->empresa_id], ['status', '=', '0']])
-                                        ->groupBy('pedido_id')
-                                        ->select('pedido_id')
-                                        ->where(function($query) {
-                                            if(self::$own){
-                                              $query->whereIn('servicio_id', Auth::user()->procesos->map(function($c){return $c->id;})->toArray());
-                                            }
-                                        })->get();
-        $incompletos = $incompletos->map(function($incompletos){return $incompletos->pedido_id;});
+      $incompletos = Pedido_servicio::where([['empresa_id', '=', auth()->user()->empresa_id], ['status', '=', '0']])
+        ->groupBy('pedido_id')
+        ->select('pedido_id')
+        ->where(function($query) use ($fecha) {
+          if(self::$own){
+            $query->whereIn('servicio_id', Auth::user()->procesos->map(function($c){return $c->id;})->toArray());
+          }
+        })->get();
+      $incompletos = $incompletos->map(function($incompletos){return $incompletos->pedido_id;});
 
-        return Pedido::whereIn('id', $incompletos)->where('estado',  '!=', '3')->select('id', 'numero', 'cliente_id', 'detalle', 'cantidad')->get();
+      return Pedido::whereIn('id', $incompletos)->where('estado',  '!=', '3')->select('id', 'numero', 'cliente_id', 'detalle', 'cantidad')->where(function($query) use ($fecha) {
+          if($fecha){
+            $query->whereBetween('fecha_entrada', [date('Y-m-01', strtotime($fecha)), date('Y-m-t', strtotime($fecha))]);
+          }
+        })->get();
     }
 
     /*

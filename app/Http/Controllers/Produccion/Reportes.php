@@ -34,12 +34,12 @@ class Reportes extends Controller
     $areas = Area::where('empresa_id', Auth::user()->empresa_id)->orderBy('orden')->get();
     return view('Produccion.reportePedidos', compact('areas', 'clientes'));
   }
-  
+
   public static function ajaxPedidos(Request $request){
     $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->select('cliente_id', 'numero', 'id', 'detalle', 'total_pedido', 'abono', 'saldo', 'estado')->whereBetween('fecha_entrada', [$request->fechaini, $request->fechafin]);
     if($request->cliente != 'none'){
       $pedidos->where('cliente_id', $request->cliente);
-    } 
+    }
     elseif($request->cobro != 'none'){
       $pedidos->where('estado', $request->cobro);
     }
@@ -59,7 +59,7 @@ class Reportes extends Controller
     $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->get();
     return view('Produccion.reportePagos', compact('clientes'));
   }
-  
+
   public static function ajaxPagos(Request $request){
     $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->select('cliente_id', 'numero', 'id', 'fecha_entrada', 'fecha_cobro', 'detalle', 'usuario_cob_id', 'total_pedido', 'abono', 'saldo', 'estado')
       ->Where(function($query) use ($request) {
@@ -91,12 +91,12 @@ class Reportes extends Controller
     $servicios = Servicio::where('empresa_id', Auth::user()->empresa_id)->select('servicio', 'id')->where('seguimiento', 1)->orderBy('servicio')->get();
     return view('Produccion.reporteMaquinas', compact('servicios'));
   }
-  
+
   public static function ajaxMaquinas(Request $request){
     $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->select('cliente_id', 'numero', 'id', 'detalle', 'total_pedido', 'estado')->whereBetween('fecha_entrada', [$request->fechaini, $request->fechafin]);
-    // if($request->cobro != 'none'){
-    //   $pedidos->where('estado', $request->cobro);
-    // }
+    if($request->cobro != 'none'){
+      $pedidos->where('estado', $request->cobro);
+    }
     $pedidos = $pedidos->get();
     foreach($pedidos as $pedido){
       $tmp = $pedido->cliente->contacto;

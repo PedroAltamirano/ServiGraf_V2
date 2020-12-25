@@ -1,15 +1,19 @@
 <div class="container">
   {{-- DATOS DE LA EMPRESA --}}
   <div class="form-row">
-    <div class="form-group col-12 col-md-8">
+    <div class="form-group col-12 col-md-6">
       <label for="empresa">Empresa</label>
       <div>
         <input type="text" class="form-control form-control-sm @error('empresa') is-invalid @enderror" name="empresa" id="empresa" value="{{ old('empresa') }}">
       </div>
     </div>
-    <div class="form-group col-12 col-md-4">
+    <div class="form-group col-12 col-md-3">
       <label for="ruc">RUC</label>
       <input type="number" class="form-control form-control-sm @error('ruc') is-invalid @enderror" name="ruc" id="ruc" value="{{ old('ruc') }}">
+    </div>
+    <div class="form-group col-12 col-md-3">
+      <label for="actividad">Actividad</label>
+      <input type="text" class="form-control form-control-sm @error('actividad') is-invalid @enderror" name="actividad" id="actividad" value="{{ old('actividad') }}">
     </div>
   </div>
 
@@ -59,9 +63,13 @@
       <label for="web">Web</label>
       <input type="url" class="form-control form-control-sm @error('web') is-invalid @enderror" name="web" id="web" value="{{ old('web') }}">
     </div>
-    <div class="custom-control custom-checkbox col-12">
-      <input type="checkbox" class="custom-control-input @error('web') is-invalid @enderror" name="isCliente" id="isCliente" {{ old('isCliente') ? 'checked' : '' }}>
-      <label class="custom-control-label" for="isCliente">Cliente</label>
+    <div class="form-check col-6 col-md-2">
+      <input type="checkbox" class="form-check-input @error('seguimiento') is-invalid @enderror" name="seguimiento" id="seguimiento" value="0" {{ old('seguimiento') ? 'checked' : '' }}>
+      <label class="form-check-label" for="seguimiento">Seguimiento</label>
+    </div>
+    <div class="form-check col-6 col-md-2">
+      <input type="checkbox" class="form-check-input @error('isCliente') is-invalid @enderror" name="isCliente" id="isCliente" value="0" {{ old('isCliente') ? 'checked' : '' }}>
+      <label class="form-check-label" for="isCliente">Cliente</label>
     </div>
   </div>
 </div>
