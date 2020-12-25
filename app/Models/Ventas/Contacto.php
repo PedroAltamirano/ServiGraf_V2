@@ -6,19 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contacto extends Model
 {
-   protected $table = 'contactos';
-//    protected $primaryKey = 'cedula';
-//    public $incrementing = false;
+  protected $table = 'contactos';
 
-//    public $attributes =[
-//        'activo' => 1, 'reservarot' => 1, 'libro' => 1
-//    ];
+  protected $fillable = [
+    'empresa_id', 'usuario_id', 'cliente_empresa_id', 'actividad', 'titulo', 'nombre', 'apellido', 'cargo', 'direccion', 'sector', 'telefono', 'celular', 'extencion', 'email', 'web',
+  ];
 
-   protected $fillable = [
-       'usuario_id', 'empresa', 'actividad', 'titulo', 'nombre', 'apellido', 'cargo', 'direccion', 'sector', 'telefono', 'celular', 'extension', 'email', 'web'
-   ];
-
-   protected $hidden = [
-       'created_at', 'updated_at', 'empresa_id'
-   ];
+  protected $hidden = [
+    'created_at', 'updated_at'
+  ];
 }

@@ -1,6 +1,6 @@
 @php
   $utilidad = App\Security::hasModule('19');
-  $clientes = App\Models\Ventas\Cliente::where('empresa_id', Auth::user()->empresa_id)->get();
+  $clientes = App\Models\Ventas\Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
 @endphp
 <section id="datos-cliente">
   <h6><i class="fas fa-plus" data-toggle="modal" data-target="#modalCliente"></i>&nbsp; Datos del cliente</h6>
@@ -82,31 +82,7 @@
 </section>
 
 @section('modals1')
-<!-- Modal Cliente -->
-<div class="modal fade" id="modalCliente" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Crear Cliente</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <form method="POST" action="{{ route('contacto.cliente.post') }}" role="form">
-            @csrf
-            @include('Ventas.contacto')
-          </form>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Guardar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<x-addCliente/>
 @endsection
 
 @section('after.scripts')
@@ -141,6 +117,11 @@
 
   $('#formSubmit').click(function(){
     $('#form').submit();
+  });
+
+  $('.submitbtn').click(function(){
+    let form = $(this).data('form');
+    $(form).submit();
   });
 
   $(function(){
