@@ -11,10 +11,32 @@
   ]"
 />
 
-<div class="m-2 m-md-3">
-  <label for="meta">Pedidos por completar: {{ $pi }}</label>
-  <div class="progress" style="height: 30px;" id="meta">
-    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ (($pt-$pi)*100)/$pt }}%" aria-valuenow="{{ $pt-$pi }}" aria-valuemin="0" aria-valuemax="{{ $pt }}">{{ $pt-$pi }}</div>
+<div class="row">
+  <div class="col-12 col-md-8">
+    <div class="m-2 m-md-3">
+      <label for="meta">Pedidos por completar: {{ $pi }}</label>
+      <div class="progress" style="height: 30px;" id="meta">
+        @php
+          $w = $pt > 0 ?(abs($pt-$pi)*100)/$pt : 0;
+        @endphp
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ $w }}%" aria-valuenow="{{ $pt-$pi }}" aria-valuemin="0" aria-valuemax="{{ $pt }}">{{ $pt-$pi }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <x-blueBoard
+      title='Fecha del reporte'
+      :foot="[]"
+    >
+      <form action="{{ route('desktop') }}" method="GET" id="fechaForm">
+        <div class="form-group">
+          {{-- <label for=""></label> --}}
+          <input type="date"
+            class="form-control form-control-sm" name="fecha" id="fecha" aria-describedby="helpId" value="{{ date('Y-m-d') }}">
+          <small id="helpId" class="form-text text-muted">Se tomara el mes y año de la fecha seleccionada</small>
+        </div>
+      </form>
+    </x-blueBoard>
   </div>
 </div>
 
@@ -122,14 +144,14 @@
         <td>{{ $item->numero }}</td>
         <td>{{ $item->cliente->contacto->nombre.' '.$item->cliente->contacto->apellido }}</td>
         <td>{{ $item->detalle }}</td>
-        <td class="text-right">{{ number_format ($item->utilidad, 2) }}</td>
+        <td class="text-right">{{ number_format($item->utilidad, 2) }}</td>
       </tr>
       @endforeach
     </tbody>
     <tfoot>
       <tr class="text-right">
         <td colspan="3">Total $</td>
-        <td>{{ number_format ($utilidades->sum('utilidad'), 2) }}</td>
+        <td>{{ number_format($utilidades->sum('utilidad'), 2) }}</td>
       </tr>
     </tfoot>
   </table>
@@ -166,6 +188,11 @@
 @endsection
 
 @section('scripts')
+<script>
+  $('#fecha').on('change', function(){
+    $('#fechaForm').submit();
+  });
+</script>
 <script>
   var interna = new Chart($('#interna'), {
     type: 'horizontalBar',

@@ -30,10 +30,18 @@ class Desktop extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function showAdmin(){
-    $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->whereBetween('fecha_entrada', [date('Y-m-01'), date('Y-m-d')])->get();
+	public function showAdmin(Request $request){
+    if($request->get('fecha')){
+      $dateInit = date('Y-m-01', strtotime($request->get('fecha')));
+      $dateFin = date('Y-m-t', strtotime($request->get('fecha')));
+    } else {
+      $dateInit = date('Y-m-01');
+      $dateFin = date('Y-m-t');
+    }
+    // dd($dateInit, $dateFin);
+    $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->get();
     $pt = $pedidos->count();
-    $pi = Pedido::incompletas()->count();
+    $pi = Pedido::incompletas($request->get('fecha'))->count();
     $materiales = Solicitud_material::whereIn('pedido_id', $pedidos->map(function($p){return $p->id;})->toArray())->get();
     $servicios = Servicio::where('empresa_id', Auth::user()->empresa_id)->get();
     $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();

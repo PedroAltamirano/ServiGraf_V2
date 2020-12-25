@@ -22,7 +22,7 @@
     $ci = $loop->index % count($colors);
   @endphp
   <div class="m-2 m-md-3">
-    <label for="meta">Producción ${{ $item->meta }}</label>
+    <label for="meta">Producción {{ $item->servicio }} ${{ $item->meta }}</label>
     <div class="progress" style="height: 30px;" id="meta">
       <div class="progress-bar progress-bar-striped progress-bar-animated {{ $colors[$ci] }}" role="progressbar" style="width: {{$prog}}%" aria-valuenow="{{ $logrado }}" aria-valuemin="0" aria-valuemax="{{ $item->meta }}">{{ $logrado }}</div>
     </div>
@@ -60,7 +60,7 @@
         <td>{{ $item->detalle }}</td>
         <td>{{ $item->cantidad }}</td>
         <td>{{ implode(', ', $item->serviciosIncompletos($item->id)) }}</td>
-        <td><a class='fa fa-edit' href='{{route('pedido.edit', $item->numero)}}'></a> <a class='fa fa-eye verPedido' id="{{ $item->numero }}"></a></td>
+        <td><a class='fa fa-edit' href='{{route('pedido.edit', $item->numero)}}'></a> <a class='fa fa-eye verPedido' id="{{ $item->numero }}" href="#modalPedido" data-toggle="modal"></a></td>
       </tr>
       @endforeach
     </tbody>
@@ -68,6 +68,8 @@
     </tfoot>
   </table>
 </x-blueBoard>
+
+<x-modal-pedido></x-modal-pedido>
 @endif
 
 @if(count($clientes) > 0)
