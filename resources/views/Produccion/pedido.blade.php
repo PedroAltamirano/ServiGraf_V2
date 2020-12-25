@@ -22,7 +22,8 @@
 <x-blueBoard
   :title=$text
   :foot="[
-    ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=> 'link']
+    ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=> 'link'],
+    ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'print', 'tipo'=> 'button']
   ]"
 >
   <form action="{{ $path }}" method="POST" id="form">
@@ -43,5 +44,9 @@
   $('#formSubmit').click(function(){
     $('#form').submit();
   });
+
+  // function print(){
+  //   $('#form').printArea();
+  // };
 </script>
 @endsection
