@@ -3,17 +3,21 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use App\Models\Produccion\Pedido;
 
 class modalPedido extends Component
 {
+  public $pedido;
+  public $method;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($id = null)
     {
-        //
+      $this->pedido = $id ? Pedido::find($id) : new Pedido;
+      $this->method = 'PUT';
     }
 
     /**
