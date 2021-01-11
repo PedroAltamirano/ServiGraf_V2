@@ -5,7 +5,7 @@ var webpackConfig = {
    //    new VuetifyLoaderPlugin(),
    //    new CaseSensitivePathsPlugin()
    // ]
-   
+
    // resolve: {
    //    alias: {
    //       'vue$': 'vue/dist/vue.runtime.common.js'
@@ -28,4 +28,5 @@ mix.webpackConfig(webpackConfig);
 
 mix
    .js('resources/js/app.js', 'public/js')
+   .js('resources/js/helpers.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
