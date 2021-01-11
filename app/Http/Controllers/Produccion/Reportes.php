@@ -30,7 +30,7 @@ class Reportes extends Controller
    * @return View reporte de pedidos
    */
   public function showPedidos(){
-    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->get();
+    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
     $areas = Area::where('empresa_id', Auth::user()->empresa_id)->orderBy('orden')->get();
     return view('Produccion.reportePedidos', compact('areas', 'clientes'));
   }
@@ -56,7 +56,7 @@ class Reportes extends Controller
    * @return View reporte de pedidos
    */
   public function showPagos(){
-    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->get();
+    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
     return view('Produccion.reportePagos', compact('clientes'));
   }
 

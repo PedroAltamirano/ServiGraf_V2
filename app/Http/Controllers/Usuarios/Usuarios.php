@@ -46,7 +46,7 @@ class Usuarios extends Controller
 		$perfiles = Perfil::where('empresa_id', Auth::user()->empresa_id)->select('id', 'nombre')->get();
 		$procesos = Servicio::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
 		$actividades = [];
-		$clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
+		$clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->where('seguimiento', 1)->get();
 		$data = [
 			'path'=>route('usuario.nuevo'),
 			'text'=>'Nuevo usuario',
@@ -81,7 +81,7 @@ class Usuarios extends Controller
 		$perfiles = Perfil::where('empresa_id', Auth::user()->empresa_id)->select('id', 'nombre')->get();
 		$procesos = Servicio::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
 		$actividades = [];
-		$clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
+		$clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->where('seguimiento', 1)->get();
 		$data = [
 			'path'=> route('usuario.modificar', [$usuario->cedula]),
 			'text'=>'Modificar usuario',
@@ -100,7 +100,7 @@ class Usuarios extends Controller
 		$validator['reservarot'] = $validator['reservarot'] ?? 0;
 		$validator['libro'] = $validator['libro'] ?? 0;
 		$usuario->update($validator);
-		
+
 		UsuarioServicios::where('usuario_id', Auth::id())->delete();
 		foreach($validator['procesos'] as $pro){
 			$new = new UsuarioServicios;
@@ -108,7 +108,7 @@ class Usuarios extends Controller
 			$new->servicio_id = $pro;
 			$new->save();
 		}
-		
+
 		UsuarioClientes::where('usuario_id', Auth::id())->delete();
 		foreach($validator['clientes'] as $cli){
 			$new = new UsuarioClientes;
