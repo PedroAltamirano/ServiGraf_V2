@@ -26,8 +26,9 @@ class CreateFacturasTable extends Migration
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->date('emision');
             $table->date('vencimiento');
-            $table->unsignedTinyInteger('tipo');
+            $table->unsignedTinyInteger('tipo')->comment('1: ingreso, 0: egreso');
             $table->unsignedTinyInteger('estado'); //pendiente pagado
+            $table->date('fecha_pago')->nullable();
             $table->unsignedTinyInteger('tipo_pago');
             $table->unsignedDecimal('subtotal', 8, 2);
             $table->unsignedTinyInteger('descuento_%');

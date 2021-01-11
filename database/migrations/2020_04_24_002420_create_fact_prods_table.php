@@ -18,7 +18,7 @@ class CreateFactProdsTable extends Migration
             $table->unsignedMediumInteger('factura_id');
             $table->foreign('factura_id')->references('id')->on('facturas');
             $table->unsignedSmallInteger('cantidad');
-            $table->string('detalle', 50);
+            $table->string('detalle');
             $table->unsignedSmallInteger('iva_id');
             $table->foreign('iva_id')->references('id')->on('ivas');
             $table->decimal('valor_unitario', 9, 3)->unsigned();
