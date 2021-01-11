@@ -44,7 +44,7 @@ class Desktop extends Controller
     $pi = Pedido::incompletas($request->get('fecha'))->count();
     $materiales = Solicitud_material::whereIn('pedido_id', $pedidos->map(function($p){return $p->id;})->toArray())->get();
     $servicios = Servicio::where('empresa_id', Auth::user()->empresa_id)->get();
-    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
+    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->orderBy('cliente_empresa_id')->get();
 		return view('desktop', compact('clientes', 'pedidos', 'pt', 'pi', 'servicios', 'materiales'));
 	}
 
