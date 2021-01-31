@@ -9,7 +9,7 @@
         </a>
     </li>
     <li>
-        <a href="{{route('facturacion')}}" class="btn btn-primary bg-primary-80 btn-lg mb-2">
+        <a href="{{route('factura.create')}}" class="btn btn-primary bg-primary-80 btn-lg mb-2">
             <i class="fas fa-chart-line"></i>
         </a>
     </li>
