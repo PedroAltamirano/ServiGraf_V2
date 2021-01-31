@@ -61,7 +61,7 @@ class Pedidos extends Controller
   }
 
   // crear nuevo
-  public function store(StorePedidoImprentaPost $request){
+  public function store(StorePedidoImprenta $request){
     $validator = $request->validated();
     $num = Pedido::where('empresa_id', Auth::user()->empresa_id)->orderBy('numero', 'desc')->first()->numero;
     $validator['numero'] = $num + 1;
@@ -77,14 +77,14 @@ class Pedidos extends Controller
     $model = Pedido::create($validator);
     // dd($validator['proceso']);
 
-    foreach($validator['tinta_tiro'] as $ttiro){
+    foreach($validator['tinta_tiro'] ?? [] as $ttiro){
       $tinta = new Pedido_tintas;
       $tinta->tinta_id = $ttiro;
       $tinta->pedido_id = $model->id;
       $tinta->lado = 1;
       $tinta->save();
     }
-    foreach($validator['tinta_retiro'] as $tretiro){
+    foreach($validator['tinta_retiro'] ?? [] as $tretiro){
       $tinta = new Pedido_tintas;
       $tinta->tinta_id = $tretiro;
       $tinta->pedido_id = $model->id;
@@ -167,14 +167,14 @@ class Pedidos extends Controller
     $pedido->update($validator);
 
     Pedido_tintas::where('pedido_id', $pedido->id)->delete();
-    foreach($validator['tinta_tiro'] as $ttiro){
+    foreach($validator['tinta_tiro'] ?? [] as $ttiro){
       $tinta = new Pedido_tintas;
       $tinta->tinta_id = $ttiro;
       $tinta->pedido_id = $pedido->id;
       $tinta->lado = 1;
       $tinta->save();
     }
-    foreach($validator['tinta_retiro'] as $tretiro){
+    foreach($validator['tinta_retiro'] ?? [] as $tretiro){
       $tinta = new Pedido_tintas;
       $tinta->tinta_id = $tretiro;
       $tinta->pedido_id = $pedido->id;

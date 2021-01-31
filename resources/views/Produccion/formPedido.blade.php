@@ -31,7 +31,7 @@
     </div>
     <div class="form-group col-12 col-md-2 order-4 order-md-3">
       <label for="telefono">Telefono</label>
-      <input type="text" id="telefono" class="form-control form-control-sm" value="{{ old('telefono') }}" readonly>
+      <input type="text" id="cli_telefono" class="form-control form-control-sm" value="{{ old('telefono') }}" readonly>
     </div>
     <div class="form-group col-6 col-md-2 order-5 order-md-4">
       <label for="prioridad">Prioridad</label>
@@ -94,14 +94,14 @@
       }
     });
     $.ajax({
-      url:"{{route('cliente.telefono')}}",
+      url:"{{route('cliente.info')}}",
       type: 'post',
       dataType: "json",
       data: {
         'cliente_id': $('#cliente').val(),
       },
       success: function(data) {
-        $('#telefono').val(data);
+        $('#cli_telefono').val(data.telefono);
         // alert(data);
       },
       error: function(jqXhr, textStatus, errorThrown){
