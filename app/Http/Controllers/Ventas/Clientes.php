@@ -14,6 +14,7 @@ use App\Models\Ventas\Cliente;
 use App\Http\Requests\Ventas\StoreCliente;
 use App\Http\Requests\Ventas\UpdateCliente;
 use Facade\FlareClient\Http\Client;
+use stdClass;
 
 class Clientes extends Controller
 {
@@ -44,18 +45,18 @@ class Clientes extends Controller
     return redirect()->back()->with(['actionStatus' => json_encode($data)]);
   }
 
-  public function telefono() {
+  public function info() {
     $cli = Cliente::find($_POST['cliente_id']);
-    $res = '';
-    if ($cli->contacto->telefono){
-      $res .= $cli->contacto->telefono;
-      if($cli->contacto->celular){
-        $res .= ' / ';
-      }
+    $cont = $cli->contacto;
+    $emp = $cli->empresa;
+    if ($cont->telefono && $cont->celular){
+      $cont->telefono .= ' / '.$cont->celular;
+    } else {
+      $cont->telefono .= $cont->celular;
     }
-    if ($cli->contacto->celular){
-      $res .= $cli->contacto->celular;
-    }
+    $res = $cont->only(['telefono', 'direccion']);
+    $res += $emp->only('ruc');
+
     return response()->json($res);
   }
 }
