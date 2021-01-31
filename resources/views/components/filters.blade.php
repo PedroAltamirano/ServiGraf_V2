@@ -17,7 +17,7 @@
     @if($cli && $clientes!=[])
     <div class="col-12 col-md form-group">
       <label for="cliente">Cliente</label>
-      <select name="cliente" id="cliente" class="form-control refresh">
+      <select name="cliente" id="cliente" class="form-control form-control-sm refresh">
         <option value="none" selected>Selecciona uno...</option>
         {{ $group =  $clientes->first()->cliente_empresa_id ?? 0 }}
         <optgroup label="{{ $clientes->first()->empresa->nombre }}">
