@@ -9,5 +9,6 @@
     <li class="breadcrumb-item active"><a href="{{ $item['href'] }}">{{ Str::of($item['text'])->upper() }}</a></li>
     @endif
     @endforeach
+    {{ $slot }}
   </ol>
 </nav>
