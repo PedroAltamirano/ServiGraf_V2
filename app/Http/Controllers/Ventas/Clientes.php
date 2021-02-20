@@ -49,12 +49,8 @@ class Clientes extends Controller
     $cli = Cliente::find($_POST['cliente_id']);
     $cont = $cli->contacto;
     $emp = $cli->empresa;
-    if ($cont->telefono && $cont->celular){
-      $cont->telefono .= ' / '.$cont->celular;
-    } else {
-      $cont->telefono .= $cont->celular;
-    }
-    $res = $cont->only(['telefono', 'direccion']);
+
+    $res = $cont->only(['movil', 'direccion']);
     $res += $emp->only('ruc');
 
     return response()->json($res);

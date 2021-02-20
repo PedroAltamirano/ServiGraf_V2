@@ -101,7 +101,7 @@
         'cliente_id': $('#cliente').val(),
       },
       success: function(data) {
-        $('#cli_telefono').val(data.telefono);
+        $('#cli_telefono').val(data.movil);
         // alert(data);
       },
       error: function(jqXhr, textStatus, errorThrown){
