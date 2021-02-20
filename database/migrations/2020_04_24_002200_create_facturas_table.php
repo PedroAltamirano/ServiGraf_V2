@@ -26,21 +26,21 @@ class CreateFacturasTable extends Migration
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->date('emision');
             $table->date('vencimiento');
-            $table->unsignedTinyInteger('tipo')->comment('1: ingreso, 0: egreso');
+            $table->boolean('tipo')->comment('1: ingreso, 0: egreso');
             $table->unsignedTinyInteger('estado'); //pendiente pagado
             $table->date('fecha_pago')->nullable();
             $table->unsignedTinyInteger('tipo_pago');
             $table->unsignedDecimal('subtotal', 8, 2);
-            $table->unsignedTinyInteger('descuento_%');
+            $table->unsignedTinyInteger('descuento_p');
             $table->unsignedDecimal('descuento', 8, 2);
             $table->unsignedDecimal('iva', 8, 2);
             $table->unsignedDecimal('iva_0', 8, 2);
             $table->unsignedDecimal('total', 8, 2);
-            $table->unsignedMediumInteger('ret_iva_%');
-            $table->foreign('ret_iva_%')->references('id')->on('retenciones');
+            $table->unsignedMediumInteger('ret_iva_p');
+            $table->foreign('ret_iva_p')->references('id')->on('retenciones');
             $table->unsignedDecimal('ret_iva', 8, 2);
-            $table->unsignedMediumInteger('ret_fuente_%');
-            $table->foreign('ret_fuente_%')->references('id')->on('retenciones');
+            $table->unsignedMediumInteger('ret_fuente_p');
+            $table->foreign('ret_fuente_p')->references('id')->on('retenciones');
             $table->unsignedDecimal('ret_fuente', 8, 2);
             $table->unsignedDecimal('total_pagar', 8, 2);
             $table->string('notas', 140);
