@@ -14,7 +14,9 @@
       'href' => '#',
     ]
   ]"
-/>
+>
+<li class="breadcrumb-item" id="fact_num_path"><input type="number" name="number_vis" id="fact_num_vis" class="form-control form-control-sm" value="{{ $fact_num }}" readonly></li>
+</x-path>
 
 <x-blueBoard
   :title=$text
@@ -25,10 +27,7 @@
   <form action="{{ $path }}" method="POST" id="form">
     @csrf
     @method($method)
-    @php
-      $utilidad = App\Security::hasModule('19');
-      $clientes = App\Models\Ventas\Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
-    @endphp
+    <input type="hidden" name="numero" id="fact_num" value="{{ $fact_num }}">
     <section id="datos-cliente">
       <h6><i class="fas fa-plus" data-toggle="modal" data-target="#modalCliente"></i>&nbsp; Datos del cliente</h6>
       <hr>
@@ -54,15 +53,15 @@
         </div>
         <div class="form-group col-6 col-md-2">
           <label for="ruc">RUC</label>
-          <input type="text" id="ruc" class="form-control form-control-sm" value="{{ old('ruc') }}" readonly>
+          <input type="text" id="ruc" name="ruc" class="form-control form-control-sm" value="{{ old('ruc') }}" readonly>
         </div>
         <div class="form-group col-6 col-md-2">
           <label for="telefono">Telefono</label>
-          <input type="text" id="telefono" class="form-control form-control-sm" value="{{ old('telefono') }}" readonly>
+          <input type="text" id="telefono" name="telefono" class="form-control form-control-sm" value="{{ old('telefono') }}" readonly>
         </div>
         <div class="form-group col-12 col-md-5">
           <label for="direccion">Dirección</label>
-          <input type="text" id="direccion" class="form-control form-control-sm" value="{{ old('direccion') }}" readonly>
+          <input type="text" id="direccion" name="direccion" class="form-control form-control-sm" value="{{ old('direccion') }}" readonly>
         </div>
 
         <div class="form-group col-6 col-md-2">
@@ -74,34 +73,34 @@
           <input type="date" name="vencimiento" id="vencimiento" class="form-control form-control-sm @error('vencimiento') is-invalid @enderror" value="{{ old('vencimiento', $factura->vencimiento) ?? date('Y-m-d') }}">
         </div>
         <div class="col-6 col-md form-group">
-          <label for="empresa">Empresa</label>
-          <select name="empresa" id="empresa" class="form-control form-control-sm refresh">
+          <label for="fact_emp_id">Empresa</label>
+          <select name="fact_emp_id" id="fact_emp_id" class="form-control form-control-sm refresh">
             @foreach ($empresas as $item)
-            <option value="{{ $item->id }}">{{ $item->empresa }}</option>
+            <option value="{{ $item->id }}" {{ old('fact_emp_id', $factura->fact_emp_id) == $item->id ? 'selected' : '' }}>{{ $item->empresa }}</option>
             @endforeach
           </select>
         </div>
         <div class="col-6 col-md form-group">
           <label for="tipo">Tipo</label>
           <select name="tipo" id="tipo" class="form-control form-control-sm refresh">
-            <option value="1">Ingreso</option>
-            <option value="0">Egreso</option>
+            <option value="1" {{ old('tipo', $factura->tipo) == 1 ? 'selected' : '' }}>Ingreso</option>
+            <option value="0" {{ old('tipo', $factura->tipo) == 0 ? 'selected' : '' }}>Egreso</option>
           </select>
         </div>
         <div class="col-6 col-md form-group">
-          <label for="cobro">Pago</label>
-          <select class="form-control form-control-sm refresh" name="cobro" id="cobro">
-            <option value="1">Efectivo</option>
-            <option value="2">Cheque</option>
-            <option value="3">Canje</option>
+          <label for="tipo_pago">Pago</label>
+          <select class="form-control form-control-sm refresh" name="tipo_pago" id="tipo_pago">
+            <option value="1" {{ old('tipo_pago', $factura->tipo_pago) == 1 ? 'selected' : '' }}>Efectivo</option>
+            <option value="2" {{ old('tipo_pago', $factura->tipo_pago) == 2 ? 'selected' : '' }}>Cheque</option>
+            <option value="3" {{ old('tipo_pago', $factura->tipo_pago) == 3 ? 'selected' : '' }}>Canje</option>
           </select>
         </div>
         <div class="col-6 col-md form-group">
           <label for="estado">Estado</label>
           <select name="estado" id="estado" class="form-control form-control-sm refresh">
-            <option value="1">Pendiente</option>
-            <option value="0">Pagado</option>
-            <option value="2">Anulado</option>
+            <option value="1" {{ old('estado', $factura->estado) == 1 ? 'selected' : '' }}>Pendiente</option>
+            <option value="0" {{ old('estado', $factura->estado) == 0 ? 'selected' : '' }}>Pagado</option>
+            <option value="2" {{ old('estado', $factura->estado) == 2 ? 'selected' : '' }}>Anulado</option>
           </select>
         </div>
       </div>
@@ -109,8 +108,13 @@
 
     <hr style="border-width: 3px;">
 
+    @php
+      // $oldArticulos = $factura->articulos ?? json_encode(new stdClass);
+      $artCount = count(old("articulo.cantidad", $factura->productos) ?? []);
+      // dd(old('articulo', $factura->productos[0]->factura_id));
+    @endphp
     <section id="articulos">
-      <table id="table-articulos" class="table table-sm table-responsive">
+      <table id="table-articulos" class="table table-sm">
         <thead>
           <tr>
             <th scope="col" class="crudCol"><i id="addArticulo" class="fas fa-plus"></i></th>
@@ -122,29 +126,29 @@
           </tr>
         </thead>
         <tbody>
-          @for ($i = 0; $i < 0; $i++)
+          @for ($i = 0; $i < $artCount; $i++)
           <tr id="{{'row-articulo-'.$i}}">
             <td>
-              <i type="button" name="remove" id="{{'articulo-'.$i}}" class="fas fa-times removeRow"></i>
+              <i type="button" name="remove" id="{{ 'articulo-'.$i }}" class="fas fa-times removeRow"></i>
             </td>
             <td>
-              <input type="number" name="articulo[cantidad][]" class="form-control form-control-sm text-center" value="{{old('articulo.cantidad.'.$i, $articulos[$i]->cantidad) ?? '0'}}" min="0" />
+              <input type="number" name="articulo[cantidad][]" class="form-control form-control-sm text-center" value="{{ old('articulo.cantidad.'.$i, $factura->productos[$i]->cantidad) ?? '0' }}" min="0" id="{{ 'articulo_cantidad_'.$i }}" onchange="sumar({{$i}})" />
             </td>
             <td>
-              <input type="text" name="articulo[detalle][]" class="form-control form-control-sm" value="{{old('articulo.detalle.'.$i, $articulos[$i]->detalle) ?? '0.00'}}"/>
+              <input type="text" name="articulo[detalle][]" class="form-control form-control-sm" value="{{ old('articulo.detalle.'.$i, $factura->productos[$i]->detalle) }}" id="{{ 'articulo_detalle_'.$i }}"/>
             </td>
             <td>
-              <select class="form-control form-control-sm selectProveedor" name="articulo[iva_id][]">
+              <select class="form-control form-control-sm selectProveedor" name="articulo[iva_id][]" id="{{ 'articulo_iva_'.$i }}" onchange="sumar({{$i}})">
                 @foreach($ivas as $iva)
-                <option value="{{ $iva->id }}" {{old('articulo.iva_id.'.$i, $articulos[$i]->iva_id) == $iva->id ? 'selected' : ''}}>{{ $iva->porcentaje }}</option>
+                <option value="{{ $iva->id }}" {{ old('articulo.iva_id.'.$i, $factura->productos[$i]->iva_id) == $iva->id ? 'selected' : '' }}>{{ $iva->porcentaje }}</option>
                 @endforeach
               </select>
             </td>
             <td>
-              <input type="number" name="articulo[valor_unitario][]" class="form-control form-control-sm text-center fixFloat" min="0" value="{{old('articulo.valor_unitario.'.$i, $articulos[$i]->valor_unitario) ?? '0.00'}}"/>
+              <input type="number" name="articulo[valor_unitario][]" class="form-control form-control-sm text-right fixFloat" min="0" value="{{ old('articulo.valor_unitario.'.$i, $factura->productos[$i]->valor_unitario) ?? '0.00' }}" id="{{ 'articulo_valor_unitario_'.$i }}" onchange="sumar({{$i}})" />
             </td>
             <td>
-              <input type="number" name="articulo[subtotal][]" class="form-control form-control-sm fixFloat text-center" value="{{old('articulo.subtotal.'.$i, $articulos[$i]->subtotal) ?? '0.00'}}" step="0.01" min="0" onchange="sumarArticulo()" />
+              <input type="number" name="articulo[subtotal][]" class="form-control form-control-sm fixFloat text-right" value="{{ old('articulo.subtotal.'.$i, $factura->productos[$i]->subtotal) ?? '0.00' }}" step="0.01" min="0" id="{{ 'articulo_subtotal_'.$i }}" readonly />
             </td>
           </tr>
           @endfor
@@ -157,12 +161,12 @@
           </tr>
           <tr class="font-weight-bold">
             <td colspan="3"></td>
-            <td colspan="2" class="text-right">Descuento <input type="number" id="descuentop" value="0" class="form-control form-control-sm w-25" style="display:inline!important" min="0" max="100" onclick="sumartotal()"> $</td>
+            <td colspan="2" class="text-right">Descuento <input type="number" id="descuento_p" name="descuento_p" value="0" class="form-control form-control-sm w-25" style="display:inline!important" min="0" max="100" onclick="sumartotal()"> $</td>
             <td><input type="number" name="descuento" id="descuento" value="{{ old('descuento', $factura->descuento) ?? '0.00'}}" class="form-control form-control-sm text-right fixFloat" readonly></td>
           </tr>
           <tr class="font-weight-bold">
             <td colspan="3"></td>
-            <td colspan="2" class="text-right">IVA {{$iva}} $</td>
+            <td colspan="2" class="text-right">IVA {{ $iva_p }} $</td>
             <td><input type="number" name="iva" id="iva" value="{{ old('iva', $factura->iva) ?? '0.00'}}" class="form-control form-control-sm text-right fixFloat" readonly></td>
           </tr>
           <tr class="font-weight-bold">
@@ -184,38 +188,34 @@
     <section id="retenciones">
       <div class="row m-0">
         <h6 class="col-12 col-md m-0">Retenciones</h6>
-        <div class="col-12 col-md form-inline d-flex justify-content-md-end">
-          <div class="form-group">
+        <div class="col-12 col-md form-inline p-0">
+          <div class="form-group w-100 m-0">
             <label for="ret_iva_p">Iva</label>
-            <select class="form-control form-control-sm mx-2" name="ret_iva_p" id="ret_iva_p">
+            <select class="form-control form-control-sm mx-2 retencion" name="ret_iva_p" id="ret_iva_p">
               @foreach ($ret_iva as $ret)
-              <option value="{{ $ret->id }}">{{ $ret->porcentaje }}</option>
+              <option value="{{ $ret->id }}" {{ old('ret_iva_p', $factura->ret_iva_p) == $ret->id ? 'selected' : '' }}>{{ $ret->porcentaje }}</option>
               @endforeach
             </select>
-          </div>
-          <div class="form-group">
             <label for="ret_iva">%:</label>
-            <input type="number" class="form-control form-control-sm mx-2" name="ret_iva" id="ret_iva" readonly>
+            <input type="number" class="form-control form-control-sm mx-2 w-25 text-right fixFloat" value="{{ old('ret_iva', $factura->ret_iva) ?? '0.00' }}" name="ret_iva" id="ret_iva" readonly>
           </div>
         </div>
-        <div class="col-12 col-md form-inline d-flex justify-content-md-end">
-          <div class="form-group">
+        <div class="col-12 col-md form-inline p-0">
+          <div class="form-group w-100 m-0">
             <label for="ret_fnt_p">Fuente</label>
-            <select class="form-control form-control-sm mx-2" name="ret_fnt_p" id="ret_fnt_p">
+            <select class="form-control form-control-sm mx-2 retencion" name="ret_fuente_p" id="ret_fnt_p">
               @foreach ($ret_fnt as $ret)
-              <option value="{{ $ret->id }}">{{ $ret->porcentaje }}</option>
+              <option value="{{ $ret->id }}" {{ old('ret_fuente_p', $factura->ret_fuente_p) == $ret->id ? 'selected' : '' }}>{{ $ret->porcentaje }}</option>
               @endforeach
             </select>
-          </div>
-          <div class="form-group">
             <label for="ret_fnt">%:</label>
-            <input type="number" class="form-control form-control-sm mx-2" name="ret_fnt" id="ret_fnt" readonly>
+            <input type="number" class="form-control form-control-sm mx-2 w-25 text-right fixFloat" value="{{ old('ret_fuente', $factura->ret_fuente) ?? '0.00' }}" name="ret_fuente" id="ret_fnt" readonly>
           </div>
         </div>
-        <div class="col-12 col-md form-inline d-flex justify-content-md-end">
-          <div class="form-group">
+        <div class="col-12 col-md form-inline p-0">
+          <div class="form-group w-100 m-0">
             <label for="tot_cob">Total a cobrar $</label>
-            <input type="number" class="form-control form-control-sm mx-2" name="tot_cob" id="tot_cob" readonly>
+            <input type="number" class="form-control form-control-sm mx-2 w-50 text-right fixFloat" value="{{ old('total_pagar', $factura->total_pagar) ?? '0.00' }}" name="total_pagar" id="tot_cob" readonly>
           </div>
         </div>
       </div>
@@ -239,6 +239,9 @@
 
 @section('scripts')
 <script>
+  const fact_num = {{ $fact_num }};
+  const fact_new = {{ $factura->id ?? 0 }};
+
   function getPhone(){
     $.ajaxSetup({
       headers: {
@@ -246,15 +249,16 @@
       }
     });
     $.ajax({
-      url:"{{route('cliente.telefono')}}",
+      url:"{{route('cliente.info')}}",
       type: 'post',
       dataType: "json",
       data: {
         'cliente_id': $('#cliente').val(),
       },
       success: function(data) {
-        $('#telefono').val(data);
-        // alert(data);
+        $('#ruc').val(data.ruc);
+        $('#telefono').val(data.movil);
+        $('#direccion').val(data.direccion);
       },
       error: function(jqXhr, textStatus, errorThrown){
         console.log(errorThrown);
@@ -267,8 +271,30 @@
     getPhone();
   });
 
+
+  $(()=>{
+    if(fact_new){
+      getPhone();
+    }
+  })
+
+  $('#tipo').change(()=>{
+    let tipo = parseInt($('#tipo').val());
+    if(tipo){
+      $('#fact_num').val(fact_num);
+      $('#fact_num_vis').val(fact_num).prop('readonly', true);
+    } else {
+      $('#fact_num').val(0);
+      $('#fact_num_vis').val(0).prop('readonly', false);
+    }
+  });
+
+  $('#fact_num_vis').change(()=>{
+    $('#fact_num').val(parseInt($('#fact_num_vis').val()));
+  });
+
   //ARTICULO
-  var i = {{$i += 1}};
+  var i = {{ $artCount }};
   var ivas_opts = '';
   $.each(@json($ivas), function(){ ivas_opts += '<option value=' + this.id + '>' + this.porcentaje + '</option>' });
 
@@ -281,7 +307,7 @@
 
     let detalle = $('<input />', {'type': 'text', 'class': 'form-control form-control-sm', 'name':'articulo[detalle][]'});
 
-    let iva = $('<select />', {'name' : 'articulo[iva][]', 'id': 'articulo_iva_'+i, 'class': 'form-control form-control-sm text-center', 'onchange':'sumar('+i+');'}).append(ivas_opts);
+    let iva = $('<select />', {'name' : 'articulo[iva_id][]', 'id': 'articulo_iva_'+i, 'class': 'form-control form-control-sm text-center', 'onchange':'sumar('+i+');'}).append(ivas_opts);
 
     let unitario = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': '0.00', 'name':'articulo[valor_unitario][]', 'id': 'articulo_valor_unitario_'+i, 'min': '0', 'onchange':'sumar('+i+');'});
 
@@ -292,7 +318,7 @@
   });
 
   function getDesc(){
-    let descp = parseFloat($('#descuentop').val())/100;
+    let descp = parseFloat($('#descuento_p').val())/100;
     let desc = (parseFloat($('#subtotal').val()) * descp).toFixed(2);
     $('#descuento').val(desc);
     return desc;
@@ -300,24 +326,48 @@
 
   //funcion para obtener las retenciones
   function getRet(){
-    var iva = parseFloat($("#iva").val());
-    var subtot = parseFloat($("#subtotal").val());
-    var tot = parseFloat($("#total").val());
-    var ivap = parseFloat($('#retivap option:selected').text())/100;
-    var totp = parseFloat($('#retfuentep option:selected').text())/100;
-    $("#retiva").val((iva*ivap).toFixed(2));
-    $("#retfuente").val((subtot*totp).toFixed(2));
-    $("#totret").val(parseFloat(tot-(iva*ivap)-(subtot*totp)).toFixed(2));
+    let iva_p = fnt_p = 0;
+    let iva = parseFloat($("#iva").val());
+    let subtot = parseFloat($("#subtotal").val());
+    let tot = parseFloat($("#total").val());
+
+    if($('#ret_iva_p option:selected').length > 0){
+      iva_p = $('#ret_iva_p option:selected').text();
+    } else {
+      alert('Selecciona un porcentaje de retención del iva.');
+    }
+
+    if($('#ret_fnt_p option:selected').length > 0){
+      fnt_p = $('#ret_fnt_p option:selected').text();
+    } else {
+      alert('Selecciona un porcentaje de retención en la fuente.');
+    }
+    let ret_iva_p = parseFloat(iva_p)/100;
+    let ret_fnt_p = parseFloat(fnt_p)/100;
+    // debugger
+    let ret_iva = (iva*ret_iva_p).toFixed(2);
+    let ret_fnt = (subtot*ret_fnt_p).toFixed(2);
+
+    $("#ret_iva").val(ret_iva);
+    $("#ret_fnt").val(ret_fnt);
+    $("#tot_cob").val(parseFloat(tot-ret_iva-ret_fnt).toFixed(2));
   }
+
+  $('.retencion').change(()=>{
+    getRet();
+  });
 
   // sumar total procesos
   function sumartotal(){
+    // debugger
     let indx, valor = 0, iva_tot = 0, iva_0 = 0;
 
-    for(indx = 1; indx < i; indx++){
+    for(indx = 0; indx < i; indx++){
+      if ($('#row-articulo-'+String(indx)).length == 0) {continue}
+
       let iva = parseFloat($('#articulo_iva_'+String(indx)+' option:selected').text());
       let sub_prod = parseFloat($('#articulo_subtotal_'+String(indx)).val());
-      let descp = parseFloat($('#descuentop').val())/100;
+      let descp = parseFloat($('#descuento_p').val())/100;
 
       if(iva != 0){
         let ivap = iva/100;
@@ -334,7 +384,7 @@
     $('#iva').val(iva_tot.toFixed(2));
     $('#iva_0').val(iva_0.toFixed(2));
     $('#total').val((valor + iva_tot - desc).toFixed(2));
-    console.log(valor, desc, iva_tot, iva0);
+    // console.log(valor, desc, iva_tot, iva0);
     getRet();
   }
 

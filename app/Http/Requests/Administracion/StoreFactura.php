@@ -24,28 +24,36 @@ class StoreFactura extends FormRequest
     public function rules()
     {
         return [
-          'empresa_id' => [],
-          'usuario_id' => [],
-          'numero' => [],
-          'fact_emp_id' => [],
-          'cliente_id' => [],
-          'emision' => [],
-          'vencimiento' => [],
-          'tipo' => [],
-          'estado' => [],
-          'tipo_pago' => [],
-          'subtotal' => [],
-          'descuento_%' => [],
-          'descuento' => [],
-          'iva' => [],
-          'iva_0' => [],
-          'total' => [],
-          'ret_iva_%' => [],
-          'ret_iva' => [],
-          'ret_fuente_%' => [],
-          'ret_fuente' => [],
-          'total_pagar' => [],
-          'notas' => []
+          'numero' => ['required', 'numeric'],
+          'fact_emp_id' => ['required', 'numeric'],
+          'cliente_id' => ['required', 'numeric'],
+          'ruc' => ['required', 'string'],
+          'telefono' => ['required', 'string'],
+          'direccion' => ['required', 'string'],
+          'emision' => ['required', 'date'],
+          'vencimiento' => ['required', 'date'],
+          'tipo' => ['required', 'boolean'],
+          'estado' => ['required', 'numeric'],
+          'tipo_pago' => ['required', 'numeric'],
+          //articulos
+          'articulo.cantidad.*' => ['required', 'numeric'],
+          'articulo.detalle.*' => ['required', 'string'],
+          'articulo.iva_id.*' => ['required', 'numeric'],
+          'articulo.valor_unitario.*' => ['required', 'numeric'],
+          'articulo.subtotal.*' => ['required', 'numeric'],
+          //values
+          'subtotal' => ['required', 'numeric'],
+          'descuento_p' => ['required', 'numeric'],
+          'descuento' => ['required', 'numeric'],
+          'iva' => ['required', 'numeric'],
+          'iva_0' => ['required', 'numeric'],
+          'total' => ['required', 'numeric'],
+          'ret_iva_p' => ['required', 'numeric'],
+          'ret_iva' => ['required', 'numeric'],
+          'ret_fuente_p' => ['required', 'numeric'],
+          'ret_fuente' => ['required', 'numeric'],
+          'total_pagar' => ['required', 'numeric'],
+          'notas' => ['nullable', 'string']
         ];
     }
 }

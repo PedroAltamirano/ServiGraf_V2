@@ -12,9 +12,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Session;
 
+use App\Security;
 use App\Models\Administracion\Factura;
 use App\Models\Administracion\Fact_prod;
 use App\Models\Administracion\Iva;
+use App\Models\Administracion\Retencion;
 use App\Models\Ventas\Cliente;
 use App\Models\Sistema\Fact_empr;
 
@@ -53,11 +55,16 @@ class Facturacion extends Controller
    */
   public function create(){
     $factura = new Factura;
+    $fact_num = Factura::where('tipo', 1)->where('empresa_id', Auth::user()->empresa_id)->select('numero')->orderBy('numero', 'DESC')->first()->numero + 1;
     $empresas = Fact_empr::where('empresa_id', Auth::user()->empresa_id)->get();
-    $iva = '12';
+
+    $utilidad = Security::hasModule('19');
+    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
+
+    $iva_p = '12'; //DEBE SALIR DESDE EL SISTEMA
     $ivas = Iva::where('empresa_id', Auth::user()->empresa_id)->get();
-    $ret_iva = Iva::where('empresa_id', Auth::user()->empresa_id)->get();
-    $ret_fnt = Iva::where('empresa_id', Auth::user()->empresa_id)->get();
+    $ret_iva = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('tipo', 1)->get();
+    $ret_fnt = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('tipo', 0)->get();
     $data = [
       'text' => 'Nueva Factura',
       'path' => route('factura.create'),
@@ -65,12 +72,26 @@ class Facturacion extends Controller
       'action' => 'Crear',
       'mod' => 0,
     ];
-    return view('Administracion.factura', compact('factura', 'empresas', 'iva', 'ivas', 'ret_iva', 'ret_fnt'))->with($data);
+    return view('Administracion.factura', compact('factura', 'fact_num', 'empresas', 'utilidad', 'clientes', 'iva_p', 'ivas', 'ret_iva', 'ret_fnt'))->with($data);
   }
 
   // crear nuevo
   public function store(StoreFactura $request){
     $validator = $request->validated();
+    $validator['empresa_id'] = Auth::user()->empresa_id;
+    $validator['usuario_id'] = Auth::id();
+    $factura = Factura::create($validator);
+
+    $size = sizeof($validator['articulo']['cantidad'] ?? []);
+    for($i=0; $i < $size; $i++){
+      $prod = new Fact_prod();
+      $prod->cantidad = $validator['articulo']['cantidad'][$i];
+      $prod->detalle = $validator['articulo']['detalle'][$i];
+      $prod->iva_id = $validator['articulo']['iva_id'][$i];
+      $prod->valor_unitario = $validator['articulo']['valor_unitario'][$i];
+      $prod->subtotal = $validator['articulo']['subtotal'][$i];
+      $prod->save();
+    }
 
     $data = [
       'type'=>'success',
@@ -78,26 +99,48 @@ class Facturacion extends Controller
       'message'=>'La factura se ha creado con éxito'
     ];
 
-    return redirect()->route('factura.edit', $model->id)->with(['actionStatus' => json_encode($data)]);
+    return redirect()->route('factura.edit', $factura)->with(['actionStatus' => json_encode($data)]);
   }
 
   //ver modificar
   public function edit(Factura $factura){
+    $fact_num = $factura->numero;
     $empresas = Fact_empr::where('empresa_id', Auth::user()->empresa_id)->get();
+
+    $utilidad = Security::hasModule('19');
+    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
+
+    $iva_p = '12'; //DEBE SALIR DESDE EL SISTEMA
+    $ivas = Iva::where('empresa_id', Auth::user()->empresa_id)->get();
+    $ret_iva = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('tipo', 1)->get();
+    $ret_fnt = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('tipo', 0)->get();
+
     $data = [
-      'text'=>'Modificar Factura '.$factura->id,
+      'text'=>'Modificar Factura ',
       'path'=> route('factura.update', $factura->id),
       'method' => 'PUT',
       'action' => 'Modificar',
-      'mod' => 1,
     ];
-    return view('Administracion.factura', compact('factura', 'empresas'))->with($data);
+    return view('Administracion.factura', compact('factura', 'fact_num', 'empresas', 'utilidad', 'clientes', 'iva_p', 'ivas', 'ret_iva', 'ret_fnt'))->with($data);
   }
 
   //modificar perfil
   public function update(UpdateFactura $request, Factura $factura){
     $validator = $request->validated();
     $factura->update($validator);
+
+    Fact_prod::where('factura_id', $factura->id)->delete();
+    $size = sizeof($validator['articulo']['cantidad'] ?? []);
+    for($i=0; $i < $size; $i++){
+      $prod = new Fact_prod();
+      $prod->factura_id = $factura->id;
+      $prod->cantidad = $validator['articulo']['cantidad'][$i];
+      $prod->detalle = $validator['articulo']['detalle'][$i];
+      $prod->iva_id = $validator['articulo']['iva_id'][$i];
+      $prod->valor_unitario = $validator['articulo']['valor_unitario'][$i];
+      $prod->subtotal = $validator['articulo']['subtotal'][$i];
+      $prod->save();
+    }
 
     $data = [
       'type' => 'success',

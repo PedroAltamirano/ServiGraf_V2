@@ -15,4 +15,13 @@ class Contacto extends Model
   protected $hidden = [
     'created_at', 'updated_at'
   ];
+
+  public function getMovilAttribute(){
+    $res = $this->telefono;
+    if($res != ''){
+      $res .= ' / ';
+    }
+    $res .= $this->celular;
+    return $res;
+  }
 }

@@ -188,14 +188,14 @@
         <td><img src="{{ $logo }}" alt="{{ $item->id }}" style="max-width: 100px;"></td>
         <td>{{ $item->impresion ? 'A4' : 'A5' }}</td>
         <td><a class='fa fa-edit modFactura' href="#modalFactura" data-toggle="modal"
-          data-route='{{route('factura.update', $item->id)}}' 
-          data-empresa="{{ $item->empresa }}" 
-          data-representante="{{ $item->representante }}" 
-          data-ruc="{{ $item->ruc }}" 
-          data-caja="{{ $item->caja }}" 
-          data-inicio="{{ $item->inicio }}" 
-          data-valido_de="{{ $item->valido_de }}" 
-          data-valido_a="{{ $item->valido_a }}" 
+          data-route='{{route('facturacion.update', $item->id)}}'
+          data-empresa="{{ $item->empresa }}"
+          data-representante="{{ $item->representante }}"
+          data-ruc="{{ $item->ruc }}"
+          data-caja="{{ $item->caja }}"
+          data-inicio="{{ $item->inicio }}"
+          data-valido_de="{{ $item->valido_de }}"
+          data-valido_a="{{ $item->valido_a }}"
           data-logo="{{ $logo }}"
           data-status="{{ $item->status }}"
           data-impresion="{{ $item->impresion }}"></a> <a class='fa fa-eye' id="{{ $item->id }}"></a></td>
@@ -215,7 +215,7 @@
         <h5 class="modal-title"></h5>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <form action="{{ route('factura.store') }}" method="post" class="modal-path" enctype="multipart/form-data">
+      <form action="{{ route('facturacion.store') }}" method="post" class="modal-path" enctype="multipart/form-data">
         @csrf
         @method('POST')
         <div class="modal-body">
@@ -309,7 +309,7 @@
     modal.find('.modal-valido_a').val(today);
     modal.find('.modal-impresion').val('1');
     modal.find('.modal-logo').attr('data-default-file', '');
-    modal.find('.modal-path').attr('action', '{{ route("factura.store") }}');
+    modal.find('.modal-path').attr('action', '{{ route("facturacion.store") }}');
     modal.find('input[name="_method"]').val('POST');
   });
 
