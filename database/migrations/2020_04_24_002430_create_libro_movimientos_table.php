@@ -25,12 +25,13 @@ class CreateLibroMovimientosTable extends Migration
             $table->string('beneficiario', 50);
             $table->unsignedInteger('ci');
             $table->string('detalle', 140);
-            $table->unsignedDecimal('ingreso', 7, 2);
-            $table->unsignedDecimal('egreso', 7, 2);
+            $table->boolean('tipo')->comment('1:ingreso, 0:egreso');
+            $table->unsignedDecimal('ingreso', 7, 2)->nullable();
+            $table->unsignedDecimal('egreso', 7, 2)->nullable();
             $table->unsignedMediumInteger('banco_id');
             $table->foreign('banco_id')->references('id')->on('bancos');
-            $table->unsignedInteger('cuenta');
-            $table->unsignedInteger('cheque');
+            $table->unsignedInteger('cuenta')->nullable();
+            $table->unsignedInteger('cheque')->nullable();
             $table->timestamps();
         });
     }
