@@ -36,7 +36,7 @@ class CreateNominaDocumentosTable extends Migration
             $table->boolean('certificado_medico')->default(0);
             $table->boolean('aviso_salida')->default(0);
             $table->boolean('acta_finiquito')->default(0);
-            $table->boolean('recivo_pago_acta_fini')->default(0);
+            $table->boolean('recibo_pago_acta_fini')->default(0);
             $table->timestamps();
         });
     }
