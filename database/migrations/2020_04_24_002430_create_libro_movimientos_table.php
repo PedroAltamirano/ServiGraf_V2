@@ -21,6 +21,7 @@ class CreateLibroMovimientosTable extends Migration
             $table->foreign('libro_id')->references('id')->on('libros');
             $table->unsignedSmallInteger('libro_ref_id');
             $table->foreign('libro_ref_id')->references('id')->on('libro_refs');
+            $table->date('fecha');
             $table->string('beneficiario', 50);
             $table->unsignedInteger('ci');
             $table->string('detalle', 140);
