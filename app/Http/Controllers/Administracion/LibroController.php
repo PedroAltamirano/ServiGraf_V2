@@ -91,11 +91,11 @@ class LibroController extends Controller
         //
     }
 
-    public function ajax_libros(Request $request) {
+    public function api_libros(Request $request) {
       $res = Usuario::find($request->usuario)->libros;
       return response()->json($res, 200);
     }
-    public function ajax_info(Request $request) {
+    public function api_info(Request $request) {
       $movimientos = Libro_movimientos::where('usuario_id', $request->usuario)->where('libro_id', $request->libro)->whereBetween('fecha', [$request->fechaini, $request->fechafin])->get();
 
       return response()->json(LibroResource::collection($movimientos), 200);

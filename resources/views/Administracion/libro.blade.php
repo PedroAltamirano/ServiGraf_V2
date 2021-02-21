@@ -78,7 +78,7 @@
 
   function getLibros(){
     $.ajax({
-      url:"{{ route('libro.ajaxlibros') }}",
+      url:"{{ route('libro.api.libros') }}",
       type: 'post',
       dataType: "json",
       data: {
@@ -122,7 +122,7 @@
       autoPrint: false
     }],
     "ajax": {
-      "url": "{{route('libro.ajaxinfo')}}",
+      "url": "{{route('libro.api.info')}}",
       "method": 'post',
       "dataSrc": '',
       "data": {
