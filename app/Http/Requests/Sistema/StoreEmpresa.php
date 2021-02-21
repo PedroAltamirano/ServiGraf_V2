@@ -27,6 +27,7 @@ class StoreEmpresa extends FormRequest
             'nombre' => ['required', 'string', 'max:50'],
             'representante' => ['required', 'string', 'max:50'],
             'ruc' => ['required', 'numeric', 'regex:/[0-9]{13}/'],
+            'ciudad' => ['required', 'string', 'max:250'],
             'direccion' => ['required', 'string', 'max:250'],
             'telefono' => ['required', 'numeric', 'regex:/[0-9]{7}/'],
             'celular' => ['required', 'numeric', 'regex:/[0-9]{10}/'],
