@@ -6,6 +6,8 @@ namespace App\Models\Usuarios;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Models\Administracion\Libro;
+
 class Usuario extends Authenticatable
 {
     use Notifiable;
@@ -50,6 +52,11 @@ class Usuario extends Authenticatable
 
     public function clientes()
     {
-        return $this->hasManyThrough('App\Models\Ventas\Cliente', 'App\Models\Usuarios\UsuarioClientes', 'usuario_id', 'id', 'cedula', 'cliente_id');
+      return $this->hasManyThrough('App\Models\Ventas\Cliente', 'App\Models\Usuarios\UsuarioClientes', 'usuario_id', 'id', 'cedula', 'cliente_id');
+    }
+
+    public function libros()
+    {
+      return $this->hasMany(Libro::class, 'usuario_id');
     }
 }
