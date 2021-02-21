@@ -122,7 +122,7 @@
         <label for="correo">Correo</label>
         <input type="text" name="correo" id="correo" class="form-control form-control-sm @error('correo') is-invalid @enderror" value="{{ old('correo', $empresa->correo) }}">
       </div>
-      <div class="form-group col-12 col-md-4">
+      <div class="form-group col-12 col-md-2">
         <label for="ciudad">Ciudad</label>
         <input type="text" name="ciudad" id="ciudad" class="form-control form-control-sm @error('ciudad') is-invalid @enderror" value="{{ old('ciudad', $empresa->ciudad) }}">
       </div>
