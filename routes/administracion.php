@@ -10,7 +10,9 @@ Route::namespace('Administracion')
   Route::get('factura/modificar/{factura}', 'Facturacion@edit')->name('factura.edit')->middleware('hasModRol:21,3');
   Route::put('factura/modificar/{factura}', 'Facturacion@update')->name('factura.update')->middleware('hasModRol:21,3');
 
-  Route::get('libro', 'Libro@show')->name('libro')->middleware('hasModRol:22,1');
+  Route::get('libro', 'LibroController@index')->name('libro')->middleware('hasModRol:22,1');
+  Route::post('libro/ajaxlibros', 'LibroController@ajax_libros')->name('libro.ajaxlibros')->middleware('hasModRol:22,1');
+  Route::post('libro/ajaxinfo', 'LibroController@ajax_info')->name('libro.ajaxinfo')->middleware('hasModRol:22,1');
 
   Route::get('rrhh', 'RRHH@show')->name('rrhh')->middleware('hasModRol:24,1');
 });
