@@ -25,6 +25,7 @@ class LibroResource extends JsonResource
           'libro_ref_id' => $this->libro_ref_id,
           'ci' => $this->ci,
           'banco_id' => $this->banco_id,
+          'banco' => $this->banco->banco,
           'cuenta' => $this->cuenta,
           'cheque' => $this->cheque,
         ];
