@@ -31,9 +31,9 @@
 <x-blueBoard
   title='Flujo de activos'
   :foot="[
-    ['text'=>'Nueva Entrada', 'href'=>'#', 'id'=>'modal-entrada', 'tipo'=> 'modal'],
-    ['text'=>'Nuevo Libro', 'href'=>'#', 'id'=>'modal-libro', 'tipo'=> 'modal'],
-    ['text'=>'Referencias y Bancos', 'href'=>'#', 'id'=>'referencias_bancos', 'tipo'=> 'link']
+    ['text'=>'Nueva Entrada', 'href'=>route('entrada.create'), 'id'=>'newEntrada', 'tipo'=> 'link'],
+    ['text'=>'Nuevo Libro', 'href'=>'#modalLibro', 'id'=>'modal-libro', 'tipo'=> 'modal'],
+    ['text'=>'Referencias y Bancos', 'href'=>route('referencias-bancos'), 'id'=>'referencias_bancos', 'tipo'=> 'link']
   ]"
 >
   <table id="table" class="table table-striped table-sm">
@@ -64,11 +64,12 @@
   </table>
 </x-blueBoard>
 
-@include('Administracion.libro-entrada')
+@include('Administracion.modal-recibo')
 
 @endsection
 
 @section('scripts')
+<script src="{{ asset('js/num2word.js') }}"></script>
 <script>
   $.ajaxSetup({
     headers: {
@@ -100,17 +101,17 @@
 
   $(()=>{
     getLibros();
-  })
+  });
 
   $('#usuario').change(()=>{
-    alert('change')
     getLibros();
-  })
+  });
 
   var saldo = 0;
   var dato_fecha = '';
   var dato_color = '';
   var cambio_color = false;
+  const route = "{{ route('entrada.edit', 0) }}";
   var table = $('#table').DataTable({
     "paging":   true,
     "ordering": true,
@@ -150,8 +151,11 @@
       {"name":"saldo", "defaultContent": "0.00", "class": "text-right bold"},
       {"name":"crud", "data":null, "sortable": "false",
         "render": function ( data, type, full, meta ) {
-          data = JSON.stringify(data);
-          return "<a class='fa fa-edit modalEntrada' href='#modalEntrada' data-toggle='modal' data-entrada='"+data+"' ></a> <a class='fa fa-print'  href='#modalRecivo' data-toggle='modal'></a>"
+          let dataJson = JSON.stringify(data);
+          let router = route.replace("/0", "/"+data.id);
+          let crud = "<a class='fa fa-edit' href='"+router+"' ></a> ";
+          crud += "<a class='fa fa-print' href='#modalRecibo' data-toggle='modal' data-entrada='"+dataJson+"'></a>";
+          return crud;
         }
       }
     ],
@@ -219,13 +223,24 @@
     cambio_color = false;
     table.ajax.reload(null, false);
   });
-</script>
-<script>
-  $('.modalEntrada').on('click', function () {
-    debugger
-    var button = $(this);
-    var modal = $('#modalEntrada');
-    modal.find('.modal-title').html('Modificar Entrada');
+
+  $("#modalRecibo").on('show.bs.modal', function(event) {
+    let data = $(event.relatedTarget).data('entrada');
+    let tipo = data.tipo ? 'COBRO' : 'PAGO';
+    let ciudad = "{{ Auth::user()->empresa->datos->ciudad }}";
+    let fecha = ciudad + ', ' + data.fecha;
+    let valor = data.tipo ? data.ingreso : data.egreso;
+    let empresa = "{{ Auth::user()->empresa->nombre }}";
+    let valor_texto = numeroALetras(valor);
+    $('.recibo-tipo').html(tipo);
+    $('.recibo-fecha').html(fecha);
+    $('.recibo-valor').html(valor);
+    $('.recibo-empresa').html(empresa);
+    $('.recibo-valor_texto').html(valor_texto);
+    $('.recibo-detalle').html(data.detalle);
+    $('.recibo-pago').html(data.banco);
+    $('.recibo-beneficiario').html(data.beneficiario);
+    $('.recibo-ci').html(data.ci);
   });
 </script>
 @endsection
