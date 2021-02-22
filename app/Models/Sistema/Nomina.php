@@ -37,4 +37,8 @@ class Nomina extends Model
 		$nomina = Nomina::where('empresa_id', Auth::user()->empresa_id)->select('nombre', 'apellido', 'cedula')->get();
 		return $nomina->diff($usuarios);
     }
+
+    public function getNombreCompletoAttribute() {
+      return $this->nombre.' '.$this->apellido;
+    }
 }
