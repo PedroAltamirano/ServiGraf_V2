@@ -24,8 +24,8 @@ class CreateAsistenciasTable extends Migration
             $table->time('salida_mañana')->nullable();
             $table->time('llegada_tarde')->nullable();
             $table->time('salida_tarde')->nullable();
-            $table->decimal('total', 4, 2)->unsigned()->default(0.0);
-            $table->decimal('extras', 4, 2)->unsigned()->default(0.0);
+            $table->time('total')->nullable();
+            $table->time('extras')->nullable();
             $table->timestamps();
         });
     }
