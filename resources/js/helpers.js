@@ -55,3 +55,7 @@ window.newRow = function newRow($table, cols, col_id) {
   }
   $table.append($row);
 };
+
+$("#print").on("click", () => {
+  window.print();
+});

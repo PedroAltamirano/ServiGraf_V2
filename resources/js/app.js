@@ -1,26 +1,26 @@
-require('./bootstrap');
-require('jquery');
-require('select2/dist/js/select2.min.js');
-require('dropify/dist/js/dropify.min.js');
-require('chart.js/dist/Chart.js');
+require("./bootstrap");
+require("jquery");
+require("select2/dist/js/select2.min.js");
+require("dropify/dist/js/dropify.min.js");
+require("chart.js/dist/Chart.js");
 
 // Node Modules
-import 'popper.js';
-import 'animate.css';
+import "popper.js";
+import "animate.css";
 
-import 'jszip';
-import 'pdfmake';
-import 'datatables.net-bs4';
-import 'datatables.net-buttons-bs4';
-import 'datatables.net-buttons/js/buttons.html5.js';
-import 'datatables.net-buttons/js/buttons.print.js';
-import 'datatables.net-fixedheader-bs4';
-import 'datatables.net-keytable-bs4';
-import 'datatables.net-responsive-bs4';
-import 'datatables.net-rowgroup-bs4';
+// import "jszip";
+// import "pdfmake";
+import "datatables.net-bs4";
+import "datatables.net-buttons-bs4";
+// import "datatables.net-buttons/js/buttons.html5.js";
+import "datatables.net-buttons/js/buttons.print.js";
+// import "datatables.net-fixedheader-bs4";
+// import "datatables.net-keytable-bs4";
+import "datatables.net-responsive-bs4";
+// import "datatables.net-rowgroup-bs4";
 
-require('../../resources/js/sb-admin-2.min.js');
-require('../../resources/js/helpers.js');
+require("../../resources/js/sb-admin-2.min.js");
+require("../../resources/js/helpers.js");
 
 //components
 // import blueBoard from './components/blueBoard.vue';
