@@ -26,5 +26,8 @@ Route::namespace('Administracion')
   Route::post('banco/nueva', 'BancoController@store')->name('banco.store')->middleware('hasModRol:23,2');
   Route::put('banco/modificar/{banco}', 'BancoController@update')->name('banco.update')->middleware('hasModRol:23,3');
 
-  Route::get('rrhh', 'RRHH@show')->name('rrhh')->middleware('hasModRol:24,1');
+  Route::get('rrhh', 'RRHHController@index')->name('rrhh')->middleware('hasModRol:24,1');
+  Route::post('rrhh/api', 'RRHHController@api')->name('rrhh.api')->middleware('hasModRol:24,1');
+  Route::put('asistencia/modificar/{asistencia}', 'RRHHController@update')->name('asistencia.update')->middleware('hasModRol:24,3');
+  Route::delete('asistencia/eliminar/{asistencia}', 'RRHHController@destroy')->name('asistencia.delete')->middleware('hasModRol:24,4');
 });
