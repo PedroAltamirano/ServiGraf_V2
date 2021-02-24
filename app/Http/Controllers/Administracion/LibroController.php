@@ -62,10 +62,10 @@ class LibroController extends Controller
       $libro->update($validated);
 
       $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'El libro se ha modificado con éxito'
-    ];
+        'type'=>'success',
+        'title'=>'Acción completada',
+        'message'=>'El libro se ha modificado con éxito'
+      ];
       return redirect()->back()->with(['actionStatus' => json_encode($data)]);
     }
 
