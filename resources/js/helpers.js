@@ -56,6 +56,11 @@ window.newRow = function newRow($table, cols, col_id) {
   $table.append($row);
 };
 
-$("#print").on("click", () => {
-  window.print();
+$("#print").on("click", event => {
+  let target = "#" + $("#print").data("target");
+  $(".select2Class").select2("destroy");
+  $(target).print();
+  $(".select2Class").select2();
 });
+
+$(".select2Class").select2();

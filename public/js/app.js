@@ -95156,9 +95156,8 @@ __webpack_require__(/*! chart.js/dist/Chart.js */ "./node_modules/chart.js/dist/
 
  // import "datatables.net-rowgroup-bs4";
 
-__webpack_require__(/*! ../../resources/js/sb-admin-2.min.js */ "./resources/js/sb-admin-2.min.js");
-
-__webpack_require__(/*! ../../resources/js/helpers.js */ "./resources/js/helpers.js"); //components
+__webpack_require__(/*! ../../resources/js/sb-admin-2.min.js */ "./resources/js/sb-admin-2.min.js"); // require("../../resources/js/helpers.js");
+//components
 // import blueBoard from './components/blueBoard.vue';
 // import pathRoute from './components/pathRoute.vue';
 // Vue.component('carousel', require('vue-owl-carousel'));
@@ -95236,70 +95235,6 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
-
-/***/ }),
-
-/***/ "./resources/js/helpers.js":
-/*!*********************************!*\
-  !*** ./resources/js/helpers.js ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-if (document.querySelector(".dropify")) {
-  $(".dropify").dropify({
-    tpl: {
-      wrap: '<div class="dropify-wrapper user"></div>',
-      loader: '<div class="dropify-loader"></div>',
-      message: '<div class="dropify-message"><span class="file-icon"></span> <p class="text-uppercase">Arrastra y suelta aquí para subir</p><button type="button" class="mt-3 cs-file-drop-btn btn btn-primary btn-sm">O seleccione archivo</button></div>',
-      preview: '<div class="dropify-preview"><span class="dropify-render"></span><div class="dropify-infos"><div class="dropify-infos-inner"><p class="dropify-infos-message fs-12">Arrastra y suelta o haz clic para reemplazar</p></div></div></div>',
-      filename: '<p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner"></span></p>',
-      clearButton: '<button type="button" class="dropify-clear">Quitar</button>',
-      errorLine: '<p class="dropify-error">{{ error }}</p>',
-      errorsContainer: '<div class="dropify-errors-container"><ul></ul></div>'
-    },
-    error: {
-      fileSize: "El tamaño del archivo es demasiado grande ({{ value }}B máximo).",
-      minWidth: "El ancho de la imagen es demasiado pequeño ({{ value }}}px mínimo).",
-      maxWidth: "El ancho de la imagen es demasiado grande ({{ value }}}px máximo).",
-      minHeight: "La altura de la imagen es demasiado pequeña ({{ value }}}px mínimo).",
-      maxHeight: "La altura de la imagen es demasiado grande ({{ value }}px máximo).",
-      imageFormat: "El formato de imagen no está permitido ({{ value }} solamente)."
-    },
-    messages: {
-      "default": "Arrastre y suelte un archivo aquí o haga clic en",
-      replace: "Arrastra y suelta o haz clic para reemplazar",
-      remove: "Eliminar",
-      error: "Tenemos problemas con a imagen a cargar"
-    }
-  });
-}
-
-$(document).on("change", ".fixFloat", function () {
-  $(this).val(parseFloat($(this).val()).toFixed(2));
-});
-$(document).on("click", ".removeRow", function () {
-  var button_id = $(this).attr("id");
-  $("#row-" + button_id + "").remove();
-});
-
-window.newRow = function newRow($table, cols, col_id) {
-  $row = $("<tr/>", {
-    id: col_id
-  });
-
-  for (var indx = 0; indx < cols.length; indx++) {
-    $col = $("<td/>");
-    $col.append(cols[indx]);
-    $row.append($col);
-  }
-
-  $table.append($row);
-};
-
-$("#print").on("click", function () {
-  window.print();
-});
 
 /***/ }),
 

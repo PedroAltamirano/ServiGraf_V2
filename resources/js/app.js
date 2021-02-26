@@ -20,7 +20,7 @@ import "datatables.net-responsive-bs4";
 // import "datatables.net-rowgroup-bs4";
 
 require("../../resources/js/sb-admin-2.min.js");
-require("../../resources/js/helpers.js");
+// require("../../resources/js/helpers.js");
 
 //components
 // import blueBoard from './components/blueBoard.vue';
