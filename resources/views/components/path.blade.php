@@ -1,4 +1,4 @@
-<nav class="m-2 m-md-3 p-0" aria-label="breadcrumb">
+<nav class="m-2 m-md-3 p-0 d-print-none" aria-label="breadcrumb">
   <ol class="breadcrumb">
     {{-- <li v-for='e in links' :key="e.href" :class="['breadcrumb-item']"><a :href="e.href">{{e.text.toUpperCase()}}</a></li>
     <li v-for='e in currentL' :key="e.href" :class="['breadcrumb-item', 'active']" aria-current="page">{{e.text.toUpperCase()}}</li> --}}

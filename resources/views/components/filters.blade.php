@@ -1,6 +1,7 @@
 <x-blueBoard
   title='Filtros'
   :foot="[]"
+  class="d-print-none"
 >
   @props(['cli'=>true, 'cob'=>true])
 

@@ -24,7 +24,7 @@
 <x-blueBoard
   title='Reporte'
   :foot="[
-    ['text'=>'fas fa-print', 'href'=>'imprimir(\'tabla\')', 'id'=>'print', 'tipo'=>'button'],
+    ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'print', 'tipo'=>'button'],
   ]"
 >
   <table id="table" class="table table-striped table-sm">
@@ -68,11 +68,6 @@
     "ordering": true,
     "info":     false,
     "responsive": true,
-    "buttons": [{
-      extend: 'print',
-      text: 'Imprimir Reporte',
-      autoPrint: false
-    }],
     "ajax": {
       "url": "{{route('reporte.maquinas.ajax')}}",
       "method": 'get',
@@ -142,7 +137,7 @@
       let {{"totserv".$servicio->id}} = {{'dataserv'.$servicio->id}}.length ? {{'dataserv'.$servicio->id}}.sum() : 0;
       $("#{{'serv'.$servicio->id}}").html({{'totserv'.$servicio->id}}.toFixed(2));
       @endforeach
-    }
+    },
   });
 
   $('.refresh').on('change', function(){

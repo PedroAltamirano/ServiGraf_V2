@@ -1,10 +1,10 @@
-<div class="dropdown dropup floating-action-button">
+<div class="dropdown dropup floating-action-button d-print-none">
   <button type="button" class="btn btn-primary btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <i class="fa fa-plus" aria-hidden="true"></i>
   </button>
   <ul class="dropdown-menu dropdown-menu-right">
     <li>
-        <a href="{{route('libro')}}" class="btn btn-primary bg-primary-80 btn-lg mb-2">
+        <a href="{{route('entrada.create')}}" class="btn btn-primary bg-primary-80 btn-lg mb-2">
             <i class="fa fa-book" aria-hidden="true"></i>
         </a>
     </li>

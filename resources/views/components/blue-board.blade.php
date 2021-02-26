@@ -1,7 +1,7 @@
-<div class="m-2 m-md-3">
-    <div style="background-color: rgba(59,89,152,.8)" class="text-white rounded-top p-2">{{ $title }}</div>
+<div {{ $attributes->merge(['class' => 'm-2 m-md-3']) }}>
+    <div style="background-color: rgba(59,89,152,.8)" class="text-white rounded-top p-2 d-print-none">{{ $title }}</div>
     <div class="p-2 p-md-3 m-0 border-left border-right">{{ $slot }}</div>
-    <div class="bg-gray rounded-bottom p-2">
+    <div class="bg-gray rounded-bottom p-2 d-print-none">
         <div class="d-flex">
             <div class="flex-grow-1 d-flex">
                 @foreach ($foot as $item)
@@ -18,7 +18,7 @@
                 @foreach ($foot as $item)
                 <div class="mr-2 mr-md-3">
                     @if ($item['tipo'] == 'button')
-                    <a onclick="{{ $item['href'] }}" class="{{ $item['text'] }}" id="{{ $item['id'] }}"></a>
+                    <a onclick="{{ $item['href'] }}" class="{{ $item['text'] }}" id="{{ $item['id'] }}" {{ $item['print-target'] ? "data-target={$item['print-target']}" : '' }}></a>
                     @endif
                 </div>
                 @endforeach

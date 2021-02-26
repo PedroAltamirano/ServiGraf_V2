@@ -49,7 +49,7 @@
     </tbody>
     <tfoot>
     </tfoot>
-  </table> 
+  </table>
 </x-blueBoard>
 @endsection
 

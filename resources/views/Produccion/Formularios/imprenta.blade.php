@@ -48,7 +48,7 @@
       <label for="tintas">Tintas</label>
       <div class="form-row" id="tintas">
         <div class="col-6">
-          <select name="tinta_tiro[]" id="tinta_tiro" class="form-control form-control-sm" aria-describedby="help_tintas_tiro" multiple>
+          <select name="tinta_tiro[]" id="tinta_tiro" class="form-control form-control-sm d-print-none" aria-describedby="help_tintas_tiro" multiple>
             @foreach ($tintas as $tinta)
             <option value="{{ $tinta->id }}" {{ in_array($tinta->id, $oldTintasTiro) ? 'selected' : '' }}>{{ $tinta->color }}</option>
             @endforeach
@@ -104,7 +104,7 @@
           <i type="button" name="remove" id="{{'material-'.$i}}" class="fas fa-times removeRow"></i>
         </td>
         <td>
-          <select class="form-control form-control-sm selectMaterial" name="material[id][]">
+          <select class="form-control form-control-sm select2Class" name="material[id][]">
             <option selected value="null">Seleccione uno...</option>
             {{ $group =  $materiales->first()->categoria_id ?? '' }}
             <optgroup label="{{ $materiales->first()->categoria->categoria ?? '' }}">
@@ -130,7 +130,7 @@
           <input type="number" name="material[tamanios][]" class="form-control form-control-sm text-center" value="{{(old('material.tamanios.'.$i) ?? $oldMaterial[$i]->tamanos) ?? '0'}}" min="0" />
         </td>
         <td>
-          <select class="form-control form-control-sm selectProveedor" name="material[proveedor][]">
+          <select class="form-control form-control-sm select2Class" name="material[proveedor][]">
             <option selected disabled>Seleccione uno...</option>
             @foreach($proveedores as $prov)
             <option value="{{ $prov->id }}" {{(old('material.proveedor.'.$i) ?? $oldMaterial[$i]->proveedor_id) == $prov->id ? 'selected' : ''}}>{{ $prov->proveedor }} / {{ $prov->telefono }}</option>
@@ -148,9 +148,9 @@
     </tbody>
     <tfoot>
       <tr class="font-weight-bold">
-        <td colspan="2"><a class="text-muted" href="#">Corte de papel</a></td>
+        <td colspan="2"><a class="text-muted d-print-none" href="#">Corte de papel</a></td>
         <td colspan="4" class="text-right"></td>
-        <td colspan="2" class="text-right"><i class="fas fa-print pr-2"></i>  Total material $</td>
+        <td colspan="2" class="text-right"><a id="printable" data-target="material" class="d-print-none"><i class="fas fa-print pr-2"></i></a>  Total material $</td>
         <td class="text-center"><input type="number" name="total_material" id="totalMaterial" value="{{ old('total_material', $pedido->total_material) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
       </tr>
     </tfoot>
@@ -159,7 +159,7 @@
 
 <hr style="border-width: 3px;">
 <section id="procesos">
-  <table id="table-procesos" class="table table-sm table-responsive">
+  <table id="table-procesos" class="table table-sm table-responsive-sm">
     <thead>
       <tr>
         <th scope="col" class="crudCol"><i id="addProceso" class="fas fa-plus"></i></th>
@@ -179,7 +179,7 @@
           <i type="button" name="remove" id="{{'proceso-'.$j}}" class="fas fa-times removeRow"></i>
         </td>
         <td>
-          <select class="form-control form-control-sm selectProceso" name="proceso[id][]">
+          <select class="form-control form-control-sm select2Class" name="proceso[id][]">
             <option selected value="null">Seleccione uno...</option>
             {{ $group =  $servicios->first()->area_id }}
             <optgroup label="{{ $servicios->first()->area->area }}">
@@ -226,19 +226,21 @@
     </tbody>
     <tfoot>
       <tr class="font-weight-bold">
-        <td colspan="4"></td>
+        <td colspan="4" rowspan="3" class="align-bottom">
+          <div class="d-none d-print-flex text-center mh-100 justify-content-center">
+            <div class="border-top w-50">{{ session('userInfo.nomina') }}</div>
+          </div>
+        </td>
         <td colspan="2" class="text-right">Total Pedido $</td>
         <td class="text-center"><input type="number" id="totalProcesos" name="total_pedido" value="{{ old('total_pedido', $pedido->total_pedido) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
         <td></td>
       </tr>
       <tr>
-        <td colspan="4"></td>
         <td colspan="2" class="text-right">Abonos $</td>
         <td class="text-center"><input type="number" id="totalAbonos" name="abono" value="{{ old('abono', $pedido->abono) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
         <td><i data-toggle="modal" data-target="#modalAbonos" class="fas fa-eye"></i></td>
       </tr>
       <tr>
-        <td colspan="4"></td>
         <td colspan="2" class="text-right">Saldo $</td>
         <td class="text-center"><input type="number" id="totalSaldo" name="saldo" value="{{ old('saldo', $pedido->saldo) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
         <td></td>
@@ -313,9 +315,6 @@
     maximumSelectionLength: 4,
   });
 
-  $('.selectProceso').select2();
-
-
   //SOLICITUD DE MATERIALES
   var materiales = @json($materiales);
   var mat_grp = materiales[0].categoria_id;
@@ -340,7 +339,7 @@
 
     let button = $('<i />', {'type': 'button', 'class':'fas fa-times removeRow', 'name': 'remove', 'id':'material-'+i});
 
-    let material = $('<select />', {'name' : 'material[id][]', 'id': 'material_id_'+i, 'class': 'form-control form-control-sm selectMaterial'}).append(mat_opts);
+    let material = $('<select />', {'name' : 'material[id][]', 'id': 'material_id_'+i, 'class': 'form-control form-control-sm select2Class'}).append(mat_opts);
 
     let cantidad = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': '0', 'name':'material[cantidad][]', 'id': 'material_cantidad_'+i, 'min': '0', 'onchange':'('+i+');'});
 
@@ -350,15 +349,14 @@
 
     let tamanios = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': '0', 'name':'material[tamanios][]', 'id': 'material_tamanios_'+i, 'min': '0'});
 
-    let proveedor = $('<select />', {'name' : 'material[proveedor][]', 'id': 'material_proveedor_'+i, 'class': 'form-control form-control-sm selectProveedor'}).append(prov_opts);
+    let proveedor = $('<select />', {'name' : 'material[proveedor][]', 'id': 'material_proveedor_'+i, 'class': 'form-control form-control-sm select2Class'}).append(prov_opts);
 
     let factura = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'name':'material[factura][]', 'id': 'material_factura_'+i, 'min': '0'});
 
     let total = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': '0.00', 'name':'material[total][]', 'id': 'material_total_'+i, 'min': '0', 'step':'0.01', 'onchange':'sumarMaterial();'});
 
     newRow(table, [button, material, cantidad, corte_alt, corte_anc, tamanios, proveedor, factura, total], 'row-material-'+i);
-    $('.selectMaterial').select2();
-    $('.selectProveedor').select2();
+    $('.select2Class').select2();
     i++;
   });
 
@@ -400,7 +398,7 @@
 
       let button = $('<i />', {'type': 'button', 'class':'fas fa-times removeRow', 'name': 'remove', 'id':'proceso-'+i});
 
-      let proceso = $('<select />', {'name' : 'proceso[id][]', 'id': 'proceso-'+i, 'class': 'form-control form-control-sm selectProceso'}).append(serv_opts);
+      let proceso = $('<select />', {'name' : 'proceso[id][]', 'id': 'proceso-'+i, 'class': 'form-control form-control-sm select2Class'}).append(serv_opts);
 
       let tiro = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': '1', 'name':'proceso[tiro][]', 'id': 'tiro-'+i, 'min': '0', 'onchange':'sumar('+i+');'});
 
@@ -415,7 +413,7 @@
       let terminado = $('<input />', {'type': 'hidden', 'value': '0', 'name':'proceso[terminado][]'}).append($('<input />', {'type': 'checkbox', 'name':'clicker[]', 'onClick': 'this.previousSibling.value=1-this.previousSibling.value'}));
 
       newRow(table, [button, proceso, tiro, retiro, millar, valor, total, terminado], 'row-proceso-'+i);
-      $('.selectProceso').select2();
+      $('.select2Class').select2();
       i++;
     });
   });
@@ -508,6 +506,13 @@
         $(this).val('1');
       });
     }
+  });
+
+  $("#printable").on("click", event => {
+    let target = "#" + $("#printable").data("target");
+    $(".select2Class").select2("destroy");
+    $(target).print();
+    $(".select2Class").select2();
   });
 </script>
 @endsection

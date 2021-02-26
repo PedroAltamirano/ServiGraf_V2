@@ -7,19 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="ERP">
-  
+
   <meta name="author" content="Pedro Andrés Altamirano López">
   <link href="{{ asset('img/sg-2.png') }}" rel="icon" type="text/css">
-  
+
   <title>{{ __('ServiGraf app') }}</title>
-  
+
   <!-- ASSETS -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-  
+
   @yield('links')
 
   <style>
@@ -42,7 +42,7 @@
 </head>
 
 <body class="sidebar-toggled">
-  <nav class="navbar navbar-expand navbar-dark bg-primary d-flex justify-content-lg-between sticky-top shadow">
+  <nav class="navbar navbar-expand navbar-dark bg-primary d-flex justify-content-lg-between sticky-top shadow d-print-none">
     <button class="btn btn-link btn-sm text-white order-0 mr-3" id="sidebarToggle">
       <i class="fas fa-bars"></i>
     </button>
@@ -65,7 +65,7 @@
 
   <div id="wrapper">
     @include('layouts._sidebar')
-    
+
     <!-- WRAPPER -->
     <div  id="content-wrapper" class="d-flex flex-column p-0 m-0">
       <div id="content" style="padding:0 0 40px 0;">
@@ -151,6 +151,7 @@
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{ asset('js/helpers.js') }}"></script>
   <script src="//cdn.datatables.net/plug-ins/1.10.22/api/sum().js"></script>
+  <script src="{{ asset('js/printable.js') }}"></script>
 
   @yield('scripts')
   @yield('after.scripts')

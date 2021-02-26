@@ -1,4 +1,4 @@
-<ul class="navbar-nav sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+<ul class="navbar-nav sidebar sidebar-dark accordion toggled d-print-none" id="accordionSidebar">
 
   <!-- tablero -->
   <li class="nav-item">

@@ -24,7 +24,7 @@
 <x-blueBoard
   title='Reporte'
   :foot="[
-    ['text'=>'fas fa-print', 'href'=>'imprimir(\'tabla\')', 'id'=>'print', 'tipo'=>'button'],
+    ['text'=>'fas fa-print', 'href'=>'', 'id'=>'print', 'tipo'=>'button'],
   ]"
 >
   <table id="table" class="table table-striped table-sm">
@@ -67,11 +67,12 @@
     "ordering": true,
     "info":     false,
     "responsive": true,
-    "buttons": [{
-      extend: 'print',
-      text: 'Imprimir Reporte',
-      autoPrint: false
-    }],
+    // "dom": 'Bfrtip',
+    // "buttons": [{
+    //   extend: 'print',
+    //   text: 'Imprimir Reporte',
+    //   autoPrint: true
+    // }],
     "ajax": {
       "url": "{{route('reporte.pagos.ajax')}}",
       "method": 'get',

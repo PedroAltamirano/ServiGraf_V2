@@ -2,6 +2,8 @@
   $utilidad = App\Security::hasModule('19');
   $clientes = App\Models\Ventas\Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
 @endphp
+<h1 class="text-center d-none d-print-block">{{ session('userInfo.empresa') }}</h1>
+<h3 class="d-none d-print-block">Orden de trabajo No. <span class="font-weight-bold">{{ $pedido->numero }}</span></h3>
 <section id="datos-cliente">
   <h6><i class="fas fa-plus" data-toggle="modal" data-target="#modalCliente"></i>&nbsp; Datos del cliente</h6>
   <hr>
@@ -12,7 +14,7 @@
     </div>
     <div class="form-group col-12 col-md-3 order-3 order-md-2">
       <label for="cliente">Cliente</label>
-      <select class="form-control form-control-sm @error('cliente_id') is-invalid @enderror" name="cliente_id" id="cliente" data-tags="true">
+      <select class="form-control form-control-sm select2Class @error('cliente_id') is-invalid @enderror" name="cliente_id" id="cliente" data-tags="true">
         <option disabled selected>Selecciona uno...</option>
         {{ $group =  $clientes->first()->cliente_empresa_id }}
         <optgroup label="{{ $clientes->first()->empresa->nombre }}">
@@ -115,18 +117,12 @@
     getPhone();
   });
 
-  $('#formSubmit').click(function(){
-    $('#form').submit();
-  });
-
   $('.submitbtn').click(function(){
     let form = $(this).data('form');
     $(form).submit();
   });
 
   $(function(){
-    $('#cliente').select2();
-
     @if (old('cliente_id', $pedido->cliente_id))
     getPhone();
     @endif
