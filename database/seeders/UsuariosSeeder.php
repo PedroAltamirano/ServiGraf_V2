@@ -57,7 +57,7 @@ class UsuariosSeeder extends Seeder
         $perfil = new \App\Models\Usuarios\Perfil;
         $perfil->id = 1;
         $perfil->empresa_id = 1709636664001;
-        $perfil->perfil = 'RootPerf';
+        $perfil->nombre = 'RootPerf';
         $perfil->descripcion = 'Perfil de desarrollo';
         $perfil->save();
 
