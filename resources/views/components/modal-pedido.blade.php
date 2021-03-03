@@ -8,8 +8,11 @@
                 <span aria-hidden="true">&times;</span>
               </button>
           </div>
-      <div class="modal-body">
+      <div class="modal-body" id="modalContent">
         @include('Produccion.formPedido')
+      </div>
+      <div class="modal-footer">
+        <a class="fas fa-print" id="printer" data-target="modalContent"></a>
       </div>
     </div>
   </div>

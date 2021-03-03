@@ -145,12 +145,55 @@ window.newRow = function newRow($table, cols, col_id) {
 };
 
 $("#print").on("click", function (event) {
+  // console.log("printing");
   var target = "#" + $("#print").data("target");
   $(".select2Class").select2("destroy");
   $(target).print();
   $(".select2Class").select2();
 });
+$("body").delegate("#printer", "click", function () {
+  // console.log("printering");
+  var target = "#" + $("#printer").data("target");
+  $(target).print();
+});
 $(".select2Class").select2();
+
+function getModal(pedido_id) {
+  $.ajaxSetup({
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+    }
+  });
+  $.ajax({
+    url: "/pedido/modal",
+    type: "post",
+    dataType: "html",
+    data: {
+      pedido_id: pedido_id
+    },
+    success: function success(data) {
+      $("#modalPedidoDiv").html(data);
+      $("#tinta_tiro").select2({
+        maximumSelectionLength: 4
+      });
+      $("#tinta_retiro").select2({
+        maximumSelectionLength: 4
+      });
+      $("#modalPedido").modal("show");
+    },
+    error: function error(jqXhr, textStatus, errorThrown) {
+      console.log(errorThrown);
+    }
+  });
+}
+
+$("body").delegate(".verPedido", "click", function () {
+  // $(".verPedido").on("click", function() {
+  var pedido_id = $(this).data("pedido_id");
+  $("#modalPedidoDiv").empty(); // debugger;
+
+  getModal(pedido_id);
+});
 
 /***/ }),
 

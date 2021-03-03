@@ -9,6 +9,7 @@ Route::namespace('Produccion')
   Route::post('pedido/nuevo', 'Pedidos@store')->name('pedido.post')->middleware('hasModRol:30,2');
   Route::get('pedido/modificar/{pedido}', 'Pedidos@edit')->name('pedido.edit')->middleware('hasModRol:30,3');
   Route::put('pedido/modificar/{pedido}', 'Pedidos@update')->name('pedido.update')->middleware('hasModRol:30,3');
+  Route::post('pedido/modal', 'Pedidos@modal')->name('pedido.modal')->middleware('hasModRol:30,1');
   Route::post('abonos/{pedido}', 'Pedidos@abonos')->name('abonos')->middleware('hasModRol:30,3');
 
   // REPORTE DE PEDIDOS

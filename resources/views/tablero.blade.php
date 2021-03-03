@@ -60,7 +60,7 @@
         <td>{{ $item->detalle }}</td>
         <td>{{ $item->cantidad }}</td>
         <td>{{ implode(', ', $item->serviciosIncompletos($item->id)) }}</td>
-        <td><a class='fa fa-edit' href='{{route('pedido.edit', $item->numero)}}'></a> <a class='fa fa-eye verPedido' id="{{ $item->numero }}" href="#modalPedido" data-toggle="modal"></a></td>
+        <td><a class='fa fa-edit' href='{{route('pedido.edit', $item->numero)}}'></a> <a class='fa fa-eye verPedido' data-pedido_id="{{ $item->id }}" id="{{ $item->numero }}" href="#"></a></td>
       </tr>
       @endforeach
     </tbody>
@@ -69,7 +69,8 @@
   </table>
 </x-blueBoard>
 
-<x-modal-pedido></x-modal-pedido>
+{{-- <x-modal-pedido id=1></x-modal-pedido> --}}
+<div id="modalPedidoDiv"></div>
 @endif
 
 @if(count($clientes) > 0)
@@ -88,13 +89,11 @@
 
 @section('scripts')
 <script>
-  $(document).ready(function() {
-    $('#table').DataTable({
-      "paging":   true,
-      "ordering": true,
-      "info":     false,
-      "responsive": true,
-    });
+  $('#table').DataTable({
+    "paging":   true,
+    "ordering": true,
+    "info":     false,
+    "responsive": true,
   });
 </script>
 @endsection

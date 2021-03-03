@@ -12,6 +12,7 @@ use App\Models\Produccion\Pedido_tintas;
 use App\Models\Produccion\Solicitud_material;
 use App\Models\Produccion\Abono;
 use App\Models\Ventas\Cliente;
+use App\View\Components\modalPedido;
 
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -261,6 +262,12 @@ class Pedidos extends Controller
   //get todos los perfiles
   public function get(){
     $data['data'] = Pedido::todos();
+  }
+
+  public function modal(Request $request){
+    $pedido = Pedido::find($request->pedido_id);
+    $method = 'PUT';
+    return view('components.modal-pedido', compact('pedido', 'method'));
   }
 
 }

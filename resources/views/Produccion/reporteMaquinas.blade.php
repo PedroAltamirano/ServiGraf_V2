@@ -24,7 +24,7 @@
 <x-blueBoard
   title='Reporte'
   :foot="[
-    ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'print', 'tipo'=>'button'],
+    ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'print', 'tipo'=>'button', 'print-target'=>'table'],
   ]"
 >
   <table id="table" class="table table-striped table-sm">
@@ -55,6 +55,8 @@
     </tfoot>
   </table>
 </x-blueBoard>
+
+<div id="modalPedidoDiv"></div>
 @endsection
 
 @section('scripts')
@@ -63,6 +65,7 @@
   $('#cliente').select2();
 
   // console.log(areas.length);
+  const route = "{{ route('pedido.edit', 0) }}";
   var table = $('#table').DataTable({
     "paging":   true,
     "ordering": true,
@@ -110,7 +113,10 @@
       },
       {"name":"crud", "data":"id", "sortable": "false",
         "render": function ( data, type, full, meta ) {
-          return "<a class='fa fa-edit' href='/pedido/modificar/"+data+"'></a> <a class='fa fa-eye' href='#' onClick='openOt("+data+")'></a>"
+          let router = route.replace("/0", "/"+data);
+          let crud = "<a class='fa fa-edit' href='"+router+"'></a> ";
+          crud += "<a class='fa fa-eye verPedido' href='#' data-pedido_id='"+data+"'></a>";
+          return crud;
         }
       }
     ],
@@ -137,7 +143,7 @@
       let {{"totserv".$servicio->id}} = {{'dataserv'.$servicio->id}}.length ? {{'dataserv'.$servicio->id}}.sum() : 0;
       $("#{{'serv'.$servicio->id}}").html({{'totserv'.$servicio->id}}.toFixed(2));
       @endforeach
-    },
+    }
   });
 
   $('.refresh').on('change', function(){

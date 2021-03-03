@@ -28,7 +28,7 @@
     ['text'=>'Hoy', 'href'=>'#', 'id'=>'hoy', 'tipo'=> 'link'],
     ['text'=>'Semana', 'href'=>'#', 'id'=>'semana', 'tipo'=> 'link'],
     ['text'=>'Mes', 'href'=>'#', 'id'=>'mes', 'tipo'=> 'link'],
-    ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'mes', 'tipo'=> 'button']
+    ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'mes', 'tipo'=> 'button', 'print-target'=>'table']
   ]"
 >
   <table id="table" class="table table-striped table-sm">

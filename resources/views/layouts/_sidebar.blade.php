@@ -17,7 +17,7 @@
       <i class="fas fa-fw fa-chart-line"></i>
       <span>Administración</span>
     </a>
-    <div class="dropdown-menu collapse" aria-labelledby="pagesDropdown" id="collapseAdmin">
+    <div id="collapseAdmin" class="dropdown-menu collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       @if(Security::hasModule('21'))
       <a class="dropdown-item" href="{{Route('facturacion')}}">Facturación</a>
       @endif

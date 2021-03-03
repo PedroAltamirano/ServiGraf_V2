@@ -76,7 +76,7 @@
 
 <hr style="border-width: 3px;">
 
-</section id="notas">
+<section id="notas">
   <div class="form-group">
     <label for="notas"><i class="far fa-sticky-note"></i> Observaciones</label>
     <textarea class="form-control form-control-sm" name="notas" id="notas" rows="2"> {{ old('notas', $pedido->notas) }} </textarea>
