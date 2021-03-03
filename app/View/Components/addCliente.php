@@ -23,6 +23,6 @@ class addCliente extends Component
      */
     public function render()
     {
-        return view('components.add-cliente');
+        return view('components.addCliente');
     }
 }

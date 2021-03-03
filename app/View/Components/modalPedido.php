@@ -28,6 +28,6 @@ class modalPedido extends Component
    */
   public function render()
   {
-      return view('components.modal-pedido');
+      return view('components.modalPedido');
   }
 }

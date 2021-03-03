@@ -31,7 +31,7 @@
 @endif
 
 @if(count($procesos) > 0)
-<x-blue-board
+<x-blueBoard
   title='Pendientes'
   :foot="[
     ['text'=>'Nuevo', 'href'=>route('pedido.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
@@ -67,9 +67,9 @@
     <tfoot>
     </tfoot>
   </table>
-</x-blue-board>
+</x-blueBoard>
 
-{{-- <x-modal-pedido id=1></x-modal-pedido> --}}
+{{-- <x-modalPedido id=1></x-modalPedido> --}}
 <div id="modalPedidoDiv"></div>
 @endif
 

@@ -23,6 +23,6 @@ class addProveedor extends Component
      */
     public function render()
     {
-        return view('components.add-proveedor');
+        return view('components.addProveedor');
     }
 }
