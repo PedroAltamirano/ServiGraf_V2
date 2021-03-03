@@ -19,7 +19,7 @@ class CreateClientesTable extends Migration
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedInteger('usuario_id');
             $table->foreign('usuario_id')->references('cedula')->on('usuarios');
-            $table->unsignedInteger('contacto_id');
+            $table->foreignId('contacto_id');
             $table->foreign('contacto_id')->references('id')->on('contactos');
             $table->unsignedMediumInteger('cliente_empresa_id');
             $table->foreign('cliente_empresa_id')->references('id')->on('cliente_empresas');
