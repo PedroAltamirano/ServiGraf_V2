@@ -19,7 +19,6 @@
   :foot="[
     ['text'=>'Nuevo', 'href'=>route('perfil.nuevo'), 'id'=>'nuevo', 'tipo'=> 'link']
   ]"
-  class=""
 >
 
   <table id="table" class="table table-striped">
@@ -55,8 +54,8 @@
       },
       "columns": [
         {"name":"nombre", "data":"nombre"},
-        {"name":"descripcion", "data":"descripcion", "sortable": "false"},
-        {"name":"crud", "data":"id", "sortable": "false",
+        {"name":"descripcion", "data":"descripcion"},
+        {"name":"crud", "data":"id",
           "render": function ( data, type, full, meta ) {
             return "<a class='fa fa-edit' href='perfil/modificar/"+data+"'></a>";
           }
