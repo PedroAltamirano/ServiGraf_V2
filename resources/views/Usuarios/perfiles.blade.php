@@ -19,7 +19,6 @@
   :foot="[
     ['text'=>'Nuevo', 'href'=>route('perfil.nuevo'), 'id'=>'nuevo', 'tipo'=> 'link']
   ]"
-  class="mb-4"
 >
 
   <table id="table" class="table table-striped">

@@ -1,4 +1,5 @@
-<div {{ $attributes->merge(['class' => 'm-2 m-md-3']) }}>
+{{-- <div {{ $attributes->merge(['class' => 'm-2 m-md-3']) }} > --}}
+<div class="m-2 m-md-3">
     <div style="background-color: rgba(59,89,152,.8)" class="text-white rounded-top p-2 d-print-none">{{ $title }}</div>
     <div class="p-2 p-md-3 m-0 border-left border-right">{{ $slot }}</div>
     <div class="bg-gray rounded-bottom p-2 d-print-none">
