@@ -46,7 +46,7 @@ return [
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             // 'collation' => 'utf8mb4_0900_ai_ci',
-            'collation' => 'utf8_unicode_ci', //suport for mariadb
+            'collation' => 'utf8mb4_unicode_ci', //suport for mariadb
             'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,
