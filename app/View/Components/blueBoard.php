@@ -8,16 +8,18 @@ class blueBoard extends Component
 {
     public $title;
     public $foot;
+    public $class;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($title, $foot)
+    public function __construct($title, $foot, $class='')
     {
         $this->title = $title;
         $this->foot = $foot;
+        $this->class = $class;
     }
 
     /**
