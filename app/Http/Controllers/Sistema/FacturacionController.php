@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Helpers\Archivos;
 use App\Models\Sistema\Fact_empr;
+use App\Models\Administracion\Iva;
+use App\Models\Administracion\Retencion;
 
 use App\Http\Requests\Sistema\StoreFactura;
 use App\Http\Requests\Sistema\UpdateFactura;
@@ -22,7 +24,10 @@ class FacturacionController extends Controller
     public function index()
     {
       $facturas = Fact_empr::where('empresa_id', Auth::user()->empresa_id)->get();
-      return view('Sistema.facturacion', compact('facturas'));
+      $ivas = Iva::where('empresa_id', Auth::user()->empresa_id)->get();
+      $ret_iva = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('tipo', 1)->get();
+      $ret_fnt = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('tipo', 0)->get();
+      return view('Sistema.facturacion', compact('facturas', 'ivas', 'ret_iva', 'ret_fnt'));
     }
 
     /**

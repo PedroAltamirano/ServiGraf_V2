@@ -9,7 +9,7 @@ class DatosEmpresa extends Model{
   protected $table = 'datos_empresas';
 
   protected $fillable = [
-    'empresa_id', 'usuario_id_mod', 'nombre', 'representante', 'ruc', 'ciudad', 'direccion', 'telefono', 'celular', 'web', 'correo', 'inicio', 'iva', 'cloud'
+    'empresa_id', 'usuario_id_mod', 'nombre', 'representante', 'ruc', 'ciudad', 'direccion', 'telefono', 'celular', 'web', 'correo', 'inicio', 'cloud'
   ];
 
   /**

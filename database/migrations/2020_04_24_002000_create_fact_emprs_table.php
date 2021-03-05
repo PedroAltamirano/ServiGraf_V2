@@ -24,6 +24,12 @@ class CreateFactEmprsTable extends Migration
             $table->unsignedMediumInteger('inicio');
             $table->date('valido_de');
             $table->date('valido_a');
+            $table->unsignedSmallInteger('iva_id');
+            $table->foreign('iva_id')->references('id')->on('ivas');
+            $table->unsignedMediumInteger('ret_iva_id');
+            $table->foreign('ret_iva_id')->references('id')->on('retenciones');
+            $table->unsignedMediumInteger('ret_fuente_id');
+            $table->foreign('ret_fuente_id')->references('id')->on('retenciones');
             $table->boolean('impresion');
             $table->string('logo');
             $table->boolean('status');
