@@ -21,7 +21,7 @@
       @if(Security::hasModule('21'))
       <a class="dropdown-item" href="{{Route('facturacion')}}">Facturación</a>
       @endif
-      @if(Security::hasModule('22'))
+      @if(Security::hasModule('23'))
       <a class="dropdown-item" href="{{Route('libro')}}">Libro diario</a>
       @endif
       @if(Security::hasModule('24'))
@@ -39,7 +39,7 @@
       <span>Producción</span>
     </a>
     <div id="collapseProd" class="dropdown-menu collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-      <a class="dropdown-item" href="{{Route('pedidos')}}">Pedido</a>
+      <a class="dropdown-item" href="{{Route('pedidos')}}">Pedidos</a>
       <div class="dropdown-divider"></div>
       <h6 class="dropdown-header">Reportes:</h6>
       @if(Security::hasModule('32'))
@@ -139,9 +139,14 @@
       <span>Sistema</span>
     </a>
     <div class="dropdown-menu collapse" id="collapseSys" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-      <a class="dropdown-item" href="{{Route('horarios')}}">Horarios</a>
+      {{-- <a class="dropdown-item" href="{{Route('horarios')}}">Horarios</a> --}}
       <a class="dropdown-item" href="{{Route('empresa')}}">Mi empresa</a>
+      @if(Security::hasModule('81'))
+      <a class="dropdown-item" href="{{Route('facturacion-empresas')}}">Facturación</a>
+      @endif
+      @if(Security::hasModule('82'))
       <a class="dropdown-item confirmModal" href="#confirmModal" data-route="{{Route('claves')}}" data-toggle="modal">Claves</a>
+      @endif
     </div>
   </li>
   @endif
