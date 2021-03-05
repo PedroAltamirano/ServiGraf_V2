@@ -14,7 +14,7 @@ class CRMController extends Controller
      */
     public function index()
     {
-      return view('CRM.index');
+      return view('Ventas.crm');
     }
 
     /**
