@@ -34,7 +34,7 @@ class UpdateEmpresa extends FormRequest
             'web' => ['required', 'url', 'max:250'],
             'correo' => ['required', 'email', 'max:50'],
             'inicio' => ['required', 'numeric', 'max:999999', 'min:0'],
-            'iva' => ['required', 'numeric', 'max:99', 'min:0'],
+            // 'iva' => ['required', 'numeric', 'max:99', 'min:0'],
             'cloud' => ['required', 'url', 'max:250']
         ];
     }
