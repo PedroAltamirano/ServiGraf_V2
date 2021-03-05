@@ -75,31 +75,31 @@
             $rol = isset($mod) ? (int)$mod->rol_id : null;
         @endphp
         <tr>
-          <td class="m-0 {{ $item->principal ? '':'pl-4' }}">{{ $item->nombre }}</td>
+          <td class="m-0 {{ $item->principal ? '':'pl-5' }}">{{ $item->nombre }}</td>
           <td>
             <div class="custom-control custom-switch d-flex justify-content-center">
-              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-1" name="mod[{{ $item->id }}][1]" 
+              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-1" name="mod[{{ $item->id }}][1]"
               {{ old($item->id.'-1') ? 'checked':'' }} {{ $rol >= 1 ? 'checked':'' }}>
               <label class="custom-control-label" for="{{ $item->id }}-1"></label>
             </div>
           </td>
           <td>
             <div class="custom-control custom-switch d-flex justify-content-center">
-              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-2" name="mod[{{ $item->id }}][2]" 
+              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-2" name="mod[{{ $item->id }}][2]"
               {{ old($item->id.'-2') ? 'checked':'' }} {{ $rol >= 2 ? 'checked':'' }}>
               <label class="custom-control-label" for="{{ $item->id }}-2"></label>
             </div>
           </td>
           <td>
             <div class="custom-control custom-switch d-flex justify-content-center">
-              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-3" name="mod[{{ $item->id }}][3]" 
+              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-3" name="mod[{{ $item->id }}][3]"
               {{ old($item->id.'-3') ? 'checked':'' }} {{ $rol >= 3 ? 'checked':'' }}>
               <label class="custom-control-label" for="{{ $item->id }}-3"></label>
             </div>
           </td>
           <td>
             <div class="custom-control custom-switch d-flex justify-content-center">
-              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-4" name="mod[{{ $item->id }}][4]" 
+              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-4" name="mod[{{ $item->id }}][4]"
               {{ old($item->id.'-4') ? 'checked':'' }} {{ $rol >= 4 ? 'checked':'' }}>
               <label class="custom-control-label" for="{{ $item->id }}-4"></label>
             </div>
