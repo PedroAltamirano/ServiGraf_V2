@@ -1,0 +1,66 @@
+.text-hr {
+  display: flex;
+  align-items: center;
+  font-family: sans-serif;
+  width: 100%;
+  margin: 15px auto;
+  color: #444;
+}
+.text-hr__text {
+  padding-right: 15px;
+}
+.text-hr__text:not(:first-child) {
+  display: none;
+}
+.text-hr::after {
+  flex: 1;
+  background: #c7c7c7;
+  content: "";
+  height: 1px;
+}
+.text-hr--right .text-hr__text {
+  order: 1;
+  padding: 0 0 0 15px;
+}
+.text-hr--double .text-hr__text:nth-child(2) {
+  order: 1;
+  display: inline;
+  padding: 0 0 0 15px;
+}
+.text-hr--center::before {
+  flex: 1;
+  background: #c7c7c7;
+  content: "";
+  height: 1px;
+}
+.text-hr--center .text-hr__text {
+  padding: 0 15px;
+}
+.text-hr--triple .text-hr__text:nth-child(2) {
+  order: 2;
+  display: inline;
+  padding: 0 15px;
+}
+.text-hr--triple .text-hr__text:nth-child(3) {
+  order: 4;
+  display: inline;
+  padding: 0 0 0 15px;
+}
+.text-hr--triple::after {
+  order: 3;
+}
+.text-hr--triple::before {
+  flex: 1;
+  background: #c7c7c7;
+  content: "";
+  height: 1px;
+  order: 1;
+}
+.text-hr--loud .text-hr__text {
+  font-size: 36px;
+  font-weight: bold;
+}
+.text-hr--loud .text-hr__text:nth-child(2) {
+  font-size: 12px;
+  font-weight: normal;
+}
