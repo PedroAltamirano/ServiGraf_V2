@@ -32,7 +32,7 @@
     <div class="form-row">
       <div class="form-group col-6 col-md-2">
         <label for="nombre">Nombre</label>
-        <input type="text" name="nombre" id="nombre" class="form-control form-control-sm @error('nombre') is-invalid @enderror" value="{{ old('nombre', $empresa->nombre) }}">
+        <input type="text" name="nombre" id="nombre" class="form-control form-control-sm @error('nombre') is-invalid @enderror" value="{{ old('nombre', $empresa->nombre) ?? Auth::user()->empresa->nombre }}">
       </div>
       <div class="form-group col-6 col-md-2">
         <label for="representante">Representante</label>
@@ -40,7 +40,7 @@
       </div>
       <div class="form-group col-12 col-md-2">
         <label for="ruc">RUC</label>
-        <input type="text" minlength="13" maxlength="13" pattern="[0-9]{13}" name="ruc" id="ruc" class="form-control form-control-sm @error('ruc') is-invalid @enderror" value="{{ old('ruc', $empresa->ruc) }}">
+        <input type="text" minlength="13" maxlength="13" pattern="[0-9]{13}" name="ruc" id="ruc" class="form-control form-control-sm @error('ruc') is-invalid @enderror" value="{{ old('ruc', $empresa->ruc) ?? Auth::user()->empresa->id }}">
       </div>
       <div class="form-group col-6 col-md-2">
         <label for="telefono">Teléfono</label>
