@@ -10,8 +10,9 @@ Route::namespace('Sistema')
   Route::post('/empresa/store', 'Empresa@store')->name('empresa.store')->middleware('hasModRol:81,2');
   Route::put('/empresa/update/{empresa}', 'Empresa@update')->name('empresa.update')->middleware('hasModRol:81,3');
 
-  Route::post('facturacion/store', 'Empresa@storeFact')->name('facturacion.store')->middleware('hasModRol:81,2');
-  Route::put('facturacion/update/{factura}', 'Empresa@updateFact')->name('facturacion.update')->middleware('hasModRol:81,3');
+  Route::get('facturacion-empresas', 'FacturacionController@index')->name('facturacion-empresas')->middleware('hasModRol:81,1');
+  Route::post('facturacion-empresas/store', 'FacturacionController@store')->name('facturacion-empresas.store')->middleware('hasModRol:81,2');
+  Route::put('facturacion-empresas/update/{factura}', 'FacturacionController@update')->name('facturacion-empresas.update')->middleware('hasModRol:81,3');
 
   Route::post('/claves', 'Claves@show')->name('claves')->middleware('hasModRol:81,1')->middleware('password.confirm');
   Route::post('/clave/store', 'Claves@store')->name('clave.store')->middleware('hasModRol:81,2');
