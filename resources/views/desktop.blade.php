@@ -74,20 +74,6 @@
 
 <div class="m-2 m-md-3 row">
   <div class="col-12 col-md-9">
-    <canvas id="materiales" height="50"></canvas>
-  </div>
-  @php
-  $pa = $pedidos->map(function($p){return $p->id;})->toArray();
-  $items = App\Models\Produccion\Solicitud_material::select('material_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->groupBy('material_id')->get()->each(function($i){return $i->nombre = $i->material->descripcion; });
-  $Md = $items->pluck('totalData');
-  $Ml = $items->pluck('nombre');
-  @endphp
-  <x-report title="Compra de materiales" :items="$items"></x-report>
-</div>
-
-
-<div class="m-2 m-md-3 row">
-  <div class="col-12 col-md-9">
     <div class="row">
       <div class="col-12 col-md-6">
         <canvas id="pedidosC" height="100"></canvas>
@@ -120,6 +106,20 @@
   $Pl = $items->pluck('nombre');
   @endphp
   <x-report title="Pedidos" :items="$items"></x-report>
+</div>
+
+
+<div class="m-2 m-md-3 row">
+  <div class="col-12 col-md-9">
+    <canvas id="materiales" height="50"></canvas>
+  </div>
+  @php
+  $pa = $pedidos->map(function($p){return $p->id;})->toArray();
+  $items = App\Models\Produccion\Solicitud_material::select('material_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->groupBy('material_id')->get()->each(function($i){return $i->nombre = $i->material->descripcion; });
+  $Md = $items->pluck('totalData');
+  $Ml = $items->pluck('nombre');
+  @endphp
+  <x-report title="Compra de materiales" :items="$items"></x-report>
 </div>
 
 
