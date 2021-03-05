@@ -91,16 +91,16 @@
     <div class="dropdown-menu collapse" id="collapseSales" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <a class="dropdown-item" href="{{Route('crm')}}">CRM</a>
       @if(Security::hasModule('51'))
-      <a class="dropdown-item" href="{{Route('actividades')}}">Actividades</a>
+      <a class="dropdown-item" href="#">Actividades</a>
       @endif
       @if(Security::hasModule('52'))
-      <a class="dropdown-item" href="{{Route('contactos')}}">Contactos</a>
+      <a class="dropdown-item" href="#">Contactos</a>
       @endif
       @if(Security::hasModule('53'))
-      <a class="dropdown-item" href="{{Route('plantillas')}}">Plantillas</a>
+      <a class="dropdown-item" href="#">Plantillas</a>
       @endif
       @if(Security::hasModule('54'))
-      <a class="dropdown-item" href="{{Route('evaluacion')}}">Evaluación</a>
+      <a class="dropdown-item" href="#">Evaluación</a>
       @endif
     </div>
   </li>
