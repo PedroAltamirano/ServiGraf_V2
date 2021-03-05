@@ -267,7 +267,7 @@ class Pedidos extends Controller
   public function modal(Request $request){
     $pedido = Pedido::find($request->pedido_id);
     $method = 'PUT';
-    return view('components.modal-pedido', compact('pedido', 'method'));
+    return view('components.modalPedido', compact('pedido', 'method'));
   }
 
 }
