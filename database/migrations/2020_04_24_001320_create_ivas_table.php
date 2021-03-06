@@ -17,8 +17,7 @@ class CreateIvasTable extends Migration
             $table->smallIncrements('id');
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
-            $table->unsignedTinyInteger('porcentaje');
-            $table->boolean('defecto')->default(0);
+            $table->unsignedDecimal('porcentaje', 5, 2);
             $table->timestamps();
         });
     }
