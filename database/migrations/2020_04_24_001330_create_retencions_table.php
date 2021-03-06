@@ -20,6 +20,7 @@ class CreateRetencionsTable extends Migration
             $table->boolean('tipo')->comment('1->iva, 0->fuente');
             $table->unsignedDecimal('porcentaje', 5, 2);
             $table->string('descripcion', 140);
+            $table->boolean('status')->comment('1->activo, 0->inactivo');
             $table->timestamps();
         });
     }

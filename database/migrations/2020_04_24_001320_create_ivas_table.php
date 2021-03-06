@@ -18,6 +18,7 @@ class CreateIvasTable extends Migration
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedDecimal('porcentaje', 5, 2);
+            $table->boolean('status')->comment('1->activo, 0->inactivo');
             $table->timestamps();
         });
     }
