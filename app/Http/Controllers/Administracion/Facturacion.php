@@ -62,9 +62,9 @@ class Facturacion extends Controller
     $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
 
     $iva_p = '12'; //DEBE BBENIR DE CADA EMPRESA DE FACTURACION
-    $ivas = Iva::where('empresa_id', Auth::user()->empresa_id)->get();
-    $ret_iva = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('tipo', 1)->get();
-    $ret_fnt = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('tipo', 0)->get();
+    $ivas = Iva::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
+    $ret_iva = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->where('tipo', 1)->get();
+    $ret_fnt = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->where('tipo', 0)->get();
     $data = [
       'text' => 'Nueva Factura',
       'path' => route('factura.create'),
@@ -111,9 +111,9 @@ class Facturacion extends Controller
     $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
 
     $iva_p = '12'; //DEBE SALIR DESDE EL SISTEMA
-    $ivas = Iva::where('empresa_id', Auth::user()->empresa_id)->get();
-    $ret_iva = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('tipo', 1)->get();
-    $ret_fnt = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('tipo', 0)->get();
+    $ivas = Iva::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
+    $ret_iva = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->where('tipo', 1)->get();
+    $ret_fnt = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->where('tipo', 0)->get();
 
     $data = [
       'text'=>'Modificar Factura ',

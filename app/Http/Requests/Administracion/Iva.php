@@ -24,7 +24,8 @@ class Iva extends FormRequest
     public function rules()
     {
         return [
-          'porcentaje' => ['required', 'numeric']
+          'porcentaje' => ['required', 'numeric'],
+          'status' => ['nullable', 'boolean'],
         ];
     }
 }

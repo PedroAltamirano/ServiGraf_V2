@@ -9,6 +9,6 @@ class Retencion extends Model
   protected $table = 'retenciones';
 
   protected $fillable = [
-    'empresa_id', 'tipo', 'porcentaje', 'descripcion'
+    'empresa_id', 'tipo', 'porcentaje', 'descripcion', 'status'
   ];
 }

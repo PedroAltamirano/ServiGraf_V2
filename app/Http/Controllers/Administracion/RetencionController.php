@@ -40,6 +40,7 @@ class RetencionController extends Controller
     {
       $validated = $request->validated();
       $validated['empresa_id'] = Auth::user()->empresa_id;
+      $validated['status'] = $validated['status'] ?? 0;
 
       Retencion::create($validated);
 
@@ -84,6 +85,7 @@ class RetencionController extends Controller
     {
       $validated = $request->validated();
       $validated['empresa_id'] = Auth::user()->empresa_id;
+      $validated['status'] = $validated['status'] ?? 0;
 
       $retencion->update($validated);
 

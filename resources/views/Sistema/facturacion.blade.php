@@ -73,7 +73,7 @@
   <div class="row">
     @foreach ($ivas as $item)
     <div class="col-6 col-md-2">
-    <a class="fas fa-edit modIva" href="#modalIva" data-toggle="modal" data-iva='@json($item)'></a>
+    <a class="fas fa-edit modIva @if ($item->status) text-success @else text-danger @endif" href="#modalIva" data-toggle="modal" data-iva='@json($item)'></a>
       &nbsp;&nbsp;{{ $item->porcentaje }}
     </div>
     @endforeach
@@ -89,7 +89,7 @@
   <div class="row">
     @foreach ($ret_iva as $item)
     <div class="col-6 col-md-2">
-    <a class="fas fa-edit modRetencion" href="#modalRetencion" data-toggle="modal" data-retencion='@json($item)'></a>
+    <a class="fas fa-edit modRetencion @if ($item->status) text-success @else text-danger @endif" href="#modalRetencion" data-toggle="modal" data-retencion='@json($item)'></a>
       &nbsp;&nbsp;{{ $item->porcentaje }}
     </div>
     @endforeach
@@ -105,7 +105,7 @@
   <div class="row">
     @foreach ($ret_fnt as $item)
     <div class="col-6 col-md-2">
-    <a class="fas fa-edit modRetencion" href="#modalRetencion" data-toggle="modal" data-retencion='@json($item)'></a>
+    <a class="fas fa-edit modRetencion @if ($item->status) text-success @else text-danger @endif" href="#modalRetencion" data-toggle="modal" data-retencion='@json($item)'></a>
       &nbsp;&nbsp;{{ $item->porcentaje }}
     </div>
     @endforeach
@@ -170,7 +170,7 @@
     modal.find('.modal-ret_iva_id').val(data.ret_iva_id);
     modal.find('.modal-ret_fuente_id').val(data.ret_fuente_id);
     modal.find('.modal-impresion').val(data.impresion);
-    if(modal.find('.modal-activo').prop('checked') != Boolean(data.status)){
+    if(modal.find('.modal-activo').prop('checked') != Boolean(Number(data.status))){
       modal.find('.modal-activo').click();
     }
     modal.find('.modal-logo').data('default-file', $(this).data('logo'));
@@ -184,6 +184,9 @@
     var modal = $('#modalIva');
     modal.find('.modal-iva-title').html('Nuevo Iva');
     modal.find('.modal-iva-porcentaje').val('0.00');
+    if(modal.find('.modal-iva-activo').prop('checked') != true){
+      modal.find('.modal-iva-activo').click();
+    }
     modal.find('.modal-iva-path').attr('action', '{{ route("iva.store") }}');
     modal.find('input[name="_method"]').val('POST');
   });
@@ -193,6 +196,9 @@
     let data = $(this).data('iva');
     modal.find('.modal-iva-title').html('Modificar Iva');
     modal.find('.modal-iva-porcentaje').val(data.porcentaje);
+    if(modal.find('.modal-iva-activo').prop('checked') != Boolean(Number(data.status))){
+      modal.find('.modal-iva-activo').click();
+    }
     modal.find('.modal-iva-path').attr('action', routeUpdateIva.replace("/0", "/"+data.id));
     modal.find('input[name="_method"]').val('PUT');
   });
@@ -205,6 +211,9 @@
     modal.find('.modal-ret-porcentaje').val('0.00');
     modal.find('.modal-ret-tipo').val('1');
     modal.find('.modal-ret-descripcion').html('');
+    if(modal.find('.modal-ret-activo').prop('checked') != true){
+      modal.find('.modal-ret-activo').click();
+    }
     modal.find('.modal-ret-path').attr('action', '{{ route("retencion.store") }}');
     modal.find('input[name="_method"]').val('POST');
   });
@@ -212,11 +221,13 @@
   $('.modRetencion').on('click', function (event) {
     let modal = $('#modalRetencion');
     let data = $(this).data('retencion');
-    console.log(data)
     modal.find('.modal-ret-title').html('Modificar Retencion');
     modal.find('.modal-ret-porcentaje').val(data.porcentaje);
     modal.find('.modal-ret-tipo').val(data.tipo);
     modal.find('.modal-ret-descripcion').html(data.descripcion);
+    if(modal.find('.modal-ret-activo').prop('checked') != Boolean(Number(data.status))){
+      modal.find('.modal-ret-activo').click();
+    }
     modal.find('.modal-ret-path').attr('action', routeUpdateRetencion.replace("/0", "/"+data.id));
     modal.find('input[name="_method"]').val('PUT');
   });

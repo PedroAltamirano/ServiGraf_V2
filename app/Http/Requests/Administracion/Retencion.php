@@ -26,7 +26,8 @@ class Retencion extends FormRequest
         return [
           'porcentaje' => ['required', 'numeric'],
           'tipo' => ['required', 'boolean'],
-          'descripcion' => ['required', 'string', 'max:250']
+          'descripcion' => ['required', 'string', 'max:250'],
+          'status' => ['nullable', 'boolean'],
         ];
     }
 }

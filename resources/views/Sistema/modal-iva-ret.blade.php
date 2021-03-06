@@ -16,6 +16,13 @@
             <label for="porcentaje">Porcentaje</label>
             <input type="number" step="0.01" name="porcentaje" id="porcentaje" class="form-control fixFloat modal-iva-porcentaje">
           </div>
+          <div class="form-group col-2">
+              <label for="statusDiv">Activo</label>
+              <div class="custom-control custom-switch d-flex justify-content-center" name="statusDiv">
+                <input type="checkbox" class="custom-control-input modal-iva-activo" id="status-iva" name="status" value="1" {{ old('status') == '1' ? 'checked':'' }}>
+                <label class="custom-control-label" for="status-iva"></label>
+              </div>
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -55,6 +62,13 @@
             <label for="descripcion">Descripcion</label>
             <textarea class="form-control modal-ret-descripcion" name="descripcion" id="descripcion" rows="3"></textarea>
           </div>
+          <div class="form-group col-2">
+              <label for="statusDiv">Activo</label>
+              <div class="custom-control custom-switch d-flex justify-content-center" name="statusDiv">
+                <input type="checkbox" class="custom-control-input modal-ret-activo" id="status-ret" name="status" value="1" {{ old('status') == '1' ? 'checked':'' }}>
+                <label class="custom-control-label" for="status-ret"></label>
+              </div>
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

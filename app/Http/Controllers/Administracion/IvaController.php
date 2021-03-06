@@ -40,6 +40,7 @@ class IvaController extends Controller
     {
       $validated = $request->validated();
       $validated['empresa_id'] = Auth::user()->empresa_id;
+      $validated['status'] = $validated['status'] ?? 0;
 
       Iva::create($validated);
 
@@ -83,6 +84,7 @@ class IvaController extends Controller
     public function update(RequestIva $request, Iva $iva)
     {
       $validated = $request->validated();
+      $validated['status'] = $validated['status'] ?? 0;
 
       $iva->update($validated);
 

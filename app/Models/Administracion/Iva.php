@@ -9,6 +9,6 @@ class Iva extends Model
   protected $table = 'ivas';
 
   protected $fillable = [
-    'empresa_id', 'porcentaje'
+    'empresa_id', 'porcentaje', 'status'
   ];
 }
