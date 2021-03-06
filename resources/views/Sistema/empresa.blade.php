@@ -73,10 +73,10 @@
         <label for="inicio">Inicio de pedidos</label>
         <input type="number" min="0" max="9999999" name="inicio" id="inicio" class="form-control form-control-sm @error('inicio') is-invalid @enderror" value="{{ old('inicio', $empresa->inicio) }}">
       </div>
-      <div class="form-group col-4 col-md-2">
+      {{-- <div class="form-group col-4 col-md-2">
         <label for="iva">% IVA</label>
         <input type="number" min="1" max="99" name="iva" id="iva" class="form-control form-control-sm @error('iva') is-invalid @enderror" value="{{ old('iva', $empresa->iva) }}">
-      </div>
+      </div> --}}
       <div class="form-group col-12 col-md-4">
         <label for="cloud">Cloud</label>
         <input type="url" name="cloud" id="cloud" class="form-control form-control-sm @error('cloud') is-invalid @enderror" value="{{ old('cloud', $empresa->cloud) }}">

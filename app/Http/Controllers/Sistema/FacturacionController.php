@@ -53,17 +53,18 @@ class FacturacionController extends Controller
       $file = $validated['logo'];
       $validated['logo'] = '';
       $factura = Fact_empr::create($validated);
+
       if(isset($file)){
-          $name = $factura->id;
-          $imageName = Archivos::storeImagen($name, $file, 'facturas');
-          $factura->logo = $imageName;
-          $factura->save();
+        $name = $factura->id;
+        $imageName = Archivos::storeImagen($name, $file, 'facturas');
+        $factura->logo = $imageName;
+        $factura->save();
       }
 
       $data = [
-          'type'=>'success',
-          'title'=>'Acción completada',
-          'message'=>'Los datos se ha creado con éxito'
+        'type'=>'success',
+        'title'=>'Acción completada',
+        'message'=>'Los datos se ha creado con éxito'
       ];
       return redirect()->route('facturacion-empresas')->with(['actionStatus' => json_encode($data)]);
     }

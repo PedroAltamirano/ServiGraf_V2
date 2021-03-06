@@ -3,6 +3,8 @@
 namespace App\Models\Sistema;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Administracion\Iva;
+use App\Models\Administracion\Retencion;
 
 class Fact_empr extends Model
 {
@@ -11,6 +13,21 @@ class Fact_empr extends Model
         'status' => 1,
     ];
     protected $fillable = [
-        'empresa_id', 'empresa', 'representante', 'ruc', 'caja', 'inicio', 'valido_de', 'valido_a', 'impresion', 'logo', 'status',
+        'empresa_id', 'empresa', 'representante', 'ruc', 'caja', 'inicio', 'valido_de', 'valido_a', 'iva_id', 'ret_iva_id', 'ret_fuente_id', 'impresion', 'logo', 'status',
     ];
+
+    public function iva()
+    {
+        return $this->belongsTo(Iva::class, 'iva_id');
+    }
+
+    public function ret_iva()
+    {
+        return $this->belongsTo(Retencion::class, 'ret_iva_id');
+    }
+
+    public function ret_fuente()
+    {
+        return $this->belongsTo(Retencion::class, 'ret_fuente_id');
+    }
 }

@@ -26,6 +26,12 @@ Route::namespace('Administracion')
   Route::post('banco/nueva', 'BancoController@store')->name('banco.store')->middleware('hasModRol:22,2');
   Route::put('banco/modificar/{banco}', 'BancoController@update')->name('banco.update')->middleware('hasModRol:22,3');
 
+  Route::post('iva/nuevo', 'IvaController@store')->name('iva.store')->middleware('hasModRol:22,2');
+  Route::put('iva/modificar/{iva}', 'IvaController@update')->name('iva.update')->middleware('hasModRol:22,3');
+
+  Route::post('retencion/nuevo', 'RetencionController@store')->name('retencion.store')->middleware('hasModRol:22,2');
+  Route::put('retencion/modificar/{retencion}', 'RetencionController@update')->name('retencion.update')->middleware('hasModRol:22,3');
+
   Route::get('rrhh', 'RRHHController@index')->name('rrhh')->middleware('hasModRol:24,1');
   Route::post('rrhh/api', 'RRHHController@api')->name('rrhh.api')->middleware('hasModRol:24,1');
   Route::put('asistencia/modificar/{asistencia}', 'RRHHController@update')->name('asistencia.update')->middleware('hasModRol:24,3');

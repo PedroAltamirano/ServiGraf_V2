@@ -4,7 +4,7 @@ namespace App\Http\Requests\Administracion;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreNomina extends FormRequest
+class Retencion extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,9 @@ class StoreNomina extends FormRequest
     public function rules()
     {
         return [
-            //
+          'porcentaje' => ['required', 'numeric'],
+          'tipo' => ['required', 'boolean'],
+          'descripcion' => ['required', 'string', 'max:250']
         ];
     }
 }

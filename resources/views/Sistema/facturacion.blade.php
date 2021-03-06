@@ -40,7 +40,7 @@
       @foreach ($facturas as $item)
       @php
         $url = 'storage/facturas/'.$item->logo;
-        $logo = Storage::disk('facturas')->exists($item->logo) ? asset($url) : asset('logos/ServiGraf_logoWeb.png');
+        $logo = Storage::disk('facturas')->exists($item->logo) ? asset($url) : asset('logos/logo.svg');
       @endphp
       <tr>
         <td>{{ $item->empresa }}</td>
@@ -53,17 +53,8 @@
         <td class="text-center"><img src="{{ $logo }}" alt="{{ $item->id }}" style="max-width: 100px;"></td>
         <td class="text-center">{{ $item->impresion ? 'A4' : 'A5' }}</td>
         <td class="text-center"><a class='fa fa-edit modFactura @if ($item->status) text-success @else text-danger @endif' href="#modalFactura" data-toggle="modal"
-          data-route='{{route('facturacion-empresas.update', $item->id)}}'
-          data-empresa="{{ $item->empresa }}"
-          data-representante="{{ $item->representante }}"
-          data-ruc="{{ $item->ruc }}"
-          data-caja="{{ $item->caja }}"
-          data-inicio="{{ $item->inicio }}"
-          data-valido_de="{{ $item->valido_de }}"
-          data-valido_a="{{ $item->valido_a }}"
-          data-logo="{{ $logo }}"
-          data-status="{{ $item->status }}"
-          data-impresion="{{ $item->impresion }}"></a>
+          data-empresa='@json($item)'
+          data-logo="{{ $logo }}"></a>
           {{-- <a class='fa fa-eye' id="{{ $item->id }}"></a></td> --}}
       </tr>
       @endforeach
@@ -73,81 +64,62 @@
   </table>
 </x-blueBoard>
 
-<!-- Modal CATEGORIA -->
-<div id="modalFactura" class="modal fade">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"></h5>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <form action="{{ route('facturacion-empresas.store') }}" method="post" class="modal-path" enctype="multipart/form-data">
-        @csrf
-        @method('POST')
-        <div class="modal-body">
-          <div class="form-row">
-            <div class="form-group col-6 col-md-6">
-              <label for="empresa">Empresa</label>
-              <input type="text" name="empresa" id="empresa" class="form-control modal-empresa @error('empresa') is-invalid @enderror" value="{{ old('empresa') }}">
-            </div>
-            <div class="form-group col-6 col-md-6">
-              <label for="representante">Representante</label>
-              <input type="text" name="representante" id="representanteModal" class="form-control modal-representante @error('representante') is-invalid @enderror" value="{{ old('representante') }}">
-            </div>
-            <div class="form-group col-12 col-md-6">
-              <label for="ruc">RUC</label>
-              <input type="text" name="ruc" id="rucModal" class="form-control modal-ruc @error('ruc') is-invalid @enderror" value="{{ old('ruc') }}">
-            </div>
-            <div class="form-group col-6 col-md-3">
-              <label for="caja">Caja</label>
-              <input type="text" name="caja" id="caja" class="form-control modal-caja @error('caja') is-invalid @enderror" value="{{ old('caja') }}">
-            </div>
-            <div class="form-group col-6 col-md-3">
-              <label for="inicio">Inicio</label>
-              <input type="text" name="inicio" id="inicioModal" class="form-control modal-inicio @error('inicio') is-invalid @enderror" value="{{ old('inicio') }}">
-            </div>
-            <div class="form-group col-6 col-md-6">
-              <label for="valido_de">Válido de</label>
-              <input type="date" value="{{ date('Y-m-d') }}" name="valido_de" id="valido_de" class="form-control modal-valido_de @error('valido_de') is-invalid @enderror" value="{{ old('valido_de') }}">
-            </div>
-            <div class="form-group col-6 col-md-6">
-              <label for="valido_a">Válido a</label>
-              <input type="date" value="{{ date('Y-m-d') }}" name="valido_a" id="valido_a" class="form-control modal-valido_a @error('valido_a') is-invalid @enderror" value="{{ old('valido_a') }}">
-            </div>
-            <div class="form-group col-6">
-              <label for="impresion">Impresión</label>
-              <select name="impresion" id="impresion" class="form-control modal-impresion @error('impresion') is-invalid @enderror">
-                <option value="1" {{ old('impresion') == '1' ? 'selected' : '' }}>A4</option>
-                <option value="0" {{ old('impresion') == '0' ? 'selected' : '' }}>A5</option>
-              </select>
-            </div>
-            <div class="form-group col-2">
-              <label for="statusDiv">Activo</label>
-              <div class="custom-control custom-switch d-flex justify-content-center" name="statusDiv">
-                <input type="checkbox" class="custom-control-input modal-activo @error('status') is-invalid @enderror" id="status" name="status" value="1" {{ old('status') == '1' ? 'checked':'' }}>
-                <label class="custom-control-label" for="status"></label>
-              </div>
-            </div>
-            <div class="form-group col-12">
-              <label for="logo">Logo <span class="text-muted">Max. 2MB</span></label>
-              <input type="file" class="dropify modal-logo" id="logo" name="logo" title="logo del usuario" accept="image/*" size="2MB" data-default-file=''>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-      </form>
+<x-blueBoard
+  title='Ivas'
+  :foot="[
+    ['text'=>'Nuevo', 'href'=>'#modalIva', 'id'=>'newIva', 'tipo'=> 'modal'],
+  ]"
+>
+  <div class="row">
+    @foreach ($ivas as $item)
+    <div class="col-6 col-md-2">
+    <a class="fas fa-edit modIva" href="#modalIva" data-toggle="modal" data-iva='@json($item)'></a>
+      &nbsp;&nbsp;{{ $item->porcentaje }}
     </div>
+    @endforeach
   </div>
-</div>
+</x-blueBoard>
+
+<x-blueBoard
+  title='Retenciones Iva'
+  :foot="[
+    ['text'=>'Nueva', 'href'=>'#modalRetencion', 'id'=>'newRetencionIva', 'tipo'=> 'modal'],
+  ]"
+>
+  <div class="row">
+    @foreach ($ret_iva as $item)
+    <div class="col-6 col-md-2">
+    <a class="fas fa-edit modRetencion" href="#modalRetencion" data-toggle="modal" data-retencion='@json($item)'></a>
+      &nbsp;&nbsp;{{ $item->porcentaje }}
+    </div>
+    @endforeach
+  </div>
+</x-blueBoard>
+
+<x-blueBoard
+  title='Retenciones Fuente'
+  :foot="[
+    ['text'=>'Nueva', 'href'=>'#modalRetencion', 'id'=>'newRetencionFnt', 'tipo'=> 'modal'],
+  ]"
+>
+  <div class="row">
+    @foreach ($ret_fnt as $item)
+    <div class="col-6 col-md-2">
+    <a class="fas fa-edit modRetencion" href="#modalRetencion" data-toggle="modal" data-retencion='@json($item)'></a>
+      &nbsp;&nbsp;{{ $item->porcentaje }}
+    </div>
+    @endforeach
+  </div>
+</x-blueBoard>
+
+@include('Sistema.modal-fact-emp')
+@include('Sistema.modal-iva-ret')
+
 @endsection
 
 @section('scripts')
 <script>
-  let date = new Date();
-  let today = date.getFullYear()+"-"+("0" + date.getMonth()).slice(-2)+"-"+("0" + date.getDate()).slice(-2);
+  let today = "{{ date('Y-m-d') }}";
 
   $(document).ready(function() {
     $('#table').DataTable({
@@ -163,6 +135,7 @@
   });
 
   // CATEGORIAS
+  const route = "{{route('facturacion-empresas.update', 0)}}";
   $('#newFactura').on('click', function (event) {
     var modal = $('#modalFactura');
     modal.find('.modal-title').html('Nueva Factura');
@@ -174,29 +147,77 @@
     modal.find('.modal-valido_de').val(today);
     modal.find('.modal-valido_a').val(today);
     modal.find('.modal-impresion').val('1');
+    if(modal.find('.modal-activo').prop('checked') != true){
+      modal.find('.modal-activo').click();
+    }
     modal.find('.modal-logo').attr('data-default-file', '');
     modal.find('.modal-path').attr('action', '{{ route("facturacion-empresas.store") }}');
     modal.find('input[name="_method"]').val('POST');
   });
 
   $('.modFactura').on('click', function (event) {
-    var button = $(this);
-    var modal = $('#modalFactura');
+    let data = $(this).data('empresa');
+    let modal = $('#modalFactura');
     modal.find('.modal-title').html('Modificar Factura');
-    modal.find('.modal-empresa').val(button.data('empresa'));
-    modal.find('.modal-representante').val(button.data('representante'));
-    modal.find('.modal-ruc').val(button.data('ruc'));
-    modal.find('.modal-caja').val(button.data('caja'));
-    modal.find('.modal-inicio').val(button.data('inicio'));
-    modal.find('.modal-valido_de').val(button.data('valido_de'));
-    modal.find('.modal-valido_a').val(button.data('valido_a'));
-    modal.find('.modal-impresion').val(button.data('impresion'));
-    if(modal.find('.modal-activo').prop('checked') != Boolean(button.data('status'))){
+    modal.find('.modal-empresa').val(data.empresa);
+    modal.find('.modal-representante').val(data.representante);
+    modal.find('.modal-ruc').val(data.ruc);
+    modal.find('.modal-caja').val(data.caja);
+    modal.find('.modal-inicio').val(data.inicio);
+    modal.find('.modal-valido_de').val(data.valido_de);
+    modal.find('.modal-valido_a').val(data.valido_a);
+    modal.find('.modal-iva_id').val(data.iva_id);
+    modal.find('.modal-ret_iva_id').val(data.ret_iva_id);
+    modal.find('.modal-ret_fuente_id').val(data.ret_fuente_id);
+    modal.find('.modal-impresion').val(data.impresion);
+    if(modal.find('.modal-activo').prop('checked') != Boolean(data.status)){
       modal.find('.modal-activo').click();
     }
-    console.log(button.data('logo'))
-    // modal.find('.modal-logo').data('default-file', button.data('logo'));
-    modal.find('.modal-path').attr('action', button.data('route'));
+    modal.find('.modal-logo').data('default-file', $(this).data('logo'));
+    modal.find('.modal-path').attr('action', route.replace("/0", "/"+data.id));
+    modal.find('input[name="_method"]').val('PUT');
+  });
+
+  //Iva
+  const routeUpdateIva = "{{route('iva.update', 0)}}";
+  $('#newIva').on('click', function (event) {
+    var modal = $('#modalIva');
+    modal.find('.modal-iva-title').html('Nuevo Iva');
+    modal.find('.modal-iva-porcentaje').val('0.00');
+    modal.find('.modal-iva-path').attr('action', '{{ route("iva.store") }}');
+    modal.find('input[name="_method"]').val('POST');
+  });
+
+  $('.modIva').on('click', function (event) {
+    let modal = $('#modalIva');
+    let data = $(this).data('iva');
+    modal.find('.modal-iva-title').html('Modificar Iva');
+    modal.find('.modal-iva-porcentaje').val(data.porcentaje);
+    modal.find('.modal-iva-path').attr('action', routeUpdateIva.replace("/0", "/"+data.id));
+    modal.find('input[name="_method"]').val('PUT');
+  });
+
+  //Retencion
+  const routeUpdateRetencion = "{{route('retencion.update', 0)}}";
+  $('#newRetencionIva,#newRetencionFnt').on('click', function (event) {
+    var modal = $('#modalRetencion');
+    modal.find('.modal-ret-title').html('Nueva Retencion');
+    modal.find('.modal-ret-porcentaje').val('0.00');
+    modal.find('.modal-ret-tipo').val('1');
+    modal.find('.modal-ret-descripcion').html('');
+    modal.find('.modal-ret-path').attr('action', '{{ route("retencion.store") }}');
+    modal.find('input[name="_method"]').val('POST');
+  });
+
+  $('.modRetencion').on('click', function (event) {
+    let modal = $('#modalRetencion');
+    let data = $(this).data('retencion');
+    console.log(data)
+    modal.find('.modal-ret-title').html('Modificar Retencion');
+    modal.find('.modal-ret-porcentaje').val(data.porcentaje);
+    modal.find('.modal-ret-tipo').val(data.tipo);
+    modal.find('.modal-ret-descripcion').html(data.descripcion);
+    modal.find('.modal-ret-path').attr('action', routeUpdateRetencion.replace("/0", "/"+data.id));
     modal.find('input[name="_method"]').val('PUT');
   });
 </script>
