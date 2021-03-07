@@ -92,7 +92,7 @@ class ModulesSeeder extends Seeder
               'created_at' => date('Y-m-d H:i:s'),
               'updated_at' => date('Y-m-d H:i:s'),
               'empresa_id' => 1709636664001,
-              'nombre' => 'Anual',
+              'nombre' => 'Reporte Anual',
               'principal' => 0,
             ],
             //ADMINISTRACION
