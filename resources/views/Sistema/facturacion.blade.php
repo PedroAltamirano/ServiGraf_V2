@@ -138,14 +138,20 @@
   const route = "{{route('facturacion-empresas.update', 0)}}";
   $('#newFactura').on('click', function (event) {
     var modal = $('#modalFactura');
-    modal.find('.modal-title').html('Nueva Factura');
+    modal.find('.modal-title').html('Nueva Empresa');
     modal.find('.modal-empresa').val('');
     modal.find('.modal-representante').val('');
+    modal.find('.modal-direccion').val('');
+    modal.find('.modal-correo').val('');
+    modal.find('.modal-telefono').val('');
+    modal.find('.modal-celular').val('');
     modal.find('.modal-ruc').val('');
-    modal.find('.modal-caja').val('');
-    modal.find('.modal-inicio').val('');
     modal.find('.modal-valido_de').val(today);
     modal.find('.modal-valido_a').val(today);
+    modal.find('.modal-clave_sri').val('');
+    modal.find('.modal-clave_firma_sri').val('');
+    modal.find('.modal-caja').val('');
+    modal.find('.modal-inicio').val('');
     modal.find('.modal-impresion').val('1');
     if(modal.find('.modal-activo').prop('checked') != true){
       modal.find('.modal-activo').click();
@@ -158,14 +164,20 @@
   $('.modFactura').on('click', function (event) {
     let data = $(this).data('empresa');
     let modal = $('#modalFactura');
-    modal.find('.modal-title').html('Modificar Factura');
+    modal.find('.modal-title').html('Modificar Empresa');
     modal.find('.modal-empresa').val(data.empresa);
     modal.find('.modal-representante').val(data.representante);
+    modal.find('.modal-direccion').val(data.direccion);
+    modal.find('.modal-correo').val(data.correo);
+    modal.find('.modal-telefono').val(data.telefono);
+    modal.find('.modal-celular').val(data.celular);
     modal.find('.modal-ruc').val(data.ruc);
-    modal.find('.modal-caja').val(data.caja);
-    modal.find('.modal-inicio').val(data.inicio);
     modal.find('.modal-valido_de').val(data.valido_de);
     modal.find('.modal-valido_a').val(data.valido_a);
+    modal.find('.modal-clave_sri').val(data.clave_sri);
+    modal.find('.modal-clave_firma_sri').val(data.clave_firma_sri);
+    modal.find('.modal-caja').val(data.caja);
+    modal.find('.modal-inicio').val(data.inicio);
     modal.find('.modal-iva_id').val(data.iva_id);
     modal.find('.modal-ret_iva_id').val(data.ret_iva_id);
     modal.find('.modal-ret_fuente_id').val(data.ret_fuente_id);

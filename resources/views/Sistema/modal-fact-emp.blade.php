@@ -19,25 +19,56 @@
               <label for="representante">Representante</label>
               <input type="text" name="representante" id="representanteModal" class="form-control modal-representante @error('representante') is-invalid @enderror" value="{{ old('representante') }}">
             </div>
-            <div class="form-group col-12 col-md-6">
+            <div class="form-group col-6 col-md-6">
+              <label for="direccion">Dirección</label>
+              <input type="text" name="direccion" id="direccionModal" class="form-control modal-direccion @error('representante') is-invalid @enderror" value="{{ old('direccion') }}">
+            </div>
+            <div class="form-group col-6 col-md-6">
+              <label for="correo">Correo Electrónico</label>
+              <input type="text" name="correo" id="correoModal" class="form-control modal-correo @error('representante') is-invalid @enderror" value="{{ old('correo') }}">
+            </div>
+            <div class="form-group col-6 col-md-3">
+              <label for="telefono">Teléfono</label>
+              <input type="text" name="telefono" id="telefonoModal" class="form-control modal-telefono @error('representante') is-invalid @enderror" value="{{ old('telefono') }}">
+            </div>
+            <div class="form-group col-6 col-md-3">
+              <label for="celular">Celular</label>
+              <input type="text" name="celular" id="celularModal" class="form-control modal-celular @error('representante') is-invalid @enderror" value="{{ old('celular') }}">
+            </div>
+
+            <hr class="col-12" />
+
+            <div class="form-group col-12 col-md-3">
               <label for="ruc">RUC</label>
               <input type="text" name="ruc" id="rucModal" class="form-control modal-ruc @error('ruc') is-invalid @enderror" value="{{ old('ruc') }}">
+            </div>
+            <div class="form-group col-6 col-md-3">
+              <label for="valido_de">Inicio de Actividades</label>
+              <input type="date" value="{{ date('Y-m-d') }}" name="valido_de" id="valido_de" class="form-control modal-valido_de @error('valido_de') is-invalid @enderror" value="{{ old('valido_de') }}">
+            </div>
+            {{-- <div class="form-group col-6 col-md-3">
+              <label for="valido_a">Cese de Actividades</label>
+              <input type="date" value="{{ date('Y-m-d') }}" name="valido_a" id="valido_a" class="form-control modal-valido_a @error('valido_a') is-invalid @enderror" value="{{ old('valido_a') }}">
+            </div> --}}
+            <div class="form-group col-6 col-md-3">
+              <label for="clave_sri">Clave SRI</label>
+              <input type="text" name="clave_sri" id="clave_sri" class="form-control modal-clave_sri @error('clave_sri') is-invalid @enderror" value="{{ old('clave_sri') }}">
+            </div>
+            <div class="form-group col-6 col-md-6">
+              <label for="clave_firma_sri">Clave de Firma</label>
+              <input type="text" name="clave_firma_sri" id="clave_firma_sri" class="form-control modal-clave_firma_sri @error('clave_sri') is-invalid @enderror" value="{{ old('clave_firma_sri') }}">
+            </div>
+            <div class="form-group">
+              <label for="firma_electronica">Firma Electrónica</label>
+              <input type="file" class="form-control-file" name="firma_electronica" id="firma_electronica">
             </div>
             <div class="form-group col-6 col-md-3">
               <label for="caja">Caja</label>
               <input type="text" name="caja" id="caja" class="form-control modal-caja @error('caja') is-invalid @enderror" value="{{ old('caja') }}">
             </div>
             <div class="form-group col-6 col-md-3">
-              <label for="inicio">Inicio</label>
+              <label for="inicio">Inicio de facturas</label>
               <input type="text" name="inicio" id="inicioModal" class="form-control modal-inicio @error('inicio') is-invalid @enderror" value="{{ old('inicio') }}">
-            </div>
-            <div class="form-group col-6 col-md-6">
-              <label for="valido_de">Válido de</label>
-              <input type="date" value="{{ date('Y-m-d') }}" name="valido_de" id="valido_de" class="form-control modal-valido_de @error('valido_de') is-invalid @enderror" value="{{ old('valido_de') }}">
-            </div>
-            <div class="form-group col-6 col-md-6">
-              <label for="valido_a">Válido a</label>
-              <input type="date" value="{{ date('Y-m-d') }}" name="valido_a" id="valido_a" class="form-control modal-valido_a @error('valido_a') is-invalid @enderror" value="{{ old('valido_a') }}">
             </div>
             <div class="form-group col-6 col-md-2">
               <label for="iva_id">Iva</label>
@@ -63,6 +94,9 @@
                 @endforeach
               </select>
             </div>
+
+            <hr class="col-12" />
+
             <div class="form-group col-6 col-md-2">
               <label for="impresion">Impresión</label>
               <select name="impresion" id="impresion" class="form-control modal-impresion @error('impresion') is-invalid @enderror">

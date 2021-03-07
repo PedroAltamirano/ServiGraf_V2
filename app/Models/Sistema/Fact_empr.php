@@ -13,7 +13,7 @@ class Fact_empr extends Model
         'status' => 1,
     ];
     protected $fillable = [
-        'empresa_id', 'empresa', 'representante', 'ruc', 'caja', 'inicio', 'valido_de', 'valido_a', 'iva_id', 'ret_iva_id', 'ret_fuente_id', 'impresion', 'logo', 'status',
+        'empresa_id', 'empresa', 'representante', 'ruc', 'direccion', 'correo', 'telefono', 'celular', 'caja', 'inicio', 'valido_de', 'valido_a', 'clave_sri', 'clave_firma_sri', 'iva_id', 'ret_iva_id', 'ret_fuente_id', 'impresion', 'logo', 'status',
     ];
 
     public function iva()
