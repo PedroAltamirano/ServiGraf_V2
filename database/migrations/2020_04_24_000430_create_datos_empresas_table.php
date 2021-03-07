@@ -24,8 +24,8 @@ class CreateDatosEmpresasTable extends Migration
             $table->string('ruc', 14);
             $table->string('ciudad', 250);
             $table->string('direccion', 250);
-            $table->unsignedInteger('telefono');
-            $table->unsignedInteger('celular');
+            $table->string('telefono', 10);
+            $table->string('celular', 15);
             $table->string('web', 250);
             $table->string('correo', 50);
             $table->unsignedMediumInteger('inicio');
