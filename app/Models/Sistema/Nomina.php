@@ -41,4 +41,13 @@ class Nomina extends Model
     public function getNombreCompletoAttribute() {
       return $this->nombre.' '.$this->apellido;
     }
+
+    public function getMovilAttribute() {
+      $res = $this->telefono;
+      if($res != ''){
+        $res .= ' / ';
+      }
+      $res .= $this->celular;
+      return $res;
+    }
 }

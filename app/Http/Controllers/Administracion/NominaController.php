@@ -28,7 +28,14 @@ class NominaController extends Controller
      */
     public function create()
     {
-        //
+      $nomina = new Nomina();
+      $data = [
+        'text' => 'Nueva Nomina',
+        'path' => route('nomina.create'),
+        'method' => 'POST',
+        'action' => 'Crear',
+      ];
+      return view('Administracion.nomina', compact('nomina'))->with($data);
     }
 
     /**
