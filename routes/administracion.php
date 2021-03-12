@@ -38,5 +38,8 @@ Route::namespace('Administracion')
   Route::delete('asistencia/eliminar/{asistencia}', 'RRHHController@destroy')->name('asistencia.delete')->middleware('hasModRol:24,4');
 
   Route::get('nominas', 'NominaController@index')->name('nomina')->middleware('hasModRol:24,1');
-  Route::get('nominas', 'NominaController@index')->name('nomina.create')->middleware('hasModRol:24,2');
+  Route::get('nomina/nueva', 'NominaController@create')->name('nomina.create')->middleware('hasModRol:24,2');
+  Route::post('nomina/store', 'NominaController@store')->name('nomina.store')->middleware('hasModRol:24,2');
+  Route::get('nomina/modificar', 'NominaController@edit')->name('nomina.edit')->middleware('hasModRol:24,3');
+  Route::put('nomina/update', 'NominaController@update')->name('nomina.update')->middleware('hasModRol:24,3');
 });
