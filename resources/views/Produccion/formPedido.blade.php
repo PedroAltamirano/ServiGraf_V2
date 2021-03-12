@@ -16,8 +16,8 @@
       <label for="cliente">Cliente</label>
       <select class="form-control form-control-sm select2Class @error('cliente_id') is-invalid @enderror" name="cliente_id" id="cliente" data-tags="true">
         <option disabled selected>Selecciona uno...</option>
-        {{ $group =  $clientes->first()->cliente_empresa_id }}
-        <optgroup label="{{ $clientes->first()->empresa->nombre }}">
+        {{ $group =  $clientes->first()->cliente_empresa_id ?? 0 }}
+        <optgroup label="{{ $clientes->first()->empresa->nombre ?? 'Sin Clientes' }}">
         @foreach ($clientes as $cli)
           @if ($group != $cli->cliente_empresa_id)
           {{ $group =  $cli->cliente_empresa_id }}

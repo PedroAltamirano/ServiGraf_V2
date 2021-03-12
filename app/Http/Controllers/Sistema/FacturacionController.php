@@ -50,6 +50,7 @@ class FacturacionController extends Controller
     {
       $validated = $request->validated();
       $validated['empresa_id'] = Auth::user()->empresa_id;
+      $validated['valido_a'] = $validated['valido_de'];
       $file = $validated['logo'];
       $validated['logo'] = '';
       $factura = Fact_empr::create($validated);
@@ -102,6 +103,7 @@ class FacturacionController extends Controller
     {
       $validated = $request->validated();
       $validated['status'] = $validated['status'] ?? 0;
+      $validated['valido_a'] = $validated['valido_de'];
       $factura->update($validated);
       if(isset($validated['logo'])){
           $name = $factura->id;

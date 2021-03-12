@@ -227,7 +227,7 @@
   $("#modalRecibo").on('show.bs.modal', function(event) {
     let data = $(event.relatedTarget).data('entrada');
     let tipo = data.tipo ? 'COBRO' : 'PAGO';
-    let ciudad = "{{ Auth::user()->empresa->datos->ciudad }}";
+    let ciudad = "{{ Auth::user()->empresa->datos->ciudad ?? '' }}";
     let fecha = ciudad + ', ' + data.fecha;
     let valor = data.tipo ? data.ingreso : data.egreso;
     let empresa = "{{ Auth::user()->empresa->nombre }}";

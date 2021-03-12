@@ -44,7 +44,7 @@
 <x-blueBoard
   title='Facturas'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>route('factura.create'), 'id'=>'nuevo', 'tipo'=> 'link']
+    ['text'=>'Nueva', 'href'=>route('factura.create'), 'id'=>'nuevo', 'tipo'=> 'link']
   ]"
 >
   <table id="table" class="table table-striped">

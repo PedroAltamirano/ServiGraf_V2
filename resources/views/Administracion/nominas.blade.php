@@ -23,11 +23,11 @@
   <table id="table" class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">Número</th>
-        <th scope="col">Emición</th>
-        <th scope="col">Mora</th>
-        <th scope="col">Cliente</th>
-        <th scope="col">Ing./Eg.</th>
+        <th scope="col">Cédula</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Telefono</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Cargo</th>
         <th scope="col">Valor</th>
         <th scope="col" class="crudCol">Crud</th>
       </tr>

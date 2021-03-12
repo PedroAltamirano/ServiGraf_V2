@@ -18,10 +18,10 @@
     @if($cli && $clientes!=[])
     <div class="col-12 col-md form-group">
       <label for="cliente">Cliente</label>
-      <select name="cliente" id="cliente" class="form-control form-control-sm refresh">
+      <select name="cliente" id="cliente" class="form-control form-control-sm refresh select2Class">
         <option value="none" selected>Selecciona uno...</option>
         {{ $group =  $clientes->first()->cliente_empresa_id ?? 0 }}
-        <optgroup label="{{ $clientes->first()->empresa->nombre }}">
+        <optgroup label="{{ $clientes->first()->empresa->nombre ?? 'Sin Clientes' }}">
         @foreach ($clientes as $cli)
           @if ($group != $cli->cliente_empresa_id)
           {{ $group =  $cli->cliente_empresa_id }}
