@@ -55,7 +55,7 @@ class Facturacion extends Controller
    */
   public function create(){
     $factura = new Factura;
-    $fact_num = Factura::where('tipo', 1)->where('empresa_id', Auth::user()->empresa_id)->select('numero')->orderBy('numero', 'DESC')->first()->numero + 1;
+    $fact_num = (Factura::where('tipo', 1)->where('empresa_id', Auth::user()->empresa_id)->select('numero')->orderBy('numero', 'DESC')->first()->numero ?? 0) + 1;
     $empresas = Fact_empr::where('empresa_id', Auth::user()->empresa_id)->get();
 
     $utilidad = Security::hasModule('19');
