@@ -37,7 +37,7 @@ class CreateNominaTable extends Migration
             //estado civil
             $table->unsignedTinyInteger('estado_civil'); //1soltero, 2casado, 3divo, 4viudo, 5union libre
             $table->unsignedTinyInteger('cant_hijos')->nullable();
-            //DATOS RMPRESARIALES
+            //DATOS EMPRESARIALES
             $table->date('inicio_labor');
             $table->date('fin_labor')->nullable();
             $table->string('cargo', 50);
