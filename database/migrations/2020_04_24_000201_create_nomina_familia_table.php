@@ -20,11 +20,11 @@ class CreateNominaFamiliaTable extends Migration
             $table->unsignedInteger('nomina_id');
             $table->foreign('nomina_id')->references('cedula')->on('nomina');
             $table->unsignedTinyInteger('relacion'); //1padre, 2madre, 3conyuge, 4hijo, 5otros
-            $table->string('nombre', 100);
-            $table->date('fecha_nacimiento');
+            $table->string('nombre_fam', 100);
+            $table->date('fecha_nacimiento_fam');
             $table->string('ocupacion', 50);
-            $table->unsignedInteger('telefono')->nullable($value = true);
-            $table->unsignedInteger('celular');
+            $table->unsignedInteger('telefono_fam')->nullable($value = true);
+            $table->unsignedInteger('celular_fam');
             $table->timestamps();
         });
     }
