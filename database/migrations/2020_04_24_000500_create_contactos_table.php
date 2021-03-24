@@ -21,18 +21,18 @@ class CreateContactosTable extends Migration
           $table->foreign('usuario_id')->references('cedula')->on('usuarios');
           $table->unsignedMediumInteger('cliente_empresa_id');
           $table->foreign('cliente_empresa_id')->references('id')->on('cliente_empresas');
-          $table->string('actividad', 200);
-          $table->string('titulo', 50);
+          $table->string('actividad', 200)->nullable();
+          $table->string('titulo', 50)->nullable();
           $table->string('nombre', 50);
           $table->string('apellido', 50);
-          $table->string('cargo', 50);
-          $table->string('direccion', 200);
-          $table->string('sector', 50);
-          $table->unsignedInteger('telefono');
-          $table->unsignedInteger('celular');
-          $table->unsignedMediumInteger('extencion');
-          $table->string('email', 50);
-          $table->string('web', 200);
+          $table->string('cargo', 50)->nullable();
+          $table->string('direccion', 200)->nullable();
+          $table->string('sector', 50)->nullable();
+          $table->unsignedInteger('telefono')->nullable();
+          $table->unsignedInteger('celular')->nullable();
+          $table->unsignedMediumInteger('extencion')->nullable();
+          $table->string('email', 50)->nullable();
+          $table->string('web', 200)->nullable();
           $table->timestamps();
         });
     }
