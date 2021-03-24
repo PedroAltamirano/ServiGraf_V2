@@ -35,7 +35,9 @@ class CreateNominaTable extends Migration
             $table->text('padecimientos_medicos')->nullable();
             $table->text('alergias')->nullable();
             $table->string('contacto_emergencia_nombre')->nullable();
+            $table->string('contacto_emergencia_domicilio')->nullable();
             $table->string('contacto_emergencia_celular')->nullable();
+            $table->string('contacto_emergencia_oficina')->nullable();
             $table->text('alergias')->nullable();
             $table->unsignedTinyInteger('genero'); //1masculino, 2femenino
             //estado civil

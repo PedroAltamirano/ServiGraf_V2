@@ -22,11 +22,11 @@ class CreateNominaReferTable extends Migration
             $table->boolean('tipo_refer');
             $table->string('empresa', 50)->nullable($value = true);
             $table->string('contacto', 100);
-            $table->unsignedInteger('telefono');
+            $table->unsignedInteger('telefono_refer');
             $table->string('afinidad', 50);
-            $table->date('inicio_labor')->nullable($value = true);
-            $table->date('fin_labor')->nullable($value = true);
-            $table->string('cargo', 50);
+            $table->date('inicio_labor_refer')->nullable($value = true);
+            $table->date('fin_labor_refer')->nullable($value = true);
+            $table->string('cargo_refer', 50);
             $table->string('razon_separacion', 250)->nullable($value = true);
             $table->timestamps();
         });
