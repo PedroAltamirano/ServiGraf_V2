@@ -33,6 +33,7 @@ class CreateNominaTable extends Migration
             $table->string('correo')->unique();
             $table->unsignedTinyInteger('tipo_sangre'); //1A+, 2...
             $table->text('padecimientos_medicos')->nullable();
+            $table->text('alergias')->nullable();
             $table->unsignedTinyInteger('genero'); //1masculino, 2femenino
             //estado civil
             $table->unsignedTinyInteger('estado_civil'); //1soltero, 2casado, 3divo, 4viudo, 5union libre
