@@ -24,26 +24,34 @@ class StoreNomina extends FormRequest
     public function rules()
     {
         return [
-          'cedula' => ['required', 'string', 'numeric'],
+          //datos personales
           'foto' => ['required', 'string', 'numeric'],
           'fecha_nacimiento' => ['required', 'string', 'numeric'],
           'lugar_nacimiento' => ['required', 'string', 'numeric'],
           'nacionalidad' => ['required', 'string', 'numeric'],
+          'estado_civil' => ['required', 'string', 'numeric'],
+          'genero' => ['required', 'string', 'numeric'],
           'idioma_nativo' => ['required', 'string', 'numeric'],
+          'cedula' => ['required', 'string', 'numeric'],
           'nombre' => ['required', 'string', 'numeric'],
           'apellido' => ['required', 'string', 'numeric'],
           'direccion' => ['required', 'string', 'numeric'],
           'sector' => ['required', 'string', 'numeric'],
-          'visita_domiciliaria' => ['required', 'string', 'numeric'],
+          // 'visita_domiciliaria' => ['required', 'string', 'numeric'],
           'fecha_visita' => ['required', 'string', 'numeric'],
           'telefono' => ['required', 'string', 'numeric'],
           'celular' => ['required', 'string', 'numeric'],
           'correo' => ['required', 'string', 'numeric'],
+          'cant_hijos' => ['required', 'string', 'numeric'],
+
+          //Datos medicos
           'tipo_sangre' => ['required', 'string', 'numeric'],
           'padecimientos_medicos' => ['required', 'string', 'numeric'],
-          'genero' => ['required', 'string', 'numeric'],
-          'estado_civil' => ['required', 'string', 'numeric'],
-          'cant_hijos' => ['required', 'string', 'numeric'],
+          'alergias' => ['required', 'string', 'numeric'],
+          'contacto_emergencia_nombre' => ['required', 'string', 'numeric'],
+          'contacto_emergencia_celular' => ['required', 'string', 'numeric'],
+
+          //Datos empresariales
           'inicio_labor' => ['required', 'string', 'numeric'],
           'fin_labor' => ['required', 'string', 'numeric'],
           'cargo' => ['required', 'string', 'numeric'],
