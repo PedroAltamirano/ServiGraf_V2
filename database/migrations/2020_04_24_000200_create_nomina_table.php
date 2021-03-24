@@ -38,7 +38,6 @@ class CreateNominaTable extends Migration
             $table->string('contacto_emergencia_domicilio')->nullable();
             $table->string('contacto_emergencia_celular')->nullable();
             $table->string('contacto_emergencia_oficina')->nullable();
-            $table->text('alergias')->nullable();
             $table->unsignedTinyInteger('genero'); //1masculino, 2femenino
             //estado civil
             $table->unsignedTinyInteger('estado_civil'); //1soltero, 2casado, 3divo, 4viudo, 5union libre
@@ -47,7 +46,7 @@ class CreateNominaTable extends Migration
             $table->date('inicio_labor');
             $table->date('fin_labor')->nullable();
             $table->string('cargo', 50);
-            $table->unsignedTinyInteger('centro_costos'); //1administracion, 2produccion, 3ventas
+            $table->foreignId('centro_costos_id');
             $table->date('ingreso_iess')->nullable();
             $table->boolean('iess_asumido_empleador');
             $table->unsignedDecimal('sueldo', 6, 2);
@@ -63,6 +62,7 @@ class CreateNominaTable extends Migration
             $table->boolean('Txhoras')->default(0);
             $table->timestamps();
             $table->foreign('empresa_id')->references('id')->on('empresas');
+            $table->foreign('centro_costos_id')->references('id')->on('centro_costos');
             $table->foreign('horario_id')->references('id')->on('horarios');
         });
     }
