@@ -19,7 +19,7 @@ class CreateContactosTable extends Migration
           $table->foreign('empresa_id')->references('id')->on('empresas');
           $table->unsignedInteger('usuario_id');
           $table->foreign('usuario_id')->references('cedula')->on('usuarios');
-          $table->unsignedMediumInteger('cliente_empresa_id');
+          $table->unsignedMediumInteger('cliente_empresa_id')->nullable();
           $table->foreign('cliente_empresa_id')->references('id')->on('cliente_empresas');
           $table->string('actividad', 200)->nullable();
           $table->string('titulo', 50)->nullable();
@@ -29,7 +29,7 @@ class CreateContactosTable extends Migration
           $table->string('direccion', 200)->nullable();
           $table->string('sector', 50)->nullable();
           $table->unsignedInteger('telefono')->nullable();
-          $table->unsignedInteger('celular')->nullable();
+          $table->unsignedInteger('celular');
           $table->unsignedMediumInteger('extencion')->nullable();
           $table->string('email', 50)->nullable();
           $table->string('web', 200)->nullable();
