@@ -100,6 +100,7 @@ $factory->define(Pedido::class, function (Faker $faker) {
         'fecha_salida' => now(),
         'prioridad' => $faker->boolean(25), //1-0
         'estado' => $faker->numberBetween(1, 4), //1-4
+        'cotizado' => $faker->numberBetween(0, 180.00), //1-4
         'detalle' => 'Ot de prueba',
         'papel' => 'papel',
         'cantidad' => $faker->numberBetween(0, 200),

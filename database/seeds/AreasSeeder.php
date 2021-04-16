@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use \App\Models\Produccion\Area;
 use \App\Models\Produccion\Servicio;
-use \App\Models\Produccion\Tita;
+use \App\Models\Produccion\Tinta;
 
 class AreasSeeder extends Seeder
 {
