@@ -84,6 +84,51 @@
     </div>
   </form>
 </x-blueBoard>
+
+<x-blueBoard
+  title='Centro de Costos'
+  :foot="[
+    ['text'=>'Nuevo', 'href'=>'#modalCCostos', 'id'=>'newCCostos', 'tipo'=> 'modal'],
+  ]"
+>
+  <div class="row">
+    @foreach ($ccostos as $item)
+    <div class="col-6 col-md-2">
+    <a class="fas fa-edit modCCostos" href="#modalCCostos" data-toggle="modal" data-ccosto='@json($item)'></a>
+      &nbsp;&nbsp;{{ $item->nombre }}
+    </div>
+    @endforeach
+  </div>
+</x-blueBoard>
+
+<!-- Modal Centro de Costos -->
+<div class="modal fade" id="modalCCostos" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <form action="" class="modal-path" method="POST">
+        @csrf
+        @method('POST')
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="porcentaje">Nombre del Centro de Costos</label>
+            <input type="text" name="nombre" id="nombre_ccosto" class="form-control modal-nombre">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section('scripts')
@@ -95,6 +140,25 @@
       "info":     false,
       "responsive": true,
     });
+  });
+
+  //Centro de Costos
+  const routeUpdateCCostos = "{{route('centro-costos.update', 0)}}";
+  $('#newCCostos').on('click', function (event) {
+    var modal = $('#modalCCostos');
+    modal.find('.modal-title').html('Nuevo Centro de Costos');
+    modal.find('.modal-nombre').html('');
+    modal.find('.modal-path').attr('action', '{{ route("centro-costos.store") }}');
+    modal.find('input[name="_method"]').val('POST');
+  });
+
+  $('.modCCostos').on('click', function (event) {
+    let modal = $('#modalCCostos');
+    let data = $(this).data('ccosto');
+    modal.find('.modal-title').html('Modificar Centro de Costos');
+    modal.find('.modal-nombre').val(data.nombre);
+    modal.find('.modal-path').attr('action', routeUpdateCCostos.replace("/0", "/"+data.id));
+    modal.find('input[name="_method"]').val('PUT');
   });
 
   $('#formSubmit').click(function(){
