@@ -4,6 +4,7 @@ namespace App\Models\Administracion;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Administracion\Fact_prod;
+use App\Models\Produccion\Pedido;
 use App\Models\Ventas\Cliente;
 
 class Factura extends Model
@@ -24,5 +25,9 @@ class Factura extends Model
 
   public function productos() {
     return $this->hasMany(Fact_prod::class);
+  }
+
+  public function pedidos() {
+    return $this->belongsToMany(Pedido::class, 'factura_ots');
   }
 }

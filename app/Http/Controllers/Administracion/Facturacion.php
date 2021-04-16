@@ -22,6 +22,8 @@ use App\Models\Sistema\Fact_empr;
 
 use App\Http\Requests\Administracion\StoreFactura;
 use App\Http\Requests\Administracion\UpdateFactura;
+use App\Models\Administracion\FacturaPedido;
+use App\Models\Produccion\Pedido;
 
 class Facturacion extends Controller
 {
@@ -65,6 +67,8 @@ class Facturacion extends Controller
     $ivas = Iva::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
     $ret_iva = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->where('tipo', 1)->get();
     $ret_fnt = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->where('tipo', 0)->get();
+    $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->get();
+    $old_pedidos = [];
     $data = [
       'text' => 'Nueva Factura',
       'path' => route('factura.create'),
@@ -72,7 +76,7 @@ class Facturacion extends Controller
       'action' => 'Crear',
       'mod' => 0,
     ];
-    return view('Administracion.factura', compact('factura', 'fact_num', 'empresas', 'utilidad', 'clientes', 'iva_p', 'ivas', 'ret_iva', 'ret_fnt'))->with($data);
+    return view('Administracion.factura', compact('factura', 'fact_num', 'empresas', 'utilidad', 'clientes', 'iva_p', 'ivas', 'ret_iva', 'ret_fnt', 'pedidos', 'old_pedidos'))->with($data);
   }
 
   // crear nuevo
@@ -85,12 +89,19 @@ class Facturacion extends Controller
     $size = sizeof($validator['articulo']['cantidad'] ?? []);
     for($i=0; $i < $size; $i++){
       $prod = new Fact_prod();
+      $prod->factura_id = $factura->id;
       $prod->cantidad = $validator['articulo']['cantidad'][$i];
       $prod->detalle = $validator['articulo']['detalle'][$i];
       $prod->iva_id = $validator['articulo']['iva_id'][$i];
       $prod->valor_unitario = $validator['articulo']['valor_unitario'][$i];
       $prod->subtotal = $validator['articulo']['subtotal'][$i];
       $prod->save();
+    }
+
+    if(isset($validatos['pedidos'])){
+      foreach($validatos['pedidos'] as $pedido){
+        FacturaPedido::create(['factura_id' => $factura->id, 'pedido_id' => $pedido]);
+      }
     }
 
     $data = [
@@ -115,13 +126,16 @@ class Facturacion extends Controller
     $ret_iva = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->where('tipo', 1)->get();
     $ret_fnt = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->where('tipo', 0)->get();
 
+    $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->get();
+    $old_pedidos = $factura->pedidos->map(function($p){return $p->id;})->toArray();
+
     $data = [
       'text'=>'Modificar Factura ',
       'path'=> route('factura.update', $factura->id),
       'method' => 'PUT',
       'action' => 'Modificar',
     ];
-    return view('Administracion.factura', compact('factura', 'fact_num', 'empresas', 'utilidad', 'clientes', 'iva_p', 'ivas', 'ret_iva', 'ret_fnt'))->with($data);
+    return view('Administracion.factura', compact('factura', 'fact_num', 'empresas', 'utilidad', 'clientes', 'iva_p', 'ivas', 'ret_iva', 'ret_fnt', 'pedidos', 'old_pedidos'))->with($data);
   }
 
   //modificar perfil
@@ -140,6 +154,13 @@ class Facturacion extends Controller
       $prod->valor_unitario = $validator['articulo']['valor_unitario'][$i];
       $prod->subtotal = $validator['articulo']['subtotal'][$i];
       $prod->save();
+    }
+
+    FacturaPedido::where('factura_id', $factura->id)->delete();
+    if(isset($validator['pedidos'])){
+      foreach($validator['pedidos'] as $pedido){
+        FacturaPedido::create(['factura_id' => $factura->id, 'pedido_id' => $pedido]);
+      }
     }
 
     $data = [

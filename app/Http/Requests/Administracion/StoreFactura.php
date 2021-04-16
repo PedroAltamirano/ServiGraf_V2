@@ -53,7 +53,9 @@ class StoreFactura extends FormRequest
           'ret_fuente_p' => ['required', 'numeric'],
           'ret_fuente' => ['required', 'numeric'],
           'total_pagar' => ['required', 'numeric'],
-          'notas' => ['nullable', 'string']
+          'notas' => ['nullable', 'string'],
+          // pedidos
+          'pedidos.*' => ['numeric', 'exists:pedidos,id']
         ];
     }
 }

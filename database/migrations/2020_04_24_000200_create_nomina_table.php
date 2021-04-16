@@ -46,7 +46,7 @@ class CreateNominaTable extends Migration
             $table->date('inicio_labor');
             $table->date('fin_labor')->nullable();
             $table->string('cargo', 50);
-            $table->foreignId('centro_costos_id');
+            $table->foreignId('centro_costos_id')->references('id')->on('centro_costos');
             $table->date('ingreso_iess')->nullable();
             $table->boolean('iess_asumido_empleador');
             $table->unsignedDecimal('sueldo', 6, 2);
@@ -62,7 +62,6 @@ class CreateNominaTable extends Migration
             $table->boolean('Txhoras')->default(0);
             $table->timestamps();
             $table->foreign('empresa_id')->references('id')->on('empresas');
-            $table->foreign('centro_costos_id')->references('id')->on('centro_costos');
             $table->foreign('horario_id')->references('id')->on('horarios');
         });
     }
