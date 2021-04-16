@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Administracion;
+namespace App\Http\Controllers\Sistema;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Sistema\StoreCentroCostos;
+use App\Http\Requests\Sistema\UpdateCentroCostos;
+use App\Models\Sistema\CentroCostos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\Sistema\Nomina;
-use App\Models\Sistema\CentroCostos;
-use App\Models\Sistema\Horario;
-
-class NominaController extends Controller
+class CentroCostosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +18,7 @@ class NominaController extends Controller
      */
     public function index()
     {
-      $nominas = Nomina::where('empresa_id', Auth::user()->empresa_id)->get();
-      return view('Administracion.nominas', compact('nominas'));
+        //
     }
 
     /**
@@ -30,16 +28,7 @@ class NominaController extends Controller
      */
     public function create()
     {
-      $nomina = new Nomina();
-      $ccostos = CentroCostos::where('empresa_id', Auth::user()->empresa_id)->get();
-      $horarios = Horario::where('empresa_id', Auth::user()->empresa_id)->get();
-      $data = [
-        'text' => 'Nueva Nomina',
-        'path' => route('nomina.create'),
-        'method' => 'POST',
-        'action' => 'Crear',
-      ];
-      return view('Administracion.nomina', compact('nomina', 'ccostos', 'horarios'))->with($data);
+        //
     }
 
     /**
@@ -48,9 +37,18 @@ class NominaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCentroCostos $request)
     {
-        //
+      $validated = $request->validated();
+      $validated['empresa_id'] = Auth::user()->empresa_id;
+      $user = CentroCostos::create($validated);
+
+      $data = [
+        'type'=>'success',
+        'title'=>'Acción completada',
+        'message'=>'El centro de costos se ha creado con éxito'
+      ];
+      return redirect()->back()->with($data);
     }
 
     /**
@@ -82,9 +80,17 @@ class NominaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCentroCostos $request, CentroCostos $centro)
     {
-        //
+      $validated = $request->validated();
+      $centro->update($validated);
+
+      $data = [
+        'type'=>'success',
+        'title'=>'Acción completada',
+        'message'=>'El centro de costos se ha modificado con éxito'
+      ];
+      return redirect()->back()->with($data);
     }
 
     /**
