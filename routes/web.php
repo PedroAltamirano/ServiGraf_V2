@@ -48,6 +48,9 @@ Route::middleware('auth')
     Route::get('/desktop', 'Desktop@showAdmin')->name('desktop')->middleware('hasModRol:10,1');
     Route::get('/tablero', 'Desktop@show')->name('tablero');
 
+    // KPIs
+    include('kpis.php');
+
     //ADMINISTRACION
     include('administracion.php');
 

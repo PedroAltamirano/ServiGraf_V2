@@ -11,6 +11,8 @@
   ]"
 />
 
+@include('kpis')
+
 <div class="row">
   <div class="col-12 col-md-8">
     <div class="m-2 m-md-3">
@@ -32,7 +34,7 @@
         <div class="form-group">
           {{-- <label for=""></label> --}}
           <input type="date"
-            class="form-control form-control-sm" name="fecha" id="fecha" aria-describedby="helpId" value="{{ date('Y-m-d') }}">
+            class="form-control form-control-sm" name="fecha" id="fecha" aria-describedby="helpId" value="{{ $fecha }}">
           <small id="helpId" class="form-text text-muted">Se tomara el mes y año de la fecha seleccionada</small>
         </div>
       </form>
@@ -256,4 +258,5 @@
     },
   });
 </script>
+@stack('kpis-script')
 @endsection

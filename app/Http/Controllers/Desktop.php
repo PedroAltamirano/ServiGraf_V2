@@ -38,6 +38,7 @@ class Desktop extends Controller
       $dateInit = date('Y-m-01');
       $dateFin = date('Y-m-t');
     }
+    $fecha = $request->get('fecha') ?? date('Y-m-d');
     // dd($dateInit, $dateFin);
     $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->get();
     $pt = $pedidos->count();
@@ -45,7 +46,7 @@ class Desktop extends Controller
     $materiales = Solicitud_material::whereIn('pedido_id', $pedidos->map(function($p){return $p->id;})->toArray())->get();
     $servicios = Servicio::where('empresa_id', Auth::user()->empresa_id)->get();
     $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->orderBy('cliente_empresa_id')->get();
-		return view('desktop', compact('clientes', 'pedidos', 'pt', 'pi', 'servicios', 'materiales'));
+		return view('desktop', compact('clientes', 'pedidos', 'pt', 'pi', 'servicios', 'materiales', 'fecha'));
 	}
 
 	public function show(){
