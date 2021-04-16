@@ -148,7 +148,7 @@
     </tbody>
     <tfoot>
       <tr class="font-weight-bold">
-        <td colspan="2"><a class="text-muted d-print-none" href="#">Corte de papel</a></td>
+        <td colspan="2"><a class="text-muted d-print-none" href="http://www.pplanos.com/" target="_blank">Corte de papel</a></td>
         <td colspan="4" class="text-right"></td>
         <td colspan="2" class="text-right"><a id="printable" data-target="material" class="d-print-none"><i class="fas fa-print pr-2"></i></a>  Total material $</td>
         <td class="text-center"><input type="number" name="total_material" id="totalMaterial" value="{{ old('total_material', $pedido->total_material) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
