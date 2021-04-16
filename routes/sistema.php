@@ -2,9 +2,9 @@
 Route::namespace('Sistema')
 ->middleware('hasModRol:80,1')
 ->group(function () {
-  Route::get('/horarios', 'Horarios@show')->name('horarios')->middleware('hasModRol:80,1');
-  Route::post('/horario/store', 'Horarios@store')->name('horario.store')->middleware('hasModRol:80,2');
-  Route::put('/horario/update/{horario}', 'Horarios@update')->name('horario.update')->middleware('hasModRol:80,3');
+  Route::get('horarios', 'Horarios@show')->name('horarios')->middleware('hasModRol:80,1');
+  Route::post('horario/store', 'Horarios@store')->name('horario.store')->middleware('hasModRol:80,2');
+  Route::put('horario/update/{horario}', 'Horarios@update')->name('horario.update')->middleware('hasModRol:80,3');
 
   Route::get('/empresa', 'Empresa@show')->name('empresa')->middleware('hasModRol:81,1');
   Route::post('/empresa/store', 'Empresa@store')->name('empresa.store')->middleware('hasModRol:81,2');
@@ -18,4 +18,8 @@ Route::namespace('Sistema')
   Route::post('/clave/store', 'Claves@store')->name('clave.store')->middleware('hasModRol:81,2');
   Route::put('/clave/update/{clave}', 'Claves@update')->name('clave.update')->middleware('hasModRol:81,3');
   Route::delete('/clave/delete/{clave}', 'Claves@delete')->name('clave.delete')->middleware('hasModRol:81,4');
+
+  Route::get('centro-costos', 'CentroCostosController@index')->name('centro-costos.get')->middleware('hasModRol:81,1');
+  Route::post('centro-costos/store', 'CentroCostosController@store')->name('centro-costos.store')->middleware('hasModRol:81,2');
+  Route::put('centro-costos/update/{centro}', 'CentroCostosController@update')->name('centro-costos.update')->middleware('hasModRol:81,3');
 });
