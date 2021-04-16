@@ -222,6 +222,21 @@
     </section>
 
     <hr style="border-width: 3px;">
+    @php
+        $pedidos_old = old('pedidos') ?? [];
+    @endphp
+    <section id="ots">
+      <div class="form-group">
+        <label for="pedidos">Pedidos</label>
+        <select multiple class="form-control select2Class" name="pedidos[]" id="pedidos">
+          @foreach ($pedidos as $pedido)
+          <option value="{{ $pedido->id }}" {{ (in_array($pedido->id, $old_pedidos) or in_array($pedido->id, $pedidos_old)) ? 'selected' : '' }}>{{ $pedido->numero }}</option>
+          @endforeach
+        </select>
+      </div>
+    </section>
+
+    <hr style="border-width: 3px;">
 
     </section id="notas">
       <div class="form-group">
