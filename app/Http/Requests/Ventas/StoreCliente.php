@@ -28,11 +28,11 @@ class StoreCliente extends FormRequest
         'ruc' => ['required', 'numeric'], //ruc de la empresa
 
         'actividad' => ['nullable', 'string'],
-        'cargo' => ['required', 'string'],
+        'cargo' => ['nullable', 'string'],
         'titulo' => ['nullable', 'string'],
         'nombre' => ['required', 'string'],
         'apellido' => ['required', 'string'],
-        'direccion' => ['required', 'string'],
+        'direccion' => ['nullable', 'string'],
         'sector' => ['nullable', 'string'],
         'extencion' => ['nullable', 'numeric'],
         'telefono' => ['nullable', 'numeric', 'required_if:celular,null'],
