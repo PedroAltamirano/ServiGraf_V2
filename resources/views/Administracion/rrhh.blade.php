@@ -28,6 +28,7 @@
     ['text'=>'Hoy', 'href'=>'#', 'id'=>'hoy', 'tipo'=> 'link'],
     ['text'=>'Semana', 'href'=>'#', 'id'=>'semana', 'tipo'=> 'link'],
     ['text'=>'Mes', 'href'=>'#', 'id'=>'mes', 'tipo'=> 'link'],
+    ['text'=>'Horarios', 'href'=>route('horarios'), 'id'=>'horarios', 'tipo'=> 'link'],
     ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'mes', 'tipo'=> 'button', 'print-target'=>'table']
   ]"
 >
