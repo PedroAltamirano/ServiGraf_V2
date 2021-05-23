@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class status extends Component
+class Status extends Component
 {
     /**
      * Create a new component instance.

@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class filters extends Component
+class Filters extends Component
 {
   public $clientes;
   public $cli;

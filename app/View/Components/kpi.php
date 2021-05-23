@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class kpi extends Component
+class Kpi extends Component
 {
   public $title;
   public $value;

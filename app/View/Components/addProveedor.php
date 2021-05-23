@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class addProveedor extends Component
+class AddProveedor extends Component
 {
     /**
      * Create a new component instance.

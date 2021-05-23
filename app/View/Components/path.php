@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class path extends Component
+class Path extends Component
 {
     public $items;
 

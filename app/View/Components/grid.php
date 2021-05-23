@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class grid extends Component
+class Grid extends Component
 {
     /**
      * Create a new component instance.

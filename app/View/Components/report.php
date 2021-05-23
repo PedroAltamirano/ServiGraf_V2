@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class report extends Component
+class Report extends Component
 {
     public $title;
     public $items;

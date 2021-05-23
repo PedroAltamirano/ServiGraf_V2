@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class addCliente extends Component
+class AddCliente extends Component
 {
     /**
      * Create a new component instance.

@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class blueBoard extends Component
+class BlueBoard extends Component
 {
     public $title;
     public $foot;

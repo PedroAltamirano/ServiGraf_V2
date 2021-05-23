@@ -5,7 +5,7 @@ namespace App\View\Components;
 use Illuminate\View\Component;
 use App\Models\Produccion\Pedido;
 
-class modalPedido extends Component
+class ModalPedido extends Component
 {
   public $pedido;
   public $method;
