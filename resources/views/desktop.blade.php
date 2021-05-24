@@ -187,6 +187,10 @@
 </div>
 @endif
 
+<hr class="m-2 m-md-3"/>
+<h2 class="m-2 m-md-3">Predicción Anual</h2>
+<x-yearPred />
+
 @endsection
 
 @section('scripts')
@@ -259,4 +263,5 @@
   });
 </script>
 @stack('kpis-script')
+@stack('year-pred-script')
 @endsection

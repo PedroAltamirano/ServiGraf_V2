@@ -30,10 +30,10 @@ class CreatePedidosTable extends Migration
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->date('fecha_entrada');
             $table->date('fecha_salida');
+            $table->date('fecha_cobro')->nullable();
             $table->boolean('prioridad')->default(0);
             $table->unsignedTinyInteger('estado'); //pendiente, pagado
-            $table->unsignedDecimal('cotizado', 6, 2);
-            $table->date('fecha_cobro')->nullable();
+            $table->unsignedDecimal('cotizado', 7, 2);
             $table->string('detalle', 256);
             $table->string('papel', 140);
             $table->unsignedMediumInteger('cantidad')->default(0);
