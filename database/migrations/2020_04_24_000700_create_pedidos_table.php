@@ -47,6 +47,7 @@ class CreatePedidosTable extends Migration
             $table->unsignedDecimal('saldo', 6, 2);
             $table->string('notas', 255);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

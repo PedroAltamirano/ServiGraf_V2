@@ -17,6 +17,7 @@ class CreateTipoEmpresaTable extends Migration
             $table->tinyIncrements('id');
             $table->string('nombre', 20);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

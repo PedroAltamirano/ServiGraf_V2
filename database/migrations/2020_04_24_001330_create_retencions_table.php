@@ -22,6 +22,7 @@ class CreateRetencionsTable extends Migration
             $table->string('descripcion', 140);
             $table->boolean('status')->comment('1->activo, 0->inactivo');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

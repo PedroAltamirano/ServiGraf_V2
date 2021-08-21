@@ -22,6 +22,7 @@ class CreateModuloPerfilTable extends Migration
             $table->unsignedTinyInteger('rol_id');
             $table->foreign('rol_id')->references('id')->on('roles');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

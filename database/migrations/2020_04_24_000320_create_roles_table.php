@@ -17,6 +17,7 @@ class CreateRolesTable extends Migration
             $table->tinyIncrements('id');
             $table->string('rol', 20);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

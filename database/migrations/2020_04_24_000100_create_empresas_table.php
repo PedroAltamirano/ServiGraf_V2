@@ -20,6 +20,7 @@ class CreateEmpresasTable extends Migration
             $table->foreign('tipo_empresa_id')->references('id')->on('tipo_empresa');
             $table->boolean('status'); //status-instatus
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

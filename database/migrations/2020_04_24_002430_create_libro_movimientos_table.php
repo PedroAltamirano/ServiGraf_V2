@@ -33,6 +33,7 @@ class CreateLibroMovimientosTable extends Migration
             $table->unsignedInteger('cuenta')->nullable();
             $table->unsignedInteger('cheque')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

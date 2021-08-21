@@ -29,6 +29,7 @@ class CreateSolicitudMaterialsTable extends Migration
             $table->unsignedMediumInteger('factura')->nullable();
             $table->unsignedDecimal('total', 8, 2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

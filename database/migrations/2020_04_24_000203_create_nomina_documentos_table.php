@@ -38,6 +38,7 @@ class CreateNominaDocumentosTable extends Migration
             $table->boolean('acta_finiquito')->default(0);
             $table->boolean('recibo_pago_acta_fini')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

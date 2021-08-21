@@ -20,6 +20,7 @@ class CreateUsuarioServicioTable extends Migration
             $table->unsignedMediumInteger('servicio_id');
             $table->foreign('servicio_id')->references('id')->on('servicios');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

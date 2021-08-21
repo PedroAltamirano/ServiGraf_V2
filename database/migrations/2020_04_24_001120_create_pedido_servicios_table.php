@@ -29,6 +29,7 @@ class CreatePedidoServiciosTable extends Migration
             $table->unsignedDecimal('total', 6, 2);
             $table->boolean('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

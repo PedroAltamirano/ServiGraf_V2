@@ -25,6 +25,7 @@ class CreateClientesTable extends Migration
             $table->foreign('cliente_empresa_id')->references('id')->on('cliente_empresas');
             $table->boolean('seguimiento')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

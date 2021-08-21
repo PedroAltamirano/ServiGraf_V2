@@ -25,6 +25,7 @@ class CreateHorariosTable extends Migration
             $table->unsignedTinyInteger('espera');
             $table->unsignedTinyInteger('gracia');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

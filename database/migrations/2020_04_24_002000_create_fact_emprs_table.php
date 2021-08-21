@@ -40,6 +40,7 @@ class CreateFactEmprsTable extends Migration
             $table->string('logo')->nulable();
             $table->boolean('status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -34,6 +34,7 @@ class CreateContactosTable extends Migration
           $table->string('email', 50)->nullable();
           $table->string('web', 200)->nullable();
           $table->timestamps();
+          $table->softDeletes();
         });
     }
 

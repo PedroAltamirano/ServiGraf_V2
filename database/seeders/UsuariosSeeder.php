@@ -69,5 +69,43 @@ class UsuariosSeeder extends Seeder
         $usuario->password = Hash::make('123456');
         $usuario->perfil_id = 1;
         $usuario->save();
+
+        //nomina
+        $nomina = new \App\Models\Sistema\Nomina;
+        $nomina->empresa_id = 1707255277001;
+        $nomina->cedula = 1707255277;
+        $nomina->fecha_nacimiento = '1963-09-17';
+        $nomina->lugar_nacimiento = 'Quito';
+        $nomina->nacionalidad = 'ecuatoriano';
+        $nomina->idioma_nativo = 'Espanol';
+        $nomina->nombre = 'Daniel';
+        $nomina->apellido = 'Altamirano';
+        $nomina->direccion = 'La calle y la que crusa';
+        $nomina->sector = 'Barrio';
+        $nomina->telefono = 7777777;
+        $nomina->celular = 999999999;
+        $nomina->correo = 'danielapi@yahoo.com';
+        $nomina->tipo_sangre = 1;
+        $nomina->genero = 1;
+        $nomina->estado_civil = 1;
+        $nomina->inicio_labor = '2020-01-01';
+        $nomina->cargo = 'Administrador';
+        $nomina->centro_costos = 1;
+        $nomina->iess_asumido_empleador = 1;
+        $nomina->sueldo = 2000.00;
+        $nomina->banco_id = 0;
+        $nomina->tipo_cuenta_banco = 0;
+        $nomina->numero_cuenta_bancaria = 123456789;
+        $nomina->horario_id = 1;
+        $nomina->save();
+
+        //usuario
+        $usuario = new \App\Models\Usuarios\Usuario;
+        $usuario->cedula = 1707255277;
+        $usuario->empresa_id = 1707255277001;
+        $usuario->usuario = 'Daniel';
+        $usuario->password = Hash::make('123456');
+        $usuario->perfil_id = 1;
+        $usuario->save();
     }
 }

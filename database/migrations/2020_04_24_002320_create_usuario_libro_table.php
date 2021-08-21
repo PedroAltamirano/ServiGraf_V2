@@ -20,6 +20,7 @@ class CreateUsuarioLibroTable extends Migration
             $table->unsignedMediumInteger('libro_id');
             $table->foreign('libro_id')->references('id')->on('libros');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

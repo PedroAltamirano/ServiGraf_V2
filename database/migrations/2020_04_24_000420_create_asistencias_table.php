@@ -27,6 +27,7 @@ class CreateAsistenciasTable extends Migration
             $table->time('total')->nullable();
             $table->time('extras')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

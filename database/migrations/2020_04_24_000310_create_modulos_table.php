@@ -20,6 +20,7 @@ class CreateModulosTable extends Migration
             $table->string('nombre', 30);
             $table->boolean('principal');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

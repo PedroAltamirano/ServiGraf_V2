@@ -24,6 +24,7 @@ class CreateFactProdsTable extends Migration
             $table->decimal('valor_unitario', 9, 3)->unsigned();
             $table->decimal('subtotal', 9, 3)->unsigned();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

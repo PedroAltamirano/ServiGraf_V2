@@ -22,6 +22,7 @@ class CreateBancosTable extends Migration
             $table->string('banco');
             $table->unsignedBigInteger('cuenta');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

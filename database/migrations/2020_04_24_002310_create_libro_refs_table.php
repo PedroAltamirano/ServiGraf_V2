@@ -22,6 +22,7 @@ class CreateLibroRefsTable extends Migration
             $table->string('referencia', 50);
             $table->string('descripcion', 140);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

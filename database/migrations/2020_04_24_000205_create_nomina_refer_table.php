@@ -29,6 +29,7 @@ class CreateNominaReferTable extends Migration
             $table->string('cargo_refer', 50);
             $table->string('razon_separacion', 250)->nullable($value = true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

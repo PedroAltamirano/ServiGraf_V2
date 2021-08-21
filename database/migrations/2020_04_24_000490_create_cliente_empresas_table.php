@@ -20,6 +20,7 @@ class CreateClienteEmpresasTable extends Migration
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

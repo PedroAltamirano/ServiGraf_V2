@@ -25,6 +25,7 @@ class CreateNominaEducTable extends Migration
             $table->date('fin');
             $table->string('titulo');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

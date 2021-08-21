@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
             $table->boolean('libro')->default(0);
             $table->boolean('utilidad')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

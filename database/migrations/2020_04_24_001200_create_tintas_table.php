@@ -19,6 +19,7 @@ class CreateTintasTable extends Migration
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->string('color', 50);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

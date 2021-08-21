@@ -23,6 +23,7 @@ class CreateNominaDotacionTable extends Migration
             $table->unsignedMediumInteger('dotacion_id');
             $table->foreign('dotacion_id')->references('id')->on('dotacion');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

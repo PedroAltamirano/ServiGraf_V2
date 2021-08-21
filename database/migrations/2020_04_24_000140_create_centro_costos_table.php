@@ -19,6 +19,7 @@ class CreateCentroCostosTable extends Migration
       $table->foreign('empresa_id')->references('id')->on('empresas');
       $table->string('nombre');
       $table->timestamps();
+      $table->softDeletes();
     });
   }
 

@@ -26,6 +26,7 @@ class CreateNominaFamiliaTable extends Migration
             $table->unsignedInteger('telefono_fam')->nullable($value = true);
             $table->unsignedInteger('celular_fam');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

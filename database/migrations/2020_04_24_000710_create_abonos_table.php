@@ -21,6 +21,7 @@ class CreateAbonosTable extends Migration
             $table->string('forma_pago', 20);
             $table->decimal('valor', 8, 2)->default(0.0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

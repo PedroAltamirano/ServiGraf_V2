@@ -19,6 +19,7 @@ class CreateCategoriasTable extends Migration
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->string('categoria');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

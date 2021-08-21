@@ -61,6 +61,7 @@ class CreateNominaTable extends Migration
             $table->unsignedMediumInteger('horario_id')->default(0);
             $table->boolean('Txhoras')->default(0);
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->foreign('horario_id')->references('id')->on('horarios');
         });

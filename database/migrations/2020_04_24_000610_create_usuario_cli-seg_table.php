@@ -20,6 +20,7 @@ class CreateUsuarioCliSegTable extends Migration
             $table->unsignedMediumInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

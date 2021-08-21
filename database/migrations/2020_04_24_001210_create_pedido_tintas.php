@@ -20,6 +20,7 @@ class CreatePedidoTintas extends Migration
             $table->foreign('tinta_id')->references('id')->on('tintas');
             $table->boolean('lado');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

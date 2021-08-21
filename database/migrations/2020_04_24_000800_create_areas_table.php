@@ -20,6 +20,7 @@ class CreateAreasTable extends Migration
             $table->string('area', 30);
             $table->unsignedTinyInteger('orden');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

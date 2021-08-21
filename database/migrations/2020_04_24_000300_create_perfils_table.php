@@ -21,6 +21,7 @@ class CreatePerfilsTable extends Migration
             $table->string('descripcion', 140);
             $table->boolean('status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

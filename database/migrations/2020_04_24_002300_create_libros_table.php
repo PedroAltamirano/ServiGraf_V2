@@ -21,6 +21,7 @@ class CreateLibrosTable extends Migration
             $table->foreign('usuario_id')->references('cedula')->on('usuarios');
             $table->string('libro', 30);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

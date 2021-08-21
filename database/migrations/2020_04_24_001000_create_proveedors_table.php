@@ -23,6 +23,7 @@ class CreateProveedorsTable extends Migration
             $table->unsignedInteger('telefono');
             $table->string('direccion', 140);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

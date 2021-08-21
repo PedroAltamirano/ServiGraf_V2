@@ -23,6 +23,7 @@ class CreateClavesTable extends Migration
             $table->text('refuerzo')->nullable();
             $table->string('url')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

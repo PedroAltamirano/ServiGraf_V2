@@ -45,6 +45,7 @@ class CreateFacturasTable extends Migration
             $table->unsignedDecimal('total_pagar', 8, 2);
             $table->string('notas', 140);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -27,6 +27,7 @@ class CreateMaterialsTable extends Migration
             $table->boolean('uv')->default(0);
             $table->boolean('plastificado')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

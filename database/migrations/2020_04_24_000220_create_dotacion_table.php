@@ -20,6 +20,7 @@ class CreateDotacionTable extends Migration
             $table->string('dotacion');
             $table->boolean('status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
