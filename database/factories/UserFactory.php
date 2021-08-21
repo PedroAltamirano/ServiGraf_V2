@@ -76,7 +76,7 @@ $factory->define(Proceso::class, function (Faker $faker) {
     return [
         'empresa_id' => 1709636664001,
         'area_id' => $faker->numberBetween(1, 5),
-        'proceso' => 'testServicio'.$faker->numberBetween(1, 20),
+        'proceso' => 'testproceso'.$faker->numberBetween(1, 20),
         'meta' => $faker->numberBetween(0.00, 600.00),
     ];
 });

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Produccion\Pedido_proceso;
 use App\Models\Produccion\Proceso;
-use App\Models\Produccion\Sub_proceso;
 
 class Pedido extends Model
 {
@@ -30,7 +29,7 @@ class Pedido extends Model
     ];
 
     /*
-    * @return Orden_produccion con servicios incompletos
+    * @return Orden_produccion con Procesos incompletos
     */
 
     public function user()
@@ -58,7 +57,7 @@ class Pedido extends Model
         return $this->hasMany('App\Models\Produccion\Solicitud_material');
     }
 
-    public function servicios()
+    public function procesos()
     {
         return $this->hasMany('App\Models\Produccion\Pedido_proceso');
     }
@@ -96,17 +95,17 @@ class Pedido extends Model
     }
 
     /*
-    * @return lista con todos los servicios sin terminar
+    * @return lista con todos los procesos sin terminar
     */
     public static function serviciosIncompletos($pedido_id)
     {
         $OS = Pedido_proceso::where('pedido_id', strval($pedido_id))->get();
         $list = [];
         foreach ($OS as $proceso) {
-            $serv = Servicio::where('id', $proceso->proceso_id)->value('servicio');
+            $serv = Proceso::where('id', $proceso->proceso_id)->value('proceso');
             if($proceso->subproceso_id != null){
                 $serv = $serv.'-';
-                $serv = $serv.Sub_proceso::where('id', $proceso->subproceso_id)->value('subservicio');
+                // $serv = $serv.Sub_proceso::where('id', $proceso->subproceso_id)->value('subservicio');
             }
             $list[] = $serv;
         }
@@ -114,7 +113,7 @@ class Pedido extends Model
     }
 
     /**
-     * @return lista con todos los servicios sin terminar
+     * @return lista con todos los procesos sin terminar
      */
     public static function todos()
     {
@@ -126,7 +125,7 @@ class Pedido extends Model
             $temp['numero'] = $pedido->numero;
             $temp['detalle'] = $pedido->detalle;
             $temp['cantidad'] = $pedido->cantidad;
-            $temp['servicios'] = $pedido->serviciosIncompletos($pedido->id);
+            $temp['procesos'] = $pedido->serviciosIncompletos($pedido->id);
             $temp['cliente'] = $cli->empresa->nombre.' / '.$cli->contacto->nombre.' '.$cli->contacto->apellido;
             $list[] = $temp;
         }
@@ -134,7 +133,7 @@ class Pedido extends Model
     }
 
     public static function reporteAreas($id){
-        return Pedido_proceso::where('pedido_id', $id)->join('servicios', 'pedido_procesos.proceso_id' ,'=', 'servicios.id')->select('area_id', DB::raw('sum(total) as totalArea'))->groupBy('area_id')->get()->toArray();
+        return Pedido_proceso::where('pedido_id', $id)->join('procesos', 'pedido_procesos.proceso_id' ,'=', 'procesos.id')->select('area_id', DB::raw('sum(total) as totalArea'))->groupBy('area_id')->get()->toArray();
     }
 
     /**

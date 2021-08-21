@@ -31,7 +31,7 @@
 </x-blueBoard>
 
 <x-blueBoard
-  title='Servicios'
+  title='procesos'
   :foot="[
     ['text'=>'Nuevo', 'href'=>route('proceso.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
   ]"
@@ -40,7 +40,7 @@
     <thead>
       <tr>
         <th scope="col">Area</th>
-        <th scope="col">Servicio</th>
+        <th scope="col">Proceso</th>
         <th scope="col">Meta $</th>
         <th scope="col">T xM</th>
         <th scope="col">T xO</th>
@@ -53,7 +53,7 @@
       @foreach ($procesos as $item)
       <tr>
         <td>{{ $item->area->area }}</td>
-        <td>{{ $item->servicio }}</td>
+        <td>{{ $item->proceso }}</td>
         <td>{{ $item->meta }}</td>
         <td>{{ $item->tmaquina ?? '' }}</td>
         <td>{{ $item->toperador ?? '' }}</td>
@@ -67,41 +67,6 @@
     </tfoot>
   </table>
 </x-blueBoard>
-
-<x-blueBoard
-  title='Subservicios'
-  :foot="[
-    ['text'=>'Nuevo', 'href'=>route('subproceso.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
-  ]"
->
-  <table id="tableSubs" class="table table-striped table-sm">
-    <thead>
-      <tr>
-        <th scope="col">Servicio</th>
-        <th scope="col">Subservicio</th>
-        <th scope="col">T xM</th>
-        <th scope="col">T xO</th>
-        <th scope="col">Tipo</th>
-        <th scope="col" class="crudCol">Crud</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach ($subservicios as $item)
-      <tr>
-        <td>{{ $item->servicio->servicio }}</td>
-        <td>{{ $item->subservicio }}</td>
-        <td>{{ $item->tmaquina ?? '' }}</td>
-        <td>{{ $item->toperador ?? '' }}</td>
-        <td>{{ $item->tipo ? 'Interno' : 'Externo' }}</td>
-        <td><a class='fa fa-edit' href='{{route('subproceso.edit', $item->id)}}'></a> <a class='fa fa-eye' id="{{ $item->id }}"></a></td>
-      </tr>
-      @endforeach
-    </tbody>
-    <tfoot>
-    </tfoot>
-  </table>
-</x-blueBoard>
-
 
 <!-- Modal AREAS -->
 <div id="modalArea" class="modal fade">

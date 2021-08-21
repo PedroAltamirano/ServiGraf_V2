@@ -38,8 +38,8 @@
         </select>
       </div>
       <div class="form-group col-12 col-md-4">
-        <label for="servicio">Servicio</label>
-        <input type="text" name="servicio" id="servicio" class="form-control form-control-sm @error('servicio') is-invalid @enderror" value="{{ old('servicio', $proceso->servicio) }}">
+        <label for="proceso">Proceso</label>
+        <input type="text" name="proceso" id="proceso" class="form-control form-control-sm @error('proceso') is-invalid @enderror" value="{{ old('proceso', $proceso->proceso) }}">
       </div>
       <div class="form-group col-6 col-md-4">
         <label for="meta">Meta $</label>

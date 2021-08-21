@@ -61,7 +61,7 @@
 
 @section('scripts')
 <script>
-  let servicios = @json($procesos);
+  let procesos = @json($procesos);
   $('#cliente').select2();
 
   // console.log(areas.length);
@@ -94,9 +94,9 @@
       {"name":"cliente", "data": "cliente_nom"},
       {"name":"detalle", "data": "detalle"},
       @foreach($procesos as $proceso)
-      {"name":"{{'serv'.$proceso->id}}", "data":"servicios", "defaultContent": "", "render":function(data, type, full, meta){
-        let servicio = data.find(record => record.proceso_id === '{{ $proceso->id }}');
-        return servicio ? servicio.totalServicio : '';
+      {"name":"{{'serv'.$proceso->id}}", "data":"procesos", "defaultContent": "", "render":function(data, type, full, meta){
+        let proceso = data.find(record => record.proceso_id === '{{ $proceso->id }}');
+        return proceso ? proceso.totalServicio : '';
       }},
       @endforeach
       {"name":"total", "data": "total_pedido"},

@@ -88,8 +88,8 @@ class Reportes extends Controller
    * @return View reporte de maquinas
    */
   public function showMaquinas(){
-    $procesos = Servicio::where('empresa_id', Auth::user()->empresa_id)->select('servicio', 'id')->where('seguimiento', 1)->orderBy('servicio')->get();
-    return view('Produccion.reporteMaquinas', compact('servicios'));
+    $procesos = Proceso::where('empresa_id', Auth::user()->empresa_id)->select('proceso', 'id')->where('seguimiento', 1)->orderBy('proceso')->get();
+    return view('Produccion.reporteMaquinas', compact('procesos'));
   }
 
   public static function ajaxMaquinas(Request $request){
@@ -101,7 +101,7 @@ class Reportes extends Controller
     foreach($pedidos as $pedido){
       $tmp = $pedido->cliente->contacto;
       $pedido->cliente_nom = $tmp->nombre.' '.$tmp->apellido;
-      $pedido->servicios = Self::getServicios($pedido->id);
+      $pedido->procesos = Self::getServicios($pedido->id);
     }
     return response()->json($pedidos, 200);
   }

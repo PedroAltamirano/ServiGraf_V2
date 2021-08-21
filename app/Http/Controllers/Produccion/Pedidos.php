@@ -112,18 +112,15 @@ class Pedidos extends Controller
     $proSize = sizeof($validator['proceso']['id'] ?? []);
     for($i=0; $i < $proSize; $i++){
       $proceso = $validator['proceso']['id'][$i];
-      $subservicio = null;
       if(strpos($proceso, '.') !== false){
         $serv = explode('.', $proceso);
         $proceso = $serv[0];
-        $subservicio = $serv[1];
       }
 
       $proceso = new Pedido_proceso;
       $proceso->empresa_id = Auth::user()->empresa_id;
       $proceso->pedido_id = $model->id;
       $proceso->proceso_id = $proceso;
-      $proceso->subproceso_id = $subservicio;
       $proceso->tiro = $validator['proceso']['tiro'][$i];
       $proceso->retiro = $validator['proceso']['retiro'][$i];
       $proceso->millares = $validator['proceso']['millar'][$i];
@@ -204,18 +201,15 @@ class Pedidos extends Controller
     $proSize = sizeof($validator['proceso']['id'] ?? []);
     for($i=0; $i<$proSize; $i++){
       $proceso = $validator['proceso']['id'][$i];
-      $subservicio = null;
       if(strpos($proceso, '.') !== false){
         $serv = explode('.', $proceso);
         $proceso = $serv[0];
-        $subservicio = $serv[1];
       }
 
       $proceso = new Pedido_proceso;
       $proceso->empresa_id = Auth::user()->empresa_id;
       $proceso->pedido_id = $pedido->id;
       $proceso->proceso_id = $proceso;
-      $proceso->subproceso_id = $subservicio;
       $proceso->tiro = $validator['proceso']['tiro'][$i];
       $proceso->retiro = $validator['proceso']['retiro'][$i];
       $proceso->millares = $validator['proceso']['millar'][$i];

@@ -22,7 +22,7 @@
     $ci = $loop->index % count($colors);
   @endphp
   <div class="m-2 m-md-3">
-    <label for="meta">Producción {{ $item->servicio }} ${{ $item->meta }}</label>
+    <label for="meta">Producción {{ $item->proceso }} ${{ $item->meta }}</label>
     <div class="progress" style="height: 30px;" id="meta">
       <div class="progress-bar progress-bar-striped progress-bar-animated {{ $colors[$ci] }}" role="progressbar" style="width: {{$prog}}%" aria-valuenow="{{ $logrado }}" aria-valuemin="0" aria-valuemax="{{ $item->meta }}">{{ $logrado }}</div>
     </div>
@@ -78,7 +78,7 @@
   @foreach ($clientes as $cli)
     @php
     $pa = App\Models\Produccion\Pedido::select('id')->where('cliente_id', $cli->id)->whereBetween('fecha_entrada', [date('Y-m-01'), date('Y-m-d')])->get()->map(function($p){return $p->id;})->toArray();
-    $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->groupBy('proceso_id')->get()->each(function($i){return $i->nombre = $i->servicio->servicio; });
+    $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->groupBy('proceso_id')->get()->each(function($i){return $i->nombre = $i->proceso; });
     @endphp
     <x-report :title="$cli->contacto->nombre.' '.$cli->contacto->apellido" :items="$items"></x-report>
   @endforeach

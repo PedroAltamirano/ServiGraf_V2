@@ -44,7 +44,7 @@ class Usuarios extends Controller
 	public function create(){
 		$nomina = Nomina::availables();
 		$perfiles = Perfil::where('empresa_id', Auth::user()->empresa_id)->select('id', 'nombre')->get();
-		$procesos = Servicio::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
+		$procesos = Proceso::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
 		$actividades = [];
 		$clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->where('seguimiento', 1)->get();
 		$data = [
@@ -79,7 +79,7 @@ class Usuarios extends Controller
 	public function edit(Usuario $usuario){
 		$nomina = Nomina::todos();
 		$perfiles = Perfil::where('empresa_id', Auth::user()->empresa_id)->select('id', 'nombre')->get();
-		$procesos = Servicio::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
+		$procesos = Proceso::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
 		$actividades = [];
 		$clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->where('seguimiento', 1)->get();
 		$data = [

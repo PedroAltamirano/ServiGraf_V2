@@ -33,13 +33,9 @@
         <label for="proceso_id">Servico</label>
         <select name="proceso_id" id="proceso_id" class="form-control form-control-sm @error('proceso_id') is-invalid @enderror">
           @foreach ($procesos as $item)
-          <option value="{{ $item->id }}" {{ old('proceso_id', $subservicio->proceso_id) == $item->id ? 'selected' : '' }}>{{ $item->servicio }}</option>
+          <option value="{{ $item->id }}" {{ old('proceso_id', $subproceso->proceso_id) == $item->id ? 'selected' : '' }}>{{ $item->proceso }}</option>
           @endforeach
         </select>
-      </div>
-      <div class="form-group col-12 col-md-4">
-        <label for="subservicio">Subservicio</label>
-        <input type="text" name="subservicio" id="subservicio" class="form-control form-control-sm @error('subservicio') is-invalid @enderror" value="{{ old('subservicio', $subservicio->subservicio) }}">
       </div>
       <div class="form-group col-6 col-md-4">
         <label for="tipo">Tipo de proceso</label>

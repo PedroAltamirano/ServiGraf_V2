@@ -44,17 +44,17 @@
       </div>
       <div class="form-group col-12 col-md-6">
         <label for="nomina">Usuario</label>
-        <input type="text" name="usuario" id="usuario" class="form-control @error('usuario') is-invalid @enderror" placeholder="Usuario" 
+        <input type="text" name="usuario" id="usuario" class="form-control @error('usuario') is-invalid @enderror" placeholder="Usuario"
         value="{{ old('usuario', $usuario->usuario) }}">
       </div>
       <div class="form-group col-12 col-md-6">
         <label for="password">Contraseña</label>
-        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="Contraseña" 
+        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="Contraseña"
         value="{{ old('password') }}" {{ isset($usuario->password) ? 'disabled':'' }}>
       </div>
       <div class="form-group col-12 col-md-6">
         <label for="password_confirmation">Verificar contraseña</label>
-        <input type="password" class="form-control  @error('passwordVer') is-invalid @enderror" name="password_confirmation" id="password_confirmation" placeholder="Contraseña" 
+        <input type="password" class="form-control  @error('passwordVer') is-invalid @enderror" name="password_confirmation" id="password_confirmation" placeholder="Contraseña"
         value="{{ old('password_confirmation') }}" {{ isset($usuario->password) ? 'disabled':'' }}>
       </div>
       <div class="form-group col-6 col-md-4">
@@ -76,7 +76,7 @@
           @php($array = old('procesos') ?? $usuario->procesos->map(function($c){return $c->id;})->toArray())
           @foreach ($procesos as $item)
           <option value="{{ $item->id }}" {{ in_array($item->id, $array) ? 'selected':'' }}>
-            {{ $item->servicio }}
+            {{ $item->proceso }}
           </option>
           @endforeach
         </select>
@@ -111,21 +111,21 @@
           <input type="checkbox" class="custom-control-input @error('status') is-invalid @enderror" id="status" name="status" {{ old('status', $usuario->status) == '1' ? 'checked':'' }} value='1'>
           <label class="custom-control-label" for="status"></label>
         </div>
-      </div> 
+      </div>
       <div class="form-group col-3 col-md-2">
         <label for="utilidadDiv">Utilidad</label>
         <div class="custom-control custom-switch d-flex justify-content-center" name="utilidadDiv">
           <input type="checkbox" class="custom-control-input @error('utilidad') is-invalid @enderror" id="utilidad" name="utilidad" {{ old('utilidad', $usuario->utilidad) == '1' ? 'checked':'' }} value='1'>
           <label class="custom-control-label" for="utilidad"></label>
         </div>
-      </div> 
+      </div>
       <div class="form-group col-3 col-md-2">
         <label for="reservarotDiv">Reservar Ot</label>
         <div class="custom-control custom-switch d-flex justify-content-center" name="reservarotDiv">
           <input type="checkbox" class="custom-control-input @error('reservarot') is-invalid @enderror" id="reservarot" name="reservarot" {{ old('reservarot', $usuario->reservarot) == '1' ? 'checked':'' }} value='1'>
           <label class="custom-control-label" for="reservarot"></label>
         </div>
-      </div> 
+      </div>
       <div class="form-group col-3 col-md-2">
         <label for="libroDiv">Libro</label>
         <div class="custom-control custom-switch d-flex justify-content-center" name="libroDiv">
@@ -133,7 +133,7 @@
           {{ old('libro', $usuario->libro) == '1' ? 'checked':'' }} value='1'>
           <label class="custom-control-label" for="libro"></label>
         </div>
-      </div> 
+      </div>
     </div>
   </form>
 </x-blueBoard>

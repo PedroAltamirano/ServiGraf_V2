@@ -9,7 +9,6 @@ use App\Models\Sistema\Nomina;
 use App\Models\Produccion\Pedido;
 use App\Models\Produccion\Pedido_proceso;
 use App\Models\Produccion\Proceso;
-use App\Models\Produccion\Sub_proceso;
 
 use App\Models\Ventas\Cliente;
 
@@ -62,7 +61,7 @@ use Illuminate\Support\Facades\DB;
 // $ots = Orden_produccion::whereIn('numero', $ot_inc)->select('numero', 'cliente_id', 'detalle', 'cantidad')->get();
 // echo json_encode(Orden_produccion::todos());
 
-// $ots_serv = Orden_produccion::join('servicios', 'servicios.id', 'proceso_id')->get();
+// $ots_serv = Orden_produccion::join('procesos', 'procesos.id', 'proceso_id')->get();
 
 // $ot_proceso = Orden_proceso::first();
 // $proceso = Orden_proceso::all();
@@ -73,8 +72,8 @@ use Illuminate\Support\Facades\DB;
 // echo $ots_serv;
 // foreach ($ots as $ot) {
 //   echo $ot->numero.' ';
-//   foreach ($ot->servicios as $proceso) {
-//     echo $proceso->servicio->servicio;
+//   foreach ($ot->procesos as $proceso) {
+//     echo $proceso->proceso->proceso;
 //     if
 //     echo $proceso->sub_proceso;
 //   }

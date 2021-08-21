@@ -29,7 +29,7 @@ class Store extends FormRequest
             'password' => 'required|confirmed',
             'password_confirmation' => 'required',
             'perfil_id' => 'required|numeric|exists:perfiles,id',
-            'procesos.*' => 'nullable|numeric|exists:servicios,id',
+            'procesos.*' => 'nullable|numeric|exists:Procesos,id',
             'actividades.*' => 'nullable|numeric',
             'clientes.*' => 'nullable|numeric|exists:clientes,id',
             'status' => 'required|boolean',

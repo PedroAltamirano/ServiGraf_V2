@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Produccion\StoreProceso;
 use App\Http\Requests\Produccion\UpdateProceso;
 
-class Servicios extends Controller
+class Procesos extends Controller
 {
   use AuthenticatesUsers;
   /**
@@ -32,15 +32,15 @@ class Servicios extends Controller
   * @return \Illuminate\Http\Response
   */
   public function create(){
-    $proceso = new Servicio;
+    $proceso = new Proceso;
     $areas = Area::where('empresa_id', Auth::user()->empresa_id)->get();
     $data = [
-      'text' => 'Nuevo Servicio',
+      'text' => 'Nuevo Proceso',
       'path' => route('proceso.store'),
       'method' => 'POST',
       'action' => 'Crear',
     ];
-    return view('Produccion.servicio', compact('servicio', 'areas'))->with($data);
+    return view('Produccion.proceso', compact('proceso', 'areas'))->with($data);
   }
 
   // // crear nuevo
@@ -48,7 +48,7 @@ class Servicios extends Controller
     $validator = $request->validated();
     // dd($validator);
     $validator['empresa_id'] = Auth::user()->empresa_id;
-    $proceso = Servicio::create($validator);
+    $proceso = Proceso::create($validator);
 
     $data = [
       'type'=>'success',
@@ -59,19 +59,19 @@ class Servicios extends Controller
   }
 
   // //ver modificar
-  public function edit(Servicio $proceso){
+  public function edit(Proceso $proceso){
     $areas = Area::where('empresa_id', Auth::user()->empresa_id)->get();
     $data = [
-      'text'=>'Modificar Servicio',
+      'text'=>'Modificar Proceso',
       'path'=> route('proceso.update', $proceso->id),
       'method' => 'PUT',
       'action'=>'Modificar',
     ];
-    return view('Produccion.servicio', compact('servicio', 'areas'))->with($data);
+    return view('Produccion.proceso', compact('proceso', 'areas'))->with($data);
   }
 
   // //modificar perfil
-  public function update(UpdateProceso $request, Servicio $proceso){
+  public function update(UpdateProceso $request, Proceso $proceso){
     $validator = $request->validated();
     $validator['subprocesos'] = $validator['subprocesos'] ?? 0;
     $validator['seguimiento'] = $validator['seguimiento'] ?? 0;

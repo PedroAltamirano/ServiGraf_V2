@@ -1,12 +1,12 @@
 @php
   $proveedores = App\Models\Produccion\Proveedor::where('empresa_id', Auth::user()->empresa_id)->get();
   $materiales = App\Models\Produccion\Material::where('empresa_id', Auth::user()->empresa_id)->orderBy('categoria_id')->with('categoria')->get();
-  $procesos = App\Models\Produccion\Proceso::where('empresa_id', Auth::user()->empresa_id)->orderBy('area_id')->with('area')->with('subservicios')->get();
+  $procesos = App\Models\Produccion\Proceso::where('empresa_id', Auth::user()->empresa_id)->orderBy('area_id')->with('area')->get();
   $tintas = App\Models\Produccion\Tinta::where('empresa_id', Auth::user()->empresa_id)->get();
   $oldTintasTiro = old('tinta_tiro') ?? $pedido->tintas->reject(function($tinta){return $tinta->lado == 0;})->map(function($tintas){return $tintas->tinta_id;})->toArray();
   $oldTintasRetiro = old('tinta_retiro') ?? $pedido->tintas->reject(function($tinta){return $tinta->lado == 1;})->map(function($tintas){return $tintas->tinta_id;})->toArray();
   $oldMaterial = $pedido->material ?? json_encode(new stdClass);
-  $oldProcesos = $pedido->servicios ?? json_encode(new stdClass);
+  $oldProcesos = $pedido->procesos ?? json_encode(new stdClass);
   $oldAbonos = $pedido->abonos ?? json_encode(new stdClass);
   $matCount = count(old("material.id", $oldMaterial) ?? []);
   $proCount = count(old("proceso.id", $oldProcesos) ?? []);
@@ -190,12 +190,12 @@
               <optgroup label="{{ $serv->area->area }}">
               @endif
               @if ($serv->subprocesos == 0)
-              <option value="{{ $serv->id }}" {{(old('proceso.id.'.$j) ?? $oldProcesos[$j]->proceso_id) == $serv->id ? 'selected' : '' }}>{{ $serv->servicio }}</option>
+              <option value="{{ $serv->id }}" {{(old('proceso.id.'.$j) ?? $oldProcesos[$j]->proceso_id) == $serv->id ? 'selected' : '' }}>{{ $serv->proceso }}</option>
               @else
-              <option disabled>{{ $serv->servicio }}</option>
-                {{ $subservicios = $serv->subservicios }}
-                @foreach($subservicios as $sub)
-                <option value="{{$serv->id}}.{{$sub->id}}" {{ old('proceso.id.'.$j) ? (old('proceso.id.'.$j) == ($serv->id.'.'.$sub->id) ? 'selected' : '') : ($oldProcesos[$j]->subproceso_id == $sub->id ? 'selected' : '') }}>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sub->subservicio }}</option>
+              <option disabled>{{ $serv->proceso }}</option>
+                {{ $subprocesos = $serv->subprocesos }}
+                @foreach($subprocesos as $sub)
+                <option value="{{$serv->id}}.{{$sub->id}}" {{ old('proceso.id.'.$j) ? (old('proceso.id.'.$j) == ($serv->id.'.'.$sub->id) ? 'selected' : '') : ($oldProcesos[$j]->subproceso_id == $sub->id ? 'selected' : '') }}>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sub->subproceso }}</option>
                 @endforeach
               @endif
             @endforeach
@@ -371,21 +371,21 @@
 
 
   //PROCESOS
-  var servicios = @json($procesos);
-  var serv_grp = servicios[0].area_id;
-  var serv_opts = "<option selected value='null'>Seleccione uno...</option><optgroup label='"+servicios[0].area.area+"'>";
+  var procesos = @json($procesos);
+  var serv_grp = procesos[0].area_id;
+  var serv_opts = "<option selected value='null'>Seleccione uno...</option><optgroup label='"+procesos[0].area.area+"'>";
 
-  $.each(servicios, function(indx, val){
+  $.each(procesos, function(indx, val){
     if (serv_grp != val.area_id){
       serv_grp = val.area_id;
       serv_opts += "</optgroup><optgroup label='"+val.area.area+"'>";
     }
     if (val.subprocesos == 0){
-      serv_opts += "<option value='"+val.id+"'>"+val.servicio+"</option>";
+      serv_opts += "<option value='"+val.id+"'>"+val.proceso+"</option>";
     } else {
-      serv_opts += "<option disabled>"+val.servicio+"</option>";
-      $.each(val.subservicios, (indxs, vals)=>{
-        serv_opts += "<option value='"+val.id+vals.id+"'>&nbsp;&nbsp;&nbsp;&nbsp;"+vals.subservicio+"</option>";
+      serv_opts += "<option disabled>"+val.proceso+"</option>";
+      $.each(val.subprocesos, (indxs, vals)=>{
+        serv_opts += "<option value='"+val.id+vals.id+"'>&nbsp;&nbsp;&nbsp;&nbsp;"+vals.subproceso+"</option>";
       });
     }
   });

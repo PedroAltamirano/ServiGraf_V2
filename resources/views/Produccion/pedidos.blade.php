@@ -77,7 +77,7 @@
       //   {"name":"cliente", "data":"cliente"},
       //   {"name":"detalle", "data":"detalle", "sortable": "false"},
       //   {"name":"cantidad", "data":"cantidad", "sortable": "false"},
-      //   {"name":"servicios", "data":"servicios[, ]", "sortable": "false"},
+      //   {"name":"procesos", "data":"procesos[, ]", "sortable": "false"},
       //   {"name":"crud", "data":"numero", "sortable": "false",
       //     "render": function ( data, type, full, meta ) {
       //       return "<a class='fa fa-edit' href='ot/modificar/"+data+"'></a> <a class='fa fa-eye' href='#' onClick='openOt("+data+")'></a>"

@@ -25,14 +25,8 @@ class Pedido_proceso extends Model
         return $this->belongsTo('App\Models\Produccion\Pedido');
     }
 
-    function servicio()
+    function proceso()
     {
         return $this->belongsTo('App\Models\Produccion\Proceso');
     }
-
-    public function sub_proceso()
-    {
-        return $this->belongsTo('App\Models\Produccion\Sub_proceso', 'subproceso_id');
-    }
-
 }
