@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Produccion;
 use App\Models\Produccion\Area;
 use App\Models\Produccion\Pedido;
 use App\Models\Ventas\Cliente;
-use App\Models\Produccion\Servicio;
-use App\Models\Produccion\Pedido_servicio;
+use App\Models\Produccion\Proceso;
+use App\Models\Produccion\Pedido_proceso;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -107,6 +107,6 @@ class Reportes extends Controller
   }
 
   public static function getServicios($id){
-    return $ps = Pedido_servicio::where('pedido_id', $id)->select('servicio_id', DB::raw('sum(total) as totalServicio'))->groupBy('servicio_id')->get()->toArray();
+    return $ps = Pedido_proceso::where('pedido_id', $id)->select('servicio_id', DB::raw('sum(total) as totalServicio'))->groupBy('servicio_id')->get()->toArray();
   }
 }

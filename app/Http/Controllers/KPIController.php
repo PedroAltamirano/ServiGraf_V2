@@ -6,8 +6,8 @@ use App\Models\Administracion\Factura;
 use Illuminate\Http\Request;
 use App\Helpers\Functions;
 use App\Models\Produccion\Pedido;
-use App\Models\Produccion\Pedido_servicio;
-use App\Models\Produccion\Servicio;
+use App\Models\Produccion\Pedido_proceso;
+use App\Models\Produccion\Proceso;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -105,7 +105,7 @@ class KPIController extends Controller
 
     $servicios = Servicio::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get()->map(function($s){return $s->id;})->toArray();
     $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->get()->map(function($p){return $p->id;})->toArray();
-    $value = Pedido_servicio::whereIn('pedido_id', $pedidos)->whereIn('servicio_id', $servicios)->sum('total');
+    $value = Pedido_proceso::whereIn('pedido_id', $pedidos)->whereIn('servicio_id', $servicios)->sum('total');
 
     $title = 'Máquinas';
     $value = $value;
@@ -122,7 +122,7 @@ class KPIController extends Controller
     $dateFin = date('Y-m-t', strtotime($date));
 
     $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->count();
-    $incompletos = Pedido_servicio::where([['empresa_id', '=', auth()->user()->empresa_id], ['status', '=', '0']])->select('pedido_id')->groupBy('pedido_id')->get()->count();
+    $incompletos = Pedido_proceso::where([['empresa_id', '=', auth()->user()->empresa_id], ['status', '=', '0']])->select('pedido_id')->groupBy('pedido_id')->get()->count();
     $value = strval($pedidos - $incompletos).' / '.strval($incompletos);
 
     $title = 'Pedidos Terminados / Incompletos';

@@ -4,16 +4,16 @@ namespace App\Models\Produccion;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Servicio extends Model
+class Proceso extends Model
 {
-    protected $table = 'servicios';
+    protected $table = 'procesos';
 
     public $attributes =[
     'tipo' => 0 , 'subprocesos' => 0, 'seguimiento' => 0, 'meta' => 0.00
     ];
 
     protected $fillable = [
-        'empresa_id', 'area_id', 'servicio', 'meta', 'tipo', 'tmaquina', 'toperador', 'subprocesos', 'seguimiento',
+        'empresa_id', 'area_id', 'servicio', 'meta', 'tipo', 'tmaquina', 'toperador', 'subprocesos', 'seguimiento', 'parent_id'
     ];
 
     protected $hidden = [
@@ -25,7 +25,7 @@ class Servicio extends Model
         return $this->belongsTo('App\Models\Produccion\Area');
     }
 
-    public function subservicios(){
-    return $this->hasMany('App\Models\Produccion\Sub_servicio');
+    public function childs(){
+    return $this->hasMany('App\Models\Produccion\Proceso', 'parent_id');
     }
 }

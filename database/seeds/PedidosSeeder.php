@@ -15,6 +15,6 @@ class PedidosSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             factory(\App\Models\Produccion\Pedido::class, 1)->create(); //de uno en uno hasta el 10
         }
-        factory(\App\Models\Produccion\Pedido_servicio::class, 30)->create();
+        factory(\App\Models\Produccion\Pedido_proceso::class, 30)->create();
     }
 }

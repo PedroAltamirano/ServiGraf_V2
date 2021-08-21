@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Produccion;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
-use App\Models\Produccion\Servicio;
+use App\Models\Produccion\Proceso;
 use App\Models\Produccion\Area;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Http\Requests\Produccion\StoreServicio;
-use App\Http\Requests\Produccion\UpdateServicio;
+use App\Http\Requests\Produccion\StoreProceso;
+use App\Http\Requests\Produccion\UpdateProceso;
 
 class Servicios extends Controller
 {
@@ -44,7 +44,7 @@ class Servicios extends Controller
   }
 
   // // crear nuevo
-  public function store(StoreServicio $request){
+  public function store(StoreProceso $request){
     $validator = $request->validated();
     // dd($validator);
     $validator['empresa_id'] = Auth::user()->empresa_id;
@@ -71,7 +71,7 @@ class Servicios extends Controller
   }
 
   // //modificar perfil
-  public function update(UpdateServicio $request, Servicio $servicio){
+  public function update(UpdateProceso $request, Servicio $servicio){
     $validator = $request->validated();
     $validator['subprocesos'] = $validator['subprocesos'] ?? 0;
     $validator['seguimiento'] = $validator['seguimiento'] ?? 0;

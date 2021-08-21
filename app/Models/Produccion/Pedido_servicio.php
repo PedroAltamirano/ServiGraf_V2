@@ -4,9 +4,9 @@ namespace App\Models\Produccion;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pedido_servicio extends Model
+class Pedido_proceso extends Model
 {
-    protected $table = 'pedido_servicios';
+    protected $table = 'pedido_procesos';
 
     public $attributes =[
         'status' => 0
@@ -27,12 +27,12 @@ class Pedido_servicio extends Model
 
     function servicio()
     {
-        return $this->belongsTo('App\Models\Produccion\Servicio');
+        return $this->belongsTo('App\Models\Produccion\Proceso');
     }
 
-    public function sub_servicio()
+    public function sub_proceso()
     {
-        return $this->belongsTo('App\Models\Produccion\Sub_servicio', 'subservicio_id');
+        return $this->belongsTo('App\Models\Produccion\Sub_proceso', 'subservicio_id');
     }
 
 }

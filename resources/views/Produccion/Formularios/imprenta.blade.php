@@ -1,7 +1,7 @@
 @php
   $proveedores = App\Models\Produccion\Proveedor::where('empresa_id', Auth::user()->empresa_id)->get();
   $materiales = App\Models\Produccion\Material::where('empresa_id', Auth::user()->empresa_id)->orderBy('categoria_id')->with('categoria')->get();
-  $servicios = App\Models\Produccion\Servicio::where('empresa_id', Auth::user()->empresa_id)->orderBy('area_id')->with('area')->with('subservicios')->get();
+  $servicios = App\Models\Produccion\Proceso::where('empresa_id', Auth::user()->empresa_id)->orderBy('area_id')->with('area')->with('subservicios')->get();
   $tintas = App\Models\Produccion\Tinta::where('empresa_id', Auth::user()->empresa_id)->get();
   $oldTintasTiro = old('tinta_tiro') ?? $pedido->tintas->reject(function($tinta){return $tinta->lado == 0;})->map(function($tintas){return $tintas->tinta_id;})->toArray();
   $oldTintasRetiro = old('tinta_retiro') ?? $pedido->tintas->reject(function($tinta){return $tinta->lado == 1;})->map(function($tintas){return $tintas->tinta_id;})->toArray();

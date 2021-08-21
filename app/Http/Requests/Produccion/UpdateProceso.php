@@ -4,7 +4,7 @@ namespace App\Http\Requests\Produccion;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSubservicio extends FormRequest
+class UpdateProceso extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,14 @@ class UpdateSubservicio extends FormRequest
     public static function rules()
     {
         return [
-            'servicio_id' => ['required', 'numeric', 'exists:servicios,id'],
-            'subservicio' => ['required', 'string', 'max:140'],
+            'area_id' => ['required', 'numeric', 'exists:areas,id'],
+            'proceso' => ['required', 'string', 'max:140'],
+            'parent_id' => ['nullable', 'numeric', 'exists:procesos,id'],
+            'meta' => ['required', 'numeric', 'max:99999,99'],
             'tipo' => ['required', 'boolean'],
             'tmaquina' => ['nullable'],
             'toperador' => ['nullable'],
+            'seguimiento' => ['nullable', 'boolean'],
         ];
     }
 }

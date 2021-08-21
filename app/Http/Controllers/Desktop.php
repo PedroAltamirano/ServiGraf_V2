@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Produccion\Pedido;
-use App\Models\Produccion\Pedido_servicio;
-use App\Models\Produccion\Servicio;
+use App\Models\Produccion\Pedido_proceso;
+use App\Models\Produccion\Proceso;
 use App\Models\Produccion\Solicitud_material;
 use App\Models\Ventas\Cliente;
 

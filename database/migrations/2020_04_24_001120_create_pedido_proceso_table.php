@@ -13,7 +13,7 @@ class CreatePedidoServiciosTable extends Migration
      */
     public function up()
     {
-        Schema::create('pedido_servicios', function (Blueprint $table) {
+        Schema::create('pedido_proceso', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
@@ -21,7 +21,7 @@ class CreatePedidoServiciosTable extends Migration
             $table->unsignedMediumInteger('servicio_id');
             $table->foreign('servicio_id')->references('id')->on('servicios');
             $table->unsignedMediumInteger('subservicio_id')->nullable();
-            $table->foreign('subservicio_id')->references('id')->on('sub_servicios');
+            $table->foreign('subservicio_id')->references('id')->on('sub_procesos');
             $table->unsignedTinyInteger('tiro');
             $table->unsignedTinyInteger('retiro');
             $table->unsignedTinyInteger('millares');
@@ -40,6 +40,6 @@ class CreatePedidoServiciosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pedido_servicios');
+        Schema::dropIfExists('pedido_proceso');
     }
 }

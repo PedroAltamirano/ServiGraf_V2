@@ -7,10 +7,10 @@ use App\Models\Ventas\Contacto;
 use App\Models\Ventas\Cliente;
 
 use App\Models\Produccion\Pedido;
-use App\Models\Produccion\Pedido_servicio;
+use App\Models\Produccion\Pedido_proceso;
 use App\Models\Produccion\Area;
-use App\Models\Produccion\Servicio;
-use App\Models\Produccion\Sub_servicio;
+use App\Models\Produccion\Proceso;
+use App\Models\Produccion\Sub_proceso;
 use App\Models\Produccion\Tinta;
 
 use Faker\Generator as Faker;
@@ -115,7 +115,7 @@ $factory->define(Pedido::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Pedido_servicio::class, function (Faker $faker) {
+$factory->define(Pedido_proceso::class, function (Faker $faker) {
     return [
         'empresa_id' => 1709636664001,
         'pedido_id' => $faker->numberBetween(1, 10),

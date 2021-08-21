@@ -7,9 +7,9 @@ use App\Models\Usuarios\Usuario;
 use App\Models\Sistema\Nomina;
 
 use App\Models\Produccion\Pedido;
-use App\Models\Produccion\Pedido_servicio;
-use App\Models\Produccion\Servicio;
-use App\Models\Produccion\Sub_servicio;
+use App\Models\Produccion\Pedido_proceso;
+use App\Models\Produccion\Proceso;
+use App\Models\Produccion\Sub_proceso;
 
 use App\Models\Ventas\Cliente;
 
@@ -53,7 +53,7 @@ use Illuminate\Support\Facades\DB;
 
 // $nomina = Nomina::where('empresa_id', Auth::user()->empresa_id)->select('nombre', 'apellido', 'cedula')->get();
 
-// $incompletos = Orden_servicio::where([['empresa_id', '=', Auth::user()->empresa_id], ['status', '=', '0']])->groupBy('ot_id')->select('ot_id')->get();
+// $incompletos = Orden_proceso::where([['empresa_id', '=', Auth::user()->empresa_id], ['status', '=', '0']])->groupBy('ot_id')->select('ot_id')->get();
 // $ot_inc = [];
 // foreach ($incompletos as $e){
 //   $ot_inc[] = $e->ot_id;
@@ -64,8 +64,8 @@ use Illuminate\Support\Facades\DB;
 
 // $ots_serv = Orden_produccion::join('servicios', 'servicios.id', 'servicio_id')->get();
 
-// $ot_servicio = Orden_servicio::first();
-// $servicio = Orden_servicio::all();
+// $ot_proceso = Orden_proceso::first();
+// $servicio = Orden_proceso::all();
 
 // echo json_encode($ot_inc);
 // echo json_encode(Orden_produccion::serviciosIncompletos($ots->numero));
@@ -76,7 +76,7 @@ use Illuminate\Support\Facades\DB;
 //   foreach ($ot->servicios as $servicio) {
 //     echo $servicio->servicio->servicio;
 //     if
-//     echo $servicio->sub_servicio;
+//     echo $servicio->sub_proceso;
 //   }
 //   echo '<br>';
 // }

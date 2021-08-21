@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use App\Models\Produccion\Pedido;
 use App\Models\Produccion\Tinta;
 use App\Models\Produccion\Material;
-use App\Models\Produccion\Pedido_servicio;
+use App\Models\Produccion\Pedido_proceso;
 use App\Models\Produccion\Pedido_tintas;
 use App\Models\Produccion\Solicitud_material;
 use App\Models\Produccion\Abono;
@@ -119,7 +119,7 @@ class Pedidos extends Controller
         $subservicio = $serv[1];
       }
 
-      $proceso = new Pedido_servicio;
+      $proceso = new Pedido_proceso;
       $proceso->empresa_id = Auth::user()->empresa_id;
       $proceso->pedido_id = $model->id;
       $proceso->servicio_id = $servicio;
@@ -200,7 +200,7 @@ class Pedidos extends Controller
       $material->save();
     }
 
-    Pedido_servicio::where('empresa_id', Auth::user()->empresa_id)->where('pedido_id', $pedido->id)->delete();
+    Pedido_proceso::where('empresa_id', Auth::user()->empresa_id)->where('pedido_id', $pedido->id)->delete();
     $proSize = sizeof($validator['proceso']['id'] ?? []);
     for($i=0; $i<$proSize; $i++){
       $servicio = $validator['proceso']['id'][$i];
@@ -211,7 +211,7 @@ class Pedidos extends Controller
         $subservicio = $serv[1];
       }
 
-      $proceso = new Pedido_servicio;
+      $proceso = new Pedido_proceso;
       $proceso->empresa_id = Auth::user()->empresa_id;
       $proceso->pedido_id = $pedido->id;
       $proceso->servicio_id = $servicio;

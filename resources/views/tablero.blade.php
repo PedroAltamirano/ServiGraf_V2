@@ -17,7 +17,7 @@
   @endphp
   @foreach ($procesos as $item)
   @php
-    $logrado = App\Models\Produccion\Pedido_servicio::where('status', 1)->whereBetween('created_at', [date('Y-m-01'), date('Y-m-d')])->where('servicio_id', $item->id)->sum('total');
+    $logrado = App\Models\Produccion\Pedido_proceso::where('status', 1)->whereBetween('created_at', [date('Y-m-01'), date('Y-m-d')])->where('servicio_id', $item->id)->sum('total');
     $prog = ($logrado * 100) / $item->meta;
     $ci = $loop->index % count($colors);
   @endphp
@@ -78,7 +78,7 @@
   @foreach ($clientes as $cli)
     @php
     $pa = App\Models\Produccion\Pedido::select('id')->where('cliente_id', $cli->id)->whereBetween('fecha_entrada', [date('Y-m-01'), date('Y-m-d')])->get()->map(function($p){return $p->id;})->toArray();
-    $items = App\Models\Produccion\Pedido_servicio::select('servicio_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->groupBy('servicio_id')->get()->each(function($i){return $i->nombre = $i->servicio->servicio; });
+    $items = App\Models\Produccion\Pedido_proceso::select('servicio_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->groupBy('servicio_id')->get()->each(function($i){return $i->nombre = $i->servicio->servicio; });
     @endphp
     <x-report :title="$cli->contacto->nombre.' '.$cli->contacto->apellido" :items="$items"></x-report>
   @endforeach

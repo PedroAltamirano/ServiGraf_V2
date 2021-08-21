@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsuarioServicioTable extends Migration
+class CreateUsuarioProcesoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUsuarioServicioTable extends Migration
      */
     public function up()
     {
-        Schema::create('usuario_servicio', function (Blueprint $table) {
+        Schema::create('usuario_proceso', function (Blueprint $table) {
             $table->mediumIncrements('id');
             $table->unsignedInteger('usuario_id');
             $table->foreign('usuario_id')->references('cedula')->on('usuarios');
@@ -31,6 +31,6 @@ class CreateUsuarioServicioTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuario_servicio');
+        Schema::dropIfExists('usuario_proceso');
     }
 }

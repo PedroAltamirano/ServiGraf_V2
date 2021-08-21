@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Usuarios\Usuario;
-use App\Models\Usuarios\UsuarioServicios;
+use App\Models\Usuarios\UsuarioProceso;
 use App\Models\Usuarios\UsuarioClientes;
 use App\Models\Usuarios\Perfil;
 use App\Models\Sistema\Nomina;
-use App\Models\Produccion\Servicio;
+use App\Models\Produccion\Proceso;
 use App\Models\Ventas\Cliente;
 use App\Http\Requests\Usuarios\Store;
 use App\Http\Requests\Usuarios\Update;
@@ -101,9 +101,9 @@ class Usuarios extends Controller
 		$validator['libro'] = $validator['libro'] ?? 0;
 		$usuario->update($validator);
 
-		UsuarioServicios::where('usuario_id', Auth::id())->delete();
+		UsuarioProceso::where('usuario_id', Auth::id())->delete();
 		foreach($validator['procesos'] as $pro){
-			$new = new UsuarioServicios;
+			$new = new UsuarioProceso;
 			$new->usuario_id = Auth::id();
 			$new->servicio_id = $pro;
 			$new->save();

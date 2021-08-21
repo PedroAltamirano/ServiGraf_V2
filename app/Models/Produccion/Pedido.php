@@ -5,9 +5,9 @@ namespace App\Models\Produccion;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\Produccion\Pedido_servicio;
-use App\Models\Produccion\Servicio;
-use App\Models\Produccion\Sub_servicio;
+use App\Models\Produccion\Pedido_proceso;
+use App\Models\Produccion\Proceso;
+use App\Models\Produccion\Sub_proceso;
 
 class Pedido extends Model
 {
@@ -60,7 +60,7 @@ class Pedido extends Model
 
     public function servicios()
     {
-        return $this->hasMany('App\Models\Produccion\Pedido_servicio');
+        return $this->hasMany('App\Models\Produccion\Pedido_proceso');
     }
 
     public function tintas()
@@ -78,7 +78,7 @@ class Pedido extends Model
      */
     public static function incompletas($fecha = null)
     {
-      $incompletos = Pedido_servicio::where([['empresa_id', '=', auth()->user()->empresa_id], ['status', '=', '0']])
+      $incompletos = Pedido_proceso::where([['empresa_id', '=', auth()->user()->empresa_id], ['status', '=', '0']])
         ->groupBy('pedido_id')
         ->select('pedido_id')
         ->where(function($query) use ($fecha) {
@@ -100,13 +100,13 @@ class Pedido extends Model
     */
     public static function serviciosIncompletos($pedido_id)
     {
-        $OS = Pedido_servicio::where('pedido_id', strval($pedido_id))->get();
+        $OS = Pedido_proceso::where('pedido_id', strval($pedido_id))->get();
         $list = [];
         foreach ($OS as $servicio) {
             $serv = Servicio::where('id', $servicio->servicio_id)->value('servicio');
             if($servicio->subservicio_id != null){
                 $serv = $serv.'-';
-                $serv = $serv.Sub_servicio::where('id', $servicio->subservicio_id)->value('subservicio');
+                $serv = $serv.Sub_proceso::where('id', $servicio->subservicio_id)->value('subservicio');
             }
             $list[] = $serv;
         }
@@ -134,7 +134,7 @@ class Pedido extends Model
     }
 
     public static function reporteAreas($id){
-        return Pedido_servicio::where('pedido_id', $id)->join('servicios', 'pedido_servicios.servicio_id' ,'=', 'servicios.id')->select('area_id', DB::raw('sum(total) as totalArea'))->groupBy('area_id')->get()->toArray();
+        return Pedido_proceso::where('pedido_id', $id)->join('servicios', 'pedido_procesos.servicio_id' ,'=', 'servicios.id')->select('area_id', DB::raw('sum(total) as totalArea'))->groupBy('area_id')->get()->toArray();
     }
 
     /**
