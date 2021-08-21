@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pedido_proceso extends Model
 {
-    protected $table = 'pedido_procesos';
+    protected $table = 'pedido_proceso';
 
     public $attributes =[
         'status' => 0

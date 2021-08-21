@@ -10,7 +10,6 @@ use App\Models\Produccion\Pedido;
 use App\Models\Produccion\Pedido_proceso;
 use App\Models\Produccion\Area;
 use App\Models\Produccion\Proceso;
-use App\Models\Produccion\Sub_proceso;
 use App\Models\Produccion\Tinta;
 
 use Faker\Generator as Faker;
@@ -73,11 +72,11 @@ $factory->define(Area::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Servicio::class, function (Faker $faker) {
+$factory->define(Proceso::class, function (Faker $faker) {
     return [
         'empresa_id' => 1709636664001,
         'area_id' => $faker->numberBetween(1, 5),
-        'servicio' => 'testServicio',
+        'proceso' => 'testServicio'.$faker->numberBetween(1, 20),
         'meta' => $faker->numberBetween(0.00, 600.00),
     ];
 });

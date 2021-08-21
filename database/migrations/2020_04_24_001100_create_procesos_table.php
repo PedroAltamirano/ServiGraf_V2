@@ -18,8 +18,8 @@ class CreateProcesosTable extends Migration
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->foreignId('area_id')->references('id')->on('areas');
-            $table->foreignId('parent_id')->references('id')->on('procesos');
-            $table->string('servicio', 140);
+            $table->string('proceso', 140);
+            $table->foreignId('parent_id')->nullable()->references('id')->on('procesos');
             $table->unsignedDecimal('meta', 7, 2)->default(0.00);
             $table->time('tmaquina', 0)->nullable();
             $table->time('toperador', 0)->nullable();
