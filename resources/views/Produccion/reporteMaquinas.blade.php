@@ -33,8 +33,8 @@
         <th scope="col">No.</th>
         <th scope="col">Cliente</th>
         <th scope="col">Detalle</th>
-        @foreach ($servicios as $servicio)
-        <th scope="col">{{$servicio->servicio}}</th>
+        @foreach ($procesos as $proceso)
+        <th scope="col">{{$proceso->servicio}}</th>
         @endforeach
         <th scope="col">Total $</th>
         <th scope="col" class="crudCol"></th>
@@ -46,8 +46,8 @@
     <tfoot>
       <tr>
         <td colspan="3" class="text-right">Total $</td>
-        @foreach ($servicios as $servicio)
-        <th scope="col" id="{{'serv'.$servicio->id}}"></th>
+        @foreach ($procesos as $proceso)
+        <th scope="col" id="{{'serv'.$proceso->id}}"></th>
         @endforeach
         <td id="clmtotal"></td>
         <td colspan="2"></td>
@@ -61,7 +61,7 @@
 
 @section('scripts')
 <script>
-  let servicios = @json($servicios);
+  let servicios = @json($procesos);
   $('#cliente').select2();
 
   // console.log(areas.length);
@@ -93,9 +93,9 @@
       {"name":"numero", "data": "numero"},
       {"name":"cliente", "data": "cliente_nom"},
       {"name":"detalle", "data": "detalle"},
-      @foreach($servicios as $servicio)
-      {"name":"{{'serv'.$servicio->id}}", "data":"servicios", "defaultContent": "", "render":function(data, type, full, meta){
-        let servicio = data.find(record => record.servicio_id === '{{ $servicio->id }}');
+      @foreach($procesos as $proceso)
+      {"name":"{{'serv'.$proceso->id}}", "data":"servicios", "defaultContent": "", "render":function(data, type, full, meta){
+        let servicio = data.find(record => record.proceso_id === '{{ $proceso->id }}');
         return servicio ? servicio.totalServicio : '';
       }},
       @endforeach
@@ -138,10 +138,10 @@
       // Update footer
       $("#clmtotal").html(totTotal.toFixed(2));
 
-      @foreach($servicios as $servicio)
-      let {{"dataserv".$servicio->id}} = api.column('{{"serv".$servicio->id}}:name', {search: 'applied'}).cache('search');
-      let {{"totserv".$servicio->id}} = {{'dataserv'.$servicio->id}}.length ? {{'dataserv'.$servicio->id}}.sum() : 0;
-      $("#{{'serv'.$servicio->id}}").html({{'totserv'.$servicio->id}}.toFixed(2));
+      @foreach($procesos as $proceso)
+      let {{"dataserv".$proceso->id}} = api.column('{{"serv".$proceso->id}}:name', {search: 'applied'}).cache('search');
+      let {{"totserv".$proceso->id}} = {{'dataserv'.$proceso->id}}.length ? {{'dataserv'.$proceso->id}}.sum() : 0;
+      $("#{{'serv'.$proceso->id}}").html({{'totserv'.$proceso->id}}.toFixed(2));
       @endforeach
     }
   });

@@ -47,7 +47,7 @@ class Usuario extends Authenticatable
 
     public function procesos()
     {
-        return $this->hasManyThrough('App\Models\Produccion\Proceso', 'App\Models\Usuarios\UsuarioProceso', 'usuario_id', 'id', 'cedula', 'servicio_id');
+        return $this->hasManyThrough('App\Models\Produccion\Proceso', 'App\Models\Usuarios\UsuarioProceso', 'usuario_id', 'id', 'cedula', 'proceso_id');
     }
 
     public function clientes()

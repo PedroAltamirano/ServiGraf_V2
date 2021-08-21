@@ -88,7 +88,7 @@ class Reportes extends Controller
    * @return View reporte de maquinas
    */
   public function showMaquinas(){
-    $servicios = Servicio::where('empresa_id', Auth::user()->empresa_id)->select('servicio', 'id')->where('seguimiento', 1)->orderBy('servicio')->get();
+    $procesos = Servicio::where('empresa_id', Auth::user()->empresa_id)->select('servicio', 'id')->where('seguimiento', 1)->orderBy('servicio')->get();
     return view('Produccion.reporteMaquinas', compact('servicios'));
   }
 
@@ -107,6 +107,6 @@ class Reportes extends Controller
   }
 
   public static function getServicios($id){
-    return $ps = Pedido_proceso::where('pedido_id', $id)->select('servicio_id', DB::raw('sum(total) as totalServicio'))->groupBy('servicio_id')->get()->toArray();
+    return $ps = Pedido_proceso::where('pedido_id', $id)->select('proceso_id', DB::raw('sum(total) as totalServicio'))->groupBy('proceso_id')->get()->toArray();
   }
 }

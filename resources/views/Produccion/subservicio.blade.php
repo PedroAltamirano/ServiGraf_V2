@@ -30,10 +30,10 @@
     @method($method)
     <div class="form-row">
       <div class="form-group col-6 col-md-4">
-        <label for="servicio_id">Servico</label>
-        <select name="servicio_id" id="servicio_id" class="form-control form-control-sm @error('servicio_id') is-invalid @enderror">
-          @foreach ($servicios as $item)
-          <option value="{{ $item->id }}" {{ old('servicio_id', $subservicio->servicio_id) == $item->id ? 'selected' : '' }}>{{ $item->servicio }}</option>
+        <label for="proceso_id">Servico</label>
+        <select name="proceso_id" id="proceso_id" class="form-control form-control-sm @error('proceso_id') is-invalid @enderror">
+          @foreach ($procesos as $item)
+          <option value="{{ $item->id }}" {{ old('proceso_id', $subservicio->proceso_id) == $item->id ? 'selected' : '' }}>{{ $item->servicio }}</option>
           @endforeach
         </select>
       </div>

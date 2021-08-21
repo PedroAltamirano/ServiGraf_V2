@@ -50,8 +50,8 @@
   </div>
   @php
   $pa = $pedidos->map(function($p){return $p->id;})->toArray();
-  $sa = $servicios->where('tipo', 1)->pluck('id')->toArray();
-  $items = App\Models\Produccion\Pedido_proceso::select('servicio_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->whereIn('servicio_id', $sa)->groupBy('servicio_id')->get()->each(function($i){return $i->nombre = $i->servicio->servicio; });
+  $sa = $procesos->where('tipo', 1)->pluck('id')->toArray();
+  $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->whereIn('proceso_id', $sa)->groupBy('proceso_id')->get()->each(function($i){return $i->nombre = $i->servicio->servicio; });
   $Id = $items->pluck('totalData');
   $Il = $items->pluck('nombre');
   @endphp
@@ -65,8 +65,8 @@
   </div>
   @php
   $pa = $pedidos->map(function($p){return $p->id;})->toArray();
-  $sa = $servicios->where('tipo', 0)->pluck('id')->toArray();
-  $items = App\Models\Produccion\Pedido_proceso::select('servicio_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->whereIn('servicio_id', $sa)->groupBy('servicio_id')->get()->each(function($i){return $i->nombre = $i->servicio->servicio; });
+  $sa = $procesos->where('tipo', 0)->pluck('id')->toArray();
+  $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->whereIn('proceso_id', $sa)->groupBy('proceso_id')->get()->each(function($i){return $i->nombre = $i->servicio->servicio; });
   $Ed = $items->pluck('totalData');
   $El = $items->pluck('nombre');
   @endphp
@@ -166,7 +166,7 @@
   @foreach ($clientes as $cli)
     @php
     $pa = $pedidos->where('cliente_id', $cli->id)->map(function($p){return $p->id;})->toArray();
-    $items = App\Models\Produccion\Pedido_proceso::select('servicio_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->groupBy('servicio_id')->get()->each(function($i){return $i->nombre = $i->servicio->servicio; });
+    $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->groupBy('proceso_id')->get()->each(function($i){return $i->nombre = $i->servicio->servicio; });
     @endphp
     <x-report :title="$cli->contacto->nombre.' '.$cli->contacto->apellido" :items="$items"></x-report>
   @endforeach

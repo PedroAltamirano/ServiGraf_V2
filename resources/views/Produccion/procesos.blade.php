@@ -50,7 +50,7 @@
       </tr>
     </thead>
     <tbody>
-      @foreach ($servicios as $item)
+      @foreach ($procesos as $item)
       <tr>
         <td>{{ $item->area->area }}</td>
         <td>{{ $item->servicio }}</td>
@@ -65,7 +65,7 @@
     </tbody>
     <tfoot>
     </tfoot>
-  </table> 
+  </table>
 </x-blueBoard>
 
 <x-blueBoard
@@ -99,7 +99,7 @@
     </tbody>
     <tfoot>
     </tfoot>
-  </table> 
+  </table>
 </x-blueBoard>
 
 

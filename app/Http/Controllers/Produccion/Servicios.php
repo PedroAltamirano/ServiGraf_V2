@@ -32,7 +32,7 @@ class Servicios extends Controller
   * @return \Illuminate\Http\Response
   */
   public function create(){
-    $servicio = new Servicio;
+    $proceso = new Servicio;
     $areas = Area::where('empresa_id', Auth::user()->empresa_id)->get();
     $data = [
       'text' => 'Nuevo Servicio',
@@ -48,22 +48,22 @@ class Servicios extends Controller
     $validator = $request->validated();
     // dd($validator);
     $validator['empresa_id'] = Auth::user()->empresa_id;
-    $servicio = Servicio::create($validator);
+    $proceso = Servicio::create($validator);
 
     $data = [
       'type'=>'success',
       'title'=>'Acción completada',
       'message'=>'El  se ha creado con éxito'
     ];
-    return redirect()->route('servicio.edit', $servicio->id)->with(['actionStatus' => json_encode($data)]);
+    return redirect()->route('servicio.edit', $proceso->id)->with(['actionStatus' => json_encode($data)]);
   }
 
   // //ver modificar
-  public function edit(Servicio $servicio){
+  public function edit(Servicio $proceso){
     $areas = Area::where('empresa_id', Auth::user()->empresa_id)->get();
     $data = [
       'text'=>'Modificar Servicio',
-      'path'=> route('servicio.update', $servicio->id),
+      'path'=> route('servicio.update', $proceso->id),
       'method' => 'PUT',
       'action'=>'Modificar',
     ];
@@ -71,19 +71,19 @@ class Servicios extends Controller
   }
 
   // //modificar perfil
-  public function update(UpdateProceso $request, Servicio $servicio){
+  public function update(UpdateProceso $request, Servicio $proceso){
     $validator = $request->validated();
     $validator['subprocesos'] = $validator['subprocesos'] ?? 0;
     $validator['seguimiento'] = $validator['seguimiento'] ?? 0;
     // dd($validator);
 
-    $servicio->update($validator);
+    $proceso->update($validator);
 
     $data = [
       'type'=>'success',
       'title'=>'Acción completada',
       'message'=>'El  se ha modificado con éxito'
     ];
-    return redirect()->route('servicio.edit', $servicio->id)->with(['actionStatus' => json_encode($data)]);
+    return redirect()->route('servicio.edit', $proceso->id)->with(['actionStatus' => json_encode($data)]);
   }
 }

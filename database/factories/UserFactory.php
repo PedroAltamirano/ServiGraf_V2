@@ -119,7 +119,7 @@ $factory->define(Pedido_proceso::class, function (Faker $faker) {
     return [
         'empresa_id' => 1709636664001,
         'pedido_id' => $faker->numberBetween(1, 10),
-        'servicio_id' => $faker->numberBetween(1, 10),
+        'proceso_id' => $faker->numberBetween(1, 10),
         'tiro'=> $faker->numberBetween(1, 5),
         'retiro' => $faker->numberBetween(0, 5),
         'millares' => $faker->numberBetween(1, 10),

@@ -17,8 +17,7 @@ class CreateUsuarioProcesoTable extends Migration
             $table->mediumIncrements('id');
             $table->unsignedInteger('usuario_id');
             $table->foreign('usuario_id')->references('cedula')->on('usuarios');
-            $table->unsignedMediumInteger('servicio_id');
-            $table->foreign('servicio_id')->references('id')->on('servicios');
+            $table->foreign('proceso_id')->references('id')->on('procesos');
             $table->timestamps();
             $table->softDeletes();
         });

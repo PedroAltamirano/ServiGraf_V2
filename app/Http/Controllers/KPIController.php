@@ -103,9 +103,9 @@ class KPIController extends Controller
     $dateInit = date('Y-m-01', strtotime($date));
     $dateFin = date('Y-m-t', strtotime($date));
 
-    $servicios = Servicio::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get()->map(function($s){return $s->id;})->toArray();
+    $procesos = Servicio::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get()->map(function($s){return $s->id;})->toArray();
     $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->get()->map(function($p){return $p->id;})->toArray();
-    $value = Pedido_proceso::whereIn('pedido_id', $pedidos)->whereIn('servicio_id', $servicios)->sum('total');
+    $value = Pedido_proceso::whereIn('pedido_id', $pedidos)->whereIn('proceso_id', $procesos)->sum('total');
 
     $title = 'Máquinas';
     $value = $value;

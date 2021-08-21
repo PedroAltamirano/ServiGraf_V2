@@ -13,7 +13,7 @@ class Pedido_proceso extends Model
     ];
 
     protected $fillable = [
-        'servicio_id', 'subservicio_id', 'tiro', 'retiro', 'millares', 'valor_unitario', 'total', 'status'
+        'proceso_id', 'subproceso_id', 'tiro', 'retiro', 'millares', 'valor_unitario', 'total', 'status'
     ];
 
     protected $hidden = [
@@ -32,7 +32,7 @@ class Pedido_proceso extends Model
 
     public function sub_proceso()
     {
-        return $this->belongsTo('App\Models\Produccion\Sub_proceso', 'subservicio_id');
+        return $this->belongsTo('App\Models\Produccion\Sub_proceso', 'subproceso_id');
     }
 
 }

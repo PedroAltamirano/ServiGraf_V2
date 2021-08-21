@@ -105,7 +105,7 @@ class Usuarios extends Controller
 		foreach($validator['procesos'] as $pro){
 			$new = new UsuarioProceso;
 			$new->usuario_id = Auth::id();
-			$new->servicio_id = $pro;
+			$new->proceso_id = $pro;
 			$new->save();
 		}
 

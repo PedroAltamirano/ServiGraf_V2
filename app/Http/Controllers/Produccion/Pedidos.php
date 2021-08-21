@@ -111,19 +111,19 @@ class Pedidos extends Controller
 
     $proSize = sizeof($validator['proceso']['id'] ?? []);
     for($i=0; $i < $proSize; $i++){
-      $servicio = $validator['proceso']['id'][$i];
+      $proceso = $validator['proceso']['id'][$i];
       $subservicio = null;
-      if(strpos($servicio, '.') !== false){
-        $serv = explode('.', $servicio);
-        $servicio = $serv[0];
+      if(strpos($proceso, '.') !== false){
+        $serv = explode('.', $proceso);
+        $proceso = $serv[0];
         $subservicio = $serv[1];
       }
 
       $proceso = new Pedido_proceso;
       $proceso->empresa_id = Auth::user()->empresa_id;
       $proceso->pedido_id = $model->id;
-      $proceso->servicio_id = $servicio;
-      $proceso->subservicio_id = $subservicio;
+      $proceso->proceso_id = $proceso;
+      $proceso->subproceso_id = $subservicio;
       $proceso->tiro = $validator['proceso']['tiro'][$i];
       $proceso->retiro = $validator['proceso']['retiro'][$i];
       $proceso->millares = $validator['proceso']['millar'][$i];
@@ -203,19 +203,19 @@ class Pedidos extends Controller
     Pedido_proceso::where('empresa_id', Auth::user()->empresa_id)->where('pedido_id', $pedido->id)->delete();
     $proSize = sizeof($validator['proceso']['id'] ?? []);
     for($i=0; $i<$proSize; $i++){
-      $servicio = $validator['proceso']['id'][$i];
+      $proceso = $validator['proceso']['id'][$i];
       $subservicio = null;
-      if(strpos($servicio, '.') !== false){
-        $serv = explode('.', $servicio);
-        $servicio = $serv[0];
+      if(strpos($proceso, '.') !== false){
+        $serv = explode('.', $proceso);
+        $proceso = $serv[0];
         $subservicio = $serv[1];
       }
 
       $proceso = new Pedido_proceso;
       $proceso->empresa_id = Auth::user()->empresa_id;
       $proceso->pedido_id = $pedido->id;
-      $proceso->servicio_id = $servicio;
-      $proceso->subservicio_id = $subservicio;
+      $proceso->proceso_id = $proceso;
+      $proceso->subproceso_id = $subservicio;
       $proceso->tiro = $validator['proceso']['tiro'][$i];
       $proceso->retiro = $validator['proceso']['retiro'][$i];
       $proceso->millares = $validator['proceso']['millar'][$i];

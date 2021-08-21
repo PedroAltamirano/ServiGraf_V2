@@ -83,7 +83,7 @@ class Pedido extends Model
         ->select('pedido_id')
         ->where(function($query) use ($fecha) {
           if(self::$own){
-            $query->whereIn('servicio_id', Auth::user()->procesos->map(function($c){return $c->id;})->toArray());
+            $query->whereIn('proceso_id', Auth::user()->procesos->map(function($c){return $c->id;})->toArray());
           }
         })->get();
       $incompletos = $incompletos->map(function($incompletos){return $incompletos->pedido_id;});
@@ -102,11 +102,11 @@ class Pedido extends Model
     {
         $OS = Pedido_proceso::where('pedido_id', strval($pedido_id))->get();
         $list = [];
-        foreach ($OS as $servicio) {
-            $serv = Servicio::where('id', $servicio->servicio_id)->value('servicio');
-            if($servicio->subservicio_id != null){
+        foreach ($OS as $proceso) {
+            $serv = Servicio::where('id', $proceso->proceso_id)->value('servicio');
+            if($proceso->subproceso_id != null){
                 $serv = $serv.'-';
-                $serv = $serv.Sub_proceso::where('id', $servicio->subservicio_id)->value('subservicio');
+                $serv = $serv.Sub_proceso::where('id', $proceso->subproceso_id)->value('subservicio');
             }
             $list[] = $serv;
         }
@@ -134,7 +134,7 @@ class Pedido extends Model
     }
 
     public static function reporteAreas($id){
-        return Pedido_proceso::where('pedido_id', $id)->join('servicios', 'pedido_procesos.servicio_id' ,'=', 'servicios.id')->select('area_id', DB::raw('sum(total) as totalArea'))->groupBy('area_id')->get()->toArray();
+        return Pedido_proceso::where('pedido_id', $id)->join('servicios', 'pedido_procesos.proceso_id' ,'=', 'servicios.id')->select('area_id', DB::raw('sum(total) as totalArea'))->groupBy('area_id')->get()->toArray();
     }
 
     /**

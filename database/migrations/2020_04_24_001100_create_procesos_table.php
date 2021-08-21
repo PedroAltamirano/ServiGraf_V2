@@ -14,11 +14,10 @@ class CreateProcesosTable extends Migration
     public function up()
     {
         Schema::create('procesos', function (Blueprint $table) {
-            $table->mediumIncrements('id');
+            $table->id('id');
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
-            $table->unsignedMediumInteger('area_id');
-            $table->foreign('area_id')->references('id')->on('areas');
+            $table->foreignId('area_id')->references('id')->on('areas');
             $table->foreignId('parent_id')->references('id')->on('procesos');
             $table->string('servicio', 140);
             $table->unsignedDecimal('meta', 7, 2)->default(0.00);

@@ -62,10 +62,10 @@ use Illuminate\Support\Facades\DB;
 // $ots = Orden_produccion::whereIn('numero', $ot_inc)->select('numero', 'cliente_id', 'detalle', 'cantidad')->get();
 // echo json_encode(Orden_produccion::todos());
 
-// $ots_serv = Orden_produccion::join('servicios', 'servicios.id', 'servicio_id')->get();
+// $ots_serv = Orden_produccion::join('servicios', 'servicios.id', 'proceso_id')->get();
 
 // $ot_proceso = Orden_proceso::first();
-// $servicio = Orden_proceso::all();
+// $proceso = Orden_proceso::all();
 
 // echo json_encode($ot_inc);
 // echo json_encode(Orden_produccion::serviciosIncompletos($ots->numero));
@@ -73,10 +73,10 @@ use Illuminate\Support\Facades\DB;
 // echo $ots_serv;
 // foreach ($ots as $ot) {
 //   echo $ot->numero.' ';
-//   foreach ($ot->servicios as $servicio) {
-//     echo $servicio->servicio->servicio;
+//   foreach ($ot->servicios as $proceso) {
+//     echo $proceso->servicio->servicio;
 //     if
-//     echo $servicio->sub_proceso;
+//     echo $proceso->sub_proceso;
 //   }
 //   echo '<br>';
 // }

@@ -28,8 +28,8 @@ class Procesos extends Controller
   public function show(){
     $areas = Area::where('empresa_id', Auth::user()->empresa_id)->orderBy('orden')->get();
     $procesos = Proceso::where('empresa_id', Auth::user()->empresa_id)->get();
-    $seg = $procesos->reject(function($servicio){return $servicio->seguimiento == 0;});
-    $seg = $procesos->map(function($servicio){return $servicio->id;});
+    $seg = $procesos->reject(function($proceso){return $proceso->seguimiento == 0;});
+    $seg = $procesos->map(function($proceso){return $proceso->id;});
     return view('Produccion/procesos', compact('areas', 'procesos'));
   }
 }

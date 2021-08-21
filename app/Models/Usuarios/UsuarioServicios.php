@@ -9,6 +9,6 @@ class UsuarioProceso extends Model
 {
     protected $table = 'usuario_proceso';
     protected $fillable = [
-        'servicio_id', 'usuario_id',
+        'proceso_id', 'usuario_id',
     ];
 }

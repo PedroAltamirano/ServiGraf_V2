@@ -1,7 +1,7 @@
 @php
   $proveedores = App\Models\Produccion\Proveedor::where('empresa_id', Auth::user()->empresa_id)->get();
   $materiales = App\Models\Produccion\Material::where('empresa_id', Auth::user()->empresa_id)->orderBy('categoria_id')->with('categoria')->get();
-  $servicios = App\Models\Produccion\Proceso::where('empresa_id', Auth::user()->empresa_id)->orderBy('area_id')->with('area')->with('subservicios')->get();
+  $procesos = App\Models\Produccion\Proceso::where('empresa_id', Auth::user()->empresa_id)->orderBy('area_id')->with('area')->with('subservicios')->get();
   $tintas = App\Models\Produccion\Tinta::where('empresa_id', Auth::user()->empresa_id)->get();
   $oldTintasTiro = old('tinta_tiro') ?? $pedido->tintas->reject(function($tinta){return $tinta->lado == 0;})->map(function($tintas){return $tintas->tinta_id;})->toArray();
   $oldTintasRetiro = old('tinta_retiro') ?? $pedido->tintas->reject(function($tinta){return $tinta->lado == 1;})->map(function($tintas){return $tintas->tinta_id;})->toArray();
@@ -181,21 +181,21 @@
         <td>
           <select class="form-control form-control-sm select2Class" name="proceso[id][]">
             <option selected value="null">Seleccione uno...</option>
-            {{ $group =  $servicios->first()->area_id }}
-            <optgroup label="{{ $servicios->first()->area->area }}">
-            @foreach($servicios as $serv)
+            {{ $group =  $procesos->first()->area_id }}
+            <optgroup label="{{ $procesos->first()->area->area }}">
+            @foreach($procesos as $serv)
               @if ($group != $serv->area_id)
               {{ $group = $serv->area_id }}
               </optgroup>
               <optgroup label="{{ $serv->area->area }}">
               @endif
               @if ($serv->subprocesos == 0)
-              <option value="{{ $serv->id }}" {{(old('proceso.id.'.$j) ?? $oldProcesos[$j]->servicio_id) == $serv->id ? 'selected' : '' }}>{{ $serv->servicio }}</option>
+              <option value="{{ $serv->id }}" {{(old('proceso.id.'.$j) ?? $oldProcesos[$j]->proceso_id) == $serv->id ? 'selected' : '' }}>{{ $serv->servicio }}</option>
               @else
               <option disabled>{{ $serv->servicio }}</option>
                 {{ $subservicios = $serv->subservicios }}
                 @foreach($subservicios as $sub)
-                <option value="{{$serv->id}}.{{$sub->id}}" {{ old('proceso.id.'.$j) ? (old('proceso.id.'.$j) == ($serv->id.'.'.$sub->id) ? 'selected' : '') : ($oldProcesos[$j]->subservicio_id == $sub->id ? 'selected' : '') }}>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sub->subservicio }}</option>
+                <option value="{{$serv->id}}.{{$sub->id}}" {{ old('proceso.id.'.$j) ? (old('proceso.id.'.$j) == ($serv->id.'.'.$sub->id) ? 'selected' : '') : ($oldProcesos[$j]->subproceso_id == $sub->id ? 'selected' : '') }}>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sub->subservicio }}</option>
                 @endforeach
               @endif
             @endforeach
@@ -371,7 +371,7 @@
 
 
   //PROCESOS
-  var servicios = @json($servicios);
+  var servicios = @json($procesos);
   var serv_grp = servicios[0].area_id;
   var serv_opts = "<option selected value='null'>Seleccione uno...</option><optgroup label='"+servicios[0].area.area+"'>";
 
