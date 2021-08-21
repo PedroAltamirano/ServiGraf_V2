@@ -36,7 +36,7 @@ class Servicios extends Controller
     $areas = Area::where('empresa_id', Auth::user()->empresa_id)->get();
     $data = [
       'text' => 'Nuevo Servicio',
-      'path' => route('servicio.store'),
+      'path' => route('proceso.store'),
       'method' => 'POST',
       'action' => 'Crear',
     ];
@@ -55,7 +55,7 @@ class Servicios extends Controller
       'title'=>'Acción completada',
       'message'=>'El  se ha creado con éxito'
     ];
-    return redirect()->route('servicio.edit', $proceso->id)->with(['actionStatus' => json_encode($data)]);
+    return redirect()->route('proceso.edit', $proceso->id)->with(['actionStatus' => json_encode($data)]);
   }
 
   // //ver modificar
@@ -63,7 +63,7 @@ class Servicios extends Controller
     $areas = Area::where('empresa_id', Auth::user()->empresa_id)->get();
     $data = [
       'text'=>'Modificar Servicio',
-      'path'=> route('servicio.update', $proceso->id),
+      'path'=> route('proceso.update', $proceso->id),
       'method' => 'PUT',
       'action'=>'Modificar',
     ];
@@ -84,6 +84,6 @@ class Servicios extends Controller
       'title'=>'Acción completada',
       'message'=>'El  se ha modificado con éxito'
     ];
-    return redirect()->route('servicio.edit', $proceso->id)->with(['actionStatus' => json_encode($data)]);
+    return redirect()->route('proceso.edit', $proceso->id)->with(['actionStatus' => json_encode($data)]);
   }
 }

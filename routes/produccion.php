@@ -27,15 +27,10 @@ Route::namespace('Produccion')
   // PROCESOS
   Route::get('procesos', 'Procesos@show')->name('procesos')->middleware('hasModRol:35,1');
 
-  Route::get('servicio/nuevo', 'Servicios@create')->name('servicio.create')->middleware('hasModRol:35,2');
-  Route::post('servicio/nuevo', 'Servicios@store')->name('servicio.store')->middleware('hasModRol:35,2');
-  Route::get('servicio/modificar/{servicio}', 'Servicios@edit')->name('servicio.edit')->middleware('hasModRol:35,3');
-  Route::put('servicio/modificar/{servicio}', 'Servicios@update')->name('servicio.update')->middleware('hasModRol:35,3');
-
-  Route::get('subservicio/nuevo', 'Subservicios@create')->name('subservicio.create')->middleware('hasModRol:35,2');
-  Route::post('subservicio/nuevo', 'Subservicios@store')->name('subservicio.store')->middleware('hasModRol:35,2');
-  Route::get('subservicio/modificar/{subservicio}', 'Subservicios@edit')->name('subservicio.edit')->middleware('hasModRol:35,3');
-  Route::put('subservicio/modificar/{subservicio}', 'Subservicios@update')->name('subservicio.update')->middleware('hasModRol:35,3');
+  Route::get('proceso/nuevo', 'Procesos@create')->name('proceso.create')->middleware('hasModRol:35,2');
+  Route::post('proceso/nuevo', 'Procesos@store')->name('proceso.store')->middleware('hasModRol:35,2');
+  Route::get('proceso/modificar/{proceso}', 'Procesos@edit')->name('proceso.edit')->middleware('hasModRol:35,3');
+  Route::put('proceso/modificar/{proceso}', 'Procesos@update')->name('proceso.update')->middleware('hasModRol:35,3');
 
   Route::post('area/nuevo', 'Areas@store')->name('area.store')->middleware('hasModRol:35,2');
   Route::put('area/modificar/{area}', 'Areas@update')->name('area.update')->middleware('hasModRol:35,3');

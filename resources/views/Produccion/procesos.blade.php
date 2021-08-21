@@ -33,7 +33,7 @@
 <x-blueBoard
   title='Servicios'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>route('servicio.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
+    ['text'=>'Nuevo', 'href'=>route('proceso.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
   ]"
 >
   <table id="tableServ" class="table table-striped table-sm">
@@ -59,7 +59,7 @@
         <td>{{ $item->toperador ?? '' }}</td>
         <td>{{ $item->tipo ? 'Interno' : 'Externo' }}</td>
         <td><i class="{{ $item->seguimiento ? 'fas fa-check' : 'fas fa-times' }}"></i></td>
-        <td><a class='fa fa-edit' href='{{route('servicio.edit', $item->id)}}'></a> <a class='fa fa-eye' id="{{ $item->id }}"></a></td>
+        <td><a class='fa fa-edit' href='{{route('proceso.edit', $item->id)}}'></a> <a class='fa fa-eye' id="{{ $item->id }}"></a></td>
       </tr>
       @endforeach
     </tbody>
@@ -71,7 +71,7 @@
 <x-blueBoard
   title='Subservicios'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>route('subservicio.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
+    ['text'=>'Nuevo', 'href'=>route('subproceso.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
   ]"
 >
   <table id="tableSubs" class="table table-striped table-sm">
@@ -93,7 +93,7 @@
         <td>{{ $item->tmaquina ?? '' }}</td>
         <td>{{ $item->toperador ?? '' }}</td>
         <td>{{ $item->tipo ? 'Interno' : 'Externo' }}</td>
-        <td><a class='fa fa-edit' href='{{route('subservicio.edit', $item->id)}}'></a> <a class='fa fa-eye' id="{{ $item->id }}"></a></td>
+        <td><a class='fa fa-edit' href='{{route('subproceso.edit', $item->id)}}'></a> <a class='fa fa-eye' id="{{ $item->id }}"></a></td>
       </tr>
       @endforeach
     </tbody>
