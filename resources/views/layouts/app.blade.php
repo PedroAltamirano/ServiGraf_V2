@@ -19,6 +19,7 @@
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ config('sweetalert.animatecss') }}">
 
   @yield('links')
 
@@ -42,6 +43,11 @@
 </head>
 
 <body class="sidebar-toggled">
+  {{-- SWEET ALERT --}}
+  @include('sweetalert::alert')
+  <!-- ERRORS ALERT -->
+  <x-errors />
+
   <nav class="navbar navbar-expand navbar-dark bg-primary d-flex justify-content-lg-between sticky-top shadow d-print-none">
     <button class="btn btn-link btn-sm text-white order-0 mr-3" id="sidebarToggle">
       <i class="fas fa-bars"></i>
@@ -139,13 +145,6 @@
       </div>
     </div>
   </div>
-
-  <!-- STATUS MODAL -->
-  <x-status />
-  {{-- SWEET ALERT --}}
-  @include('sweetalert::alert')
-  <!-- ERRORS ALERT -->
-  <x-errors />
 
   @yield('modals')
 
