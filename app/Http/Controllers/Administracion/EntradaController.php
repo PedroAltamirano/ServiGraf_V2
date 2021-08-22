@@ -47,7 +47,7 @@ class EntradaController extends Controller
   public function store(StoreEntrada $request)
   {
     $validated = $request->validated();
-    if($validated['tipo']){
+    if ($validated['tipo']) {
       $validated['ingreso'] = $validated['valor'];
       $validated['egreso'] = 0;
     } else {
@@ -57,13 +57,8 @@ class EntradaController extends Controller
 
     $entrada = Libro_movimientos::create($validated);
 
-    $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'La entrada se ha creado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->route('entrada.edit', $entrada)->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Entrada creada con éxito');
+    return redirect()->route('entrada.edit', $entrada);
   }
 
   /**
@@ -96,7 +91,7 @@ class EntradaController extends Controller
   public function update(UpdateEntrada $request, Libro_movimientos $entrada)
   {
     $validated = $request->validated();
-    if($validated['tipo']){
+    if ($validated['tipo']) {
       $validated['ingreso'] = $validated['valor'];
       $validated['egreso'] = 0;
     } else {
@@ -106,12 +101,7 @@ class EntradaController extends Controller
 
     $entrada->update($validated);
 
-    $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'La entrada se ha modificado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->route('entrada.edit', $entrada)->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Entrada modificada con éxito');
+    return redirect()->route('entrada.edit', $entrada);
   }
 }

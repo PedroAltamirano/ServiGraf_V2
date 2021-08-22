@@ -17,100 +17,92 @@ class IvaController extends Controller
 {
   use SoftDeletes;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function index()
+  {
+    //
+  }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  /**
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function create()
+  {
+    //
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreIva $request)
-    {
-      $validated = $request->validated();
-      $validated['empresa_id'] = Auth::user()->empresa_id;
-      $validated['status'] = $validated['status'] ?? 0;
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function store(StoreIva $request)
+  {
+    $validated = $request->validated();
+    $validated['empresa_id'] = Auth::user()->empresa_id;
+    $validated['status'] = $validated['status'] ?? 0;
 
-      Iva::create($validated);
+    Iva::create($validated);
 
-      $data = [
-        'type'=>'success',
-        'title'=>'Acción completada',
-        'message'=>'El iva se ha creado con éxito'
-      ];
-      return redirect()->back()->with($data);
-    }
+    Alert::success('Acción completada', 'Iva creado con éxito');
+    return redirect()->back();
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+  /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function show($id)
+  {
+    //
+  }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function edit($id)
+  {
+    //
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(StoreIva $request, Iva $iva)
-    {
-      $validated = $request->validated();
-      $validated['status'] = $validated['status'] ?? 0;
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function update(StoreIva $request, Iva $iva)
+  {
+    $validated = $request->validated();
+    $validated['status'] = $validated['status'] ?? 0;
 
-      $iva->update($validated);
+    $iva->update($validated);
 
-      $data = [
-        'type'=>'success',
-        'title'=>'Acción completada',
-        'message'=>'El iva se ha modificado con éxito'
-      ];
-      return redirect()->back()->with($data);
-    }
+    Alert::success('Acción completada', 'Iva modificado con éxito');
+    return redirect()->back();
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy($id)
+  {
+    //
+  }
 }

@@ -30,13 +30,8 @@ class BancoController extends Controller
     $validated['usuario_id'] = Auth::id();
     $libro_ref = Banco::create($validated);
 
-    $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'La referencia se ha creado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Referencia creada con éxito');
+    return redirect()->back();
   }
 
   /**
@@ -51,12 +46,7 @@ class BancoController extends Controller
     $validated = $request->validated();
     $banco->update($validated);
 
-    $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'La referencia se ha modificado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Referencia modificada con éxito');
+    return redirect()->back();
   }
 }
