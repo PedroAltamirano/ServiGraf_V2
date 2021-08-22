@@ -45,13 +45,8 @@ class HorariosController extends Controller
     $validator['empresa_id'] = Auth::user()->empresa_id;
     $horario = Horario::create($validator);
 
-    $data = [
-      'type' => 'success',
-      'title' => 'Acción completada',
-      'message' => 'El horario se ha creado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Horario creado con éxito');
+    return redirect()->back();
   }
 
   //modificar perfil
@@ -60,12 +55,7 @@ class HorariosController extends Controller
     $validator = $request->validated();
     $horario->update($validator);
 
-    $data = [
-      'type' => 'success',
-      'title' => 'Acción completada',
-      'message' => 'El horario se ha modificado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Horario modificado con éxito');
+    return redirect()->back();
   }
 }

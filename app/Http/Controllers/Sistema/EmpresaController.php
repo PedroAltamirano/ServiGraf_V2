@@ -33,25 +33,17 @@ class EmpresaController extends Controller
     $validated['empresa_id'] = Auth::user()->empresa_id;
     $validated['usuario_id_mod'] = Auth::id();
     $empresa = DatosEmpresa::create($validated);
-    $data = [
-      'type' => 'success',
-      'title' => 'Acción completada',
-      'message' => 'Los datos se ha creado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->route('empresa')->with(['actionStatus' => json_encode($data)]);
+
+    Alert::success('Acción completada', 'Datos de la empresa creados con éxito');
+    return redirect()->route('empresa');
   }
 
   public function update(UpdateEmpresa $request, DatosEmpresa $empresa)
   {
     $validated = $request->validated();
     $empresa->update($validated);
-    $data = [
-      'type' => 'success',
-      'title' => 'Acción completada',
-      'message' => 'Los datos se ha modificado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
+
+    Alert::success('Acción completada', 'Datos de la empresa modificados con éxito');
+    return redirect()->back();
   }
 }

@@ -67,13 +67,8 @@ class FacturacionController extends Controller
       $factura->save();
     }
 
-    $data = [
-      'type' => 'success',
-      'title' => 'Acción completada',
-      'message' => 'Los datos se ha creado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->route('facturacion-empresas')->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Datos de facturación creados con éxito');
+    return redirect()->route('facturacion-empresas');
   }
 
   /**
@@ -118,13 +113,8 @@ class FacturacionController extends Controller
       $factura->save();
     }
 
-    $data = [
-      'type' => 'success',
-      'title' => 'Acción completada',
-      'message' => 'Los datos se ha modificado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Datos de facturación modificados con éxito');
+    return redirect()->back();
   }
 
   /**

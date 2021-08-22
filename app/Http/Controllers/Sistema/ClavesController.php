@@ -11,6 +11,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Sistema\Clave;
+
 use App\Http\Requests\Sistema\StoreClave;
 use App\Http\Requests\Sistema\UpdateClave;
 
@@ -34,13 +35,8 @@ class ClavesController extends Controller
     }
     $clave = Clave::create($validated);
 
-    $data = [
-      'type' => 'success',
-      'title' => 'Acción completada',
-      'message' => 'La clave se ha creado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->route('tablero')->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Clave creada con éxito');
+    return redirect()->route('tablero');
   }
 
   public function update(UpdateClave $request, Clave $clave)
@@ -52,25 +48,15 @@ class ClavesController extends Controller
     }
     $clave->update($validated);
 
-    $data = [
-      'type' => 'success',
-      'title' => 'Acción completada',
-      'message' => 'La clave se ha modificado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->route('tablero')->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Clave modificada con éxito');
+    return redirect()->route('tablero');
   }
 
   public function delete(Clave $clave)
   {
     $clave->delete();
 
-    $data = [
-      'type' => 'success',
-      'title' => 'Acción completada',
-      'message' => 'La clave se ha eliminado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->route('tablero')->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Clave eliminada con éxito');
+    return redirect()->route('tablero');
   }
 }
