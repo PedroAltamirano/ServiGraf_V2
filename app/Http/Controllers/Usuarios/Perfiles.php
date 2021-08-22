@@ -5,9 +5,6 @@ namespace App\Http\Controllers\Usuarios;
 use App\Security;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
 use Auth;
 
 use App\Models\Usuarios\Perfil;
@@ -16,10 +13,11 @@ use App\Models\Usuarios\ModPerfRol;
 use App\Http\Requests\Usuarios\StorePerfil;
 use App\Http\Requests\Usuarios\UpdatePerfil;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Perfiles extends Controller
 {
-	use AuthenticatesUsers;
+	use SoftDeletes;
 	/**
 	 * Create a new controller instance.
 	 *
@@ -48,8 +46,8 @@ class Perfiles extends Controller
 		$perfil = new Perfil;
 		$modPerf = new Collection([]);
 		$data = [
-			'path'=>route('perfil.nuevo'), 
-			'text'=>'Nuevo perfil', 
+			'path'=>route('perfil.nuevo'),
+			'text'=>'Nuevo perfil',
 			'action'=>'Crear',
 			'method'=>'POST',
 			// 'modules'=>json_decode($modules)
@@ -61,9 +59,9 @@ class Perfiles extends Controller
 	public function store(StorePerfil $request){
 		$validator = $request->validated();
 		$validator['empresa_id'] = Auth::user()->empresa_id;
-		
+
 		$perfil = Perfil::create($validator);
-		
+
 		ModPerfRol::where('perfil_id', $perfil->id)->delete();
 		foreach($validator['mod'] as $key => $value){
 			$modPerfRol = new ModPerfRol;
@@ -74,8 +72,8 @@ class Perfiles extends Controller
 		}
 
 		$data = [
-			'type'=>'success', 
-			'title'=>'Accion completada', 
+			'type'=>'success',
+			'title'=>'Accion completada',
 			'message'=>'El perfil se ha creado con exito'
 		];
 		return redirect()->route('perfil.modificar', $perfil->id)->withInput()->with(['actionStatus' => json_encode($data)]);
@@ -85,14 +83,14 @@ class Perfiles extends Controller
 	public function edit(Perfil $perfil){
 		$modules = Modulo::todos();
 		$data = [
-			'path'=>route('perfil.modificar', $perfil->id), 
-			'text'=>'Modificar perfil', 
+			'path'=>route('perfil.modificar', $perfil->id),
+			'text'=>'Modificar perfil',
 			'action'=>'Modificar',
 			'method'=>'PUT',
 		];
-		
+
 		$modPerf = $perfil->modulos;
-		
+
 		return view('Usuarios/perfil', compact('modules', 'perfil', 'modPerf'))->with($data);
 	}
 
@@ -115,8 +113,8 @@ class Perfiles extends Controller
 		}
 
 		$data = [
-			'type'=>'success', 
-			'title'=>'Accion completada', 
+			'type'=>'success',
+			'title'=>'Accion completada',
 			'message'=>'El perfil se ha modificado con exito'
 		];
 		return redirect()->route('perfil.modificar', $perfil->id)->with(['actionStatus' => json_encode($data)]);

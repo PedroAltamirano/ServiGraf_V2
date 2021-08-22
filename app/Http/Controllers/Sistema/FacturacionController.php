@@ -13,9 +13,12 @@ use App\Models\Administracion\Retencion;
 
 use App\Http\Requests\Sistema\StoreFactura;
 use App\Http\Requests\Sistema\UpdateFactura;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FacturacionController extends Controller
 {
+  use SoftDeletes;
+
     /**
      * Display a listing of the resource.
      *

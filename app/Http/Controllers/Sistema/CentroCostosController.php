@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Sistema\StoreCentroCostos;
 use App\Http\Requests\Sistema\UpdateCentroCostos;
 use App\Models\Sistema\CentroCostos;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CentroCostosController extends Controller
 {
+  use SoftDeletes;
+
     /**
      * Display a listing of the resource.
      *

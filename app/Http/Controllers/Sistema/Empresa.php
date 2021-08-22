@@ -11,9 +11,12 @@ use App\Models\Sistema\Fact_empr;
 use App\Http\Requests\Sistema\StoreEmpresa;
 use App\Http\Requests\Sistema\UpdateEmpresa;
 use App\Models\Sistema\CentroCostos;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Empresa extends Controller
 {
+  use SoftDeletes;
+
     public function show(){
       $empresa = Auth::user()->empresa->datos ?? new DatosEmpresa;
       $ccostos = CentroCostos::where('empresa_id', Auth::user()->empresa_id)->get();

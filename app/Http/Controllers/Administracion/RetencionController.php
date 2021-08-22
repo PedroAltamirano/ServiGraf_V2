@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Administracion;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Administracion\Retencion as Requestretencion;
 use App\Models\Administracion\Retencion;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RetencionController extends Controller
 {
+  use SoftDeletes;
+
     /**
      * Display a listing of the resource.
      *

@@ -10,9 +10,12 @@ use App\Models\Administracion\Banco;
 
 use App\HTTP\Requests\Administracion\StoreBanco;
 use App\HTTP\Requests\Administracion\UpdateBanco;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BancoController extends Controller
 {
+  use SoftDeletes;
+
   /**
    * Store a newly created resource in storage.
    *

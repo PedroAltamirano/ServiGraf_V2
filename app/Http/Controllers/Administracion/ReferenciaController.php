@@ -10,9 +10,12 @@ use App\Models\Administracion\Libro_ref;
 
 use App\HTTP\Requests\Administracion\StoreReferencia;
 use App\HTTP\Requests\Administracion\UpdateReferencia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ReferenciaController extends Controller
 {
+  use SoftDeletes;
+
   /**
    * Store a newly created resource in storage.
    *

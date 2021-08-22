@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Usuarios;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,10 +15,11 @@ use App\Models\Produccion\Proceso;
 use App\Models\Ventas\Cliente;
 use App\Http\Requests\Usuarios\Store;
 use App\Http\Requests\Usuarios\Update;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Usuarios extends Controller
 {
-	use AuthenticatesUsers;
+	use SoftDeletes;
 	/**
 	 * Create a new controller instance.
 	 *

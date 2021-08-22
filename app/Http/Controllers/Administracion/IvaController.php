@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Administracion;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Administracion\Iva as RequestIva;
 use App\Models\Administracion\Iva;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class IvaController extends Controller
 {
+  use SoftDeletes;
+
     /**
      * Display a listing of the resource.
      *

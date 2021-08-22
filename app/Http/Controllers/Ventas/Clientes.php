@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Ventas;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
@@ -14,10 +13,14 @@ use App\Models\Ventas\Cliente;
 use App\Http\Requests\Ventas\StoreCliente;
 use App\Http\Requests\Ventas\UpdateCliente;
 use Facade\FlareClient\Http\Client;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Request;
 use stdClass;
 
 class Clientes extends Controller
 {
+  use SoftDeletes;
+
   public function store(StoreCliente $request){
     $validator = $request->validated();
     $validator['empresa_id'] = Auth::user()->empresa_id;
@@ -45,8 +48,8 @@ class Clientes extends Controller
     return redirect()->back()->with(['actionStatus' => json_encode($data)]);
   }
 
-  public function info() {
-    $cli = Cliente::find($_POST['cliente_id']);
+  public function info(Request $request) {
+    $cli = Cliente::find($request->cliente_id);
     $cont = $cli->contacto;
     $emp = $cli->empresa;
 

@@ -13,9 +13,12 @@ use App\Http\Requests\Administracion\StoreAsistencia;
 use App\Http\Requests\Administracion\UpdateAsistencia;
 use App\Http\Resources\Administracion\RRHHResource;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RRHHController extends Controller
 {
+  use SoftDeletes;
+
     /**
      * Display a listing of the resource.
      *

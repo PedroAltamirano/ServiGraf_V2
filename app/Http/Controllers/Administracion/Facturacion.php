@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Administracion;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Sistema\Empresa;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,10 +23,11 @@ use App\Http\Requests\Administracion\StoreFactura;
 use App\Http\Requests\Administracion\UpdateFactura;
 use App\Models\Administracion\FacturaPedido;
 use App\Models\Produccion\Pedido;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Facturacion extends Controller
 {
-	use AuthenticatesUsers;
+	use SoftDeletes;
 	/**
 	 * Create a new controller instance.
 	 *

@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Sistema\Nomina;
 use App\Models\Sistema\CentroCostos;
 use App\Models\Sistema\Horario;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class NominaController extends Controller
 {
+  use SoftDeletes;
+
     /**
      * Display a listing of the resource.
      *

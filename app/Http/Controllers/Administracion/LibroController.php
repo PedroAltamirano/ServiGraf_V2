@@ -15,9 +15,12 @@ use App\Http\Requests\Administracion\StoreLibro;
 use App\Http\Requests\Administracion\UpdateLibro;
 use App\Models\Administracion\Banco;
 use App\Models\Administracion\Libro_ref;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LibroController extends Controller
 {
+  use SoftDeletes;
+
     /**
      * Display a listing of the resource.
      *

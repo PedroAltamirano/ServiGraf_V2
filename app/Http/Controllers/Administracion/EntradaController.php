@@ -15,9 +15,12 @@ use App\Models\Administracion\Banco;
 use App\Http\Resources\Administracion\LibroResource;
 use App\Http\Requests\Administracion\StoreEntrada;
 use App\Http\Requests\Administracion\UpdateEntrada;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EntradaController extends Controller
 {
+  use SoftDeletes;
+
   public function create()
   {
     $entrada = new Libro_movimientos();

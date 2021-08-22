@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Sistema\Horario;
 use App\Http\Requests\Sistema\StoreHorario;
 use App\Http\Requests\Sistema\UpdateHorario;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Horarios extends Controller
 {
+  use SoftDeletes;
+
     /**
   * Create a new controller instance.
   *
