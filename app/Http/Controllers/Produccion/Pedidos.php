@@ -16,15 +16,14 @@ use App\View\Components\modalPedido;
 
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
 use App\Http\Requests\Produccion\StorePedidoImprenta;
 use App\Http\Requests\Produccion\UpdatePedidoImprenta;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pedidos extends Controller
 {
-  use AuthenticatesUsers;
+  use SoftDeletes;
+
   /**
   * Create a new controller instance.
   *
@@ -63,8 +62,9 @@ class Pedidos extends Controller
 
   // crear nuevo
   public function store(StorePedidoImprenta $request){
-    $validator = $request->validated();
     $num = Pedido::where('empresa_id', Auth::user()->empresa_id)->orderBy('numero', 'desc')->first()->numero;
+
+    $validator = $request->validated();
     $validator['numero'] = $num + 1;
     $validator['empresa_id'] = Auth::user()->empresa_id;
     $validator['usuario_id'] = Auth::id();
@@ -111,16 +111,10 @@ class Pedidos extends Controller
 
     $proSize = sizeof($validator['proceso']['id'] ?? []);
     for($i=0; $i < $proSize; $i++){
-      $proceso = $validator['proceso']['id'][$i];
-      if(strpos($proceso, '.') !== false){
-        $serv = explode('.', $proceso);
-        $proceso = $serv[0];
-      }
-
       $proceso = new Pedido_proceso;
       $proceso->empresa_id = Auth::user()->empresa_id;
       $proceso->pedido_id = $model->id;
-      $proceso->proceso_id = $proceso;
+      $proceso->proceso_id = $validator['proceso']['id'][$i];
       $proceso->tiro = $validator['proceso']['tiro'][$i];
       $proceso->retiro = $validator['proceso']['retiro'][$i];
       $proceso->millares = $validator['proceso']['millar'][$i];
@@ -257,5 +251,4 @@ class Pedidos extends Controller
     $method = 'PUT';
     return view('components.modalPedido', compact('pedido', 'method'));
   }
-
 }

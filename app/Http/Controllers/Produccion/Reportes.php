@@ -9,13 +9,15 @@ use App\Models\Produccion\Proceso;
 use App\Models\Produccion\Pedido_proceso;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class Reportes extends Controller
 {
-  // use AuthenticatesUsers;
+  use SoftDeletes;
+
   /**
    * Create a new controller instance.
   *
@@ -45,8 +47,7 @@ class Reportes extends Controller
     }
     $pedidos = $pedidos->get();
     foreach($pedidos as $pedido){
-      $tmp = $pedido->cliente->contacto;
-      $pedido->cliente_nom = $tmp->nombre.' '.$tmp->apellido;
+      $pedido->cliente_nom = $pedido->cliente->full_name;
       $pedido->areas = Pedido::reporteAreas($pedido->id);
     }
     return response()->json($pedidos, 200);
@@ -77,8 +78,7 @@ class Reportes extends Controller
     }
     $pedidos = $pedidos->get();
     foreach($pedidos as $pedido){
-      $tmp = $pedido->cliente->contacto;
-      $pedido->cliente_nom = $tmp->nombre.' '.$tmp->apellido;
+      $pedido->cliente_nom = $pedido->cliente->full_name;
       $pedido->usuario_cobro = $pedido->user_cob->nomina->nombre ?? 'N/A';
     }
     return response()->json($pedidos, 200);
@@ -99,14 +99,13 @@ class Reportes extends Controller
     }
     $pedidos = $pedidos->get();
     foreach($pedidos as $pedido){
-      $tmp = $pedido->cliente->contacto;
-      $pedido->cliente_nom = $tmp->nombre.' '.$tmp->apellido;
-      $pedido->procesos_id = Self::getProcesos($pedido->id);
+      $pedido->cliente_nom = $pedido->cliente->full_name;
+      $pedido->procesos_id = Self::getSumProcesos($pedido->id);
     }
     return response()->json($pedidos, 200);
   }
 
-  public static function getProcesos($id){
-    return $ps = Pedido_proceso::where('pedido_id', $id)->select('proceso_id', DB::raw('sum(total) as totalProceso'))->groupBy('proceso_id')->get()->toArray();
+  public static function getSumProcesos($id){
+    return Pedido_proceso::where('pedido_id', $id)->select('proceso_id', DB::raw('sum(total) as totalProceso'))->groupBy('proceso_id')->get()->toArray();
   }
 }

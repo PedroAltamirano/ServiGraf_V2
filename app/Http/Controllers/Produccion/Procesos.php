@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers\Produccion;
 
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -11,10 +10,11 @@ use App\Models\Produccion\Proceso;
 
 use App\Http\Requests\Produccion\StoreProceso;
 use App\Http\Requests\Produccion\UpdateProceso;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Procesos extends Controller
 {
-  use AuthenticatesUsers;
+  use SoftDeletes;
 
   /**
   * Create a new controller instance.
@@ -33,8 +33,6 @@ class Procesos extends Controller
   public function show(){
     $areas = Area::where('empresa_id', Auth::user()->empresa_id)->orderBy('orden')->get();
     $procesos = Proceso::where('empresa_id', Auth::user()->empresa_id)->get();
-    $seg = $procesos->reject(function($proceso){return $proceso->seguimiento == 0;});
-    $seg = $procesos->map(function($proceso){return $proceso->id;});
     return view('Produccion/procesos', compact('areas', 'procesos'));
   }
 
@@ -55,10 +53,9 @@ class Procesos extends Controller
     return view('Produccion.proceso', compact('proceso', 'areas'))->with($data);
   }
 
-  // // crear nuevo
+  // crear nuevo
   public function store(StoreProceso $request){
     $validator = $request->validated();
-    // dd($validator);
     $validator['empresa_id'] = Auth::user()->empresa_id;
     $proceso = Proceso::create($validator);
 

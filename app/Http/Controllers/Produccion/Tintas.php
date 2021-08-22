@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Produccion;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\Produccion\StoreTinta;
 use App\Http\Requests\Produccion\UpdateTinta;
 use App\Models\Produccion\Tinta;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tintas extends Controller
 {
+  use SoftDeletes;
+
   // crear nuevo
   public function store(StoreTinta $request){
     $validator = $request->validated();

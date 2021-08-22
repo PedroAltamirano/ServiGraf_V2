@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Produccion;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Produccion\Area;
 use App\Http\Requests\Produccion\StoreArea;
 use App\Http\Requests\Produccion\UpdateArea;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Areas extends Controller
 {
+  use SoftDeletes;
+
     //crear nueva area
     public function store(StoreArea $request){
     $validator = $request->validated();
@@ -35,6 +37,17 @@ class Areas extends Controller
       'type'=>'success',
       'title'=>'Acción completada',
       'message'=>'La área se ha modificado con éxito'
+    ];
+    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
+  }
+
+  public function delete(Area $area){
+    $area->delete();
+
+    $data = [
+      'type'=>'success',
+      'title'=>'Acción completada',
+      'message'=>'La área se ha eliminado con éxito'
     ];
     return redirect()->back()->with(['actionStatus' => json_encode($data)]);
   }

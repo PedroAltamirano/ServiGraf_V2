@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Produccion;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Auth\Events\Validated;
 
 use App\Models\Produccion\Tinta;
 use App\Models\Produccion\Material;
@@ -13,9 +11,12 @@ use App\Models\Produccion\Categoria;
 
 use App\Http\Requests\Produccion\StoreMaterial;
 use App\Http\Requests\Produccion\UpdateMaterial;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Materiales extends Controller
 {
+  use SoftDeletes;
+
   /**
   * Create a new controller instance.
   *
