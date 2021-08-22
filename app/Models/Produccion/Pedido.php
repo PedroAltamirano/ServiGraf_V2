@@ -57,9 +57,19 @@ class Pedido extends Model
         return $this->hasMany('App\Models\Produccion\Solicitud_material');
     }
 
-    public function procesos()
+    public function procesos_id()
     {
         return $this->hasMany('App\Models\Produccion\Pedido_proceso');
+    }
+
+    public function procesos()
+    {
+        return $this->belongsToMany(Proceso::class, 'pedido_proceso', 'pedido_id', 'proceso_id');
+    }
+
+    public function procesos_incompletos()
+    {
+        return $this->belongsToMany(Proceso::class, 'pedido_proceso', 'pedido_id', 'proceso_id')->where('status', 0);
     }
 
     public function tintas()
@@ -77,15 +87,20 @@ class Pedido extends Model
      */
     public static function incompletas($fecha = null)
     {
-      $incompletos = Pedido_proceso::where([['empresa_id', '=', auth()->user()->empresa_id], ['status', '=', '0']])
+
+      $incompletos = Pedido_proceso::where('empresa_id', auth()->user()->empresa_id)
+        ->where('status', '0')
         ->groupBy('pedido_id')
         ->select('pedido_id')
-        ->where(function($query) use ($fecha) {
+        ->where(function($query) {
           if(self::$own){
-            $query->whereIn('proceso_id', Auth::user()->procesos->map(function($c){return $c->id;})->toArray());
+            $own_processes = Auth::user()->procesos->pluck('id')->toArray();
+            $query->whereIn('proceso_id', $own_processes);
           }
-        })->get();
-      $incompletos = $incompletos->map(function($incompletos){return $incompletos->pedido_id;});
+        })
+        ->get()
+        ->pluck('pedido_id')
+        ->toArray();
 
       return Pedido::whereIn('id', $incompletos)->where('estado',  '!=', '3')->select('id', 'numero', 'cliente_id', 'detalle', 'cantidad')->where(function($query) use ($fecha) {
           if($fecha){
@@ -97,19 +112,10 @@ class Pedido extends Model
     /*
     * @return lista con todos los procesos sin terminar
     */
-    public static function serviciosIncompletos($pedido_id)
+    public function getProcesosIncompletosNombreAttribute()
     {
-        $OS = Pedido_proceso::where('pedido_id', strval($pedido_id))->get();
-        $list = [];
-        foreach ($OS as $proceso) {
-            $serv = Proceso::where('id', $proceso->proceso_id)->value('proceso');
-            if($proceso->subproceso_id != null){
-                $serv = $serv.'-';
-                // $serv = $serv.Sub_proceso::where('id', $proceso->subproceso_id)->value('subservicio');
-            }
-            $list[] = $serv;
-        }
-        return $list;
+        $pedido_procesos = $this->procesos_incompletos->pluck('proceso')->toArray();
+        return $pedido_procesos;
     }
 
     /**
@@ -125,7 +131,7 @@ class Pedido extends Model
             $temp['numero'] = $pedido->numero;
             $temp['detalle'] = $pedido->detalle;
             $temp['cantidad'] = $pedido->cantidad;
-            $temp['procesos'] = $pedido->serviciosIncompletos($pedido->id);
+            $temp['procesos'] = $pedido->procesos_incompletos_nombre;
             $temp['cliente'] = $cli->empresa->nombre.' / '.$cli->contacto->nombre.' '.$cli->contacto->apellido;
             $list[] = $temp;
         }

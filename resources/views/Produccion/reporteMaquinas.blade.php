@@ -34,7 +34,7 @@
         <th scope="col">Cliente</th>
         <th scope="col">Detalle</th>
         @foreach ($procesos as $proceso)
-        <th scope="col">{{$proceso->servicio}}</th>
+        <th scope="col">{{$proceso->proceso}}</th>
         @endforeach
         <th scope="col">Total $</th>
         <th scope="col" class="crudCol"></th>
@@ -96,7 +96,7 @@
       @foreach($procesos as $proceso)
       {"name":"{{'serv'.$proceso->id}}", "data":"procesos", "defaultContent": "", "render":function(data, type, full, meta){
         let proceso = data.find(record => record.proceso_id === '{{ $proceso->id }}');
-        return proceso ? proceso.totalServicio : '';
+        return proceso ? proceso.totalProceso : '';
       }},
       @endforeach
       {"name":"total", "data": "total_pedido"},

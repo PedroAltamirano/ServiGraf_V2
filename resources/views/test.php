@@ -67,7 +67,7 @@ use Illuminate\Support\Facades\DB;
 // $proceso = Orden_proceso::all();
 
 // echo json_encode($ot_inc);
-// echo json_encode(Orden_produccion::serviciosIncompletos($ots->numero));
+// echo json_encode(Orden_produccion::procesosIncompletos($ots->numero));
 // echo $ots->cliente;
 // echo $ots_serv;
 // foreach ($ots as $ot) {

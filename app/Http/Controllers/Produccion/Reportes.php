@@ -101,12 +101,12 @@ class Reportes extends Controller
     foreach($pedidos as $pedido){
       $tmp = $pedido->cliente->contacto;
       $pedido->cliente_nom = $tmp->nombre.' '.$tmp->apellido;
-      $pedido->procesos = Self::getServicios($pedido->id);
+      $pedido->procesos_id = Self::getProcesos($pedido->id);
     }
     return response()->json($pedidos, 200);
   }
 
-  public static function getServicios($id){
-    return $ps = Pedido_proceso::where('pedido_id', $id)->select('proceso_id', DB::raw('sum(total) as totalServicio'))->groupBy('proceso_id')->get()->toArray();
+  public static function getProcesos($id){
+    return $ps = Pedido_proceso::where('pedido_id', $id)->select('proceso_id', DB::raw('sum(total) as totalProceso'))->groupBy('proceso_id')->get()->toArray();
   }
 }

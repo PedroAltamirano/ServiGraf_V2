@@ -6,7 +6,7 @@
   $oldTintasTiro = old('tinta_tiro') ?? $pedido->tintas->reject(function($tinta){return $tinta->lado == 0;})->map(function($tintas){return $tintas->tinta_id;})->toArray();
   $oldTintasRetiro = old('tinta_retiro') ?? $pedido->tintas->reject(function($tinta){return $tinta->lado == 1;})->map(function($tintas){return $tintas->tinta_id;})->toArray();
   $oldMaterial = $pedido->material ?? json_encode(new stdClass);
-  $oldProcesos = $pedido->procesos ?? json_encode(new stdClass);
+  $oldProcesos = $pedido->procesos_id ?? json_encode(new stdClass);
   $oldAbonos = $pedido->abonos ?? json_encode(new stdClass);
   $matCount = count(old("material.id", $oldMaterial) ?? []);
   $proCount = count(old("proceso.id", $oldProcesos) ?? []);
