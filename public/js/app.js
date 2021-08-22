@@ -95135,18 +95135,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var datatables_net_responsive_bs4__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(datatables_net_responsive_bs4__WEBPACK_IMPORTED_MODULE_5__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+
+
+
 __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
 __webpack_require__(/*! select2/dist/js/select2.min.js */ "./node_modules/select2/dist/js/select2.min.js");
 
+$.fn.select2.defaults.set("theme", "bootstrap4");
+
 __webpack_require__(/*! dropify/dist/js/dropify.min.js */ "./node_modules/dropify/dist/js/dropify.min.js");
 
-__webpack_require__(/*! chart.js/dist/Chart.js */ "./node_modules/chart.js/dist/Chart.js"); // Node Modules
-
-
-
- // import "jszip";
+__webpack_require__(/*! chart.js/dist/Chart.js */ "./node_modules/chart.js/dist/Chart.js"); // import "jszip";
 // import "pdfmake";
+
 
 
  // import "datatables.net-buttons/js/buttons.html5.js";
@@ -95157,26 +95159,6 @@ __webpack_require__(/*! chart.js/dist/Chart.js */ "./node_modules/chart.js/dist/
  // import "datatables.net-rowgroup-bs4";
 
 __webpack_require__(/*! ../../resources/js/sb-admin-2.min.js */ "./resources/js/sb-admin-2.min.js"); // require("../../resources/js/helpers.js");
-//components
-// import blueBoard from './components/blueBoard.vue';
-// import pathRoute from './components/pathRoute.vue';
-// Vue.component('carousel', require('vue-owl-carousel'));
-// Vue.component('fab-comp', require('./components/fab.vue').default);
-// Vue.component('test-comp', require('./components/test.vue'));
-// Vue.component('path-route', pathRoute);
-// Vue.component('blue-board', blueBoard);
-// if (document.querySelector('#app')) {
-// 	window.Vue = require('vue');
-// 	const app = new Vue({
-// 		el: '#app',
-// 	});
-// }
-// if (document.querySelector('#fab')) {
-// 	window.Vue = require('vue');
-// 	const fab = new Vue({
-// 		el: '#fab',
-// 	});
-// }
 
 /***/ }),
 

@@ -71,7 +71,7 @@
       </div>
       <div class="form-group col-6 col-md-4">
         <label for="procesos">Procesos</label>
-        <select class="custom-select select2 @error('procesos') is-invalid @enderror" name="procesos[]" id="procesos" multiple>
+        <select class="custom-select select2Class @error('procesos') is-invalid @enderror" name="procesos[]" id="procesos" multiple>
           <option disabled>Select one</option>
           @php($array = old('procesos') ?? $usuario->procesos->pluck('id')->toArray())
           @foreach ($procesos as $item)
@@ -83,7 +83,7 @@
       </div>
       <div class="form-group col-6 col-md-4">
         <label for="actividades">Actividades</label>
-        <select class="custom-select select2 @error('actividades') is-invalid @enderror" name="actividades[]" id="actividades" disabled multiple>
+        <select class="custom-select select2Class @error('actividades') is-invalid @enderror" name="actividades[]" id="actividades" disabled multiple>
           <option disabled>Select one</option>
           @php($array = old('actividades', $usuario->actividades) ?? [])
           @foreach ($actividades as $item)
@@ -95,7 +95,7 @@
       </div>
       <div class="form-group col-6 col-md-4">
         <label for="clientes">Clientes Seguimiento</label>
-        <select class="custom-select select2 @error('clientes') is-invalid @enderror" name="clientes[]" id="clientes" multiple>
+        <select class="custom-select select2Class @error('clientes') is-invalid @enderror" name="clientes[]" id="clientes" multiple>
           <option disabled>Select one</option>
           @php($array = old('clientes') ?? $usuario->clientes->map(function($c){return $c->id;})->toArray())
           @foreach ($clientes as $item)
@@ -144,7 +144,5 @@
   $('#formSubmit').click(function(){
     $('#form').submit();
   });
-
-  $('.select2').select2({});
 </script>
 @endsection

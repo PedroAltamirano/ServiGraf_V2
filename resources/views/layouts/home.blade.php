@@ -13,14 +13,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- tab icon -->
     <link href="{{ asset('img/sg-2.png') }}" rel="icon" type="text/css">
-    
+
     <title>ServiGraf</title>
 
-    <!-- vue -->
     {{-- <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}"> --}}
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=ABeeZee" rel="stylesheet">
-    
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -74,7 +73,7 @@
             </ul>
         </footer>
     </div>
-    </div><!-- div for vue -->
+    </div>
 
 </body>
 

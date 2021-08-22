@@ -156,7 +156,9 @@ $("body").delegate("#printer", "click", function () {
   var target = "#" + $("#printer").data("target");
   $(target).print();
 });
-$(".select2Class").select2();
+$(".select2Class").select2({
+  width: '100%'
+});
 
 function getModal(pedido_id) {
   $.ajaxSetup({

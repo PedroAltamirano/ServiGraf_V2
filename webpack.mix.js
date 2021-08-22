@@ -2,13 +2,11 @@ const mix = require('laravel-mix');
 
 var webpackConfig = {
    // plugins: [
-   //    new VuetifyLoaderPlugin(),
    //    new CaseSensitivePathsPlugin()
    // ]
 
    // resolve: {
    //    alias: {
-   //       'vue$': 'vue/dist/vue.runtime.common.js'
    //    }
    // }
 }

@@ -154,6 +154,7 @@
   <script src="{{ asset('js/helpers.js') }}"></script>
   <script src="//cdn.datatables.net/plug-ins/1.10.22/api/sum().js"></script>
   <script src="{{ asset('js/printable.js') }}"></script>
+  <script src="{{ asset('vendor/sweetalert/sweetalert.all.js')  }}"></script>
 
   @yield('scripts')
   @yield('after.scripts')

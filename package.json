@@ -20,8 +20,7 @@
         "resolve-url-loader": "2.3.1",
         "sass": "^1.26.5",
         "sass-loader": "^7.3.1",
-        "vue": "^2.6.11",
-        "vue-template-compiler": "^2.6.11"
+        "vue-template-compiler": "^2.6.14"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.13.0",
@@ -37,11 +36,9 @@
         "jquery.easing": "^1.4.1",
         "jszip": "^3.4.0",
         "npm": "^6.14.6",
+        "owl.carousel": "^2.3.4",
         "pdfmake": "^0.1.65",
         "select2": "^4.0.13",
-        "vue-color": "^2.7.1",
-        "vue-fab": "^2.3.1",
-        "vue-owl-carousel": "^2.0.3",
-        "vue-quick-menu": "^1.0.7"
+        "select2-bootstrap4-theme": "^1.0.0"
     }
 }
