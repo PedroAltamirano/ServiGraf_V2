@@ -107,6 +107,7 @@
         // alert(data);
       },
       error: function(jqXhr, textStatus, errorThrown){
+        Swal.fire('Oops!', errorThrown, 'error');
         console.log(errorThrown);
       }
     });

@@ -160,9 +160,8 @@
       //   debugger
       // },
       "error": function(reason) {
-        alert('Ha ocurrido un error al cargar los datos!');
-        console.log('error -> ');
-        console.log(reason);
+        Swal.fire('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
+        console.log('error -> ', reason);
       }
     },
     "columns": [

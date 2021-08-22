@@ -49,7 +49,8 @@
         "url": "{{url('/perfiles/get')}}",
         "method": 'get',
         "error": function(reason) {
-          alert('Ha ocurrido un error al cargar los datos!');
+          Swal.fire('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
+          console.log('error -> ', reason);
         }
       },
       "columns": [

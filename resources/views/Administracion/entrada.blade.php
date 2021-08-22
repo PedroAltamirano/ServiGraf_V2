@@ -119,6 +119,7 @@
         $('#libro_id').empty().append(content);
       },
       error: function(jqXhr, textStatus, errorThrown){
+        Swal.fire('Oops!', errorThrown, 'error');
         console.log(errorThrown);
       }
     });

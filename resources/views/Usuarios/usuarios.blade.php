@@ -49,13 +49,17 @@
       "ajax": {
         "url": "{{url('/usuarios/get')}}",
         "method": 'get',
+        "error": function(reason) {
+          Swal.fire('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
+          console.log('error -> ', reason);
+        }
       },
       "columns": [
         {"name":"nombre", "data": "nombre"},
         {"name":"apellido", "data": "apellido" },
         {"name":"perfil", "data": "perfil"},
         {"name":"crud", "data": "cedula",
-          "render": function ( data, type, full, meta ) { 
+          "render": function ( data, type, full, meta ) {
             return "<a class='fa fa-edit' href='usuario/modificar/"+data+"'></a>"
           }, "sortable": "false"
         }

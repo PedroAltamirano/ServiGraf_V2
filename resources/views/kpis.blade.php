@@ -25,6 +25,7 @@
         $("#KPIs").append(data);
       },
       error: function error(jqXhr, textStatus, errorThrown) {
+        Swal.fire('Oops!', errorThrown, 'error');
         console.log(errorThrown);
       }
     });
