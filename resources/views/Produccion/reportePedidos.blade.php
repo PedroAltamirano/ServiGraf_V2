@@ -66,7 +66,6 @@
 @section('scripts')
 <script>
   let areas = @json($areas);
-  $('#cliente').select2();
 
   // console.log(areas.length);
   const route = "{{ route('pedido.edit', 0) }}";

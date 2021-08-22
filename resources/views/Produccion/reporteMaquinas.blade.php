@@ -62,7 +62,6 @@
 @section('scripts')
 <script>
   let procesos = @json($procesos);
-  $('#cliente').select2();
 
   // console.log(areas.length);
   const route = "{{ route('pedido.edit', 0) }}";

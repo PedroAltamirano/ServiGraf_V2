@@ -62,8 +62,6 @@
 
 @section('scripts')
 <script>
-  $('#cliente').select2();
-
   const route = "{{ route('pedido.edit', 0) }}";
   var table = $('#table').DataTable({
     "paging":   true,
