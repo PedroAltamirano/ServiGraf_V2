@@ -1,4 +1,4 @@
-@extends('layouts.home', ['txtcolor' => 'text-white', 'tooglercolor' => 'white'])
+@extends('layouts.home', ['txtcolor' => 'text-img', 'tooglercolor' => 'white'])
 
 @section('home-content')
 <div class="jumbotron jumbotron-fluid text-center" id="fondo" style="margin: 0px;font-family: ABeeZee, sans-serif;color: rgb(255,255,255);background-image: url(&quot;{{asset('img/imprenta_fondo1.jpeg')}}&quot;);padding: 0px;">
@@ -9,7 +9,7 @@
 
 <div id="owl_carousel" class="container-fluid mx-auto maximum-width" style="font-family: ABeeZee, sans-serif;">
   <h2 class="text-center" style="color: rgb(59, 89, 152);">Infraestructura</h2>
-  <carousel :autoplay="true" :loop="true" :nav="false" :margin=10 :mouseDrag="true" :touchDrag="true" 
+  <carousel :autoplay="true" :loop="true" :nav="false" :margin=10 :mouseDrag="true" :touchDrag="true"
             :responsive="{0:{items:1}, 720:{items:2}, 960:{items:3}}">
       <img src="{{asset('img/46.jpg')}}" alt="46">
       <img src="{{asset('img/52x2-1.jpg')}}" alt="51-1">

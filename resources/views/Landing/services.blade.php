@@ -1,4 +1,4 @@
-@extends('layouts.home', ['txtcolor' => 'text-white', 'tooglercolor' => 'white'])
+@extends('layouts.home', ['txtcolor' => 'text-img', 'tooglercolor' => 'white'])
 
 @section('home-content')
 <div class="jumbotron jumbotron-fluid text-center" id="fondo" style="margin: 0px;font-family: ABeeZee, sans-serif;color: rgb(255,255,255);background-image: url(&quot;{{asset('img/imprenta_fondo1.jpeg')}}&quot;);padding: 0px;">

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\Usuarios\Usuario;
-
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
-use Illuminate\Http\Request;
 use Log;
 use Session;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
+use App\Models\Usuarios\Usuario;
 
 class LoginController extends Controller
 {
@@ -21,14 +21,16 @@ class LoginController extends Controller
 
   public function __construct()
   {
-    $this->middleware('guest', ['only'=>'show'])->except('logout');
+    $this->middleware('guest', ['only' => 'show'])->except('logout');
   }
 
-  public function show(){
+  public function show()
+  {
     return view('auth.login');
   }
 
-  public function getInfo(Request $request){
+  public function getInfo(Request $request)
+  {
     // $ModPerfRol = ModPerfRol::where('perfil_id', Auth::user()->perfil_id)->get();
     // $request->session()->put('ModPerfRol', $ModPerfRol);
 
@@ -40,7 +42,8 @@ class LoginController extends Controller
     $request->session()->put('userInfo', $userInfo);
   }
 
-  public function login(Request $request){
+  public function login(Request $request)
+  {
     $credentials = $request->validate([
       'usuario' => 'string|required|max:20',
       'password' => 'string|required|max:128',
@@ -49,23 +52,25 @@ class LoginController extends Controller
     $credentials['status'] = 1;
     $rememberMe = $request->get('remember');
 
-    if(Auth::viaRemember()){
+    if (Auth::viaRemember()) {
       Self::getInfo($request);
       return redirect()->route('desktop');
     }
-    if(Auth::attempt($credentials, $rememberMe)){
+    if (Auth::attempt($credentials, $rememberMe)) {
       Self::getInfo($request);
-      if(Auth::user()->modulos->where('modulo_id', 10)->count() > 0){
+      if (Auth::user()->modulos->where('modulo_id', 10)->count() > 0) {
         return redirect()->route('desktop');
       } else {
         return redirect()->route('tablero');
       }
     } else {
-      return back()->withErrors(['usuario' => 'Autorizacion fallida'])->withInput();
+      Alert::error('Oops!', 'Datos erroneos');
+      return redirect()->back()->withInput();
     }
   }
 
-  public function logout(Request $request){
+  public function logout(Request $request)
+  {
     Auth::logout();
     return redirect()->route('login');
   }

@@ -1,4 +1,4 @@
-@extends('layouts.home', ['txtcolor' => 'text-dark', 'tooglercolor' => 'black'])
+@extends('layouts.home', ['txtcolor' => 'text-noimg', 'tooglercolor' => 'black'])
 
 @section('home-content')
 <div class="container-fluid text-center my-auto" style="max-width: 900px;font-family: ABeeZee, sans-serif;padding: 20px;height: 100%;">
