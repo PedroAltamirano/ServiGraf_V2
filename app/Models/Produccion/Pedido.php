@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Produccion\Pedido_proceso;
 use App\Models\Produccion\Proceso;
+use App\Models\Usuarios\Usuario;
+use App\Models\Ventas\Cliente;
 
 class Pedido extends Model
 {
@@ -34,32 +36,32 @@ class Pedido extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\Usuarios\Usuario', 'usuario_id', 'cedula');
+        return $this->belongsTo(Usuario::class, 'usuario_id', 'cedula');
     }
 
     public function user_mod()
     {
-        return $this->belongsTo('App\Models\Usuarios\Usuario', 'usuario_mod_id', 'cedula');
+        return $this->belongsTo(Usuario::class, 'usuario_mod_id', 'cedula');
     }
 
     public function user_cob()
     {
-        return $this->belongsTo('App\Models\Usuarios\Usuario', 'usuario_cob_id', 'cedula');
+        return $this->belongsTo(Usuario::class, 'usuario_cob_id', 'cedula');
     }
 
     public function cliente()
     {
-        return $this->belongsTo('App\Models\Ventas\Cliente', 'cliente_id');
+        return $this->belongsTo(Cliente::class, 'cliente_id');
     }
 
     public function material()
     {
-        return $this->hasMany('App\Models\Produccion\Solicitud_material');
+        return $this->hasMany(Solicitud_material::class);
     }
 
     public function procesos_id()
     {
-        return $this->hasMany('App\Models\Produccion\Pedido_proceso');
+        return $this->hasMany(Pedido_proceso::class);
     }
 
     public function procesos()
@@ -74,12 +76,12 @@ class Pedido extends Model
 
     public function tintas()
     {
-        return $this->hasMany('App\Models\Produccion\Pedido_tintas');
+        return $this->hasMany(Pedido_tintas::class);
     }
 
     public function abonos()
     {
-        return $this->hasMany('App\Models\Produccion\Abono');
+        return $this->hasMany(Abono::class);
     }
 
     /**
@@ -127,12 +129,11 @@ class Pedido extends Model
         $list = [];
         foreach ($incompletas as $pedido){
             $temp = [];
-            $cli = $pedido->cliente;
             $temp['numero'] = $pedido->numero;
             $temp['detalle'] = $pedido->detalle;
             $temp['cantidad'] = $pedido->cantidad;
             $temp['procesos'] = $pedido->procesos_incompletos_nombre;
-            $temp['cliente'] = $cli->empresa->nombre.' / '.$cli->contacto->nombre.' '.$cli->contacto->apellido;
+            $temp['cliente'] = $pedido->cliente->bussiness_name;
             $list[] = $temp;
         }
         return $list;

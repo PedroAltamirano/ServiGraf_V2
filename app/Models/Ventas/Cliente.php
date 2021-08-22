@@ -39,4 +39,12 @@ class Cliente extends Model
     public static function todos(){
       return Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
     }
+
+    public function full_name(){
+      return $this->contacto->nombre.' '.$this->contacto->apellido;
+    }
+
+    public function bussiness_name(){
+      return $this->empresa->nombre.' / '.$this->contacto->nombre.' '.$this->contacto->apellido;
+    }
 }
