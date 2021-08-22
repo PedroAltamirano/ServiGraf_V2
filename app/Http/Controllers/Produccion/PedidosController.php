@@ -20,7 +20,7 @@ use App\Http\Requests\Produccion\StorePedidoImprenta;
 use App\Http\Requests\Produccion\UpdatePedidoImprenta;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Pedidos extends Controller
+class PedidosController extends Controller
 {
   use SoftDeletes;
 

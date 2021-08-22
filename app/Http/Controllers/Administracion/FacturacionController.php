@@ -25,7 +25,7 @@ use App\Models\Administracion\FacturaPedido;
 use App\Models\Produccion\Pedido;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Facturacion extends Controller
+class FacturacionController extends Controller
 {
 	use SoftDeletes;
 	/**

@@ -10,7 +10,7 @@ use App\Http\Requests\Produccion\StoreArea;
 use App\Http\Requests\Produccion\UpdateArea;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Areas extends Controller
+class AreasController extends Controller
 {
   use SoftDeletes;
 

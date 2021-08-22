@@ -12,10 +12,10 @@ use App\Http\Requests\Sistema\StoreClave;
 use App\Http\Requests\Sistema\UpdateClave;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Claves extends Controller
+class ClavesController extends Controller
 {
   use SoftDeletes;
-  
+
     public function show(){
         $claves = Clave::where('empresa_id', Auth::user()->empresa_id)->get();
         return view('Sistema.claves', compact('claves'));

@@ -13,7 +13,7 @@ use App\Http\Requests\Sistema\UpdateEmpresa;
 use App\Models\Sistema\CentroCostos;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Empresa extends Controller
+class EmpresaController extends Controller
 {
   use SoftDeletes;
 

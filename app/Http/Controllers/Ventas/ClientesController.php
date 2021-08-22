@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use stdClass;
 
-class Clientes extends Controller
+class ClientesController extends Controller
 {
   use SoftDeletes;
 

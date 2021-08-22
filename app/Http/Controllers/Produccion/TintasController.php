@@ -10,7 +10,7 @@ use App\Http\Requests\Produccion\UpdateTinta;
 use App\Models\Produccion\Tinta;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Tintas extends Controller
+class TintasController extends Controller
 {
   use SoftDeletes;
 

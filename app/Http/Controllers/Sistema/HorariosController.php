@@ -11,7 +11,7 @@ use App\Http\Requests\Sistema\StoreHorario;
 use App\Http\Requests\Sistema\UpdateHorario;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Horarios extends Controller
+class HorariosController extends Controller
 {
   use SoftDeletes;
 

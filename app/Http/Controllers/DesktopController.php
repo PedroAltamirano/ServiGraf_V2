@@ -13,7 +13,7 @@ use App\Models\Produccion\Proceso;
 use App\Models\Produccion\Solicitud_material;
 use App\Models\Ventas\Cliente;
 
-class Desktop extends Controller
+class DesktopController extends Controller
 {
 	use AuthenticatesUsers;
 	/**

@@ -10,7 +10,7 @@ use App\Http\Requests\Produccion\UpdateCategoria;
 use App\Models\Produccion\Categoria;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Categorias extends Controller
+class CategoriasController extends Controller
 {
   use SoftDeletes;
 

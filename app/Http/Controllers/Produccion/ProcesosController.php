@@ -12,7 +12,7 @@ use App\Http\Requests\Produccion\StoreProceso;
 use App\Http\Requests\Produccion\UpdateProceso;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Procesos extends Controller
+class ProcesosController extends Controller
 {
   use SoftDeletes;
 

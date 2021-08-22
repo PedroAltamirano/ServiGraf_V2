@@ -17,7 +17,7 @@ use App\Http\Requests\Usuarios\Store;
 use App\Http\Requests\Usuarios\Update;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Usuarios extends Controller
+class UsuariosController extends Controller
 {
 	use SoftDeletes;
 	/**

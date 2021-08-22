@@ -10,7 +10,7 @@ use App\Models\Produccion\Proveedor;
 use App\Http\Requests\Produccion\StoreProveedor;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Proveedores extends Controller
+class ProveedoresController extends Controller
 {
   use SoftDeletes;
 

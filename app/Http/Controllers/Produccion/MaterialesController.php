@@ -13,7 +13,7 @@ use App\Http\Requests\Produccion\StoreMaterial;
 use App\Http\Requests\Produccion\UpdateMaterial;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Materiales extends Controller
+class MaterialesController extends Controller
 {
   use SoftDeletes;
 
