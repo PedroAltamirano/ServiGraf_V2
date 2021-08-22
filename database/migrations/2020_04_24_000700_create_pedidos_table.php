@@ -35,7 +35,7 @@ class CreatePedidosTable extends Migration
             $table->unsignedTinyInteger('estado'); //pendiente, pagado
             $table->unsignedDecimal('cotizado', 7, 2);
             $table->string('detalle', 256);
-            $table->string('papel', 140);
+            $table->string('papel', 140)->nullable();
             $table->unsignedMediumInteger('cantidad')->default(0);
             $table->unsignedDecimal('corte_alto', 5, 2);
             $table->unsignedDecimal('corte_ancho', 5, 2);
@@ -45,7 +45,7 @@ class CreatePedidosTable extends Migration
             $table->unsignedDecimal('total_pedido', 6, 2);
             $table->unsignedDecimal('abono', 6, 2);
             $table->unsignedDecimal('saldo', 6, 2);
-            $table->string('notas', 255);
+            $table->string('notas', 255)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

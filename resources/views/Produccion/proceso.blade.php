@@ -37,6 +37,9 @@
           @endforeach
         </select>
       </div>
+
+      <x-procesos label='Proceso padre' name='parent_id' :old="old('parent_id', $proceso->parent_id)" />
+
       <div class="form-group col-12 col-md-4">
         <label for="proceso">Proceso</label>
         <input type="text" name="proceso" id="proceso" class="form-control form-control-sm @error('proceso') is-invalid @enderror" value="{{ old('proceso', $proceso->proceso) }}">
@@ -59,13 +62,6 @@
       <div class="form-group col-6 col-md-2">
         <label for="toperador">T x operador</label>
         <input type="time" min="0" name="toperador" id="toperador" class="form-control form-control-sm @error('toperador') is-invalid @enderror" value="{{ old('toperador', $proceso->toperador) }}" disabled>
-      </div>
-      <div class="form-group col-3 col-md-2">
-        <label for="subprocesos">Subprocesos</label>
-        <div class="custom-control custom-switch d-flex justify-content-center" name="subprocesosDiv">
-          <input type="checkbox" class="custom-control-input @error('subprocesos') is-invalid @enderror" id="subprocesos" name="subprocesos" {{ old('subprocesos', $proceso->subprocesos) == '1' ? 'checked':'' }} value='1'>
-          <label class="custom-control-label" for="subprocesos"></label>
-        </div>
       </div>
       <div class="form-group col-3 col-md-2">
         <label for="seguimiento">seguimiento</label>

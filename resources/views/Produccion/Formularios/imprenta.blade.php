@@ -179,28 +179,7 @@
           <i type="button" name="remove" id="{{'proceso-'.$j}}" class="fas fa-times removeRow"></i>
         </td>
         <td>
-          <select class="form-control form-control-sm select2Class" name="proceso[id][]">
-            <option selected value="null">Seleccione uno...</option>
-            {{ $group =  $procesos->first()->area_id }}
-            <optgroup label="{{ $procesos->first()->area->area }}">
-            @foreach($procesos as $serv)
-              @if ($group != $serv->area_id)
-              {{ $group = $serv->area_id }}
-              </optgroup>
-              <optgroup label="{{ $serv->area->area }}">
-              @endif
-              @if ($serv->subprocesos == 0)
-              <option value="{{ $serv->id }}" {{(old('proceso.id.'.$j) ?? $oldProcesos[$j]->proceso_id) == $serv->id ? 'selected' : '' }}>{{ $serv->proceso }}</option>
-              @else
-              <option disabled>{{ $serv->proceso }}</option>
-                {{ $subprocesos = $serv->subprocesos }}
-                @foreach($subprocesos as $sub)
-                <option value="{{$serv->id}}.{{$sub->id}}" {{ old('proceso.id.'.$j) ? (old('proceso.id.'.$j) == ($serv->id.'.'.$sub->id) ? 'selected' : '') : ($oldProcesos[$j]->subproceso_id == $sub->id ? 'selected' : '') }}>&nbsp;&nbsp;&nbsp;&nbsp;{{ $sub->subproceso }}</option>
-                @endforeach
-              @endif
-            @endforeach
-            </optgroup>
-          </select>
+          <x-procesos-area :id="'proceso-'.$j" name='proceso[id][]' :old="old('proceso.id.'.$j, $oldProcesos[$j]->proceso_id)" />
         </td>
         <td>
           <input type="number" name="proceso[tiro][]" id="{{'tiro-'.$j}}" class="form-control form-control-sm text-center" value="{{(old('proceso.tiro.'.$j) ?? $oldProcesos[$j]->tiro) ?? '1' }}" min="0" onchange="sumar('{{$j}}')" />
@@ -317,8 +296,8 @@
 
   //SOLICITUD DE MATERIALES
   var materiales = @json($materiales);
-  var mat_grp = materiales[0].categoria_id;
-  var mat_opts = "<option selected value='null'>Seleccione uno...</option></optgroup><optgroup label='"+materiales[0].categoria.categoria+"'>";
+  var mat_grp = materiales.length ? materiales[0].categoria_id : '';
+  var mat_opts = materiales.length ? "<option selected value='null'>Seleccione uno...</option></optgroup><optgroup label='"+materiales[0].categoria.categoria+"'>" : '';
   $.each(materiales, function(indx, val){
     if (mat_grp != val.categoria_id){
       mat_grp = val.categoria_id;
@@ -371,25 +350,7 @@
 
 
   //PROCESOS
-  var procesos = @json($procesos);
-  var serv_grp = procesos[0].area_id;
-  var serv_opts = "<option selected value='null'>Seleccione uno...</option><optgroup label='"+procesos[0].area.area+"'>";
-
-  $.each(procesos, function(indx, val){
-    if (serv_grp != val.area_id){
-      serv_grp = val.area_id;
-      serv_opts += "</optgroup><optgroup label='"+val.area.area+"'>";
-    }
-    if (val.subprocesos == 0){
-      serv_opts += "<option value='"+val.id+"'>"+val.proceso+"</option>";
-    } else {
-      serv_opts += "<option disabled>"+val.proceso+"</option>";
-      $.each(val.subprocesos, (indxs, vals)=>{
-        serv_opts += "<option value='"+val.id+vals.id+"'>&nbsp;&nbsp;&nbsp;&nbsp;"+vals.subproceso+"</option>";
-      });
-    }
-  });
-  // debugger
+  const proc_opts = `<x-procesos-area id='procesos' name='proceso[id][]' :old='$pedido->proceso_id' />`;
 
   $(function(){
     var i = {{$j += 1}};
@@ -398,7 +359,8 @@
 
       let button = $('<i />', {'type': 'button', 'class':'fas fa-times removeRow', 'name': 'remove', 'id':'proceso-'+i});
 
-      let proceso = $('<select />', {'name' : 'proceso[id][]', 'id': 'proceso-'+i, 'class': 'form-control form-control-sm select2Class'}).append(serv_opts);
+      // let proceso = $('<select />', {'name' : 'proceso[id][]', 'id': 'proceso-'+i, 'class': 'form-control form-control-sm select2Class'}).append(proc_opts);
+      let proceso = proc_opts.replace("procesos", 'proceso-'+i);
 
       let tiro = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': '1', 'name':'proceso[tiro][]', 'id': 'tiro-'+i, 'min': '0', 'onchange':'sumar('+i+');'});
 

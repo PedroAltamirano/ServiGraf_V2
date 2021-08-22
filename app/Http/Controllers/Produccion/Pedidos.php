@@ -200,16 +200,10 @@ class Pedidos extends Controller
     Pedido_proceso::where('empresa_id', Auth::user()->empresa_id)->where('pedido_id', $pedido->id)->delete();
     $proSize = sizeof($validator['proceso']['id'] ?? []);
     for($i=0; $i<$proSize; $i++){
-      $proceso = $validator['proceso']['id'][$i];
-      if(strpos($proceso, '.') !== false){
-        $serv = explode('.', $proceso);
-        $proceso = $serv[0];
-      }
-
       $proceso = new Pedido_proceso;
       $proceso->empresa_id = Auth::user()->empresa_id;
       $proceso->pedido_id = $pedido->id;
-      $proceso->proceso_id = $proceso;
+      $proceso->proceso_id = $validator['proceso']['id'][$i];
       $proceso->tiro = $validator['proceso']['tiro'][$i];
       $proceso->retiro = $validator['proceso']['retiro'][$i];
       $proceso->millares = $validator['proceso']['millar'][$i];

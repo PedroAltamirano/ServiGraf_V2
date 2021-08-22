@@ -25,6 +25,10 @@ class Proceso extends Model
       return $this->belongsTo('App\Models\Produccion\Area');
     }
 
+    public function parent(){
+      return $this->belongsTo('App\Models\Produccion\Proceso', 'id', 'parent_id');
+    }
+
     public function childs(){
       return $this->hasMany('App\Models\Produccion\Proceso', 'parent_id');
     }

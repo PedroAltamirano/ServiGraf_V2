@@ -31,16 +31,17 @@
 </x-blueBoard>
 
 <x-blueBoard
-  title='procesos'
+  title='Procesos'
   :foot="[
     ['text'=>'Nuevo', 'href'=>route('proceso.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
   ]"
 >
-  <table id="tableServ" class="table table-striped table-sm">
+  <table id="tableProcesos" class="table table-striped table-sm">
     <thead>
       <tr>
         <th scope="col">Area</th>
         <th scope="col">Proceso</th>
+        <th scope="col">Padre</th>
         <th scope="col">Meta $</th>
         <th scope="col">T xM</th>
         <th scope="col">T xO</th>
@@ -54,6 +55,7 @@
       <tr>
         <td>{{ $item->area->area }}</td>
         <td>{{ $item->proceso }}</td>
+        <td>{{ $item->parent->proceso ?? '' }}</td>
         <td>{{ $item->meta }}</td>
         <td>{{ $item->tmaquina ?? '' }}</td>
         <td>{{ $item->toperador ?? '' }}</td>
@@ -102,13 +104,7 @@
 @section('scripts')
 <script>
   $(document).ready(function() {
-    $('#tableServ').DataTable({
-      "paging":   true,
-      "ordering": true,
-      "info":     false,
-      "responsive": true,
-    });
-    $('#tableSubs').DataTable({
+    $('#tableProcesos').DataTable({
       "paging":   true,
       "ordering": true,
       "info":     false,
