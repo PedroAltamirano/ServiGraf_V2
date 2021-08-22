@@ -30,7 +30,7 @@ class BancoController extends Controller
     $validated['usuario_id'] = Auth::id();
     $libro_ref = Banco::create($validated);
 
-    Alert::success('Acción completada', 'Referencia creada con éxito');
+    Alert::success('Acción completada', 'Banco creado con éxito');
     return redirect()->back();
   }
 
@@ -46,7 +46,7 @@ class BancoController extends Controller
     $validated = $request->validated();
     $banco->update($validated);
 
-    Alert::success('Acción completada', 'Referencia modificada con éxito');
+    Alert::success('Acción completada', 'Banco modificado con éxito');
     return redirect()->back();
   }
 }

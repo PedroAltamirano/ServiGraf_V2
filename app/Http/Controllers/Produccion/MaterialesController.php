@@ -20,20 +20,21 @@ class MaterialesController extends Controller
   use SoftDeletes;
 
   /**
-  * Create a new controller instance.
-  *
-  * @return void
-  */
+   * Create a new controller instance.
+   *
+   * @return void
+   */
   public function __construct()
   {
   }
 
   /**
-  * Show pedidos dashboard.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function show(){
+   * Show pedidos dashboard.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function show()
+  {
     $materiales = Material::where('empresa_id', Auth::user()->empresa_id)->get();
     $tintas = Tinta::where('empresa_id', Auth::user()->empresa_id)->get();
     $categorias = Categoria::where('empresa_id', Auth::user()->empresa_id)->get();
@@ -41,11 +42,12 @@ class MaterialesController extends Controller
   }
 
   /**
-  * Show the application dashboard.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function create(){
+   * Show the application dashboard.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function create()
+  {
     $material = new Material;
     $categorias = Categoria::where('empresa_id', Auth::user()->empresa_id)->get();
     $data = [
@@ -59,7 +61,8 @@ class MaterialesController extends Controller
   }
 
   // crear nuevo
-  public function store(StoreMaterial $request){
+  public function store(StoreMaterial $request)
+  {
     $validator = $request->validated();
     $validator['empresa_id'] = Auth::user()->empresa_id;
     $validator['color'] = $validator['color'] ?? 0;
@@ -69,30 +72,27 @@ class MaterialesController extends Controller
 
     $material = Material::create($validator);
 
-    $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'El pedido se ha creado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->route('material.edit', $material->id)->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Material creado con éxito');
+    return redirect()->route('material.edit', $material->id);
   }
 
   //ver modificar
-  public function edit(Material $material){
+  public function edit(Material $material)
+  {
     $categorias = Categoria::where('empresa_id', Auth::user()->empresa_id)->get();
     $data = [
-      'text'=>'Modificar Material',
-      'path'=> route('material.update', $material->id),
+      'text' => 'Modificar Material',
+      'path' => route('material.update', $material->id),
       'method' => 'PUT',
-      'action'=>'Modificar',
+      'action' => 'Modificar',
       'mod' => 1,
     ];
     return view('Produccion.material', compact('material', 'categorias'))->with($data);
   }
 
   //modificar perfil
-  public function update(UpdateMaterial $request, Material $material){
+  public function update(UpdateMaterial $request, Material $material)
+  {
     $validator = $request->validated();
     $validator['color'] = $validator['color'] ?? 0;
     $validator['uv'] = $validator['uv'] ?? 0;
@@ -101,12 +101,7 @@ class MaterialesController extends Controller
 
     $material->update($validator);
 
-    $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'El pedido se ha modificado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
+    Alert::success('Acción completada', 'Material modificado con éxito');
     return redirect()->route('material.edit', $material->id)->with(['actionStatus' => json_encode($data)]);
   }
 }

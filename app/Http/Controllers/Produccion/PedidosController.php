@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Produccion;
 
 use Carbon\Carbon;
@@ -27,30 +28,32 @@ class PedidosController extends Controller
   use SoftDeletes;
 
   /**
-  * Create a new controller instance.
-  *
-  * @return void
-  */
+   * Create a new controller instance.
+   *
+   * @return void
+   */
   public function __construct()
   {
   }
 
   /**
-  * Show pedidos dashboard.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function show(){
+   * Show pedidos dashboard.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function show()
+  {
     $pedidos = Pedido::incompletas();
     return view('Produccion/pedidos', compact('pedidos'));
   }
 
   /**
-  * Show the application dashboard.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function create(){
+   * Show the application dashboard.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function create()
+  {
     $pedido = new Pedido;
     $data = [
       'text' => 'Nuevo Pedido',
@@ -63,7 +66,8 @@ class PedidosController extends Controller
   }
 
   // crear nuevo
-  public function store(StorePedidoImprenta $request){
+  public function store(StorePedidoImprenta $request)
+  {
     $num = Pedido::where('empresa_id', Auth::user()->empresa_id)->orderBy('numero', 'desc')->first()->numero;
 
     $validator = $request->validated();
@@ -73,21 +77,21 @@ class PedidosController extends Controller
     $validator['usuario_mod_id'] = Auth::id();
     $fecha_salida = Carbon::create($validator['fecha_entrada'])->addDays(3)->format('Y-m-d');
     $validator['fecha_salida'] = $fecha_salida;
-    if($request->estado == 2){
+    if ($request->estado == 2) {
       $validator['usuario_cob_id'] = Auth::id();
       $validator['fecha_cobro'] = date('Y-m-d');
     }
     $model = Pedido::create($validator);
     // dd($validator['proceso']);
 
-    foreach($validator['tinta_tiro'] ?? [] as $ttiro){
+    foreach ($validator['tinta_tiro'] ?? [] as $ttiro) {
       $tinta = new Pedido_tintas;
       $tinta->tinta_id = $ttiro;
       $tinta->pedido_id = $model->id;
       $tinta->lado = 1;
       $tinta->save();
     }
-    foreach($validator['tinta_retiro'] ?? [] as $tretiro){
+    foreach ($validator['tinta_retiro'] ?? [] as $tretiro) {
       $tinta = new Pedido_tintas;
       $tinta->tinta_id = $tretiro;
       $tinta->pedido_id = $model->id;
@@ -96,7 +100,7 @@ class PedidosController extends Controller
     }
 
     $matSize = sizeof($validator['material']['id'] ?? []);
-    for($i=0; $i < $matSize; $i++){
+    for ($i = 0; $i < $matSize; $i++) {
       $material = new Solicitud_material;
       $material->empresa_id = Auth::user()->empresa_id;
       $material->pedido_id = $model->id;
@@ -112,7 +116,7 @@ class PedidosController extends Controller
     }
 
     $proSize = sizeof($validator['proceso']['id'] ?? []);
-    for($i=0; $i < $proSize; $i++){
+    for ($i = 0; $i < $proSize; $i++) {
       $proceso = new Pedido_proceso;
       $proceso->empresa_id = Auth::user()->empresa_id;
       $proceso->pedido_id = $model->id;
@@ -126,35 +130,32 @@ class PedidosController extends Controller
       $proceso->save();
     }
 
-    $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'El pedido se ha creado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->route('pedido.edit', $model->id)->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Pedido creado con éxito');
+    return redirect()->route('pedido.edit', $model->id);
   }
 
   //ver modificar
-  public function edit(Pedido $pedido){
+  public function edit(Pedido $pedido)
+  {
     $data = [
-      'text'=>'Modificar Pedido '.$pedido->numero,
-      'path'=> route('pedido.update', $pedido->id),
+      'text' => 'Modificar Pedido ' . $pedido->numero,
+      'path' => route('pedido.update', $pedido->id),
       'method' => 'PUT',
-      'action'=>'Modificar',
+      'action' => 'Modificar',
       'mod' => 1,
     ];
     return view('Produccion.pedido', compact('pedido'))->with($data);
   }
 
   //modificar perfil
-  public function update(UpdatePedidoImprenta $request, Pedido $pedido){
+  public function update(UpdatePedidoImprenta $request, Pedido $pedido)
+  {
     $validator = $request->validated();
     // dd($validator);
     $validator['usuario_mod_id'] = Auth::id();
     $fecha_salida = Carbon::create($validator['fecha_entrada'])->addDays(3)->format('Y-m-d');
     $validator['fecha_salida'] = $fecha_salida;
-    if($request->estado == 2){
+    if ($request->estado == 2) {
       $validator['usuario_cob_id'] = Auth::id();
       $validator['fecha_cobro'] = date('Y-m-d');
     }
@@ -162,14 +163,14 @@ class PedidosController extends Controller
     $pedido->update($validator);
 
     Pedido_tintas::where('pedido_id', $pedido->id)->delete();
-    foreach($validator['tinta_tiro'] ?? [] as $ttiro){
+    foreach ($validator['tinta_tiro'] ?? [] as $ttiro) {
       $tinta = new Pedido_tintas;
       $tinta->tinta_id = $ttiro;
       $tinta->pedido_id = $pedido->id;
       $tinta->lado = 1;
       $tinta->save();
     }
-    foreach($validator['tinta_retiro'] ?? [] as $tretiro){
+    foreach ($validator['tinta_retiro'] ?? [] as $tretiro) {
       $tinta = new Pedido_tintas;
       $tinta->tinta_id = $tretiro;
       $tinta->pedido_id = $pedido->id;
@@ -179,7 +180,7 @@ class PedidosController extends Controller
 
     Solicitud_material::where('empresa_id', Auth::user()->empresa_id)->where('pedido_id', $pedido->id)->delete();
     $matSize = sizeof($validator['material']['id'] ?? []);
-    for($i=0; $i<$matSize; $i++){
+    for ($i = 0; $i < $matSize; $i++) {
       $material = new Solicitud_material;
       $material->empresa_id = Auth::user()->empresa_id;
       $material->pedido_id = $pedido->id;
@@ -196,7 +197,7 @@ class PedidosController extends Controller
 
     Pedido_proceso::where('empresa_id', Auth::user()->empresa_id)->where('pedido_id', $pedido->id)->delete();
     $proSize = sizeof($validator['proceso']['id'] ?? []);
-    for($i=0; $i<$proSize; $i++){
+    for ($i = 0; $i < $proSize; $i++) {
       $proceso = new Pedido_proceso;
       $proceso->empresa_id = Auth::user()->empresa_id;
       $proceso->pedido_id = $pedido->id;
@@ -210,19 +211,15 @@ class PedidosController extends Controller
       $proceso->save();
     }
 
-    $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'El pedido se ha modificado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->route('pedido.edit', $pedido->id)->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Pedido modificado con éxito');
+    return redirect()->route('pedido.edit', $pedido->id);
   }
 
-  public function abonos(Request $request, $data_id){
+  public function abonos(Request $request, $data_id)
+  {
     Abono::where('pedido_id', $data_id)->delete();
     $aboSize = sizeof($request->abono['pago']);
-    for($i=0; $i<$aboSize; $i++){
+    for ($i = 0; $i < $aboSize; $i++) {
       $model = new Abono;
       $model->pedido_id = $data_id;
       $model->usuario_id = Auth::id();
@@ -236,22 +233,19 @@ class PedidosController extends Controller
     $model->saldo = $model->total_pedido - $request->totalAbonos;
     $model->save();
 
-    $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'El abono se ha creado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Abono creado con éxito');
+    return redirect()->back();
   }
 
   //AJAX
   //get todos los perfiles
-  public function get(){
+  public function get()
+  {
     $data['data'] = Pedido::todos();
   }
 
-  public function modal(Request $request){
+  public function modal(Request $request)
+  {
     $pedido = Pedido::find($request->pedido_id);
     $method = 'PUT';
     return view('components.modalPedido', compact('pedido', 'method'));

@@ -15,18 +15,14 @@ class ProveedoresController extends Controller
 {
   use SoftDeletes;
 
-  public function store(StoreProveedor $request){
+  public function store(StoreProveedor $request)
+  {
     $validator = $request->validated();
     $validator['empresa_id'] = Auth::user()->empresa_id;
     $validator['usuario_id'] = Auth::id();
     $proveedor = Proveedor::create($validator);
 
-    $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'El proveedor se ha creado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Proveedor creado con éxito');
+    return redirect()->back();
   }
 }

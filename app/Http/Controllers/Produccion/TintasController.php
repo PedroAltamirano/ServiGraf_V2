@@ -17,34 +17,27 @@ class TintasController extends Controller
   use SoftDeletes;
 
   // crear nuevo
-  public function store(StoreTinta $request){
+  public function store(StoreTinta $request)
+  {
     $validator = $request->validated();
     $validator['empresa_id'] = Auth::user()->empresa_id;
     // dd($validator);
 
     $tinta = Tinta::create($validator);
 
-    $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'El pedido se ha creado con éxito'
-    ];
-    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Tinta creada con éxito');
+    return redirect()->back();
   }
 
   //modificar perfil
-  public function update(UpdateTinta $request, Tinta $tinta){
+  public function update(UpdateTinta $request, Tinta $tinta)
+  {
     $validator = $request->validated();
     // dd($validator);
 
     $tinta->update($validator);
 
-    $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'El pedido se ha modificado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Tinta modificada con éxito');
+    return redirect()->back();
   }
 }
