@@ -45,8 +45,8 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::middleware('auth')
 ->group(function () {
-    Route::get('/desktop', 'Desktop@showAdmin')->name('desktop')->middleware('hasModRol:10,1');
-    Route::get('/tablero', 'Desktop@show')->name('tablero');
+    Route::get('/desktop', 'DesktopController@showAdmin')->name('desktop')->middleware('hasModRol:10,1');
+    Route::get('/tablero', 'DesktopController@show')->name('tablero');
 
     // KPIs
     include('kpis.php');

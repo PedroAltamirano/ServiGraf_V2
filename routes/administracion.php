@@ -3,12 +3,12 @@
 Route::namespace('Administracion')
 ->middleware('hasModRol:20,1')
 ->group(function () {
-  Route::get('facturacion', 'Facturacion@show')->name('facturacion')->middleware('hasModRol:21,1');
-  Route::get('getFacturas', 'Facturacion@getFacts')->name('getFacturacion')->middleware('hasModRol:20,1');
-  Route::get('factura/nueva', 'Facturacion@create')->name('factura.create')->middleware('hasModRol:21,2');
-  Route::post('factura/nueva', 'Facturacion@store')->name('factura.store')->middleware('hasModRol:21,2');
-  Route::get('factura/modificar/{factura}', 'Facturacion@edit')->name('factura.edit')->middleware('hasModRol:21,3');
-  Route::put('factura/modificar/{factura}', 'Facturacion@update')->name('factura.update')->middleware('hasModRol:21,3');
+  Route::get('facturacion', 'FacturacionController@show')->name('facturacion')->middleware('hasModRol:21,1');
+  Route::get('getFacturas', 'FacturacionController@getFacts')->name('getFacturacion')->middleware('hasModRol:20,1');
+  Route::get('factura/nueva', 'FacturacionController@create')->name('factura.create')->middleware('hasModRol:21,2');
+  Route::post('factura/nueva', 'FacturacionController@store')->name('factura.store')->middleware('hasModRol:21,2');
+  Route::get('factura/modificar/{factura}', 'FacturacionController@edit')->name('factura.edit')->middleware('hasModRol:21,3');
+  Route::put('factura/modificar/{factura}', 'FacturacionController@update')->name('factura.update')->middleware('hasModRol:21,3');
 
   Route::get('libro', 'LibroController@index')->name('libro')->middleware('hasModRol:23,1');
   Route::post('libro/nuevo', 'LibroController@store')->name('libro.store')->middleware('hasModRol:23,1');
