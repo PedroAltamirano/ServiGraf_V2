@@ -20,13 +20,13 @@ class Pedido_proceso extends Model
         'created_at', 'updated_at', 'ot_id'
     ];
 
-    function ot()
+    function pedido()
     {
-        return $this->belongsTo('App\Models\Produccion\Pedido');
+        return $this->belongsTo(Pedido::class);
     }
 
     function proceso()
     {
-        return $this->belongsTo('App\Models\Produccion\Proceso');
+        return $this->belongsTo(Proceso::class);
     }
 }

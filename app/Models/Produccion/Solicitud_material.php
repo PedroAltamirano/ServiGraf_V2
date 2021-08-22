@@ -10,6 +10,6 @@ class Solicitud_material extends Model
 
   public function material()
   {
-      return $this->belongsTo('App\Models\Produccion\Material', 'material_id');
+      return $this->belongsTo(Material::class, 'material_id');
   }
 }

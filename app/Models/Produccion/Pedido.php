@@ -54,9 +54,14 @@ class Pedido extends Model
         return $this->belongsTo(Cliente::class, 'cliente_id');
     }
 
+    public function material_id()
+    {
+        return $this->hasMany(Solicitud_material::class, 'pedido_id');
+    }
+
     public function material()
     {
-        return $this->hasMany(Solicitud_material::class);
+        return $this->belongsToMany(Material::class, 'solicitud_materials', 'pedido_id', 'material_id');
     }
 
     public function procesos_id()
@@ -74,9 +79,14 @@ class Pedido extends Model
         return $this->belongsToMany(Proceso::class, 'pedido_proceso', 'pedido_id', 'proceso_id')->where('status', 0);
     }
 
+    public function tintas_id()
+    {
+      return $this->hasMany(Pedido_tintas::class);
+    }
+
     public function tintas()
     {
-        return $this->hasMany(Pedido_tintas::class);
+      return $this->hasMany(Tinta::class, 'pedido_tintas', 'pedido_id', 'tinta_id');
     }
 
     public function abonos()
@@ -142,22 +152,4 @@ class Pedido extends Model
     public static function reporteAreas($id){
         return Pedido_proceso::where('pedido_id', $id)->join('procesos', 'pedido_procesos.proceso_id' ,'=', 'procesos.id')->select('area_id', DB::raw('sum(total) as totalArea'))->groupBy('area_id')->get()->toArray();
     }
-
-    /**
-     * @return id de las tintas del retiro
-     */
-    public function tintasTiro($query){
-        // return $query->tintas->reject(function($tinta){return $tinta->lado == 0;})->map(function($tintas){return $tintas->tinta_id;})->toArray()
-        return $query->tintas->toArray();
-    }
-
-    // public function material()
-    // {
-    //     return $this->belongsTo('App\Models\Ventas\Cliente');
-    // }
-
-    // public function abonos()
-    // {
-    //     return $this->belongsTo('App\Models\Ventas\Cliente');
-    // }
 }

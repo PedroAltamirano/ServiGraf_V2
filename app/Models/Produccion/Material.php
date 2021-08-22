@@ -21,6 +21,6 @@ class Material extends Model
   ];
 
   public function categoria(){
-    return $this->belongsTo('App\Models\Produccion\Categoria');
+    return $this->belongsTo(Categoria::class);
   }
 }

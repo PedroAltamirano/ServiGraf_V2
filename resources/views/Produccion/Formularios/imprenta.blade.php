@@ -3,9 +3,9 @@
   $materiales = App\Models\Produccion\Material::where('empresa_id', Auth::user()->empresa_id)->orderBy('categoria_id')->with('categoria')->get();
   $procesos = App\Models\Produccion\Proceso::where('empresa_id', Auth::user()->empresa_id)->orderBy('area_id')->with('area')->get();
   $tintas = App\Models\Produccion\Tinta::where('empresa_id', Auth::user()->empresa_id)->get();
-  $oldTintasTiro = old('tinta_tiro') ?? $pedido->tintas->reject(function($tinta){return $tinta->lado == 0;})->map(function($tintas){return $tintas->tinta_id;})->toArray();
-  $oldTintasRetiro = old('tinta_retiro') ?? $pedido->tintas->reject(function($tinta){return $tinta->lado == 1;})->map(function($tintas){return $tintas->tinta_id;})->toArray();
-  $oldMaterial = $pedido->material ?? json_encode(new stdClass);
+  $oldTintasTiro = old('tinta_tiro') ?? $pedido->tintas_id->reject(function($tinta){return $tinta->lado == 0;})->map(function($tintas){return $tintas->tinta_id;})->toArray();
+  $oldTintasRetiro = old('tinta_retiro') ?? $pedido->tintas_id->reject(function($tinta){return $tinta->lado == 1;})->map(function($tintas){return $tintas->tinta_id;})->toArray();
+  $oldMaterial = $pedido->material_id ?? json_encode(new stdClass);
   $oldProcesos = $pedido->procesos_id ?? json_encode(new stdClass);
   $oldAbonos = $pedido->abonos ?? json_encode(new stdClass);
   $matCount = count(old("material.id", $oldMaterial) ?? []);

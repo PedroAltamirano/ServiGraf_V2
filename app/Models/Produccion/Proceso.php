@@ -22,14 +22,14 @@ class Proceso extends Model
 
     public function area()
     {
-      return $this->belongsTo('App\Models\Produccion\Area');
+      return $this->belongsTo(Area::class);
     }
 
     public function parent(){
-      return $this->belongsTo('App\Models\Produccion\Proceso', 'id', 'parent_id');
+      return $this->belongsTo(Proceso::class, 'parent_id');
     }
 
     public function childs(){
-      return $this->hasMany('App\Models\Produccion\Proceso', 'parent_id');
+      return $this->hasMany(Proceso::class, 'parent_id');
     }
 }
