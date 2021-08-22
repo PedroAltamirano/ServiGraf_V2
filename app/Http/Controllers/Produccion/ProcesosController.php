@@ -1,16 +1,17 @@
 <?php
 namespace App\Http\Controllers\Produccion;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Produccion\Area;
 use App\Models\Produccion\Proceso;
 
 use App\Http\Requests\Produccion\StoreProceso;
 use App\Http\Requests\Produccion\UpdateProceso;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProcesosController extends Controller
 {
@@ -64,6 +65,7 @@ class ProcesosController extends Controller
       'title'=>'Acción completada',
       'message'=>'El  se ha creado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->route('proceso.edit', $proceso->id)->with(['actionStatus' => json_encode($data)]);
   }
 
@@ -93,6 +95,7 @@ class ProcesosController extends Controller
       'title'=>'Acción completada',
       'message'=>'El  se ha modificado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->route('proceso.edit', $proceso->id)->with(['actionStatus' => json_encode($data)]);
   }
 }

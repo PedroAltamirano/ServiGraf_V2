@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Sistema;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+use App\Models\Sistema\CentroCostos;
+
 use App\Http\Requests\Sistema\StoreCentroCostos;
 use App\Http\Requests\Sistema\UpdateCentroCostos;
-use App\Models\Sistema\CentroCostos;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CentroCostosController extends Controller
 {
@@ -51,6 +55,7 @@ class CentroCostosController extends Controller
         'title'=>'Acción completada',
         'message'=>'El centro de costos se ha creado con éxito'
       ];
+      Alert::success('Acción completada', 'La área se ha modificado con éxito');
       return redirect()->back()->with($data);
     }
 
@@ -93,6 +98,7 @@ class CentroCostosController extends Controller
         'title'=>'Acción completada',
         'message'=>'El centro de costos se ha modificado con éxito'
       ];
+      Alert::success('Acción completada', 'La área se ha modificado con éxito');
       return redirect()->back()->with($data);
     }
 

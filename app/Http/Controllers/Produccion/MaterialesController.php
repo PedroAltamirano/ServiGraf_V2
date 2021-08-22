@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Produccion;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Produccion\Tinta;
 use App\Models\Produccion\Material;
@@ -11,7 +14,6 @@ use App\Models\Produccion\Categoria;
 
 use App\Http\Requests\Produccion\StoreMaterial;
 use App\Http\Requests\Produccion\UpdateMaterial;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MaterialesController extends Controller
 {
@@ -72,6 +74,7 @@ class MaterialesController extends Controller
       'title'=>'Acción completada',
       'message'=>'El pedido se ha creado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->route('material.edit', $material->id)->with(['actionStatus' => json_encode($data)]);
   }
 
@@ -103,6 +106,7 @@ class MaterialesController extends Controller
       'title'=>'Acción completada',
       'message'=>'El pedido se ha modificado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->route('material.edit', $material->id)->with(['actionStatus' => json_encode($data)]);
   }
 }

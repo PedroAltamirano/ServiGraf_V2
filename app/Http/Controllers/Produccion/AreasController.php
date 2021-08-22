@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Produccion;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Produccion\Area;
 use App\Http\Requests\Produccion\StoreArea;
 use App\Http\Requests\Produccion\UpdateArea;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AreasController extends Controller
 {
@@ -25,6 +27,7 @@ class AreasController extends Controller
       'title'=>'Acción completada',
       'message'=>'La área se ha creado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->back()->with(['actionStatus' => json_encode($data)]);
   }
 
@@ -33,12 +36,8 @@ class AreasController extends Controller
     $validator = $request->validated();
     $area->update($validator);
 
-    $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'La área se ha modificado con éxito'
-    ];
-    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
+    return redirect()->back();
   }
 
   public function delete(Area $area){
@@ -49,6 +48,7 @@ class AreasController extends Controller
       'title'=>'Acción completada',
       'message'=>'La área se ha eliminado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->back()->with(['actionStatus' => json_encode($data)]);
   }
 }

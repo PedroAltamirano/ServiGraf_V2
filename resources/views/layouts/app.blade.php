@@ -142,6 +142,8 @@
 
   <!-- STATUS MODAL -->
   <x-status />
+  {{-- SWEET ALERT --}}
+  @include('sweetalert::alert')
   <!-- ERRORS ALERT -->
   <x-errors />
 

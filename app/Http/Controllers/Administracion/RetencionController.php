@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Administracion;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Administracion\Retencion as Requestretencion;
-use App\Models\Administracion\Retencion;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+use App\Models\Administracion\Retencion;
+
+use App\Http\Requests\Administracion\StoreRetencion;
 
 class RetencionController extends Controller
 {
@@ -39,7 +43,7 @@ class RetencionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Requestretencion $request)
+    public function store(StoreRetencion $request)
     {
       $validated = $request->validated();
       $validated['empresa_id'] = Auth::user()->empresa_id;
@@ -52,6 +56,7 @@ class RetencionController extends Controller
         'title'=>'Acción completada',
         'message'=>'La retención se ha creado con éxito'
       ];
+      Alert::success('Acción completada', 'La área se ha modificado con éxito');
       return redirect()->back()->with($data);
     }
 
@@ -84,7 +89,7 @@ class RetencionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Requestretencion $request, Retencion $retencion)
+    public function update(StoreRetencion $request, Retencion $retencion)
     {
       $validated = $request->validated();
       $validated['empresa_id'] = Auth::user()->empresa_id;
@@ -97,6 +102,7 @@ class RetencionController extends Controller
         'title'=>'Acción completada',
         'message'=>'La retención se ha modificado con éxito'
       ];
+      Alert::success('Acción completada', 'La área se ha modificado con éxito');
       return redirect()->back()->with($data);
     }
 

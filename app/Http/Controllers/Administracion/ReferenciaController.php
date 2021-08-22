@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Administracion;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Administracion\Libro_ref;
 
 use App\HTTP\Requests\Administracion\StoreReferencia;
 use App\HTTP\Requests\Administracion\UpdateReferencia;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ReferenciaController extends Controller
 {
@@ -34,6 +36,7 @@ class ReferenciaController extends Controller
       'title'=>'Acción completada',
       'message'=>'La referencia se ha creado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->back()->with(['actionStatus' => json_encode($data)]);
   }
 
@@ -54,6 +57,7 @@ class ReferenciaController extends Controller
       'title'=>'Acción completada',
       'message'=>'La referencia se ha modificado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->back()->with(['actionStatus' => json_encode($data)]);
   }
 }

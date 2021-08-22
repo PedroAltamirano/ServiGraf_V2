@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Administracion;
 
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Sistema\Empresa;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Carbon;
-use Session;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Security;
 use App\Models\Administracion\Factura;
@@ -18,12 +17,11 @@ use App\Models\Administracion\Iva;
 use App\Models\Administracion\Retencion;
 use App\Models\Ventas\Cliente;
 use App\Models\Sistema\Fact_empr;
+use App\Models\Administracion\FacturaPedido;
+use App\Models\Produccion\Pedido;
 
 use App\Http\Requests\Administracion\StoreFactura;
 use App\Http\Requests\Administracion\UpdateFactura;
-use App\Models\Administracion\FacturaPedido;
-use App\Models\Produccion\Pedido;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FacturacionController extends Controller
 {
@@ -109,7 +107,7 @@ class FacturacionController extends Controller
       'title'=>'Acción completada',
       'message'=>'La factura se ha creado con éxito'
     ];
-
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->route('factura.edit', $factura)->with(['actionStatus' => json_encode($data)]);
   }
 
@@ -168,6 +166,7 @@ class FacturacionController extends Controller
       'title' => 'Acción completada',
       'message' => 'La factura se ha modificado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->route('factura.edit', $factura->id)->with(['actionStatus' => json_encode($data)]);
   }
 

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Administracion;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Usuarios\Usuario;
 use App\Models\Administracion\Libro_movimientos;
@@ -15,7 +18,6 @@ use App\Models\Administracion\Banco;
 use App\Http\Resources\Administracion\LibroResource;
 use App\Http\Requests\Administracion\StoreEntrada;
 use App\Http\Requests\Administracion\UpdateEntrada;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EntradaController extends Controller
 {
@@ -56,10 +58,11 @@ class EntradaController extends Controller
     $entrada = Libro_movimientos::create($validated);
 
     $data = [
-    'type'=>'success',
-    'title'=>'Acción completada',
-    'message'=>'La entrada se ha creado con éxito'
-  ];
+      'type'=>'success',
+      'title'=>'Acción completada',
+      'message'=>'La entrada se ha creado con éxito'
+    ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->route('entrada.edit', $entrada)->with(['actionStatus' => json_encode($data)]);
   }
 
@@ -104,10 +107,11 @@ class EntradaController extends Controller
     $entrada->update($validated);
 
     $data = [
-    'type'=>'success',
-    'title'=>'Acción completada',
-    'message'=>'La entrada se ha modificado con éxito'
-  ];
+      'type'=>'success',
+      'title'=>'Acción completada',
+      'message'=>'La entrada se ha modificado con éxito'
+    ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->route('entrada.edit', $entrada)->with(['actionStatus' => json_encode($data)]);
   }
 }

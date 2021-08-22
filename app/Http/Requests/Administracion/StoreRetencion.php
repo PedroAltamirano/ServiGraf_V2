@@ -4,7 +4,7 @@ namespace App\Http\Requests\Administracion;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Iva extends FormRequest
+class StoreRetencion extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,6 +25,8 @@ class Iva extends FormRequest
     {
         return [
           'porcentaje' => ['required', 'numeric'],
+          'tipo' => ['required', 'boolean'],
+          'descripcion' => ['required', 'string', 'max:250'],
           'status' => ['nullable', 'boolean'],
         ];
     }

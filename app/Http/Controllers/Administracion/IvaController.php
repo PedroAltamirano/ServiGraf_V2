@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Administracion;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Administracion\Iva as RequestIva;
-use App\Models\Administracion\Iva;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+use App\Models\Administracion\Iva;
+
+use App\Http\Requests\Administracion\StoreIva;
 
 class IvaController extends Controller
 {
@@ -39,7 +43,7 @@ class IvaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RequestIva $request)
+    public function store(StoreIva $request)
     {
       $validated = $request->validated();
       $validated['empresa_id'] = Auth::user()->empresa_id;
@@ -84,7 +88,7 @@ class IvaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RequestIva $request, Iva $iva)
+    public function update(StoreIva $request, Iva $iva)
     {
       $validated = $request->validated();
       $validated['status'] = $validated['status'] ?? 0;

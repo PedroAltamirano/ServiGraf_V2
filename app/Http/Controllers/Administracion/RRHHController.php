@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Administracion;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Usuarios\Usuario;
 use App\Models\Administracion\Asistencia;
@@ -12,8 +16,6 @@ use App\Models\Administracion\Asistencia;
 use App\Http\Requests\Administracion\StoreAsistencia;
 use App\Http\Requests\Administracion\UpdateAsistencia;
 use App\Http\Resources\Administracion\RRHHResource;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RRHHController extends Controller
 {
@@ -100,6 +102,7 @@ class RRHHController extends Controller
         'title'=>'Acción completada',
         'message'=>'La asistencia se ha modificado con éxito'
       ];
+      Alert::success('Acción completada', 'La área se ha modificado con éxito');
       return redirect()->back()->with(['actionStatus' => json_encode($data)]);
     }
 
@@ -117,6 +120,7 @@ class RRHHController extends Controller
         'title'=>'Acción completada',
         'message'=>'La asistencia se ha eliminado con éxito'
       ];
+      Alert::success('Acción completada', 'La área se ha modificado con éxito');
       return redirect()->back()->with(['actionStatus' => json_encode($data)]);
     }
 

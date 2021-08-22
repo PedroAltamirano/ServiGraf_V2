@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Ventas;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use stdClass;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Ventas\Contacto;
 use App\Models\Ventas\Cliente_empresa;
@@ -12,43 +17,42 @@ use App\Models\Ventas\Cliente;
 
 use App\Http\Requests\Ventas\StoreCliente;
 use App\Http\Requests\Ventas\UpdateCliente;
-use Facade\FlareClient\Http\Client;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Http\Request;
-use stdClass;
 
 class ClientesController extends Controller
 {
   use SoftDeletes;
 
-  public function store(StoreCliente $request){
+  public function store(StoreCliente $request)
+  {
     $validator = $request->validated();
     $validator['empresa_id'] = Auth::user()->empresa_id;
     $ex = Cliente_empresa::where('ruc', $validator['ruc']);
-    if($ex->exists()){
+    if ($ex->exists()) {
       $cli_empresa = $ex->first();
     } else {
-      $cli_empresa = Cliente_empresa::create(['nombre'=>$validator['empresa'], 'ruc'=>$validator['ruc'], 'empresa_id'=>$validator['empresa_id'], ]);
+      $cli_empresa = Cliente_empresa::create(['nombre' => $validator['empresa'], 'ruc' => $validator['ruc'], 'empresa_id' => $validator['empresa_id'],]);
     }
 
     $validator['usuario_id'] = Auth::id();
     $validator['cliente_empresa_id'] = $cli_empresa->id;
     $contacto = Contacto::create(Arr::except($validator, ['empresa', 'ruc', 'isCliente', 'seguimento']));
 
-    if(isset($validator['isCliente'])){
+    if (isset($validator['isCliente'])) {
       $validator['contacto_id'] = $contacto->id;
       $cliente = Cliente::create(Arr::only($validator, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimento']));
     }
 
     $data = [
-      'type'=>'success',
-      'title'=>'Acción completada',
-      'message'=>'El cliente se ha creado con éxito'
+      'type' => 'success',
+      'title' => 'Acción completada',
+      'message' => 'El cliente se ha creado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->back()->with(['actionStatus' => json_encode($data)]);
   }
 
-  public function info(Request $request) {
+  public function info(Request $request)
+  {
     $cli = Cliente::find($request->cliente_id);
     $cont = $cli->contacto;
     $emp = $cli->empresa;

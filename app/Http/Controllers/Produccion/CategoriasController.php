@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Produccion;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Http\Requests\Produccion\StoreCategoria;
 use App\Http\Requests\Produccion\UpdateCategoria;
 use App\Models\Produccion\Categoria;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CategoriasController extends Controller
 {
@@ -25,6 +27,7 @@ class CategoriasController extends Controller
       'title'=>'Acción completada',
       'message'=>'El pedido se ha creado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->back()->with(['actionStatus' => json_encode($data)]);
   }
 
@@ -38,6 +41,7 @@ class CategoriasController extends Controller
       'title'=>'Acción completada',
       'message'=>'El pedido se ha modificado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->back()->with(['actionStatus' => json_encode($data)]);
   }
 }

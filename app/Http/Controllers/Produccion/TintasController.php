@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Produccion;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Http\Requests\Produccion\StoreTinta;
 use App\Http\Requests\Produccion\UpdateTinta;
 use App\Models\Produccion\Tinta;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TintasController extends Controller
 {
@@ -42,6 +44,7 @@ class TintasController extends Controller
       'title'=>'Acción completada',
       'message'=>'El pedido se ha modificado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->back()->with(['actionStatus' => json_encode($data)]);
   }
 }

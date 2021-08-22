@@ -1,8 +1,13 @@
 <?php
 namespace App\Http\Controllers\Produccion;
 
-use Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Produccion\Pedido;
 use App\Models\Produccion\Tinta;
@@ -14,11 +19,8 @@ use App\Models\Produccion\Abono;
 use App\Models\Ventas\Cliente;
 use App\View\Components\modalPedido;
 
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Produccion\StorePedidoImprenta;
 use App\Http\Requests\Produccion\UpdatePedidoImprenta;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PedidosController extends Controller
 {
@@ -129,6 +131,7 @@ class PedidosController extends Controller
       'title'=>'Acción completada',
       'message'=>'El pedido se ha creado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->route('pedido.edit', $model->id)->with(['actionStatus' => json_encode($data)]);
   }
 
@@ -212,6 +215,7 @@ class PedidosController extends Controller
       'title'=>'Acción completada',
       'message'=>'El pedido se ha modificado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->route('pedido.edit', $pedido->id)->with(['actionStatus' => json_encode($data)]);
   }
 
@@ -237,6 +241,7 @@ class PedidosController extends Controller
       'title'=>'Acción completada',
       'message'=>'El abono se ha creado con éxito'
     ];
+    Alert::success('Acción completada', 'La área se ha modificado con éxito');
     return redirect()->back()->with(['actionStatus' => json_encode($data)]);
   }
 
