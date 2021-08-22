@@ -73,13 +73,8 @@ class UsuariosController extends Controller
     $validator['password'] = Hash::make($request->password);
     $usuario = Usuario::create($validator);
 
-    $data = [
-      'type' => 'success',
-      'title' => 'Acción completada',
-      'message' => 'El usuario se ha creado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->route('usuario.modificar', [$usuario->cedula])->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Usuario creado con éxito');
+    return redirect()->route('usuario.modificar', $usuario->cedula);
   }
 
   //ver modificar usuario
@@ -126,13 +121,8 @@ class UsuariosController extends Controller
       $new->save();
     }
 
-    $data = [
-      'type' => 'success',
-      'title' => 'Acción completada',
-      'message' => 'El usuario se ha modificado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->route('usuario.modificar', [$usuario->cedula])->with('actionStatus', json_encode($data));
+    Alert::success('Acción completada', 'Usuario modificado con éxito');
+    return redirect()->route('usuario.modificar', $usuario->cedula);
   }
 
 

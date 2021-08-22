@@ -41,7 +41,7 @@ class CRMController extends Controller
    */
   public function store(Request $request)
   {
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
+    Alert::success('Acción completada', 'Evento creado con éxito');
   }
 
   /**

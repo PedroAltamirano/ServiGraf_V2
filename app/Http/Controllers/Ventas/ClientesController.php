@@ -42,13 +42,8 @@ class ClientesController extends Controller
       $cliente = Cliente::create(Arr::only($validator, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimento']));
     }
 
-    $data = [
-      'type' => 'success',
-      'title' => 'Acción completada',
-      'message' => 'El cliente se ha creado con éxito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->back()->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Cliente creado con éxito');
+    return redirect()->back();
   }
 
   public function info(Request $request)

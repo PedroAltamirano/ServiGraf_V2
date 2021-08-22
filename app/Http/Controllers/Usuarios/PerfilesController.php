@@ -76,13 +76,8 @@ class PerfilesController extends Controller
       $modPerfRol->save();
     }
 
-    $data = [
-      'type' => 'success',
-      'title' => 'Accion completada',
-      'message' => 'El perfil se ha creado con exito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->route('perfil.modificar', $perfil->id)->withInput()->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Perfil creado con exito');
+    return redirect()->route('perfil.modificar', $perfil->id);
   }
 
   //ver modificar perfil
@@ -120,13 +115,8 @@ class PerfilesController extends Controller
       $modPerfRol->save();
     }
 
-    $data = [
-      'type' => 'success',
-      'title' => 'Accion completada',
-      'message' => 'El perfil se ha modificado con exito'
-    ];
-    Alert::success('Acción completada', 'La área se ha modificado con éxito');
-    return redirect()->route('perfil.modificar', $perfil->id)->with(['actionStatus' => json_encode($data)]);
+    Alert::success('Acción completada', 'Perfil modificado con exito');
+    return redirect()->route('perfil.modificar', $perfil->id);
   }
 
 
