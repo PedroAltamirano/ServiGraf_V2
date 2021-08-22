@@ -3,7 +3,7 @@
 namespace App\Models\Sistema;
 
 use Illuminate\Database\Eloquent\Model;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Usuarios\Usuario;
 
 class Nomina extends Model
@@ -29,13 +29,14 @@ class Nomina extends Model
     }
 
     public static function todos(){
-		return Nomina::where('empresa_id', Auth::user()->empresa_id)->select('nombre', 'apellido', 'cedula')->get();
+		    return Nomina::where('empresa_id', Auth::user()->empresa_id)->select('nombre', 'apellido', 'cedula')->get();
     }
 
     public static function availables(){
         $usuarios = Usuario::where('empresa_id', Auth::user()->empresa_id)->get();
-		$nomina = Nomina::where('empresa_id', Auth::user()->empresa_id)->select('nombre', 'apellido', 'cedula')->get();
-		return $nomina->diff($usuarios);
+		    $nomina = Nomina::where('empresa_id', Auth::user()->empresa_id)->select('nombre', 'apellido', 'cedula')->get();
+
+        return $nomina->diff($usuarios);
     }
 
     public function getNombreCompletoAttribute() {

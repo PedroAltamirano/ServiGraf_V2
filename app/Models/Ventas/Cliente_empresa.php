@@ -14,6 +14,6 @@ class Cliente_empresa extends Model
 
   public function clientes()
   {
-    return $this->hasMany('App\Models\Ventas\Cliente_empresa', 'cliente_empresa_id');
+    return $this->hasMany(Cliente_empresa::class, 'cliente_empresa_id');
   }
 }

@@ -6,6 +6,13 @@ namespace App\Models\Usuarios;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Models\Sistema\Nomina;
+use App\Models\Sistema\Empresas;
+use App\Models\Usuarios\ModPerfRol;
+use App\Models\Produccion\Proceso;
+use App\Models\Usuarios\UsuarioProceso;
+use App\Models\Ventas\Cliente;
+use App\Models\Usuarios\UsuarioClientes;
 use App\Models\Administracion\Libro;
 
 class Usuario extends Authenticatable
@@ -34,25 +41,25 @@ class Usuario extends Authenticatable
     ];
 
     public function nomina() {
-        return $this->belongsTo('App\Models\Sistema\Nomina', 'cedula');
+        return $this->belongsTo(Nomina::class, 'cedula');
     }
 
     public function empresa() {
-        return $this->belongsTo('App\Models\Sistema\Empresas', 'empresa_id');
+        return $this->belongsTo(Empresas::class, 'empresa_id');
     }
 
     public function modulos() {
-        return $this->hasMany('App\Models\Usuarios\ModPerfRol', 'perfil_id', 'perfil_id');
+        return $this->hasMany(ModPerfRol::class, 'perfil_id', 'perfil_id');
     }
 
     public function procesos()
     {
-        return $this->hasManyThrough('App\Models\Produccion\Proceso', 'App\Models\Usuarios\UsuarioProceso', 'usuario_id', 'id', 'cedula', 'proceso_id');
+        return $this->hasManyThrough(Proceso::class, UsuarioProceso::class, 'usuario_id', 'id', 'cedula', 'proceso_id');
     }
 
     public function clientes()
     {
-      return $this->hasManyThrough('App\Models\Ventas\Cliente', 'App\Models\Usuarios\UsuarioClientes', 'usuario_id', 'id', 'cedula', 'cliente_id');
+      return $this->hasManyThrough(Cliente::class, UsuarioClientes::class, 'usuario_id', 'id', 'cedula', 'cliente_id');
     }
 
     public function libros()

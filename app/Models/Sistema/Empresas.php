@@ -2,7 +2,11 @@
 
 namespace App\Models\Sistema;
 
+use App\Models\Usuarios\Usuario;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Sistema\DatosEmpresa;
+use App\Models\Sistema\Nomina;
+use App\Models\Sistema\Tipo_empresa;
 
 class Empresas extends Model{
     protected $table = 'empresas';
@@ -18,18 +22,18 @@ class Empresas extends Model{
 
     public function datos()
     {
-        return $this->hasOne('App\Models\Sistema\DatosEmpresa', 'empresa_id');
+        return $this->hasOne(DatosEmpresa::class, 'empresa_id');
     }
-    
+
     public function nomina() {
-        return $this->hasMany('App\Models\Sistema\Nomina', 'empresa_id');
+        return $this->hasMany(Nomina::class, 'empresa_id');
     }
 
     public function usuarios() {
-        return $this->hasMany('App\Models\Usuarios\Usuario', 'empresa_id');
+        return $this->hasMany(Usuario::class, 'empresa_id');
     }
 
     public function tipoEmpresa() {
-        return $this->belongsTo('App\Models\Sistema\Tipo_empresa');
+        return $this->belongsTo(Tipo_empresa::class);
     }
 }
