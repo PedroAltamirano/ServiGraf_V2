@@ -257,33 +257,22 @@
   const fact_num = {{ $fact_num }};
   const fact_new = {{ $factura->id ?? 0 }};
 
+  const route = "{{route('cliente.info')}}";
   function getPhone(){
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-    });
-    $.ajax({
-      url:"{{route('cliente.info')}}",
-      type: 'post',
-      dataType: "json",
-      data: {
-        'cliente_id': $('#cliente').val(),
-      },
-      success: function(data) {
-        $('#ruc').val(data.ruc);
-        $('#telefono').val(data.movil);
-        $('#direccion').val(data.direccion);
-      },
-      error: function(jqXhr, textStatus, errorThrown){
-        Swal.fire('Oops!', errorThrown, 'error');
-        console.log(errorThrown);
-      }
+    axios.post(route, {
+      // cliente_id: $('#cliente').val(),
+    }).then(res => {
+      let data = res.data
+      $('#ruc').val(data.ruc);
+      $('#telefono').val(data.movil);
+      $('#direccion').val(data.direccion);
+    }).catch(err => {
+      Swal.fire('Oops!', err, 'error');
+      console.log(err);
     });
   }
 
   $('#cliente').change(function(){
-    // alert($('#cliente').val());
     getPhone();
   });
 

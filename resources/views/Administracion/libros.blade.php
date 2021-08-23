@@ -71,32 +71,21 @@
 @section('scripts')
 <script src="{{ asset('js/num2word.js') }}"></script>
 <script>
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-
+  const route = "{{ route('libro.api.libros') }}";
   function getLibros(){
-    $.ajax({
-      url:"{{ route('libro.api.libros') }}",
-      type: 'post',
-      dataType: "json",
-      data: {
-        'usuario': $('#usuario').val(),
-      },
-      success: function(data) {
-        let content;
-        $.each(data, (index, value)=>{
-          content += '<option value="'+value.id+'">'+value.libro+'</option>';
-        });
-        $('#libro').empty().append(content);
-        table.ajax.reload(null, false);
-      },
-      error: function(jqXhr, textStatus, errorThrown){
-        Swal.fire('Oops!', errorThrown, 'error');
-        console.log(errorThrown);
-      }
+    axios.post(route, {
+      usuario: $('#usuario_id').val(),
+    }).then(res => {
+      let data = res.data
+      let content;
+      $.each(data, (index, value) => {
+        content += '<option value="'+value.id+'">'+value.libro+'</option>';
+      });
+      $('#libro_id').empty().append(content);
+      table.ajax.reload(null, false);
+    }).catch(err => {
+      Swal.fire('Oops!', err, 'error');
+      console.log(err);
     });
   }
 

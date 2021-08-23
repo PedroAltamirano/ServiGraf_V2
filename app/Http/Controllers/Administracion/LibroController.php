@@ -86,7 +86,7 @@ class LibroController extends Controller
 
   public function api_libros(Request $request)
   {
-    $res = Usuario::find($request->usuario)->libros;
+    $res = Libro::where('usuario_id', $request->usuario)->get();
     return response()->json($res, 200);
   }
 

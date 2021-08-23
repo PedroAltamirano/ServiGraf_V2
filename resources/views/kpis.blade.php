@@ -4,35 +4,33 @@
 
 @push('kpis-script')
 <script>
-  const kpis = ["{{ route('kpi.facturado') }}", "{{ route('kpi.utilidad') }}", "{{ route('kpi.cobrar') }}", "{{ route('kpi.lob_facturacion') }}", "{{ route('kpi.maquinas') }}", "{{ route('kpi.ots') }}", "{{ route('kpi.lob_ots') }}"];
+  const kpis = [
+    "{{ route('kpi.facturado') }}",
+    "{{ route('kpi.utilidad') }}",
+    "{{ route('kpi.cobrar') }}",
+    "{{ route('kpi.lob_facturacion') }}",
+    "{{ route('kpi.maquinas') }}",
+    "{{ route('kpi.ots') }}",
+    "{{ route('kpi.lob_ots') }}"
+  ];
   const fecha = $('#fecha').val();
 
-  $.ajaxSetup({
-    headers: {
-      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-    }
-  });
-
   function getKPI(route){
-    $.ajax({
-      url: route,
-      type: "get",
-      dataType: "html",
-      data: {
-        'fecha' : fecha
-      },
-      success: function success(data) {
-        $("#KPIs").append(data);
-      },
-      error: function error(jqXhr, textStatus, errorThrown) {
-        Swal.fire('Oops!', errorThrown, 'error');
-        console.log(errorThrown);
+    axios.get(route, {
+      params: {
+        fecha : fecha
       }
+    }).then(res => {
+      let data = res.data;
+      $("#KPIs").append(data);
+    }).catch((jqXhr, textStatus, errorThrown) => {
+      Swal.fire('Oops!', errorThrown, 'error');
+      console.log(errorThrown);
     });
   }
 
   $(function(){
-    kpis.forEach((kpi)=>{getKPI(kpi)})
+    kpis.forEach(kpi => { getKPI(kpi) })
   });
 </script>
 @endpush

@@ -106,7 +106,7 @@ class UsuariosController extends Controller
     $usuario->update($validator);
 
     UsuarioProceso::where('usuario_id', Auth::id())->delete();
-    foreach ($validator['procesos'] as $pro) {
+    foreach ($validator['procesos'] ?? [] as $pro) {
       $new = new UsuarioProceso;
       $new->usuario_id = Auth::id();
       $new->proceso_id = $pro;
@@ -114,7 +114,7 @@ class UsuariosController extends Controller
     }
 
     UsuarioClientes::where('usuario_id', Auth::id())->delete();
-    foreach ($validator['clientes'] as $cli) {
+    foreach ($validator['clientes'] ?? [] as $cli) {
       $new = new UsuarioClientes;
       $new->usuario_id = Auth::id();
       $new->cliente_id = $cli;

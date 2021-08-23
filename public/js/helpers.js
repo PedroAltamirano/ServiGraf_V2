@@ -161,31 +161,21 @@ $(".select2Class").select2({
 });
 
 function getModal(pedido_id) {
-  $.ajaxSetup({
-    headers: {
-      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-    }
-  });
-  $.ajax({
-    url: "/pedido/modal",
-    type: "post",
-    dataType: "html",
-    data: {
-      pedido_id: pedido_id
-    },
-    success: function success(data) {
-      $("#modalPedidoDiv").html(data);
-      $("#tinta_tiro").select2({
-        maximumSelectionLength: 4
-      });
-      $("#tinta_retiro").select2({
-        maximumSelectionLength: 4
-      });
-      $("#modalPedido").modal("show");
-    },
-    error: function error(jqXhr, textStatus, errorThrown) {
-      console.log(errorThrown);
-    }
+  axios.post('/pedido/modal', {
+    pedido_id: pedido_id
+  }).then(function (res) {
+    var data = res.data;
+    console.log(data);
+    $("#modalPedidoDiv").html(data);
+    $("#tinta_tiro").select2({
+      maximumSelectionLength: 4
+    });
+    $("#tinta_retiro").select2({
+      maximumSelectionLength: 4
+    });
+    $("#modalPedido").modal("show");
+  })["catch"](function (jqXhr, textStatus, errorThrown) {
+    console.log(errorThrown);
   });
 }
 

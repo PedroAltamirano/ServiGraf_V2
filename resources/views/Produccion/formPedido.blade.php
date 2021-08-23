@@ -89,32 +89,20 @@
 
 @section('after.scripts')
 <script>
+  const route = "{{route('cliente.info')}}";
   function getPhone(){
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-    });
-    $.ajax({
-      url:"{{route('cliente.info')}}",
-      type: 'post',
-      dataType: "json",
-      data: {
-        'cliente_id': $('#cliente').val(),
-      },
-      success: function(data) {
-        $('#cli_telefono').val(data.movil);
-        // alert(data);
-      },
-      error: function(jqXhr, textStatus, errorThrown){
-        Swal.fire('Oops!', errorThrown, 'error');
-        console.log(errorThrown);
-      }
+    axios.post(route, {
+      cliente_id: $('#cliente').val(),
+    }).then(res => {
+      let data = res.data
+      $('#cli_telefono').val(data.movil);
+    }).catch(err => {
+      Swal.fire('Oops!', err, 'error');
+      console.log(err);
     });
   }
 
   $('#cliente').change(function(){
-    // alert($('#cliente').val());
     getPhone();
   });
 

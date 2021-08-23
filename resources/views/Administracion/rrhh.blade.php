@@ -127,12 +127,6 @@
 
 @section('scripts')
 <script>
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-
   var saldo = 0;
   var dato_fecha = '';
   var dato_color = '';
