@@ -65,23 +65,17 @@
 
 @section('scripts')
 <script>
-  let areas = @json($areas);
-
+  // let areas = @json($areas);
   // console.log(areas.length);
+
   const route = "{{ route('pedido.edit', 0) }}";
   var table = $('#table').DataTable({
     "paging":   true,
     "ordering": true,
     "info":     false,
     "responsive": true,
-    // "dom": 'Bfrtip',
-    // "buttons": [{
-    //   extend: 'print',
-    //   text: 'Imprimir Reporte',
-    //   autoPrint: true
-    // }],
     "ajax": {
-      "url": "{{route('reporte.pedidos.ajax')}}",
+      "url": "{{ route('reporte.pedidos.ajax') }}",
       "method": 'get',
       "dataSrc": '',
       "data": {

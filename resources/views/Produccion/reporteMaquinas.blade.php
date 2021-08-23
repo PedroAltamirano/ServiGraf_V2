@@ -61,9 +61,9 @@
 
 @section('scripts')
 <script>
-  let procesos = @json($procesos);
-
+  // let procesos = @json($procesos);
   // console.log(areas.length);
+
   const route = "{{ route('pedido.edit', 0) }}";
   var table = $('#table').DataTable({
     "paging":   true,
@@ -71,7 +71,7 @@
     "info":     false,
     "responsive": true,
     "ajax": {
-      "url": "{{route('reporte.maquinas.ajax')}}",
+      "url": "{{ route('reporte.maquinas.ajax') }}",
       "method": 'get',
       "dataSrc": '',
       "data": {
@@ -92,8 +92,8 @@
       {"name":"cliente", "data": "cliente_nom"},
       {"name":"detalle", "data": "detalle"},
       @foreach($procesos as $proceso)
-      {"name":"{{'serv'.$proceso->id}}", "data":"procesos", "defaultContent": "", "render":function(data, type, full, meta){
-        let proceso = data.find(record => record.proceso_id === '{{ $proceso->id }}');
+      {"name":"{{ 'serv'.$proceso->id }}", "data":"procesos", "defaultContent": "", "render":function(data, type, full, meta){
+        let proceso = data.find(record => record.proceso_id == '{{ $proceso->id }}');
         return proceso ? proceso.totalProceso : '';
       }},
       @endforeach

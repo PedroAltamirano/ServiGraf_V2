@@ -11,44 +11,48 @@ use App\Models\Produccion\Pedido;
 
 class Cliente extends Model
 {
-    protected $table = 'clientes';
+  protected $table = 'clientes';
 
-    public $attributes =[
-      'seguimiento' => 0
-    ];
+  public $attributes = [
+    'seguimiento' => 0
+  ];
 
-    protected $fillable = [
-      'empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimiento'
-    ];
+  protected $fillable = [
+    'empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimiento'
+  ];
 
-    protected $hidden = [
-      'created_at', 'updated_at'
-    ];
+  protected $hidden = [
+    'created_at', 'updated_at'
+  ];
 
-    function contacto()
-    {
-      return $this->belongsTo(Contacto::class);
-    }
+  function contacto()
+  {
+    return $this->belongsTo(Contacto::class);
+  }
 
-    function empresa()
-    {
-      return $this->belongsTo(Cliente_empresa::class, 'cliente_empresa_id');
-    }
+  function empresa()
+  {
+    return $this->belongsTo(Cliente_empresa::class, 'cliente_empresa_id');
+  }
 
-    public function pedidos()
-    {
-      return $this->hasMany(Pedido::class, 'cliente_id');
-    }
+  public function pedidos()
+  {
+    return $this->hasMany(Pedido::class, 'cliente_id');
+  }
 
-    public static function todos(){
-      return Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
-    }
+  public static function todos()
+  {
+    return Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
+  }
 
-    public function full_name(){
-      return $this->contacto->nombre.' '.$this->contacto->apellido;
-    }
+  public function getFullNameAttribute()
+  {
+    $contacto = $this->contacto;
+    return $contacto->nombre . ' ' . $contacto->apellido;
+  }
 
-    public function bussiness_name(){
-      return $this->empresa->nombre.' / '.$this->contacto->nombre.' '.$this->contacto->apellido;
-    }
+  public function getBussinessNameAttribute()
+  {
+    return $this->empresa->nombre . ' / ' . $this->full_name;
+  }
 }

@@ -68,15 +68,10 @@
     "ordering": true,
     "info":     false,
     "responsive": true,
-    // "dom": 'Bfrtip',
-    // "buttons": [{
-    //   extend: 'print',
-    //   text: 'Imprimir Reporte',
-    //   autoPrint: true
-    // }],
     "ajax": {
-      "url": "{{route('reporte.pagos.ajax')}}",
+      "url": "{{ route('reporte.pagos.ajax') }}",
       "method": 'get',
+      "dataSrc": '',
       "data": {
         "fechaini": function() { return $('#inicio').val() },
         "fechafin": function() { return $('#fin').val() },
