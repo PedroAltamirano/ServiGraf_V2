@@ -40,8 +40,8 @@
     <thead>
       <tr>
         <th scope="col">Area</th>
-        <th scope="col">Proceso</th>
         <th scope="col">Padre</th>
+        <th scope="col">Proceso</th>
         <th scope="col">Meta $</th>
         <th scope="col">T xM</th>
         <th scope="col">T xO</th>
@@ -54,8 +54,8 @@
       @foreach ($procesos as $item)
       <tr>
         <td>{{ $item->area->area }}</td>
-        <td>{{ $item->proceso }}</td>
         <td>{{ $item->parent->proceso ?? '' }}</td>
+        <td>{{ $item->proceso }}</td>
         <td>{{ $item->meta }}</td>
         <td>{{ $item->tmaquina ?? '' }}</td>
         <td>{{ $item->toperador ?? '' }}</td>
