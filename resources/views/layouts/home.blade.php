@@ -24,7 +24,6 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script>
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ config('sweetalert.animatecss') }}">
 </head>
 
 <body style="min-height: 100%; height: 100%;">
@@ -81,9 +80,5 @@
         </footer>
     </div>
   </div>
-
-  <script src="{{ asset('vendor/sweetalert/sweetalert.all.js')  }}"></script>
-
 </body>
-
 </html>

@@ -19,7 +19,6 @@
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-  <link rel="stylesheet" href="{{ config('sweetalert.animatecss') }}">
 
   @yield('links')
 
@@ -153,7 +152,6 @@
   <script src="{{ asset('js/helpers.js') }}"></script>
   <script src="//cdn.datatables.net/plug-ins/1.10.22/api/sum().js"></script>
   <script src="{{ asset('js/printable.js') }}"></script>
-  <script src="{{ asset('vendor/sweetalert/sweetalert.all.js')  }}"></script>
 
   @yield('scripts')
   @yield('after.scripts')
