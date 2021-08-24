@@ -84,7 +84,7 @@
       $('#libro_id').empty().append(content);
       table.ajax.reload(null, false);
     }).catch(err => {
-      Swal.fire('Oops!', err, 'error');
+      swal('Oops!', err, 'error');
       console.log(err);
     });
   }
@@ -126,7 +126,7 @@
       //   debugger
       // },
       "error": function(reason) {
-        Swal.fire('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
+        swal('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
         console.log('error -> ', reason);
       }
     },

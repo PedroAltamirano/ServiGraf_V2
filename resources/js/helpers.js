@@ -1,3 +1,5 @@
+const { default: Swal } = require("sweetalert2");
+
 if (document.querySelector(".dropify")) {
   $(".dropify").dropify({
     tpl: {
@@ -100,3 +102,12 @@ $("body").delegate(".verPedido", "click", function() {
   // debugger;
   getModal(pedido_id);
 });
+
+function swal(title, mssg, icon){
+  Swal.fire({
+    title: title,
+    text: mssg,
+    icon: icon,
+    width: '25em'
+  })
+}

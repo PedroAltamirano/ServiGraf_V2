@@ -91,7 +91,7 @@
         "estado": function() { return $('#estado').val() }
       },
       "error": function(reason) {
-        Swal.fire('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
+        swal('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
         console.log(reason);
       }
     },

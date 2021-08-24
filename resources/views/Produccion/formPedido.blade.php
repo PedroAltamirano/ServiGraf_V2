@@ -97,7 +97,7 @@
       let data = res.data
       $('#cli_telefono').val(data.movil);
     }).catch(err => {
-      Swal.fire('Oops!', err, 'error');
+      swal('Oops!', err, 'error');
       console.log(err);
     });
   }

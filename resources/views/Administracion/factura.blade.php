@@ -267,7 +267,7 @@
       $('#telefono').val(data.movil);
       $('#direccion').val(data.direccion);
     }).catch(err => {
-      Swal.fire('Oops!', err, 'error');
+      swal('Oops!', err, 'error');
       console.log(err);
     });
   }

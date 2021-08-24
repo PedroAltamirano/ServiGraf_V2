@@ -88,7 +88,7 @@
       //   console.log(data);
       // },
       "error": function(reason) {
-        Swal.fire('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
+        swal('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
         console.log('error -> ', reason);
       }
     },

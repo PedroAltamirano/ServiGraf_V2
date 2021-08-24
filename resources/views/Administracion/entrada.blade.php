@@ -109,7 +109,7 @@
       });
       $('#libro_id').empty().append(content);
     }).catch(err => {
-      Swal.fire('Oops!', err, 'error');
+      swal('Oops!', err, 'error');
       console.log(err);
     });
   }

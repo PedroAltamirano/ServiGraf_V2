@@ -23,9 +23,9 @@
     }).then(res => {
       let data = res.data;
       $("#KPIs").append(data);
-    }).catch((jqXhr, textStatus, errorThrown) => {
-      Swal.fire('Oops!', errorThrown, 'error');
-      console.log(errorThrown);
+    }).catch(err => {
+      swal('Oops!', err, 'error');
+      console.log(err);
     });
   }
 
