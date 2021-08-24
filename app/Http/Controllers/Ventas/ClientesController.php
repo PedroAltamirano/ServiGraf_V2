@@ -48,7 +48,8 @@ class ClientesController extends Controller
 
   public function info(Request $request)
   {
-    $cli = Cliente::find($request->cliente_id);
+    // $cli = Cliente::find($request->cliente_id);
+    $cli = Cliente::find();
     $cont = $cli->contacto;
     $emp = $cli->empresa;
 

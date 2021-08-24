@@ -3322,14 +3322,14 @@ $("body").delegate(".verPedido", "click", function () {
   getModal(pedido_id);
 });
 
-function swal(title, mssg, icon) {
+window.swal = function swal(title, mssg, icon) {
   Swal.fire({
     title: title,
     text: mssg,
     icon: icon,
     width: '25em'
   });
-}
+};
 
 /***/ }),
 
