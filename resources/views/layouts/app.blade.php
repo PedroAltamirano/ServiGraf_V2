@@ -157,8 +157,6 @@
   @yield('after.scripts')
 
   <script>
-    $('.modal-status').modal('show');
-
     @if($errors->any())
     $(".alert").fadeTo(10000, 0.5).slideUp(8000);
     @endif

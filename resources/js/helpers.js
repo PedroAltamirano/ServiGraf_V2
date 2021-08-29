@@ -1,4 +1,4 @@
-const { default: Swal } = require("sweetalert2");
+// const { default: Swal } = require("sweetalert2");
 
 if (document.querySelector(".dropify")) {
   $(".dropify").dropify({
