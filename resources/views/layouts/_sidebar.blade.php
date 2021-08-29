@@ -24,8 +24,13 @@
       @if(Security::hasModule('23'))
       <a class="dropdown-item" href="{{Route('libro')}}">Libro diario</a>
       @endif
+      <div class="dropdown-divider"></div>
+      <h6 class="dropdown-header">RRHH:</h6>
       @if(Security::hasModule('24'))
-      <a class="dropdown-item" href="{{Route('rrhh')}}">RRHH</a>
+      <a class="dropdown-item" href="{{Route('nomina')}}">Nomina</a>
+      @endif
+      @if(Security::hasModule('25'))
+      <a class="dropdown-item" href="{{Route('rrhh')}}">Asistencia</a>
       @endif
     </div>
   </li>

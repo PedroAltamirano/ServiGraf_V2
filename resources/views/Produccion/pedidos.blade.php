@@ -33,13 +33,9 @@
     </thead>
     <tbody>
       @foreach ($pedidos as $item)
-      @php
-        $cli = $item->cliente;
-        $cli = $cli->empresa->nombre.' / '.$cli->contacto->nombre.' '.$cli->contacto->apellido;
-      @endphp
       <tr>
         <td>{{ $item->numero }}</td>
-        <td>{{ $cli }}</td>
+        <td>{{ $item->cliente->bussiness_name }}</td>
         <td>{{ $item->detalle }}</td>
         <td>{{ $item->cantidad }}</td>
         <td>{{ implode(', ', $item->procesos_incompletos_nombre) }}</td>
@@ -60,9 +56,10 @@
 <script>
   $(document).ready(function() {
     $('#table').DataTable({
-      "paging":   true,
+      "info": false,
+      "paging": true,
       "ordering": true,
-      "info":     false,
+      "responsive": true,
       // "ajax": {
       //   "url": "{{url('/pedidos/get')}}",
       //   "method": 'get',
@@ -87,7 +84,6 @@
       // "columnDefs": [
       //   { "responsivePriority": 1, "targets": [0, 1, -1] }
       // ],
-      responsive: true,
     });
   });
 </script>
