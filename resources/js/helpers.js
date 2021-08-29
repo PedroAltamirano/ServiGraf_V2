@@ -103,7 +103,7 @@ $("body").delegate(".verPedido", "click", function() {
   getModal(pedido_id);
 });
 
-window.swal = function swal(title, mssg, icon){
+window.swal = function(title, mssg, icon){
   Swal.fire({
     title: title,
     text: mssg,

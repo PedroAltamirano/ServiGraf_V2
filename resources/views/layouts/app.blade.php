@@ -148,10 +148,10 @@
   @yield('modals')
 
   <!-- JavaScript -->
-  <script src="{{ asset('js/app.js') }}"></script>
-  <script src="{{ asset('js/helpers.js') }}"></script>
-  <script src="//cdn.datatables.net/plug-ins/1.10.22/api/sum().js"></script>
-  <script src="{{ asset('js/printable.js') }}"></script>
+  <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('js/helpers.js') }}" type="text/javascript"></script>
+  <script src="//cdn.datatables.net/plug-ins/1.10.22/api/sum().js" type="text/javascript"></script>
+  <script src="{{ asset('js/printable.js') }}" type="text/javascript"></script>
 
   @yield('scripts')
   @yield('after.scripts')

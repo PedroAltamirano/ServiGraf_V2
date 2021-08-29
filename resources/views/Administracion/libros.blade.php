@@ -69,7 +69,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/num2word.js') }}"></script>
+<script src="{{ asset('js/num2word.js') }}" type="text/javascript"></script>
 <script>
   const route = "{{ route('libro.api.libros') }}";
   function getLibros(){
