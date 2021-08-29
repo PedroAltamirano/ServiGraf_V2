@@ -93,7 +93,6 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// const { default: Swal } = require("sweetalert2");
 if (document.querySelector(".dropify")) {
   $(".dropify").dropify({
     tpl: {
