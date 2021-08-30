@@ -113,7 +113,7 @@
             </div>
             <div class="form-group col-12">
               <label for="logo">Logo <span class="text-muted">Max. 2MB</span></label>
-              <input type="file" class="dropify modal-logo" id="logo" name="logo" title="logo del usuario" accept="image/*" size="2MB" data-default-file=''>
+              <input type="file" class="dropify modal-logo" id="logo" name="logo" title="logo del usuario" accept="image/*" data-max-file-size="3M" data-default-file=''>
             </div>
           </div>
         </div>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use Exception;
+use App\Helpers\Archivos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -16,6 +18,10 @@ use App\Models\Sistema\Horario;
 
 use App\Http\Requests\Administracion\StoreNomina;
 use App\Http\Requests\Administracion\UpdateNomina;
+use App\Models\Administracion\NominaDotacion;
+use App\Models\Administracion\NominaEducacion;
+use App\Models\Administracion\NominaFamilia;
+use App\Models\Administracion\NominaReferencia;
 
 class NominaController extends Controller
 {
@@ -66,10 +72,22 @@ class NominaController extends Controller
     try {
       if ($nomina = Nomina::create($validated)) {
         DB::commit();
+
+        if (isset($validated['foto'])) {
+          $foto_name = Archivos::storeImagen($nomina->cedula, $validated['foto'], 'usuarios');
+          $nomina->foto = $foto_name;
+          $nomina->save();
+        }
+
+        $this->manageEducacion($validated, $nomina);
+        $this->manageReferencias($validated, $nomina);
+        $this->manageDotacion($validated, $nomina);
+        $this->manageFamiliares($validated, $nomina);
+
         Alert::success('Acción completada', 'Nómina creada con éxito');
         return redirect()->route('nomina.update', $nomina->cedula);
       }
-    } catch (\Exception $err) {
+    } catch (Exception $err) {
       Log::error($err);
       DB::rollBack();
       Alert::error('Oops!', 'Nómina no creada');
@@ -117,21 +135,135 @@ class NominaController extends Controller
   public function update(UpdateNomina $request, Nomina $nomina)
   {
     $validated = $request->validated();
-    dd($validated);
 
     DB::beginTransaction();
     try {
       if ($nomina->update($validated)) {
         DB::commit();
+
+        if (isset($validated['foto'])) {
+          $foto_name = Archivos::storeImagen($nomina->cedula, $validated['foto'], 'usuarios');
+          $nomina->foto = $foto_name;
+          $nomina->save();
+        }
+
+        $this->manageEducacion($validated, $nomina);
+        $this->manageReferencias($validated, $nomina);
+        $this->manageDotacion($validated, $nomina);
+        $this->manageFamiliares($validated, $nomina);
+
         Alert::success('Acción completada', 'Nómina modificada con éxito');
         return redirect()->back();
       }
-    } catch (\Exception $err) {
+    } catch (Exception $err) {
       Log::error($err);
       DB::rollBack();
       Alert::error('Oops!', 'Nómina no modificada');
       return redirect()->back();
     }
+  }
+
+  public function manageEducacion($request, Nomina $nomina)
+  {
+    if (!isset($request['nivel_educ'])) {
+      return 0;
+    }
+
+    $educacion = $nomina->educacion;
+    if (!$educacion->isEmpty()) {
+      $educacion->delete();
+    }
+
+    for ($i = 0; $i < sizeof($request['nivel_educ']); $i++) {
+      $model = new NominaEducacion();
+      $model->empresa_id = Auth::user()->empresa_id;
+      $model->nomina_id = $nomina->cedula;
+      $model->nivel_educ = $request['nivel_educ'][$i];
+      $model->nombre_institucion = $request['nombre_institucion'][$i];
+      $model->inicio = $request['inicio'][$i];
+      $model->fin = $request['fin'][$i];
+      $model->titulo = $request['titulo'][$i];
+      $model->save();
+    }
+    return 1;
+  }
+
+  public function manageReferencias($request, Nomina $nomina)
+  {
+    if (!isset($request['tipo_refer'])) {
+      return 0;
+    }
+
+    $referencias = $nomina->referencias;
+    if (!$referencias->isEmpty()) {
+      $referencias->delete();
+    }
+
+    for ($i = 0; $i < sizeof($request['tipo_refer']); $i++) {
+      $model = new NominaReferencia();
+      $model->empresa_id = Auth::user()->empresa_id;
+      $model->nomina_id = $nomina->cedula;
+      $model->tipo_refer = $request['tipo_refer'][$i];
+      $model->empresa = $request['empresa'][$i];
+      $model->contacto = $request['contacto'][$i];
+      $model->telefono_refer = $request['telefono_refer'][$i];
+      $model->afinidad = $request['afinidad'][$i];
+      $model->inicio_labor_refer = $request['inicio_labor_refer'][$i];
+      $model->fin_labor_refer = $request['fin_labor_refer'][$i];
+      $model->cargo_refer = $request['cargo_refer'][$i];
+      $model->razon_separacion = $request['razon_separacion'][$i];
+      $model->save();
+    }
+    return 1;
+  }
+
+  public function manageDotacion($request, Nomina $nomina)
+  {
+    if (!isset($request['entrega'])) {
+      return 0;
+    }
+
+    $dotacion = $nomina->dotacion;
+    if (!$dotacion->isEmpty()) {
+      $dotacion->delete();
+    }
+
+    for ($i = 0; $i < sizeof($request['entrega']); $i++) {
+      $model = new NominaDotacion();
+      $model->empresa_id = Auth::user()->empresa_id;
+      $model->nomina_id = $nomina->cedula;
+      $model->entrega = $request['entrega'][$i];
+      $model->dotacion_id = $request['dotacion_id'][$i];
+      $model->save();
+    }
+    return 1;
+  }
+
+  public function manageFamiliares($request, Nomina $nomina)
+  {
+    if (!isset($request['nombre_fam'])) {
+      return 0;
+    }
+
+    $familiares = $nomina->familiares;
+    if (!$familiares->isEmpty()) {
+      $familiares->delete();
+    }
+
+    for ($i = 0; $i < sizeof($request['nombre_fam']); $i++) {
+      $model = new NominaFamilia;
+      $model->empresa_id = Auth::user()->empresa_id;
+      $model->nomina_id = $nomina->cedula;
+      $model->relacion = $request['relacion'][$i] ?? '';
+      $model->nombre_fam = $request['nombre_fam'][$i] ?? '';
+      $model->fecha_nacimiento_fam = $request['fecha_nacimiento_fam'][$i] ?? '';
+      $model->ocupacion = $request['ocupacion'][$i] ?? '';
+      $model->telefono_fam = $request['telefono_fam'][$i];
+      $model->celular_fam = $request['celular_fam'][$i] ?? '';
+      $model->save();
+    }
+
+    return 1;
   }
 
   /**
@@ -149,7 +281,7 @@ class NominaController extends Controller
         Alert::success('Acción completada', 'Nómina eliminada con éxito');
         return redirect()->route('nomina');
       }
-    } catch (\Exception $err) {
+    } catch (Exception $err) {
       Log::error($err);
       DB::rollBack();
       Alert::error('Oops!', 'Nómina no eliminada');

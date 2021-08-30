@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helpers;
 
 use Carbon\Carbon;
@@ -13,9 +14,10 @@ class Archivos
    * @param string $disk
    * @return string
    */
-  public static function storeImagen($nombre, $archivo, $disk) {
-      $nombreArchivo = strtotime("now") . '_' . str_replace(" ", "_", $nombre) . '.' . $archivo->getClientOriginalExtension();
-      Storage::disk($disk)->put($nombreArchivo, file_get_contents($archivo->getRealPath()));
-      return $nombreArchivo;
+  public static function storeImagen($nombre, $archivo, $disk)
+  {
+    $nombreArchivo = strtotime("now") . '_' . str_replace(" ", "_", $nombre) . '.' . $archivo->getClientOriginalExtension();
+    Storage::disk($disk)->put($nombreArchivo, file_get_contents($archivo->getRealPath()));
+    return $nombreArchivo;
   }
 }
