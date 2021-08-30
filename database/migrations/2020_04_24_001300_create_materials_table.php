@@ -6,38 +6,37 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateMaterialsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('materiales', function (Blueprint $table) {
-            $table->mediumIncrements('id');
-            $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas');
-            $table->string('descripcion', 140);
-            $table->unsignedSmallInteger('categoria_id');
-            $table->foreign('categoria_id')->references('id')->on('categorias');
-            $table->boolean('color');
-            $table->unsignedDecimal('alto', 5, 2)->nullable();
-            $table->unsignedDecimal('ancho', 5, 2)->nullable();
-            $table->unsignedDecimal('precio', 5, 2)->nullable();
-            $table->boolean('uv')->default(0);
-            $table->boolean('plastificado')->default(0);
-            $table->timestamps();
-            $table->softDeletes();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('materiales', function (Blueprint $table) {
+      $table->id();
+      $table->unsignedBigInteger('empresa_id');
+      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->string('descripcion', 140);
+      $table->foreignId('categoria_id')->on('categorias');
+      $table->boolean('color');
+      $table->unsignedDecimal('alto', 5, 2)->nullable();
+      $table->unsignedDecimal('ancho', 5, 2)->nullable();
+      $table->unsignedDecimal('precio', 5, 2)->nullable();
+      $table->boolean('uv')->default(0);
+      $table->boolean('plastificado')->default(0);
+      $table->timestamps();
+      $table->softDeletes();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('materiales');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('materiales');
+  }
 }

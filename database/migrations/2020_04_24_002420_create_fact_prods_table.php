@@ -6,35 +6,33 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateFactProdsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('fact_prods', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedMediumInteger('factura_id');
-            $table->foreign('factura_id')->references('id')->on('facturas');
-            $table->unsignedSmallInteger('cantidad');
-            $table->string('detalle');
-            $table->unsignedSmallInteger('iva_id');
-            $table->foreign('iva_id')->references('id')->on('ivas');
-            $table->decimal('valor_unitario', 9, 3)->unsigned();
-            $table->decimal('subtotal', 9, 3)->unsigned();
-            $table->timestamps();
-            $table->softDeletes();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('fact_prods', function (Blueprint $table) {
+      $table->id();
+      $table->foreignId('factura_id')->on('facturas');
+      $table->unsignedSmallInteger('cantidad');
+      $table->string('detalle');
+      $table->foreignId('iva_id')->on('ivas');
+      $table->decimal('valor_unitario', 9, 3)->unsigned();
+      $table->decimal('subtotal', 9, 3)->unsigned();
+      $table->timestamps();
+      $table->softDeletes();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('fact_prods');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('fact_prods');
+  }
 }

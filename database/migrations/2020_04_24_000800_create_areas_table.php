@@ -6,31 +6,31 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateAreasTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('areas', function (Blueprint $table) {
-            $table->id('id');
-            $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas');
-            $table->string('area', 30);
-            $table->unsignedTinyInteger('orden');
-            $table->timestamps();
-            $table->softDeletes();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('areas', function (Blueprint $table) {
+      $table->id();
+      $table->unsignedBigInteger('empresa_id');
+      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->string('area', 30);
+      $table->unsignedTinyInteger('orden');
+      $table->timestamps();
+      $table->softDeletes();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('areas');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('areas');
+  }
 }

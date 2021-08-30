@@ -6,31 +6,30 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateUsuarioLibroTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('usuario_libro', function (Blueprint $table) {
-            $table->mediumIncrements('id');
-            $table->unsignedInteger('usuario_id');
-            $table->foreign('usuario_id')->references('cedula')->on('usuarios');
-            $table->unsignedMediumInteger('libro_id');
-            $table->foreign('libro_id')->references('id')->on('libros');
-            $table->timestamps();
-            $table->softDeletes();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('usuario_libro', function (Blueprint $table) {
+      $table->id();
+      $table->unsignedInteger('usuario_id');
+      $table->foreign('usuario_id')->references('cedula')->on('usuarios');
+      $table->foreignId('libro_id')->on('libros');
+      $table->timestamps();
+      $table->softDeletes();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('usuario_libro');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('usuario_libro');
+  }
 }
