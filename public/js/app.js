@@ -95917,7 +95917,16 @@ __webpack_require__(/*! dropify/dist/js/dropify.min.js */ "./node_modules/dropif
 
 __webpack_require__(/*! chart.js/dist/Chart.js */ "./node_modules/chart.js/dist/Chart.js");
 
-var Swal = window.Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js"); // import "jszip";
+window.Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+
+window.swal = function (title, mssg, icon) {
+  Swal.fire({
+    title: title,
+    text: mssg,
+    icon: icon,
+    width: '25em'
+  });
+}; // import "jszip";
 // import "pdfmake";
 
 

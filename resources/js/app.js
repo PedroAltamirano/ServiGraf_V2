@@ -10,7 +10,15 @@ require("dropify/dist/js/dropify.min.js");
 
 require("chart.js/dist/Chart.js");
 
-const Swal = window.Swal = require('sweetalert2');
+window.Swal = require('sweetalert2');
+window.swal = function(title, mssg, icon){
+  Swal.fire({
+    title: title,
+    text: mssg,
+    icon: icon,
+    width: '25em'
+  })
+}
 
 // import "jszip";
 // import "pdfmake";

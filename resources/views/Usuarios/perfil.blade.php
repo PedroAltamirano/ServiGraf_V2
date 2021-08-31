@@ -53,18 +53,18 @@
           <th scope="col" style="width:33.33%">Modulos del perfil</th>
           <th scope="col" style="width:16.667%" class="text-center">
             <i class="fas fa-eye"></i>&nbsp;
-            <span class="d-none d-md-inline">Ver</span></th>
+            <span class="d-none d-md-inline perfil_all" data-row="ver">Ver</span></th>
           <th scope="col" style="width:16.667%" class="text-center">
             <i class="fas fa-plus"></i>&nbsp;
-            <span class="d-none d-md-inline">Crear</span>
+            <span class="d-none d-md-inline perfil_all" data-row="crear">Crear</span>
           </th>
           <th scope="col" style="width:16.667%" class="text-center">
             <i class="fas fa-edit"></i>&nbsp;
-            <span class="d-none d-md-inline">Modificar</span>
+            <span class="d-none d-md-inline perfil_all" data-row="modificar">Modificar</span>
           </th>
           <th scope="col" style="width:16.667%" class="text-center">
             <i class="fas fa-times"></i>&nbsp;
-            <span class="d-none d-md-inline">Eliminar</span>
+            <span class="d-none d-md-inline perfil_all" data-row="eliminar">Eliminar</span>
           </th>
         </tr>
       </thead>
@@ -78,28 +78,28 @@
           <td class="m-0 {{ $item->principal ? '':'pl-5' }}">{{ $item->nombre }}</td>
           <td>
             <div class="custom-control custom-switch d-flex justify-content-center">
-              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-1" name="mod[{{ $item->id }}][1]"
+              <input type="checkbox" class="custom-control-input ver" id="{{ $item->id }}-1" name="mod[{{ $item->id }}][1]"
               {{ old($item->id.'-1') ? 'checked':'' }} {{ $rol >= 1 ? 'checked':'' }}>
               <label class="custom-control-label" for="{{ $item->id }}-1"></label>
             </div>
           </td>
           <td>
             <div class="custom-control custom-switch d-flex justify-content-center">
-              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-2" name="mod[{{ $item->id }}][2]"
+              <input type="checkbox" class="custom-control-input crear" id="{{ $item->id }}-2" name="mod[{{ $item->id }}][2]"
               {{ old($item->id.'-2') ? 'checked':'' }} {{ $rol >= 2 ? 'checked':'' }}>
               <label class="custom-control-label" for="{{ $item->id }}-2"></label>
             </div>
           </td>
           <td>
             <div class="custom-control custom-switch d-flex justify-content-center">
-              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-3" name="mod[{{ $item->id }}][3]"
+              <input type="checkbox" class="custom-control-input modificar" id="{{ $item->id }}-3" name="mod[{{ $item->id }}][3]"
               {{ old($item->id.'-3') ? 'checked':'' }} {{ $rol >= 3 ? 'checked':'' }}>
               <label class="custom-control-label" for="{{ $item->id }}-3"></label>
             </div>
           </td>
           <td>
             <div class="custom-control custom-switch d-flex justify-content-center">
-              <input type="checkbox" class="custom-control-input" id="{{ $item->id }}-4" name="mod[{{ $item->id }}][4]"
+              <input type="checkbox" class="custom-control-input eliminar" id="{{ $item->id }}-4" name="mod[{{ $item->id }}][4]"
               {{ old($item->id.'-4') ? 'checked':'' }} {{ $rol >= 4 ? 'checked':'' }}>
               <label class="custom-control-label" for="{{ $item->id }}-4"></label>
             </div>

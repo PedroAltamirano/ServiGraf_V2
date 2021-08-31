@@ -186,15 +186,31 @@ $("body").delegate(".verPedido", "click", function () {
 
   getModal(pedido_id);
 });
+$('.perfil_all').click(function (event) {
+  var row = $(event.currentTarget).data('row');
+  var check = !$(".".concat(row)).prop('checked');
+  var selector = row;
 
-window.swal = function (title, mssg, icon) {
-  Swal.fire({
-    title: title,
-    text: mssg,
-    icon: icon,
-    width: '25em'
-  });
-};
+  switch (row) {
+    case 'crear':
+      selector = check ? '.ver,.crear' : '.crear,.modificar,.eliminar';
+      break;
+
+    case 'modificar':
+      selector = check ? '.ver,.crear,.modificar' : '.modificar,.eliminar';
+      break;
+
+    case 'eliminar':
+      selector = check ? '.ver,.crear,.modificar,.eliminar' : '.eliminar';
+      break;
+
+    default:
+      selector = check ? '.ver' : '.ver,.crear,.modificar,.eliminar';
+      break;
+  }
+
+  $(selector).prop('checked', check);
+});
 
 /***/ }),
 
