@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Sistema\Nomina;
 use App\Models\Sistema\CentroCostos;
 use App\Models\Sistema\Horario;
+use App\Models\Administracion\Dotacion;
 
 use App\Http\Requests\Administracion\StoreNomina;
 use App\Http\Requests\Administracion\UpdateNomina;
@@ -48,13 +49,14 @@ class NominaController extends Controller
     $nomina = new Nomina();
     $ccostos = CentroCostos::where('empresa_id', Auth::user()->empresa_id)->get();
     $horarios = Horario::where('empresa_id', Auth::user()->empresa_id)->get();
+    $dotacion = Dotacion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
     $data = [
       'text' => 'Nueva Nomina',
-      'path' => route('nomina.create'),
+      'path' => route('nomina.store'),
       'method' => 'POST',
       'action' => 'Crear',
     ];
-    return view('Administracion.nomina', compact('nomina', 'ccostos', 'horarios'))->with($data);
+    return view('Administracion.nomina', compact('nomina', 'ccostos', 'horarios', 'dotacion'))->with($data);
   }
 
   /**
@@ -116,13 +118,14 @@ class NominaController extends Controller
   {
     $ccostos = CentroCostos::where('empresa_id', Auth::user()->empresa_id)->get();
     $horarios = Horario::where('empresa_id', Auth::user()->empresa_id)->get();
+    $dotacion = Dotacion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
     $data = [
       'text' => 'Modificar Nomina',
       'path' => route('nomina.update', $nomina->cedula),
       'method' => 'PUT',
       'action' => 'Modificar',
     ];
-    return view('Administracion.nomina', compact('nomina', 'ccostos', 'horarios'))->with($data);
+    return view('Administracion.nomina', compact('nomina', 'ccostos', 'horarios', 'dotacion'))->with($data);
   }
 
   /**

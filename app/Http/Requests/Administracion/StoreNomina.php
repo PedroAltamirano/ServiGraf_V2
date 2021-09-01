@@ -94,7 +94,7 @@ class StoreNomina extends FormRequest
       'tipo_refer.*' => ['required', 'numeric'],
       'empresa.*' => ['required', 'string', 'max:50'],
       'contacto.*' => ['required', 'string', 'max:100'],
-      'telefono_refer.*' => ['required', 'numeric', 'max:9999999'],
+      'telefono_refer.*' => ['required', 'numeric', 'max:9999999999'],
       'afinidad.*' => ['required', 'string', 'max:50'],
       'inicio_labor_refer.*' => ['required', 'date'],
       'fin_labor_refer.*' => ['required', 'date'],
