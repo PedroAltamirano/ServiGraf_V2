@@ -1,16 +1,11 @@
 @php
   $proveedores = App\Models\Produccion\Proveedor::where('empresa_id', Auth::user()->empresa_id)->get();
   $materiales = App\Models\Produccion\Material::where('empresa_id', Auth::user()->empresa_id)->orderBy('categoria_id')->with('categoria')->get();
-  $procesos = App\Models\Produccion\Proceso::where('empresa_id', Auth::user()->empresa_id)->orderBy('area_id')->with('area')->get();
+  // $procesos = App\Models\Produccion\Proceso::where('empresa_id', Auth::user()->empresa_id)->orderBy('area_id')->with('area')->get();
   $tintas = App\Models\Produccion\Tinta::where('empresa_id', Auth::user()->empresa_id)->get();
-  $oldTintasTiro = old('tinta_tiro') ?? $pedido->tintas_id->reject(function($tinta){return $tinta->lado == 0;})->map(function($tintas){return $tintas->tinta_id;})->toArray();
-  $oldTintasRetiro = old('tinta_retiro') ?? $pedido->tintas_id->reject(function($tinta){return $tinta->lado == 1;})->map(function($tintas){return $tintas->tinta_id;})->toArray();
-  $oldMaterial = $pedido->material_id ?? json_encode(new stdClass);
-  $oldProcesos = $pedido->procesos_id ?? json_encode(new stdClass);
-  $oldAbonos = $pedido->abonos ?? json_encode(new stdClass);
-  $matCount = count(old("material.id", $oldMaterial) ?? []);
-  $proCount = count(old("proceso.id", $oldProcesos) ?? []);
-  $aboCount = count(old("abono.valor", $oldAbonos) ?? []);
+
+  $oldTintasTiro = old('tinta_tiro') ?? $pedido->tintas_id->where('lado', 1)->pluck('tinta_id')->toArray();
+  $oldTintasRetiro = old('tinta_retiro') ?? $pedido->tintas_id->where('lado', 0)->pluck('tinta_id')->toArray();
 @endphp
 
 <section id="descripcion">
@@ -98,53 +93,6 @@
       </tr>
     </thead>
     <tbody>
-      @for ($i = 0; $i < $matCount; $i++)
-      <tr id="{{'row-material-'.$i}}">
-        <td>
-          <i type="button" name="remove" id="{{'material-'.$i}}" class="fas fa-times removeRow"></i>
-        </td>
-        <td>
-          <select class="form-control form-control-sm select2Class" name="material[id][]">
-            <option selected value="null">Seleccione uno...</option>
-            {{ $group =  $materiales->first()->categoria_id ?? '' }}
-            <optgroup label="{{ $materiales->first()->categoria->categoria ?? '' }}">
-            @foreach($materiales as $mat)
-            @if ($group != $mat->categoria_id)
-            {{ $group =  $mat->categoria_id }}
-            <optgroup label="{{ $mat->categoria->categoria }}">
-            @endif
-            <option value="{{ $mat->id }}" {{(old('material.id.'.$i) ?? $oldMaterial[$i]->material_id) == $mat->id ? 'selected' : ''}}>{{ $mat->descripcion }}</option>
-            @endforeach
-          </select>
-        </td>
-        <td>
-          <input type="number" name="material[cantidad][]" class="form-control form-control-sm text-center" value="{{(old('material.cantidad.'.$i) ?? $oldMaterial[$i]->cantidad) ?? '0'}}" min="0" />
-        </td>
-        <td>
-          <input type="number" name="material[corte_alt][]" class="form-control form-control-sm fixFloat text-center" value="{{(old('material.corte_alt.'.$i) ?? $oldMaterial[$i]->corte_alto) ?? '0.00'}}" step="0.01" min="0" />
-        </td>
-        <td>
-          <input type="number" name="material[corte_anc][]" class="form-control form-control-sm fixFloat text-center" value="{{(old('material.corte_anc.'.$i) ?? $oldMaterial[$i]->corte_ancho) ?? '0.00'}}" step="0.01" min="0" />
-        </td>
-        <td>
-          <input type="number" name="material[tamanios][]" class="form-control form-control-sm text-center" value="{{(old('material.tamanios.'.$i) ?? $oldMaterial[$i]->tamanos) ?? '0'}}" min="0" />
-        </td>
-        <td>
-          <select class="form-control form-control-sm select2Class" name="material[proveedor][]">
-            <option selected disabled>Seleccione uno...</option>
-            @foreach($proveedores as $prov)
-            <option value="{{ $prov->id }}" {{(old('material.proveedor.'.$i) ?? $oldMaterial[$i]->proveedor_id) == $prov->id ? 'selected' : ''}}>{{ $prov->proveedor }} / {{ $prov->telefono }}</option>
-            @endforeach
-          </select>
-        </td>
-        <td>
-          <input type="number" name="material[factura][]" class="form-control form-control-sm text-center" min="0" value="{{(old('material.factura.'.$i) ?? $oldMaterial[$i]->factura) ?? ''}}"/>
-        </td>
-        <td>
-          <input type="number" name="material[total][]" class="form-control form-control-sm fixFloat text-center" value="{{(old('material.total.'.$i) ?? $oldMaterial[$i]->total) ?? '0.00'}}" step="0.01" min="0" onchange="sumarMaterial()" />
-        </td>
-      </tr>
-      @endfor
     </tbody>
     <tfoot>
       <tr class="font-weight-bold">
@@ -173,35 +121,6 @@
       </tr>
     </thead>
     <tbody>
-      @for ($j = 0; $j < $proCount; $j++)
-      <tr id="{{'row-proceso-'.$j}}">
-        <td>
-          <i type="button" name="remove" id="{{'proceso-'.$j}}" class="fas fa-times removeRow"></i>
-        </td>
-        <td>
-          <x-procesos-area :id="'proceso-'.$j" name='proceso[id][]' :old="old('proceso.id.'.$j, $oldProcesos[$j]->proceso_id)" />
-        </td>
-        <td>
-          <input type="number" name="proceso[tiro][]" id="{{'tiro-'.$j}}" class="form-control form-control-sm text-center" value="{{(old('proceso.tiro.'.$j) ?? $oldProcesos[$j]->tiro) ?? '1' }}" min="0" onchange="sumar('{{$j}}')" />
-        </td>
-        <td>
-          <input type="number" name="proceso[retiro][]" id="{{'retiro-'.$j}}" class="form-control form-control-sm text-center" value="{{(old('proceso.retiro.'.$j) ?? $oldProcesos[$j]->retiro) ?? '0' }}" min="0" onchange="sumar('{{$j}}')" />
-        </td>
-        <td>
-          <input type="number" name="proceso[millar][]" id="{{'mill-'.$j}}" class="form-control form-control-sm text-center" value="{{(old('proceso.millar.'.$j) ?? $oldProcesos[$j]->millares) ?? '1' }}" min="0" onchange="sumar('{{$j}}')" />
-        </td>
-        <td>
-          <input type="number" name="proceso[valor][]" id="{{'valor-'.$j}}" class="form-control form-control-sm fixFloat text-center" value="{{(old('proceso.valor.'.$j) ?? $oldProcesos[$j]->valor_unitario) ?? '0.00' }}" step="0.01" min="0" onchange="sumar('{{$j}}')" />
-        </td>
-        <td>
-          <input type="number" name="proceso[total][]" id="{{'total_proceso-'.$j}}" class="form-control form-control-sm text-center" value="{{(old('proceso.total.'.$j) ?? $oldProcesos[$j]->total) ?? '0.00' }}" step="0.01" min="0" readonly />
-        </td>
-        <td>
-          {{-- <input type="checkbox" name="proceso[terminado][]" value="1" /> --}}
-          <input type='hidden' value='{{(old('proceso.terminado.'.$j) ?? $oldProcesos[$j]->status) ?? '0' }}' name='proceso[terminado][]'><input type="checkbox" name="clicker[]" onclick="this.previousSibling.value=1-this.previousSibling.value" {{(old('proceso.terminado.'.$j) ?? $oldProcesos[$j]->status) == 1 ? 'checked' : '' }}>
-        </td>
-      </tr>
-      @endfor
     </tbody>
     <tfoot>
       <tr class="font-weight-bold">
@@ -256,15 +175,6 @@
             </tr>
           </thead>
           <tbody>
-            @for ($k = 0; $k < $aboCount; $k++)
-            <tr id="{{'row-abono-'.$k}}">
-              <td><i type="button" name="remove" id="{{'abono-'.$k}}" class="fas fa-times removeRow"></i></td>
-              <td>{{ date('Y-m-d') }}</td>
-              <td>{{ Auth::user()->usuario }}</td>
-              <td><input type="text" name="abono[pago][]" class="form-control form-control-sm" value="{{ old('abono.pago.'.$k) ?? $oldAbonos[$k]->forma_pago}}"></td>
-              <td><input type="number" name="abono[valor][]" class="form-control form-control-sm text-center fixFloat" min="0" step="0.01" onchange="sumarAbonos()" value="{{(old('abono.valor.'.$k) ?? $oldAbonos[$k]->valor) ?? '0.00'}}"></td>
-            </tr>
-            @endfor
           </tbody>
           <tfoot>
             <tr class="font-weight-bold">
@@ -282,6 +192,94 @@
     </div>
   </div>
 </div>
+@php
+  //
+  // $opts_ = '<option disabled selected>Selecciona uno...</option>';
+  // foreach (config('') ?? [] as $key => $value) {
+  //   $opts_ .= "<option value='$key'>$value</option>";
+  // }
+  // $old_ = $pedido->;
+  // if($cnt = count(old('') ?? [])) {
+  //   for($i = 0; $i <optgroup $cnt; $i++){
+  //     $model = new \stdClass;
+  //     $model-> = old('')[$i];
+  //     $old_[] = $model;
+  //   }
+  // }
+
+  // SOLICITUD MATERIAL
+  $opts_mats = "<option disabled selected>Selecciona uno...</option>";
+  if($materiales){
+    $first_mat = $materiales->first();
+    $group =  $first_mat->categoria_id;
+    $cat = $first_mat->categoria->categoria;
+    $opts_mats .= "<optgroup label='$cat'>";
+    foreach($materiales as $mat){
+      if($group != $mat->categoria_id){
+        $group = $mat->categoria_id;
+        $opts_mats .= "</optgroup>";
+        $cat = $mat->categoria->categoria;
+        $opts_mats .= "<optgroup label='$cat'>";
+      }
+      $opts_mats .= "<option value='$mat->id'>$mat->descripcion</option>";
+    }
+  }
+
+  $opts_provs = '<option disabled selected>Selecciona uno...</option>';
+  foreach($proveedores as $prov){
+    $opts_provs .= "<option value='$prov->id'>$prov->proveedor / $prov->telefono</option>";
+  }
+
+  $old_material = $pedido->material_id;
+  if($cnt = count(old('material_id') ?? [])) {
+    for($i = 0; $i < $cnt; $i++){
+      $model = new \stdClass;
+      $model->material_id = old('material_id')[$i];
+      $model->cantidad = old('material_cantidad')[$i];
+      $model->corte_alto = old('material_corte_alt')[$i];
+      $model->corte_ancho = old('material_corte_anc')[$i];
+      $model->tamanos = old('material_tamanios')[$i];
+      $model->proveedor_id = old('material_proveedor')[$i];
+      $model->factura = old('material_factura')[$i];
+      $model->total = old('material_total')[$i];
+      $old_material[] = $model;
+    }
+  }
+
+  // PROCESOS
+  $old_procesos = $pedido->procesos_id;
+  if($cnt = count(old('proceso_id') ?? [])) {
+    for($i = 0; $i < $cnt; $i++){
+      $model = new \stdClass;
+      $model->proceso_id = old('proceso_id')[$i];
+      $model->tiro = old('proceso_tiro')[$i];
+      $model->retiro = old('proceso_retiro')[$i];
+      $model->millares = old('proceso_millar')[$i];
+      $model->valor_unitario = old('proceso_valor')[$i];
+      $model->total = old('proceso_total')[$i];
+      $model->status = old('proceso_terminado')[$i];
+      $old_procesos[] = $model;
+    }
+  }
+
+  // ABONOS
+  $opts_pagos = '<option disabled selected>Selecciona uno...</option>';
+  foreach (config('pedido.formas_pago') ?? [] as $key => $value) {
+    $opts_pagos .= "<option value='$key'>$value</option>";
+  }
+
+  $old_abonos = $pedido->abonos;
+  if($cnt = count(old('abono_fecha_val') ?? [])) {
+    for($i = 0; $i < $cnt; $i++){
+      $model = new \stdClass;
+      $model->fecha = old('abono_fecha_val')[$i];
+      $model->usuario_id = old('abono_usuario_val')[$i];
+      $model->forma_pago = old('abono_pago_val')[$i];
+      $model->valor = old('abono_valor_val')[$i];
+      $old_abonos[] = $model;
+    }
+  }
+@endphp
 @endsection
 
 @section('after.after.scripts')
@@ -295,54 +293,48 @@
   });
 
   //SOLICITUD DE MATERIALES
-  var materiales = @json($materiales);
-  var mat_grp = materiales.length ? materiales[0].categoria_id : '';
-  var mat_opts = materiales.length ? "<option selected value='null'>Seleccione uno...</option></optgroup><optgroup label='"+materiales[0].categoria.categoria+"'>" : '';
-  $.each(materiales, function(indx, val){
-    if (mat_grp != val.categoria_id){
-      mat_grp = val.categoria_id;
-      mat_opts += "</optgroup><optgroup label='"+val.categoria.categoria+"'>";
-    }
-    mat_opts += "<option value='"+val.id+"'>"+val.descripcion+"</option>";
-  });
-
-  var proveedores = @json($proveedores);
-  var prov_opts = "<option selected value='null'>Seleccione uno...</option>";
-  $.each(proveedores, function(indx, val){
-    prov_opts += "<option value='"+val.id+"'>"+val.proveedor+" / "+val.telefono+"</option>";
-  });
-
-  var i = {{$i += 1}};
-  $('#addMaterial').click(function(){
+  var index_material = 0;
+  const opts_mats = `@json($opts_mats)`;
+  const opts_provs = `@json($opts_provs)`;
+  const old_material = JSON.parse(`@json($old_material)`);
+  const add_material = (material_id=null, material_cantidad=null, material_corte_alt=0.00, material_corte_anc=0.00, material_tamanios=null, material_proveedor=null, material_factura=null, material_total=0.00) => {
     let table = $('#table-materiales > tbody');
 
-    let button = $('<i />', {'type': 'button', 'class':'fas fa-times removeRow', 'name': 'remove', 'id':'material-'+i});
+    let button = $('<i />', {'type': 'button', 'class':'fas fa-times removeRow', 'name': 'remove', 'id':`material-${index_material}`});
 
-    let material = $('<select />', {'name' : 'material[id][]', 'id': 'material_id_'+i, 'class': 'form-control form-control-sm select2Class'}).append(mat_opts);
+    let material = $('<select />', {'class': 'form-control form-control-sm select2Class', 'name' : 'material_id[]', 'id': `material_id_${index_material}`}).append(opts_mats);
+    if(material_id) material.val(material_id);
 
-    let cantidad = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': '0', 'name':'material[cantidad][]', 'id': 'material_cantidad_'+i, 'min': '0', 'onchange':'('+i+');'});
+    let cantidad = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': material_cantidad, 'name':'material_cantidad[]', 'id': `material_cantidad_${index_material}`, 'min': '0', 'onchange': `sumarMaterial();`});
 
-    let corte_alt = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center fixFloat', 'value': '0.00', 'name':'material[corte_alt][]', 'id': 'material_corte_alt_'+i, 'min': '0', 'step':'0.01'});
+    let corte_alt = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center fixFloat', 'value': material_corte_alt, 'name':'material_corte_alt[]', 'id': `material_corte_alt_${index_material}`, 'min': '0', 'step':'0.01'});
 
-    let corte_anc = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center fixFloat', 'value': '0.00', 'name':'material[corte_anc][]', 'id': 'material_corte_anc_'+i, 'min': '0', 'step':'0.01'});
+    let corte_anc = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center fixFloat', 'value': material_corte_anc, 'name':'material_corte_anc[]', 'id': `material_corte_anc_${index_material}`, 'min': '0', 'step':'0.01'});
 
-    let tamanios = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': '0', 'name':'material[tamanios][]', 'id': 'material_tamanios_'+i, 'min': '0'});
+    let tamanios = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': material_tamanios, 'name':'material_tamanios[]', 'id': `material_tamanios_${index_material}`, 'min': '0'});
 
-    let proveedor = $('<select />', {'name' : 'material[proveedor][]', 'id': 'material_proveedor_'+i, 'class': 'form-control form-control-sm select2Class'}).append(prov_opts);
+    let proveedor = $('<select />', {'class': 'form-control form-control-sm select2Class', 'name' : 'material_proveedor[]', 'id': `material_proveedor_${index_material}`}).append(opts_provs);
+    if(material_proveedor) proveedor.val(material_proveedor);
 
-    let factura = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'name':'material[factura][]', 'id': 'material_factura_'+i, 'min': '0'});
+    let factura = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': material_factura, 'name':'material_factura[]', 'id': `material_factura_${index_material}`, 'min': '0'});
 
-    let total = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': '0.00', 'name':'material[total][]', 'id': 'material_total_'+i, 'min': '0', 'step':'0.01', 'onchange':'sumarMaterial();'});
+    let total = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': material_total, 'name':'material_total[]', 'id': `material_total_${index_material}`, 'min': '0', 'step':'0.01', 'onchange':'sumarMaterial();'});
 
-    newRow(table, [button, material, cantidad, corte_alt, corte_anc, tamanios, proveedor, factura, total], 'row-material-'+i);
+    newRow(table, [button, material, cantidad, corte_alt, corte_anc, tamanios, proveedor, factura, total], `row-material-${index_material}`);
     $('.select2Class').select2();
-    i++;
-  });
+    index_material++;
+  };
+  $('#addMaterial').click(() => add_material());
+  if(old_material != []){
+    old_material.map(item => {
+      add_material(item.material_id, item.cantidad, item.corte_alto, item.corte_ancho, item.tamanos, item.proveedor_id, item.factura, item.total);
+    });
+  }
 
   //sumar total pedidos
   function sumarMaterial(){
     let total = 0.00;
-    $('input[name="material[total][]"]').each(function(){
+    $('input[name="material_total[]"]').each(function(){
       total += parseFloat($(this).val());
     });
     $('#totalMaterial').val(parseFloat(total).toFixed(2));
@@ -350,35 +342,42 @@
 
 
   //PROCESOS
-  const proc_opts = `<x-procesos-area id='procesos' name='proceso[id][]' :old='$pedido->proceso_id' />`;
+  var index_procesos = 0;
+  const proc_opts = `<x-procesos-area id='procesos' name='proceso_id[]' :old='$pedido->proceso_id' />`;
+  const old_procesos = JSON.parse(`@json($old_procesos)`);
+  const add_proceso = (proceso_id=null, proceso_tiro=1, proceso_retiro=0, proceso_millar=1, proceso_valor=0.00, proceso_total=0.00, proceso_terminado=0) => {
+    let table = $('#table-procesos > tbody');
 
-  $(function(){
-    var i = {{$j += 1}};
-    $('#addProceso').click(function(){
-      let table = $('#table-procesos > tbody');
+    let button = $('<i />', {'type': 'button', 'class':'fas fa-times removeRow', 'name': 'remove', 'id':`proceso-${index_procesos}`});
 
-      let button = $('<i />', {'type': 'button', 'class':'fas fa-times removeRow', 'name': 'remove', 'id':'proceso-'+i});
+    // let proceso = $('<select />', {'name' : 'proceso[id][]', 'id': 'proceso-'+i, 'class': 'form-control form-control-sm select2Class'}).append(proc_opts);
+    let proceso = proc_opts.replace("procesos", `proceso-${index_procesos}`);
+    // if(proceso_id) proceso.val(proceso_id);
 
-      // let proceso = $('<select />', {'name' : 'proceso[id][]', 'id': 'proceso-'+i, 'class': 'form-control form-control-sm select2Class'}).append(proc_opts);
-      let proceso = proc_opts.replace("procesos", 'proceso-'+i);
+    let tiro = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': proceso_tiro, 'name':'proceso_tiro[]', 'id': `tiro-${index_procesos}`, 'min': '0', 'onchange':`sumar(${index_procesos});`});
 
-      let tiro = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': '1', 'name':'proceso[tiro][]', 'id': 'tiro-'+i, 'min': '0', 'onchange':'sumar('+i+');'});
+    let retiro = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': proceso_retiro, 'name':'proceso_retiro[]', 'id': `retiro-${index_procesos}`, 'min': '0', 'onchange':`sumar(${index_procesos});`});
 
-      let retiro = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': '0', 'name':'proceso[retiro][]', 'id': 'retiro-'+i, 'min': '0', 'onchange':'sumar('+i+');'});
+    let millar = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': proceso_millar, 'name':'proceso_millar[]', 'id': `mill-${index_procesos}`, 'min': '0', 'onchange':`sumar(${index_procesos});`});
 
-      let millar = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': '1', 'name':'proceso[millar][]', 'id': 'mill-'+i, 'min': '0', 'onchange':'sumar('+i+');'});
+    let valor = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center fixFloat', 'value': proceso_valor, 'step': '0.01', 'name':'proceso_valor[]', 'id': `valor-${index_procesos}`, 'min': '0', 'onchange':`sumar(${index_procesos});`});
 
-      let valor = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center fixFloat', 'value': '0.00', 'step': '0.01', 'name':'proceso[valor][]', 'id': 'valor-'+i, 'min': '0', 'onchange':'sumar('+i+');'});
+    let total = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center fixFloat', 'value': proceso_total, 'step': '0.01', 'name':'proceso_total[]', 'id': `total_proceso-${index_procesos}`, 'min': '0', 'onchange':`sumar(${index_procesos});`, 'readonly': 'readonly'});
 
-      let total = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center fixFloat', 'value': '0.00', 'step': '0.01', 'name':'proceso[total][]', 'id': 'total_proceso-'+i, 'min': '0', 'onchange':'sumar('+i+');', 'readonly': 'readonly'});
+    let terminado = $('<input />', {'type': 'hidden', 'value': proceso_terminado, 'name':'proceso_terminado[]'});
 
-      let terminado = $('<input />', {'type': 'hidden', 'value': '0', 'name':'proceso[terminado][]'}).append($('<input />', {'type': 'checkbox', 'name':'clicker[]', 'onClick': 'this.previousSibling.value=1-this.previousSibling.value'}));
+    let clicker = $('<input />', {'type': 'checkbox', 'name':'clicker[]', 'onClick': 'this.previousSibling.value=1-this.previousSibling.value'}).prop('checked', proceso_terminado);
 
-      newRow(table, [button, proceso, tiro, retiro, millar, valor, total, terminado], 'row-proceso-'+i);
-      $('.select2Class').select2();
-      i++;
+    newRow(table, [button, proceso, tiro, retiro, millar, valor, total, terminado], `row-proceso-${index_procesos}`);
+    $('.select2Class').select2();
+    index_procesos++;
+  };
+  $('#addProceso').click(() => add_proceso());
+  if(old_procesos != []){
+    old_procesos.map(item => {
+      add_proceso(item.proceso_id, item.tiro, item.retiro, item.millares, item.valor_unitario, item.total, item.status);
     });
-  });
+  }
 
   //funcion para sumar el total
   function sumar(num){
@@ -394,7 +393,7 @@
   // sumar total procesos
   function sumarProcesos(){
     let total = 0.00;
-    $('input[name="proceso[total][]"]').each(function(){
+    $('input[name="proceso_total[]"]').each(function(){
       total += parseFloat($(this).val());
     });
     $('#totalProcesos').val(parseFloat(total).toFixed(2));
@@ -403,39 +402,44 @@
 
 
   //ABONOS
-  $(function(){
-    var i = {{$k += 1}};
-    const mod = '{{ $method }}';
-    $('#addAbono').click(function(){
-      if(mod == 'POST'){
-        $('#errorDiv').append('<div class="alert alert-danger" role="alert">Primero debes crear el pedido.&nbsp&nbsp<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-        return;
-      }
-      let table = $('#table-materiales > tbody');
+  var index_abono = 0;
+  const method = '{{ $method }}';
+  const opts_pagos = `@json($opts_pagos)`;
+  const old_abonos = JSON.parse(`@json($old_abonos)`);
+  const add_abono = (abono_fecha_val=null, abono_usuario_val=null, abono_pago_val=null, abono_valor_val=0.00) => {
+    let table = $('#table-abonos > tbody');
 
-      let button = $('<i />', {'type': 'button', 'class':'fas fa-times removeRow', 'name': 'remove', 'id':'-'+i});
+    let button = $('<i />', {'type': 'button', 'class':'fas fa-times removeRow', 'name': 'remove', 'id':`abono-${index_abono}`});
 
-      let  = $('<select />', {'name' : '[][]', 'id': '_'+i, 'class': 'form-control form-control-sm text-center', 'onchange':'('+i+');'});
+    let fecha = $('<input />', {'type': 'date', 'class': 'form-control form-control-sm text-right', 'value': abono_fecha_val, 'name':'abono_fecha[]', 'id': `abono_fecha_${index_abono}`});
 
-      let  = $('<input />', {'type': '', 'class': 'form-control form-control-sm text-right fixFloat', 'value': '0.00', 'name':'[][]', 'id': '_'+i, 'min': '0', 'onchange':'('+i+');'});
+    let usuario = $('<select />', {'class': 'form-control form-control-sm text-center', 'name' : 'abono_usuario[]', 'id': `abono_usuario_${index_abono}`});
 
-      let  = $('<input />', {'type': '', 'class': 'form-control form-control-sm text-right fixFloat', 'value': '0.00', 'name':'[][]', 'id': '_'+i, 'min': '0', 'onchange':'('+i+');'});
+    let pago = $('<select />', {'class': 'form-control form-control-sm text-right', 'name':'abono_pago[]', 'id': `abono_pago_${index_abono}`}).append(opts_pagos);
+    if(abono_pago_val) pago.val(abono_pago_val);
 
-      $('#table-abonos > tbody').append('<tr id="row-abono-'+i+'">'+
-        '<td><i type="button" name="remove" id="abono-'+i+'" class="fas fa-times removeRow"></i></td>'+
-        '<td>{{ date("Y-m-d") }}</td>'+
-        '<td>{{ Auth::user()->usuario }}</td>'+
-        '<td><input type="text" name="abono[pago][]" class="form-control form-control-sm"></td>'+
-        '<td><input type="number" name="abono[valor][]" class="form-control form-control-sm text-center fixFloat" min="0" step="0.01" value="0.00" onchange="sumarAbonos()" ></td>'+
-      '</tr>');
-      i++;
+    let valor = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': abono_valor_val, 'name':'abono_valor[]', 'id': `abono_valor_${index_abono}`, 'min': '0', 'step': '0.01', 'onchange':'sumarAbonos();'});
+
+    newRow(table, [button, fecha, usuario, pago, valor], `row-abono-${index_abono}`);
+    index_abono++;
+  };
+  $('#addAbono').click(() => {
+    if(method == 'POST'){
+      swal('Oops!', 'Primero debes crear el pedido.', 'error');
+      return;
+    }
+    add_abono();
+  })
+  if(old_abonos != []){
+    old_abonos.map(item => {
+      add_abono(item.fecha, item.usuario_id, item.forma_pago, item.valor);
     });
-  });
+  }
 
   //sumar total pedidos
   function sumarAbonos(){
     let total = 0.00;
-    $('input[name="abono[valor][]"]').each(function(){
+    $('input[name="abono_valor[]"]').each(function(){
       total += parseFloat($(this).val());
     });
     $('#totalAbonos').val(parseFloat(total).toFixed(2));
@@ -451,20 +455,20 @@
   }
 
 
-  //funcion pra check todos los checkbox
+  //funcion para check todos los checkbox
   $('#checkall').on('click', function () {
     if ($('input[name="clicker[]"]:checked').length == $('input[name="clicker[]"]').length){
       $('input[name="clicker[]"]').each(function(){
         $(this).prop('checked', false);
       });
-      $('input[name="proceso[terminado][]"]').each(function(){
+      $('input[name="proceso_terminado[]"]').each(function(){
         $(this).val('0');
       });
     } else {
       $('input[name="clicker[]"]').each(function(){
         $(this).prop('checked', true);
       });
-      $('input[name="proceso[terminado][]"]').each(function(){
+      $('input[name="proceso_terminado[]"]').each(function(){
         $(this).val('1');
       });
     }

@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Http\Controllers\Produccion\ImprentaController;
+
 use App\Models\Produccion\Pedido;
 use App\Models\Produccion\Tinta;
 use App\Models\Produccion\Material;
@@ -84,51 +86,9 @@ class PedidosController extends Controller
     $model = Pedido::create($validator);
     // dd($validator['proceso']);
 
-    foreach ($validator['tinta_tiro'] ?? [] as $ttiro) {
-      $tinta = new Pedido_tintas;
-      $tinta->tinta_id = $ttiro;
-      $tinta->pedido_id = $model->id;
-      $tinta->lado = 1;
-      $tinta->save();
-    }
-    foreach ($validator['tinta_retiro'] ?? [] as $tretiro) {
-      $tinta = new Pedido_tintas;
-      $tinta->tinta_id = $tretiro;
-      $tinta->pedido_id = $model->id;
-      $tinta->lado = 0;
-      $tinta->save();
-    }
-
-    $matSize = sizeof($validator['material']['id'] ?? []);
-    for ($i = 0; $i < $matSize; $i++) {
-      $material = new Solicitud_material;
-      $material->empresa_id = Auth::user()->empresa_id;
-      $material->pedido_id = $model->id;
-      $material->material_id = $validator['material']['id'][$i];
-      $material->cantidad = $validator['material']['cantidad'][$i];
-      $material->corte_alto = $validator['material']['corte_alt'][$i];
-      $material->corte_ancho = $validator['material']['corte_anc'][$i];
-      $material->tamanos = $validator['material']['tamanios'][$i];
-      $material->proveedor_id = $validator['material']['proveedor'][$i];
-      $material->factura = $validator['material']['factura'][$i];
-      $material->total = $validator['material']['total'][$i];
-      $material->save();
-    }
-
-    $proSize = sizeof($validator['proceso']['id'] ?? []);
-    for ($i = 0; $i < $proSize; $i++) {
-      $proceso = new Pedido_proceso;
-      $proceso->empresa_id = Auth::user()->empresa_id;
-      $proceso->pedido_id = $model->id;
-      $proceso->proceso_id = $validator['proceso']['id'][$i];
-      $proceso->tiro = $validator['proceso']['tiro'][$i];
-      $proceso->retiro = $validator['proceso']['retiro'][$i];
-      $proceso->millares = $validator['proceso']['millar'][$i];
-      $proceso->valor_unitario = $validator['proceso']['valor'][$i];
-      $proceso->total = $validator['proceso']['total'][$i];
-      $proceso->status = $validator['proceso']['terminado'][$i];
-      $proceso->save();
-    }
+    app(ImprentaController::class)->manageTintas($validator, $model);
+    app(ImprentaController::class)->manageSolicitudMaterial($validator, $model);
+    app(ImprentaController::class)->manageProcesos($validator, $model);
 
     Alert::success('Acción completada', 'Pedido creado con éxito');
     return redirect()->route('pedido.edit', $model->id);
@@ -162,54 +122,9 @@ class PedidosController extends Controller
 
     $pedido->update($validator);
 
-    Pedido_tintas::where('pedido_id', $pedido->id)->delete();
-    foreach ($validator['tinta_tiro'] ?? [] as $ttiro) {
-      $tinta = new Pedido_tintas;
-      $tinta->tinta_id = $ttiro;
-      $tinta->pedido_id = $pedido->id;
-      $tinta->lado = 1;
-      $tinta->save();
-    }
-    foreach ($validator['tinta_retiro'] ?? [] as $tretiro) {
-      $tinta = new Pedido_tintas;
-      $tinta->tinta_id = $tretiro;
-      $tinta->pedido_id = $pedido->id;
-      $tinta->lado = 0;
-      $tinta->save();
-    }
-
-    Solicitud_material::where('empresa_id', Auth::user()->empresa_id)->where('pedido_id', $pedido->id)->delete();
-    $matSize = sizeof($validator['material']['id'] ?? []);
-    for ($i = 0; $i < $matSize; $i++) {
-      $material = new Solicitud_material;
-      $material->empresa_id = Auth::user()->empresa_id;
-      $material->pedido_id = $pedido->id;
-      $material->material_id = $validator['material']['id'][$i];
-      $material->cantidad = $validator['material']['cantidad'][$i];
-      $material->corte_alto = $validator['material']['corte_alt'][$i];
-      $material->corte_ancho = $validator['material']['corte_anc'][$i];
-      $material->tamanos = $validator['material']['tamanios'][$i];
-      $material->proveedor_id = $validator['material']['proveedor'][$i];
-      $material->factura = $validator['material']['factura'][$i];
-      $material->total = $validator['material']['total'][$i];
-      $material->save();
-    }
-
-    Pedido_proceso::where('empresa_id', Auth::user()->empresa_id)->where('pedido_id', $pedido->id)->delete();
-    $proSize = sizeof($validator['proceso']['id'] ?? []);
-    for ($i = 0; $i < $proSize; $i++) {
-      $proceso = new Pedido_proceso;
-      $proceso->empresa_id = Auth::user()->empresa_id;
-      $proceso->pedido_id = $pedido->id;
-      $proceso->proceso_id = $validator['proceso']['id'][$i];
-      $proceso->tiro = $validator['proceso']['tiro'][$i];
-      $proceso->retiro = $validator['proceso']['retiro'][$i];
-      $proceso->millares = $validator['proceso']['millar'][$i];
-      $proceso->valor_unitario = $validator['proceso']['valor'][$i];
-      $proceso->total = $validator['proceso']['total'][$i];
-      $proceso->status = $validator['proceso']['terminado'][$i];
-      $proceso->save();
-    }
+    app(ImprentaController::class)->manageTintas($validator, $pedido);
+    app(ImprentaController::class)->manageSolicitudMaterial($validator, $pedido);
+    app(ImprentaController::class)->manageProcesos($validator, $pedido);
 
     Alert::success('Acción completada', 'Pedido modificado con éxito');
     return redirect()->route('pedido.edit', $pedido->id);

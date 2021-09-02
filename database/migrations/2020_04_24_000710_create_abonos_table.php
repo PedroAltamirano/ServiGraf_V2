@@ -16,6 +16,7 @@ class CreateAbonosTable extends Migration
     Schema::create('abonos', function (Blueprint $table) {
       $table->id();
       $table->foreignId('pedido_id')->constrained('pedidos');
+      $table->date('fecha');
       $table->unsignedInteger('usuario_id');
       $table->foreign('usuario_id')->references('cedula')->on('usuarios');
       $table->string('forma_pago', 20);
