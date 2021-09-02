@@ -22,13 +22,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/app.js') }}" type="text/javascript" defer></script>
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 </head>
 
 <body style="min-height: 100%; height: 100%;">
-  {{-- SWEET ALERT --}}
-  @include('sweetalert::alert')
   <!-- ERRORS ALERT -->
   <x-errors />
 
@@ -80,5 +77,10 @@
         </footer>
     </div>
   </div>
+
+  <script src="{{ asset('js/app.js') }}" type="text/javascript" defer></script>
+
+  {{-- SWEET ALERT --}}
+  @include('sweetalert::alert')
 </body>
 </html>

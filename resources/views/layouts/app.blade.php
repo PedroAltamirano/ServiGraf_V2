@@ -42,8 +42,6 @@
 </head>
 
 <body class="sidebar-toggled">
-  {{-- SWEET ALERT --}}
-  @include('sweetalert::alert')
   <!-- ERRORS ALERT -->
   <x-errors />
 
@@ -152,6 +150,9 @@
   <script src="{{ asset('js/helpers.js') }}" type="text/javascript"></script>
   <script src="//cdn.datatables.net/plug-ins/1.10.22/api/sum().js" type="text/javascript"></script>
   <script src="{{ asset('js/printable.js') }}" type="text/javascript"></script>
+
+  {{-- SWEET ALERT --}}
+  @include('sweetalert::alert')
 
   @yield('scripts')
   @yield('after.scripts')

@@ -212,6 +212,10 @@ $('.perfil_all').click(function (event) {
   $(selector).prop('checked', check);
 });
 
+window.add_error = function (mssg, type) {
+  $('#errorDiv').append("\n    <div class=\"alert alert-".concat(type, "\" role=\"alert\">\n      ").concat(mssg, "&nbsp&nbsp\n      <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n      <span aria-hidden=\"true\">&times;</span></button>\n    </div>\n  "));
+};
+
 /***/ }),
 
 /***/ 1:
