@@ -193,20 +193,6 @@
   </div>
 </div>
 @php
-  //
-  // $opts_ = '<option disabled selected>Selecciona uno...</option>';
-  // foreach (config('') ?? [] as $key => $value) {
-  //   $opts_ .= "<option value='$key'>$value</option>";
-  // }
-  // $old_ = $pedido->;
-  // if($cnt = count(old('') ?? [])) {
-  //   for($i = 0; $i <optgroup $cnt; $i++){
-  //     $model = new \stdClass;
-  //     $model-> = old('')[$i];
-  //     $old_[] = $model;
-  //   }
-  // }
-
   // SOLICITUD MATERIAL
   $opts_mats = "<option disabled selected>Selecciona uno...</option>";
   if($materiales){
@@ -269,13 +255,13 @@
   }
 
   $old_abonos = $pedido->abonos;
-  if($cnt = count(old('abono_fecha_val') ?? [])) {
+  if($cnt = count(old('abono_fecha') ?? [])) {
     for($i = 0; $i < $cnt; $i++){
       $model = new \stdClass;
-      $model->fecha = old('abono_fecha_val')[$i];
-      $model->usuario_id = old('abono_usuario_val')[$i];
-      $model->forma_pago = old('abono_pago_val')[$i];
-      $model->valor = old('abono_valor_val')[$i];
+      $model->fecha = old('abono_fecha')[$i];
+      $model->usuario_id = old('abono_usuario')[$i];
+      $model->forma_pago = old('abono_pago')[$i];
+      $model->valor = old('abono_valor')[$i];
       $old_abonos[] = $model;
     }
   }
@@ -352,7 +338,7 @@
 
     // let proceso = $('<select />', {'name' : 'proceso[id][]', 'id': 'proceso-'+i, 'class': 'form-control form-control-sm select2Class'}).append(proc_opts);
     let proceso = proc_opts.replace("procesos", `proceso-${index_procesos}`);
-    // if(proceso_id) proceso.val(proceso_id);
+    if(proceso_id) $(proceso).val(proceso_id);
 
     let tiro = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': proceso_tiro, 'name':'proceso_tiro[]', 'id': `tiro-${index_procesos}`, 'min': '0', 'onchange':`sumar(${index_procesos});`});
 
@@ -364,9 +350,7 @@
 
     let total = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center fixFloat', 'value': proceso_total, 'step': '0.01', 'name':'proceso_total[]', 'id': `total_proceso-${index_procesos}`, 'min': '0', 'onchange':`sumar(${index_procesos});`, 'readonly': 'readonly'});
 
-    let terminado = $('<input />', {'type': 'hidden', 'value': proceso_terminado, 'name':'proceso_terminado[]'});
-
-    let clicker = $('<input />', {'type': 'checkbox', 'name':'clicker[]', 'onClick': 'this.previousSibling.value=1-this.previousSibling.value'}).prop('checked', proceso_terminado);
+    let terminado = $('<input />', {'type': 'checkbox', 'class': 'form-control form-control-sm text-center fixFloat', 'value': proceso_terminado, 'name':'proceso_terminado[]', 'id': `proceso_terminado-${index_procesos}`}).prop('checked', proceso_terminado);
 
     newRow(table, [button, proceso, tiro, retiro, millar, valor, total, terminado], `row-proceso-${index_procesos}`);
     $('.select2Class').select2();
@@ -404,6 +388,7 @@
   //ABONOS
   var index_abono = 0;
   const method = '{{ $method }}';
+  const usuarios = `<x-usuarios name='abono_usuario[]' id='abono_usuarios' />`;
   const opts_pagos = `@json($opts_pagos)`;
   const old_abonos = JSON.parse(`@json($old_abonos)`);
   const add_abono = (abono_fecha_val=null, abono_usuario_val=null, abono_pago_val=null, abono_valor_val=0.00) => {
@@ -413,7 +398,8 @@
 
     let fecha = $('<input />', {'type': 'date', 'class': 'form-control form-control-sm text-right', 'value': abono_fecha_val, 'name':'abono_fecha[]', 'id': `abono_fecha_${index_abono}`});
 
-    let usuario = $('<select />', {'class': 'form-control form-control-sm text-center', 'name' : 'abono_usuario[]', 'id': `abono_usuario_${index_abono}`});
+    // let usuario = $('<select />', {'class': 'form-control form-control-sm text-center', 'name' : 'abono_usuario[]', 'id': `abono_usuario_${index_abono}`});
+    let usuario = usuarios.replace('abono_usuarios', `abono_usuario_${index_abono}`);
 
     let pago = $('<select />', {'class': 'form-control form-control-sm text-right', 'name':'abono_pago[]', 'id': `abono_pago_${index_abono}`}).append(opts_pagos);
     if(abono_pago_val) pago.val(abono_pago_val);
@@ -421,6 +407,7 @@
     let valor = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': abono_valor_val, 'name':'abono_valor[]', 'id': `abono_valor_${index_abono}`, 'min': '0', 'step': '0.01', 'onchange':'sumarAbonos();'});
 
     newRow(table, [button, fecha, usuario, pago, valor], `row-abono-${index_abono}`);
+    $('.select2Class').select2();
     index_abono++;
   };
   $('#addAbono').click(() => {

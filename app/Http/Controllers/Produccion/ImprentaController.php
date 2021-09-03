@@ -12,14 +12,14 @@ use App\Models\Produccion\Pedido_proceso;
 
 class ImprentaController extends Controller
 {
-  public function manageTintas(Request $request, Pedido $model)
+  public function manageTintas($request, Pedido $model)
   {
     if (!isset($request['tinta_tiro']) and !isset($request['tinta_retiro'])) {
       return 0;
     }
 
-    $relation = $model->tintas_id;
-    if (!$relation->isEmpty()) {
+    $relation = $model->tintas_id();
+    if ($relation->count()) {
       $relation->delete();
     }
 
@@ -40,18 +40,18 @@ class ImprentaController extends Controller
     }
   }
 
-  public function manageSolicitudMaterial(Request $request, Pedido $model)
+  public function manageSolicitudMaterial($request, Pedido $model)
   {
     if (!isset($request['tipo_refer'])) {
       return 0;
     }
 
-    $relation = $model->material_id;
-    if (!$relation->isEmpty()) {
+    $relation = $model->material_id();
+    if ($relation->count()) {
       $relation->delete();
     }
 
-    $matSize = sizeof($request['material']['id'] ?? []);
+    $matSize = sizeof($request['material_id'] ?? []);
     for ($i = 0; $i < $matSize; $i++) {
       $material = new Solicitud_material;
       $material->empresa_id = Auth::user()->empresa_id;
@@ -68,14 +68,14 @@ class ImprentaController extends Controller
     }
   }
 
-  public function manageProcesos(Request $request, Pedido $model)
+  public function manageProcesos($request, Pedido $model)
   {
     if (!isset($request['proceso_id'])) {
       return 0;
     }
 
-    $relation = $model->procesos_id;
-    if (!$relation->isEmpty()) {
+    $relation = $model->procesos_id();
+    if ($relation->count()) {
       $relation->delete();
     }
 
@@ -90,7 +90,7 @@ class ImprentaController extends Controller
       $proceso->millares = $request['proceso_millar'][$i];
       $proceso->valor_unitario = $request['proceso_valor'][$i];
       $proceso->total = $request['proceso_total'][$i];
-      $proceso->status = $request['proceso_terminado'][$i];
+      $proceso->status = $request['proceso_terminado'][$i] ?? 0;
       $proceso->save();
     }
   }

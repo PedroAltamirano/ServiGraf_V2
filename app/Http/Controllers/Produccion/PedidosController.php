@@ -84,7 +84,6 @@ class PedidosController extends Controller
       $validator['fecha_cobro'] = date('Y-m-d');
     }
     $model = Pedido::create($validator);
-    // dd($validator['proceso']);
 
     app(ImprentaController::class)->manageTintas($validator, $model);
     app(ImprentaController::class)->manageSolicitudMaterial($validator, $model);
@@ -133,13 +132,14 @@ class PedidosController extends Controller
   public function abonos(Request $request, $data_id)
   {
     Abono::where('pedido_id', $data_id)->delete();
-    $aboSize = sizeof($request->abono['pago']);
+    $aboSize = sizeof($request->abono_pago);
     for ($i = 0; $i < $aboSize; $i++) {
       $model = new Abono;
       $model->pedido_id = $data_id;
       $model->usuario_id = Auth::id();
-      $model->forma_pago = $request->abono['pago'][$i];
-      $model->valor = $request->abono['valor'][$i];
+      $model->fecha = $request->abono_fecha[$i];
+      $model->forma_pago = $request->abono_pago[$i];
+      $model->valor = $request->abono_valor[$i];
       $model->save();
     }
 

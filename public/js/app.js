@@ -95911,7 +95911,7 @@ __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
 __webpack_require__(/*! select2/dist/js/select2.min.js */ "./node_modules/select2/dist/js/select2.min.js");
 
-$.fn.select2.defaults.set("theme", "bootstrap4");
+$.fn.select2.defaults.set("theme", "bootstrap");
 
 __webpack_require__(/*! dropify/dist/js/dropify.min.js */ "./node_modules/dropify/dist/js/dropify.min.js");
 

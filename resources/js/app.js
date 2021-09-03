@@ -4,7 +4,7 @@ import "popper.js";
 import "animate.css";
 
 require("select2/dist/js/select2.min.js");
-$.fn.select2.defaults.set("theme", "bootstrap4");
+$.fn.select2.defaults.set("theme", "bootstrap");
 
 require("dropify/dist/js/dropify.min.js");
 

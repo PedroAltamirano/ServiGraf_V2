@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Usuarios\Perfil;
 use App\Models\Usuarios\Modulo;
 use App\Models\Usuarios\ModPerfRol;
@@ -88,3 +89,17 @@ use Illuminate\Support\Facades\DB;
 
 echo json_encode(session()->all());
 echo Auth::user();
+
+
+// $opts_ = '<option disabled selected>Selecciona uno...</option>';
+// foreach (config('') ?? [] as $key => $value) {
+//   $opts_ .= "<option value='$key'>$value</option>";
+// }
+// $old_ = $pedido->;
+// if($cnt = count(old('') ?? [])) {
+//   for($i = 0; $i <optgroup $cnt; $i++){
+//     $model = new \stdClass;
+//     $model-> = old('')[$i];
+//     $old_[] = $model;
+//   }
+// }
