@@ -168,9 +168,9 @@
           <thead>
             <tr>
               <td scope="col" class="crudCol"><i id="addAbono" class="fas fa-plus"></i></td>
-              <td scope="col">Fecha</td>
+              <td scope="col" class="w-25">Fecha</td>
               <td scope="col">Usuario</td>
-              <td scope="col">Forma de pago</td>
+              <td scope="col" class="w-25">Forma de pago</td>
               <td scope="col" style="width:15%">Valor $</td>
             </tr>
           </thead>
@@ -255,16 +255,18 @@
   }
 
   $old_abonos = $pedido->abonos;
-  if($cnt = count(old('abono_fecha') ?? [])) {
-    for($i = 0; $i < $cnt; $i++){
-      $model = new \stdClass;
-      $model->fecha = old('abono_fecha')[$i];
-      $model->usuario_id = old('abono_usuario')[$i];
-      $model->forma_pago = old('abono_pago')[$i];
-      $model->valor = old('abono_valor')[$i];
-      $old_abonos[] = $model;
-    }
-  }
+  if($old_abonos != []) $pedido->abonos->each(function($abono){ $abono->usuario_nombre = $abono->nomina->nombre; });
+  // if($cnt = count(old('abono_fecha') ?? [])) {
+  //   for($i = 0; $i < $cnt; $i++){
+  //     $model = new \stdClass;
+  //     $model->fecha = old('abono_fecha')[$i];
+  //     $model->usuario_id = old('abono_usuario')[$i];
+  //     $model->usuario_name = null;
+  //     $model->forma_pago = old('abono_pago')[$i];
+  //     $model->valor = old('abono_valor')[$i];
+  //     $old_abonos[] = $model;
+  //   }
+  // }
 @endphp
 @endsection
 
@@ -337,8 +339,8 @@
     let button = $('<i />', {'type': 'button', 'class':'fas fa-times removeRow', 'name': 'remove', 'id':`proceso-${index_procesos}`});
 
     // let proceso = $('<select />', {'name' : 'proceso[id][]', 'id': 'proceso-'+i, 'class': 'form-control form-control-sm select2Class'}).append(proc_opts);
-    let proceso = proc_opts.replace("procesos", `proceso-${index_procesos}`);
-    if(proceso_id) $(proceso).val(proceso_id);
+    let proceso = proc_opts.replace("procesos", `proceso_id-${index_procesos}`);
+    if(proceso_id) setTimeout(change_select, 100, `#proceso_id-${index_procesos}`, proceso_id);
 
     let tiro = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': proceso_tiro, 'name':'proceso_tiro[]', 'id': `tiro-${index_procesos}`, 'min': '0', 'onchange':`sumar(${index_procesos});`});
 
@@ -353,13 +355,15 @@
     let terminado = $('<input />', {'type': 'checkbox', 'class': 'form-control form-control-sm text-center fixFloat', 'value': proceso_terminado, 'name':'proceso_terminado[]', 'id': `proceso_terminado-${index_procesos}`}).prop('checked', proceso_terminado);
 
     newRow(table, [button, proceso, tiro, retiro, millar, valor, total, terminado], `row-proceso-${index_procesos}`);
-    $('.select2Class').select2();
+    // $('.select2Class').select2().trigger('change');
     index_procesos++;
   };
   $('#addProceso').click(() => add_proceso());
   if(old_procesos != []){
     old_procesos.map(item => {
       add_proceso(item.proceso_id, item.tiro, item.retiro, item.millares, item.valor_unitario, item.total, item.status);
+      // if(item.proceso_id) $(`#proceso_id-${index_procesos-1}`).val(item.proceso_id).trigger("change.select2");
+      // debugger
     });
   }
 
@@ -388,25 +392,32 @@
   //ABONOS
   var index_abono = 0;
   const method = '{{ $method }}';
-  const usuarios = `<x-usuarios name='abono_usuario[]' id='abono_usuarios' />`;
+  // const usuarios = `x-usuarios name='abono_usuario[]' id='abono_usuarios' /`;
+  const usuario_id = `{{ auth()->id() }}`;
+  const usuario_nombre = `{{ session('userInfo.nomina') }}`;
   const opts_pagos = `@json($opts_pagos)`;
   const old_abonos = JSON.parse(`@json($old_abonos)`);
-  const add_abono = (abono_fecha_val=null, abono_usuario_val=null, abono_pago_val=null, abono_valor_val=0.00) => {
+  const add_abono = (abono_fecha=null, abono_usuario=null, abono_usuario_nombre=null, abono_pago=null, abono_valor=0.00) => {
     let table = $('#table-abonos > tbody');
 
     let button = $('<i />', {'type': 'button', 'class':'fas fa-times removeRow', 'name': 'remove', 'id':`abono-${index_abono}`});
 
-    let fecha = $('<input />', {'type': 'date', 'class': 'form-control form-control-sm text-right', 'value': abono_fecha_val, 'name':'abono_fecha[]', 'id': `abono_fecha_${index_abono}`});
+    let fecha = $('<input />', {'type': 'date', 'class': 'form-control form-control-sm', 'value': abono_fecha, 'name':'abono_fecha[]', 'id': `abono_fecha_${index_abono}`});
 
-    // let usuario = $('<select />', {'class': 'form-control form-control-sm text-center', 'name' : 'abono_usuario[]', 'id': `abono_usuario_${index_abono}`});
-    let usuario = usuarios.replace('abono_usuarios', `abono_usuario_${index_abono}`);
+    let usuario = $('<input />', {'type': 'hidden', 'value': abono_usuario, 'name' : 'abono_usuario[]', 'id': `abono_usuario_${index_abono}`});
 
-    let pago = $('<select />', {'class': 'form-control form-control-sm text-right', 'name':'abono_pago[]', 'id': `abono_pago_${index_abono}`}).append(opts_pagos);
-    if(abono_pago_val) pago.val(abono_pago_val);
+    let usuario_nombre = $('<input />', {'type': 'text', 'class': 'form-control form-control-sm', 'value': abono_usuario_nombre, 'name' : 'abono_usuario_nombre[]', 'id': `abono_usuario_nombre_${index_abono}`, 'readonly': 'readonly'});
+    // let usuario = usuarios.replace('abono_usuarios', `abono_usuario_${index_abono}`);
+    // if(abono_usuario) setTimeout(change_select, 100, `#abono_usuario_${index_abono}`, abono_usuario);
 
-    let valor = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': abono_valor_val, 'name':'abono_valor[]', 'id': `abono_valor_${index_abono}`, 'min': '0', 'step': '0.01', 'onchange':'sumarAbonos();'});
+    let usuario_div = $('<div />').append(usuario_nombre).append(usuario);
 
-    newRow(table, [button, fecha, usuario, pago, valor], `row-abono-${index_abono}`);
+    let pago = $('<select />', {'class': 'form-control form-control-sm', 'name':'abono_pago[]', 'id': `abono_pago_${index_abono}`}).append(opts_pagos);
+    if(abono_pago) pago.val(abono_pago);
+
+    let valor = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': abono_valor, 'name':'abono_valor[]', 'id': `abono_valor_${index_abono}`, 'min': '0', 'step': '0.01', 'onchange':'sumarAbonos();'});
+
+    newRow(table, [button, fecha, usuario_div, pago, valor], `row-abono-${index_abono}`);
     $('.select2Class').select2();
     index_abono++;
   };
@@ -415,11 +426,11 @@
       swal('Oops!', 'Primero debes crear el pedido.', 'error');
       return;
     }
-    add_abono();
+    add_abono(abono_usuario=usuario_id, abono_usuario_nombre=usuario_nombre);
   })
   if(old_abonos != []){
     old_abonos.map(item => {
-      add_abono(item.fecha, item.usuario_id, item.forma_pago, item.valor);
+      add_abono(item.fecha, item.usuario_id, item.usuario_nombre, item.forma_pago, item.valor);
     });
   }
 

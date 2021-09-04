@@ -123,11 +123,12 @@ $('.perfil_all').click(event => {
 });
 
 window.add_error = function(mssg, type) {
-  $('#errorDiv').append(`
-    <div class="alert alert-${type}" role="alert">
+  let alert = `<div class="alert alert-${type}" role="alert">
       ${mssg}&nbsp&nbsp
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span></button>
-    </div>
-  `);
+    </div>`;
+  $('#errorDiv').append(alert);
 }
+
+window.change_select = (selector, val) => $(selector).val(val).trigger("change.select2");

@@ -213,7 +213,12 @@ $('.perfil_all').click(function (event) {
 });
 
 window.add_error = function (mssg, type) {
-  $('#errorDiv').append("\n    <div class=\"alert alert-".concat(type, "\" role=\"alert\">\n      ").concat(mssg, "&nbsp&nbsp\n      <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n      <span aria-hidden=\"true\">&times;</span></button>\n    </div>\n  "));
+  var alert = "<div class=\"alert alert-".concat(type, "\" role=\"alert\">\n      ").concat(mssg, "&nbsp&nbsp\n      <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n      <span aria-hidden=\"true\">&times;</span></button>\n    </div>");
+  $('#errorDiv').append(alert);
+};
+
+window.change_select = function (selector, val) {
+  return $(selector).val(val).trigger("change.select2");
 };
 
 /***/ }),
