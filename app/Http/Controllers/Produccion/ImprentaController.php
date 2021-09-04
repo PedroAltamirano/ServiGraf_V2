@@ -51,8 +51,8 @@ class ImprentaController extends Controller
       $relation->delete();
     }
 
-    $matSize = sizeof($request['material_id'] ?? []);
-    for ($i = 0; $i < $matSize; $i++) {
+    $cnt = count($request['material_id'] ?? []);
+    for ($i = 0; $i < $cnt; $i++) {
       $material = new Solicitud_material;
       $material->empresa_id = Auth::user()->empresa_id;
       $material->pedido_id = $model->id;
@@ -79,8 +79,8 @@ class ImprentaController extends Controller
       $relation->delete();
     }
 
-    $proSize = sizeof($request['proceso_id'] ?? []);
-    for ($i = 0; $i < $proSize; $i++) {
+    $cnt = count($request['proceso_id'] ?? []);
+    for ($i = 0; $i < $cnt; $i++) {
       $proceso = new Pedido_proceso;
       $proceso->empresa_id = Auth::user()->empresa_id;
       $proceso->pedido_id = $model->id;

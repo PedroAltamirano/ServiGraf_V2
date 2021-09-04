@@ -218,6 +218,7 @@
 
   $old_material = $pedido->material_id;
   if($cnt = count(old('material_id') ?? [])) {
+    $old_material = [];
     for($i = 0; $i < $cnt; $i++){
       $model = new \stdClass;
       $model->material_id = old('material_id')[$i];
@@ -235,6 +236,7 @@
   // PROCESOS
   $old_procesos = $pedido->procesos_id;
   if($cnt = count(old('proceso_id') ?? [])) {
+    $old_procesos = [];
     for($i = 0; $i < $cnt; $i++){
       $model = new \stdClass;
       $model->proceso_id = old('proceso_id')[$i];
@@ -352,18 +354,16 @@
 
     let total = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center fixFloat', 'value': proceso_total, 'step': '0.01', 'name':'proceso_total[]', 'id': `total_proceso-${index_procesos}`, 'min': '0', 'onchange':`sumar(${index_procesos});`, 'readonly': 'readonly'});
 
-    let terminado = $('<input />', {'type': 'checkbox', 'class': 'form-control form-control-sm text-center fixFloat', 'value': proceso_terminado, 'name':'proceso_terminado[]', 'id': `proceso_terminado-${index_procesos}`}).prop('checked', proceso_terminado);
+    let terminado = $('<input />', {'type': 'checkbox', 'class': 'form-control form-control-sm text-center', 'value': 1, 'name':'proceso_terminado[]', 'id': `proceso_terminado-${index_procesos}`}).prop('checked', proceso_terminado == 1 ? true : false);
 
     newRow(table, [button, proceso, tiro, retiro, millar, valor, total, terminado], `row-proceso-${index_procesos}`);
-    // $('.select2Class').select2().trigger('change');
+    $('.select2Class').select2();
     index_procesos++;
   };
   $('#addProceso').click(() => add_proceso());
   if(old_procesos != []){
     old_procesos.map(item => {
       add_proceso(item.proceso_id, item.tiro, item.retiro, item.millares, item.valor_unitario, item.total, item.status);
-      // if(item.proceso_id) $(`#proceso_id-${index_procesos-1}`).val(item.proceso_id).trigger("change.select2");
-      // debugger
     });
   }
 
@@ -418,7 +418,7 @@
     let valor = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': abono_valor, 'name':'abono_valor[]', 'id': `abono_valor_${index_abono}`, 'min': '0', 'step': '0.01', 'onchange':'sumarAbonos();'});
 
     newRow(table, [button, fecha, usuario_div, pago, valor], `row-abono-${index_abono}`);
-    $('.select2Class').select2();
+    // $('.select2Class').select2();
     index_abono++;
   };
   $('#addAbono').click(() => {
@@ -455,20 +455,10 @@
 
   //funcion para check todos los checkbox
   $('#checkall').on('click', function () {
-    if ($('input[name="clicker[]"]:checked').length == $('input[name="clicker[]"]').length){
-      $('input[name="clicker[]"]').each(function(){
-        $(this).prop('checked', false);
-      });
-      $('input[name="proceso_terminado[]"]').each(function(){
-        $(this).val('0');
-      });
+    if ($('input[name="proceso_terminado[]"]:checked').length == $('input[name="proceso_terminado[]"]').length){
+      $('input[name="proceso_terminado[]"]').each(() => $(this).prop('checked', false));
     } else {
-      $('input[name="clicker[]"]').each(function(){
-        $(this).prop('checked', true);
-      });
-      $('input[name="proceso_terminado[]"]').each(function(){
-        $(this).val('1');
-      });
+      $('input[name="proceso_terminado[]"]').each(() => $(this).prop('checked', true));
     }
   });
 

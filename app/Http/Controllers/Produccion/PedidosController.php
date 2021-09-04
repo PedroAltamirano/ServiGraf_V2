@@ -110,7 +110,6 @@ class PedidosController extends Controller
   public function update(UpdatePedidoImprenta $request, Pedido $pedido)
   {
     $validator = $request->validated();
-    // dd($validator);
     $validator['usuario_mod_id'] = Auth::id();
     $fecha_salida = Carbon::create($validator['fecha_entrada'])->addDays(3)->format('Y-m-d');
     $validator['fecha_salida'] = $fecha_salida;
