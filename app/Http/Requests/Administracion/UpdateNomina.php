@@ -52,7 +52,7 @@ class UpdateNomina extends FormRequest
       'cargo' => ['required', 'string', 'max:50'],
       'sueldo' => ['required', 'numeric'],
       'status' => ['nullable', 'boolean'],
-      'centro_costos' => ['nullable', 'numeric', 'exists:centro_costos,id'],
+      'centro_costos_id' => ['nullable', 'numeric', 'exists:centro_costos,id'],
       'ingreso_iess' => ['nullable', 'date'],
       'iess_asumido_empleador' => ['nullable', 'boolean'],
       'liquidacion_mensual' => ['nullable', 'boolean'],

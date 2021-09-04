@@ -19,6 +19,7 @@ use App\Models\Administracion\Dotacion;
 
 use App\Http\Requests\Administracion\StoreNomina;
 use App\Http\Requests\Administracion\UpdateNomina;
+use App\Models\Administracion\NominaDocs;
 use App\Models\Administracion\NominaDotacion;
 use App\Models\Administracion\NominaEducacion;
 use App\Models\Administracion\NominaFamilia;
@@ -81,19 +82,19 @@ class NominaController extends Controller
           $nomina->save();
         }
 
-        $this->manageEducacion($validated, $nomina);
-        $this->manageReferencias($validated, $nomina);
-        $this->manageDotacion($validated, $nomina);
-        $this->manageFamiliares($validated, $nomina);
+        // $this->manageEducacion($validated, $nomina);
+        // $this->manageReferencias($validated, $nomina);
+        // $this->manageDotacion($validated, $nomina);
+        // $this->manageFamiliares($validated, $nomina);
 
         Alert::success('Acción completada', 'Nómina creada con éxito');
-        return redirect()->route('nomina.update', $nomina->cedula);
+        return redirect()->route('nomina.edit', $nomina->cedula);
       }
     } catch (Exception $err) {
       Log::error($err);
       DB::rollBack();
       Alert::error('Oops!', 'Nómina no creada');
-      return redirect()->back();
+      return redirect()->back()->withInput($request->except(['foto']));
     }
   }
 
@@ -150,6 +151,7 @@ class NominaController extends Controller
           $nomina->save();
         }
 
+        $this->manageDocumentos($validated, $nomina);
         $this->manageEducacion($validated, $nomina);
         $this->manageReferencias($validated, $nomina);
         $this->manageDotacion($validated, $nomina);
@@ -164,6 +166,20 @@ class NominaController extends Controller
       Alert::error('Oops!', 'Nómina no modificada');
       return redirect()->back();
     }
+  }
+
+  public function manageDocumentos($request, Nomina $nomina)
+  {
+    $ducumentos = $nomina->ducumentos;
+    if (!$ducumentos->isEmpty()) {
+      $ducumentos->delete();
+    }
+
+    $request['empresa_id'] = Auth::user()->empresa_id;
+    $request['nomina_id'] = $nomina->id;
+    $model = NominaDocs::create($request);
+
+    return 1;
   }
 
   public function manageEducacion($request, Nomina $nomina)

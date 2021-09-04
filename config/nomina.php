@@ -12,10 +12,6 @@ return [
     1 => 'Masculino',
     2 => 'Femenino',
   ],
-  'tipo_cuenta_bancaria' => [
-    1 => 'Ahorros',
-    2 => 'Corriente',
-  ],
   'tipo_sangre' => [
     1 => 'A+',
     2 => 'A-',
@@ -43,5 +39,14 @@ return [
     3 => 'Cónyuge',
     4 => 'Hijo/a',
     5 => 'Otros',
+  ],
+  'bancos' => [
+    1 => 'Pichincha',
+    2 => 'Pacífico',
+    3 => 'Guayaquil',
+  ],
+  'tipo_cuenta_banco' => [
+    1 => 'Ahorros',
+    2 => 'Corriente',
   ],
 ];

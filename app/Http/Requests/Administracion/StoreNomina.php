@@ -37,12 +37,12 @@ class StoreNomina extends FormRequest
       'apellido' => ['required', 'string', 'max:30'],
       'telefono' => ['nullable', 'numeric', 'max:9999999'],
       'celular' => ['required', 'numeric', 'max:999999999'],
-      'correo' => ['required', 'string', 'max:255'],
+      'correo' => ['required', 'email', 'max:255', 'unique:nomina,correo'],
       'cant_hijos' => ['nullable', 'numeric'],
 
       // Datos domiciliarios
       'direccion' => ['required', 'string', 'max:255'],
-      'sector' => ['nullable', 'string', 'max:30'],
+      'sector' => ['required', 'string', 'max:30'],
       'visita_domiciliaria' => ['nullable', 'boolean'],
       'fecha_visita' => ['nullable', 'date'],
 
@@ -52,16 +52,16 @@ class StoreNomina extends FormRequest
       'cargo' => ['required', 'string', 'max:50'],
       'sueldo' => ['required', 'numeric'],
       'status' => ['required', 'boolean'],
-      'centro_costos' => ['nullable', 'numeric', 'exists:centro_costos,id'],
+      'centro_costos_id' => ['required', 'numeric', 'exists:centro_costos,id'],
       'ingreso_iess' => ['nullable', 'date'],
       'iess_asumido_empleador' => ['nullable', 'boolean'],
       'liquidacion_mensual' => ['nullable', 'boolean'],
       'Txhoras' => ['nullable', 'boolean'],
       'horario_id' => ['required', 'numeric', 'exists:horarios,id'],
       'observaciones' => ['nullable', 'string', 'max:255'],
-      'banco_id' => ['nullable', 'numeric', 'exists:bancos,id'],
-      'tipo_cuenta_banco' => ['nullable', 'numeric'],
-      'numero_cuenta_bancaria' => ['nullable', 'numeric'],
+      'banco_id' => ['required', 'numeric', 'exists:bancos,id'],
+      'tipo_cuenta_banco' => ['required', 'numeric'],
+      'numero_cuenta_bancaria' => ['required', 'numeric'],
 
       // Documentos
       'aviso_entrada' => ['nullable', 'boolean'],

@@ -155,11 +155,11 @@
           </div>
         </div>
         <div class="form-group col-12 col-md-2">
-          <label for="centro_costos">Centro de Costos</label>
-          <select class="form-control form-control-sm @error('centro_costos') is-invalid @enderror" name="centro_costos" id="centro_costos">
+          <label for="centro_costos_id">Centro de Costos</label>
+          <select class="form-control form-control-sm @error('centro_costos_id') is-invalid @enderror" name="centro_costos_id" id="centro_costos_id">
             <option disabled selected>Selecciona uno...</option>
             @foreach ($ccostos as $item)
-            <option value="{{ $item->id }}" {{ old('centro_costos', $nomina->centro_costos) == $item->id ? 'selected' : '' }}>{{ $item->nombre }}</option>
+            <option value="{{ $item->id }}" {{ old('centro_costos_id', $nomina->centro_costos_id) == $item->id ? 'selected' : '' }}>{{ $item->nombre }}</option>
             @endforeach
           </select>
         </div>
@@ -204,17 +204,20 @@
         </div>
         <div class="form-group col-12 col-md-2">
           <label for="banco_id">Banco</label>
-          <select class="form-control form-control-sm @error('banco_id') is-invalid @enderror" name="banco_id" id="banco_id" data-tags="true" disabled>
+          <select class="form-control form-control-sm @error('banco_id') is-invalid @enderror" name="banco_id" id="banco_id" data-tags="true">
             <option disabled selected>Selecciona uno...</option>
             {{-- <option value="" {{ old('banco_id', $nomina->banco_id) == '' ? 'selected' : '' }}></option> --}}
+            @foreach (config('nomina.bancos') ?? [] as $key => $value)
+            <option value="{{ $key }}" {{ old('banco_id', $nomina->banco_id) == $key ? 'selected' : '' }}>{{ $value }}</option>
+            @endforeach
           </select>
         </div>
         <div class="form-group col-12 col-md-2">
-          <label for="tipo_cuenta_bancaria">Tipo Cuenta</label>
-          <select class="form-control form-control-sm @error('tipo_cuenta_bancaria') is-invalid @enderror" name="tipo_cuenta_bancaria" id="tipo_cuenta_bancaria" data-tags="true" disabled>
+          <label for="tipo_cuenta_banco">Tipo Cuenta</label>
+          <select class="form-control form-control-sm @error('tipo_cuenta_banco') is-invalid @enderror" name="tipo_cuenta_banco" id="tipo_cuenta_banco" data-tags="true">
             <option disabled selected>Selecciona uno...</option>
-            @foreach (config('nomina.tipo_cuenta_bancaria') ?? [] as $key => $value)
-            <option value="{{ $key }}" {{ old('tipo_cuenta_bancaria', $nomina->tipo_cuenta_bancaria) == $key ? 'selected' : '' }}>{{ $value }}</option>
+            @foreach (config('nomina.tipo_cuenta_banco') ?? [] as $key => $value)
+            <option value="{{ $key }}" {{ old('tipo_cuenta_banco', $nomina->tipo_cuenta_banco) == $key ? 'selected' : '' }}>{{ $value }}</option>
             @endforeach
           </select>
         </div>

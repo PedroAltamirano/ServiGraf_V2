@@ -49,7 +49,7 @@ class CreateNominaTable extends Migration
       $table->string('cargo', 50);
       $table->foreignId('centro_costos_id')->references('id')->on('centro_costos');
       $table->date('ingreso_iess')->nullable();
-      $table->boolean('iess_asumido_empleador');
+      $table->boolean('iess_asumido_empleador')->default(0);
       $table->unsignedDecimal('sueldo', 6, 2);
       $table->boolean('liquidacion_mensual')->default(1); //pago de decimos mes a mes
       //pago

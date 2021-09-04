@@ -2,6 +2,7 @@
 
 namespace App\Models\Sistema;
 
+use App\Models\Administracion\NominaDocs;
 use App\Models\Administracion\NominaDotacion;
 use App\Models\Administracion\NominaEducacion;
 use App\Models\Administracion\NominaFamilia;
@@ -21,7 +22,11 @@ class Nomina extends Model
   ];
 
   protected $fillable = [
-    'empresa_id', 'cedula', 'foto', 'fecha_nacimiento', 'lugar_nacimiento', 'nacionalidad', 'idioma_nativo', 'nombre', 'apellido', 'direccion', 'sector', 'visita_domiciliaria', 'fecha_visita', 'telefono', 'celular', 'correo', 'tipo_sangre', 'padecimientos_medicos', 'alergias', 'contacto_emergencia_nombre', 'contacto_emergencia_domicilio', 'contacto_emergencia_celular', 'contacto_emergencia_oficina', 'genero', 'estado_civil', 'cant_hijos', 'inicio_labor', 'fin_labor', 'cargo', 'centro_costos_id', 'ingreso_iess', 'iess_asumido_empleador', 'sueldo', 'liquidacion_mensual', 'banco_id', 'tipo_cuenta_banco', 'numero_cuenta_bancaria', 'observaciones', 'status', 'horario_id', 'Txhoras'
+    'empresa_id', 'cedula', 'foto', 'fecha_nacimiento', 'lugar_nacimiento', 'nacionalidad', 'estado_civil', 'genero', 'idioma_nativo', 'nombre', 'apellido', 'telefono', 'celular', 'correo', 'cant_hijos', 'direccion', 'sector', 'visita_domiciliaria', 'fecha_visita',
+
+    'inicio_labor', 'fin_labor', 'cargo', 'sueldo', 'status', 'centro_costos_id', 'ingreso_iess', 'iess_asumido_empleador', 'liquidacion_mensual', 'Txhoras', 'horario_id', 'observaciones', 'banco_id', 'tipo_cuenta_banco', 'numero_cuenta_bancaria',
+
+    'contacto_emergencia_nombre', 'contacto_emergencia_domicilio', 'contacto_emergencia_celular', 'contacto_emergencia_oficina', 'tipo_sangre', 'padecimientos_medicos', 'alergias'
   ];
 
   protected $hidden = [
@@ -59,6 +64,16 @@ class Nomina extends Model
     }
     $res .= $this->celular;
     return $res;
+  }
+
+  /**
+   * Get all of the documentos for the Nomina
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function documentos()
+  {
+    return $this->hasOne(NominaDocs::class, 'nomina_id', 'cedula');
   }
 
   /**
