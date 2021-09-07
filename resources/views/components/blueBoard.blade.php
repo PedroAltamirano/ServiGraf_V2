@@ -6,7 +6,7 @@
             <div class="flex-grow-1 d-flex">
                 @foreach ($foot as $item)
                 <div class="mr-2 mr-md-3">
-                    @if ($item['tipo'] == 'link')
+                    @if (($item['condition'] ?? 1) && $item['tipo'] == 'link')
                     <a id="{{ $item['id'] }}" href="{{ $item['href'] }}" class="text-blue-8">{{ $item['text'] }} <i class="fas fa-arrow-alt-circle-right fa-md"></i></a>
                     @elseif ($item['tipo'] == 'modal')
                     <a id="{{ $item['id'] }}" href="{{ $item['href'] }}" class="text-blue-8" data-toggle="modal">{{ $item['text'] }} <i class="fas fa-arrow-alt-circle-right fa-md"></i></a>
@@ -17,7 +17,7 @@
             <div class="ml-2 ml-md-3">
                 @foreach ($foot as $item)
                 <div class="mr-2 mr-md-3">
-                    @if ($item['tipo'] == 'button')
+                    @if (($item['condition'] ?? 1) && $item['tipo'] == 'button')
                     <a onclick="{{ $item['href'] }}" class="{{ $item['text'] }}" id="{{ $item['id'] }}" {{ $item['print-target'] ? "data-target={$item['print-target']}" : '' }}></a>
                     @endif
                 </div>

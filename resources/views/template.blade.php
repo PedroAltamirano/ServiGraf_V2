@@ -22,7 +22,7 @@
 <x-blueBoard
   title='Áreas'
   :foot="[
-    ['text'=>'Modal', 'href'=>'#modalName', 'id'=>'newModal', 'tipo'=> 'modal'],
+    ['text'=>'Modal', 'href'=>'#modalName', 'id'=>'newModal', 'tipo'=> 'modal', 'condition' => ''],
     ['text'=>'Nuevo', 'href'=>route(''), 'id'=>'nuevo', 'tipo'=> 'link'],
     ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=> 'link'],
     ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'mes', 'tipo'=> 'button', 'print-target' => 'table'],
