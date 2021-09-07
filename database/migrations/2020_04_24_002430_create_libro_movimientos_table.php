@@ -17,8 +17,8 @@ class CreateLibroMovimientosTable extends Migration
       $table->id();
       $table->unsignedInteger('usuario_id');
       $table->foreign('usuario_id')->references('cedula')->on('usuarios');
-      $table->foreignId('libro_id')->on('libros');
-      $table->foreignId('libro_ref_id')->on('libro_refs');
+      $table->foreignId('libro_id')->constrained('libros');
+      $table->foreignId('libro_ref_id')->constrained('libro_refs');
       $table->date('fecha');
       $table->string('beneficiario', 50);
       $table->unsignedInteger('ci');
@@ -26,7 +26,7 @@ class CreateLibroMovimientosTable extends Migration
       $table->boolean('tipo')->comment('1:ingreso, 0:egreso');
       $table->unsignedDecimal('ingreso', 7, 2)->nullable();
       $table->unsignedDecimal('egreso', 7, 2)->nullable();
-      $table->foreignId('banco_id')->on('bancos');
+      $table->foreignId('banco_id')->constrained('bancos');
       $table->unsignedInteger('cuenta')->nullable();
       $table->unsignedInteger('cheque')->nullable();
       $table->timestamps();

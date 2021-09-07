@@ -17,7 +17,7 @@ class CreateUsuarioProcesoTable extends Migration
       $table->id();
       $table->unsignedInteger('usuario_id');
       $table->foreign('usuario_id')->references('cedula')->on('usuarios');
-      $table->foreignId('proceso_id')->references('id')->on('procesos');
+      $table->foreignId('proceso_id')->constrained('procesos');
       $table->timestamps();
       $table->softDeletes();
     });

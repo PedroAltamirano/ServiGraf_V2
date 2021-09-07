@@ -18,7 +18,7 @@ class CreatePedidoProcesoTable extends Migration
       $table->unsignedBigInteger('empresa_id');
       $table->foreign('empresa_id')->references('id')->on('empresas');
       $table->foreignId('pedido_id')->constrained('pedidos');
-      $table->foreignId('proceso_id')->references('id')->on('procesos');
+      $table->foreignId('proceso_id')->constrained('procesos');
       $table->unsignedTinyInteger('tiro');
       $table->unsignedTinyInteger('retiro');
       $table->unsignedTinyInteger('millares');

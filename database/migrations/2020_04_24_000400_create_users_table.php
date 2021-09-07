@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
       $table->foreign('empresa_id')->references('id')->on('empresas');
       $table->string('usuario', 20)->unique();
       $table->string('password', 128);
-      $table->foreignId('perfil_id')->on('perfiles');
+      $table->foreignId('perfil_id')->constrained('perfiles');
       //permisos adicionales
       $table->boolean('status')->default(1);
       $table->boolean('reservarot')->default(0);

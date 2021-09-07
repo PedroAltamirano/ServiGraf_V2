@@ -15,8 +15,8 @@ class CreateFacturaOtsTable extends Migration
   {
     Schema::create('factura_ots', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('factura_id')->on('facturas');
-      $table->foreignId('pedido_id')->on('pedidos');
+      $table->foreignId('factura_id')->constrained('facturas');
+      $table->foreignId('pedido_id')->constrained('pedidos');
       $table->timestamps();
       $table->softDeletes();
     });

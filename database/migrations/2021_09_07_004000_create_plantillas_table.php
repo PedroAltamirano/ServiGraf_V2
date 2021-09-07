@@ -15,6 +15,8 @@ class CreatePlantillasTable extends Migration
   {
     Schema::create('plantillas', function (Blueprint $table) {
       $table->id();
+      $table->unsignedBigInteger('empresa_id');
+      $table->foreign('empresa_id')->references('id')->on('empresas');
       $table->unsignedInteger('creador_id');
       $table->foreign('creador_id')->references('cedula')->on('usuarios');
       $table->unsignedInteger('modificador_id')->nullable();

@@ -18,7 +18,7 @@ class CreateMaterialsTable extends Migration
       $table->unsignedBigInteger('empresa_id');
       $table->foreign('empresa_id')->references('id')->on('empresas');
       $table->string('descripcion', 140);
-      $table->foreignId('categoria_id')->on('categorias');
+      $table->foreignId('categoria_id')->constrained('categorias');
       $table->boolean('color');
       $table->unsignedDecimal('alto', 5, 2)->nullable();
       $table->unsignedDecimal('ancho', 5, 2)->nullable();

@@ -30,9 +30,9 @@ class CreateFactEmprsTable extends Migration
       $table->text('clave_firma_sri')->nullable();
       $table->string('caja', 7);
       $table->unsignedMediumInteger('inicio');
-      $table->foreignId('iva_id')->on('ivas');
-      $table->foreignId('ret_iva_id')->on('retenciones');
-      $table->foreignId('ret_fuente_id')->on('retenciones');
+      $table->foreignId('iva_id')->constrained('ivas');
+      $table->foreignId('ret_iva_id')->constrained('retenciones');
+      $table->foreignId('ret_fuente_id')->constrained('retenciones');
       $table->boolean('impresion');
       $table->string('logo')->nulable();
       $table->boolean('status');

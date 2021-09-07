@@ -20,7 +20,7 @@ class CreateNominaDotacionTable extends Migration
       $table->unsignedInteger('nomina_id');
       $table->foreign('nomina_id')->references('cedula')->on('nomina');
       $table->date('entrega');
-      $table->foreignId('dotacion_id')->references('id')->on('dotacion');
+      $table->foreignId('dotacion_id')->constrained('dotacion');
       $table->timestamps();
       $table->softDeletes();
     });

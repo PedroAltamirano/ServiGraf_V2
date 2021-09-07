@@ -17,7 +17,7 @@ class CreateUsuarioLibroTable extends Migration
       $table->id();
       $table->unsignedInteger('usuario_id');
       $table->foreign('usuario_id')->references('cedula')->on('usuarios');
-      $table->foreignId('libro_id')->on('libros');
+      $table->foreignId('libro_id')->constrained('libros');
       $table->timestamps();
       $table->softDeletes();
     });

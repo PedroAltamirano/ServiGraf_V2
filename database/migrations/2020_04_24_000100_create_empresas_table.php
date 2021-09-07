@@ -16,7 +16,7 @@ class CreateEmpresasTable extends Migration
     Schema::create('empresas', function (Blueprint $table) {
       $table->bigIncrements('id'); //ruc
       $table->string('nombre', 30);
-      $table->foreignId('tipo_empresa_id')->on('tipo_empresa');
+      $table->foreignId('tipo_empresa_id')->constrained('tipo_empresa');
       $table->boolean('status'); //status-instatus
       $table->timestamps();
       $table->softDeletes();

@@ -16,7 +16,7 @@ class CreatePedidoTintas extends Migration
     Schema::create('pedido_tintas', function (Blueprint $table) {
       $table->id();
       $table->foreignId('pedido_id')->constrained('pedidos');
-      $table->foreignId('tinta_id')->on('tintas');
+      $table->foreignId('tinta_id')->constrained('tintas');
       $table->boolean('lado');
       $table->timestamps();
       $table->softDeletes();

@@ -18,12 +18,12 @@ class CreateSolicitudMaterialsTable extends Migration
       $table->unsignedBigInteger('empresa_id');
       $table->foreign('empresa_id')->references('id')->on('empresas');
       $table->foreignId('pedido_id')->constrained('pedidos');
-      $table->foreignId('material_id')->on('materiales');
+      $table->foreignId('material_id')->constrained('materiales');
       $table->unsignedMediumInteger('cantidad');
       $table->unsignedDecimal('corte_alto', 5, 2);
       $table->unsignedDecimal('corte_ancho', 5, 2);
       $table->unsignedMediumInteger('tamanos');
-      $table->foreignId('proveedor_id')->on('proveedores');
+      $table->foreignId('proveedor_id')->constrained('proveedores');
       $table->unsignedMediumInteger('factura')->nullable();
       $table->unsignedDecimal('total', 8, 2);
       $table->timestamps();

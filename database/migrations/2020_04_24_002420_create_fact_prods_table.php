@@ -15,10 +15,10 @@ class CreateFactProdsTable extends Migration
   {
     Schema::create('fact_prods', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('factura_id')->on('facturas');
+      $table->foreignId('factura_id')->constrained('facturas');
       $table->unsignedSmallInteger('cantidad');
       $table->string('detalle');
-      $table->foreignId('iva_id')->on('ivas');
+      $table->foreignId('iva_id')->constrained('ivas');
       $table->decimal('valor_unitario', 9, 3)->unsigned();
       $table->decimal('subtotal', 9, 3)->unsigned();
       $table->timestamps();

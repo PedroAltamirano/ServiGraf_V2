@@ -19,7 +19,7 @@ class CreateContactosTable extends Migration
       $table->foreign('empresa_id')->references('id')->on('empresas');
       $table->unsignedInteger('usuario_id');
       $table->foreign('usuario_id')->references('cedula')->on('usuarios');
-      $table->foreignId('cliente_empresa_id')->nullable()->on('cliente_empresas');
+      $table->foreignId('cliente_empresa_id')->nullable()->constrained('cliente_empresas');
       $table->string('actividad', 200)->nullable();
       $table->string('titulo', 50)->nullable();
       $table->string('nombre', 50);

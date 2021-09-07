@@ -26,7 +26,7 @@ class CreatePedidosTable extends Migration
       $table->foreign('usuario_mod_id')->references('cedula')->on('usuarios');
       $table->unsignedInteger('usuario_cob_id')->nullable();
       $table->foreign('usuario_cob_id')->references('cedula')->on('usuarios');
-      $table->foreignId('cliente_id')->on('clientes');
+      $table->foreignId('cliente_id')->constrained('clientes');
       $table->date('fecha_entrada');
       $table->date('fecha_salida');
       $table->date('fecha_cobro')->nullable();

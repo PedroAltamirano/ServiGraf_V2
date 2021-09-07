@@ -15,9 +15,9 @@ class CreateModuloPerfilTable extends Migration
   {
     Schema::create('modulo_perfil', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('perfil_id')->on('perfiles');
-      $table->foreignId('modulo_id')->on('modulos');
-      $table->foreignId('rol_id')->on('roles');
+      $table->foreignId('perfil_id')->constrained('perfiles');
+      $table->foreignId('modulo_id')->constrained('modulos');
+      $table->foreignId('rol_id')->constrained('roles');
       $table->timestamps();
       $table->softDeletes();
     });

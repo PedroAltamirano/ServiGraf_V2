@@ -17,7 +17,7 @@ class CreateUsuarioCliSegTable extends Migration
       $table->id();
       $table->unsignedInteger('usuario_id');
       $table->foreign('usuario_id')->references('cedula')->on('usuarios');
-      $table->foreignId('cliente_id')->on('clientes');
+      $table->foreignId('cliente_id')->constrained('clientes');
       $table->timestamps();
       $table->softDeletes();
     });
