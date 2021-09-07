@@ -102,8 +102,8 @@ class StoreNomina extends FormRequest
       'razon_separacion.*' => ['required', 'string', 'max:250'],
 
       // Dotacion
-      'entrega' => ['nullable', 'date'],
-      'dotacion_id' => ['nullable', 'numeric', 'exists:dotacion,id'],
+      'entrega.*' => ['required', 'date'],
+      'dotacion_id.*' => ['required', 'numeric', 'exists:dotacion,id'],
 
       // Datos medicos
       'contacto_emergencia_nombre' => ['required', 'string', 'max:255'],
@@ -115,9 +115,9 @@ class StoreNomina extends FormRequest
       'alergias' => ['nullable', 'string', 'max:255'],
 
       //Familia
-      'relacion.*' => ['nullable', 'numeric'],
-      'nombre_fam.*' => ['nullable', 'string', 'max:100'],
-      'fecha_nacimiento_fam.*' => ['nullable', 'date'],
+      'relacion.*' => ['required', 'numeric'],
+      'nombre_fam.*' => ['required', 'string', 'max:100'],
+      'fecha_nacimiento_fam.*' => ['required', 'date'],
       'ocupacion.*' => ['nullable', 'string', 'max:50'],
       'telefono_fam.*' => ['nullable', 'numeric', 'max:9999999'],
       'celular_fam.*' => ['nullable', 'numeric', 'max:999999999'],

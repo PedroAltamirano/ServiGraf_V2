@@ -82,10 +82,11 @@ class NominaController extends Controller
           $nomina->save();
         }
 
-        // $this->manageEducacion($validated, $nomina);
-        // $this->manageReferencias($validated, $nomina);
-        // $this->manageDotacion($validated, $nomina);
-        // $this->manageFamiliares($validated, $nomina);
+        $this->manageDocumentos($validated, $nomina);
+        $this->manageEducacion($validated, $nomina);
+        $this->manageReferencias($validated, $nomina);
+        $this->manageDotacion($validated, $nomina);
+        $this->manageFamiliares($validated, $nomina);
 
         Alert::success('Acción completada', 'Nómina creada con éxito');
         return redirect()->route('nomina.edit', $nomina->cedula);
@@ -170,13 +171,13 @@ class NominaController extends Controller
 
   public function manageDocumentos($request, Nomina $nomina)
   {
-    $ducumentos = $nomina->ducumentos;
-    if (!$ducumentos->isEmpty()) {
-      $ducumentos->delete();
+    $documentos = $nomina->documentos;
+    if ($documentos != null && $documentos->count()) {
+      $nomina->documentos()->delete();
     }
 
     $request['empresa_id'] = Auth::user()->empresa_id;
-    $request['nomina_id'] = $nomina->id;
+    $request['nomina_id'] = $nomina->cedula;
     $model = NominaDocs::create($request);
 
     return 1;
@@ -189,8 +190,8 @@ class NominaController extends Controller
     }
 
     $educacion = $nomina->educacion;
-    if (!$educacion->isEmpty()) {
-      $educacion->delete();
+    if ($educacion != null && $educacion->count()) {
+      $nomina->educacion()->delete();
     }
 
     for ($i = 0; $i < sizeof($request['nivel_educ']); $i++) {
@@ -214,8 +215,8 @@ class NominaController extends Controller
     }
 
     $referencias = $nomina->referencias;
-    if (!$referencias->isEmpty()) {
-      $referencias->delete();
+    if ($referencias != null && $referencias->count()) {
+      $nomina->referencias()->delete();
     }
 
     for ($i = 0; $i < sizeof($request['tipo_refer']); $i++) {
@@ -243,8 +244,8 @@ class NominaController extends Controller
     }
 
     $dotacion = $nomina->dotacion;
-    if (!$dotacion->isEmpty()) {
-      $dotacion->delete();
+    if ($dotacion != null && $dotacion->count()) {
+      $nomina->dotacion()->delete();
     }
 
     for ($i = 0; $i < sizeof($request['entrega']); $i++) {
@@ -265,20 +266,20 @@ class NominaController extends Controller
     }
 
     $familiares = $nomina->familiares;
-    if (!$familiares->isEmpty()) {
-      $familiares->delete();
+    if ($familiares != null && $familiares->count()) {
+      $nomina->familiares()->delete();
     }
 
     for ($i = 0; $i < sizeof($request['nombre_fam']); $i++) {
       $model = new NominaFamilia;
       $model->empresa_id = Auth::user()->empresa_id;
       $model->nomina_id = $nomina->cedula;
-      $model->relacion = $request['relacion'][$i] ?? '';
-      $model->nombre_fam = $request['nombre_fam'][$i] ?? '';
-      $model->fecha_nacimiento_fam = $request['fecha_nacimiento_fam'][$i] ?? '';
-      $model->ocupacion = $request['ocupacion'][$i] ?? '';
-      $model->telefono_fam = $request['telefono_fam'][$i];
-      $model->celular_fam = $request['celular_fam'][$i] ?? '';
+      $model->relacion = $request['relacion'][$i];
+      $model->nombre_fam = $request['nombre_fam'][$i];
+      $model->fecha_nacimiento_fam = $request['fecha_nacimiento_fam'][$i];
+      $model->ocupacion = $request['ocupacion'][$i] ?? null;
+      $model->telefono_fam = $request['telefono_fam'][$i] ?? null;
+      $model->celular_fam = $request['celular_fam'][$i] ?? null;
       $model->save();
     }
 
