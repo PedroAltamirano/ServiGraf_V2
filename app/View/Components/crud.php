@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class crud extends Component
+class Crud extends Component
 {
   public $routeSee;
   public $modalSee;

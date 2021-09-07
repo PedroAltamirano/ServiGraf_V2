@@ -30,8 +30,6 @@
   ['text' => 'fas fa-print', 'href' => '#', 'id' => 'print', 'tipo' => 'button', 'print-target' => 'form']
   ]"
 >
-  {{ App\Security::hasModule('31') ? 'true' : 'false' }}
-  {{ 'hola' }}
   <form action="{{ $path }}" method="POST" id="form">
     @csrf
     @method($method)

@@ -246,7 +246,7 @@
     </section>
 
     @section('modals1')
-    <x-addCliente />
+    <x-add-contacto />
     @endsection
   </form>
 </x-blueBoard>

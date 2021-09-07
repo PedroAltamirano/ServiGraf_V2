@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('links')
+@endsection
+
 @section('desktop-content')
 {{-- <x-errors />
 <x-fab /> --}}
@@ -53,7 +56,7 @@
 
 <x-report :title="$cli->contacto->nombre.' '.$cli->contacto->apellido" :items="$items"></x-report>
 
-<x-addCliente/>
+<x-add-contacto />
 
 <x-filters :clientes="$clientes" cli=1 cob=1>
 
@@ -61,7 +64,7 @@
 
 <x-procesos label='Proceso padre' name='parent_id' :old="old('parent_id', $proceso->parent_id)" />
 
-<x-addProveedor />
+<x-add-proveedor />
 
 <x-procesos-area id='procesos' name='proceso_id[]' :old='$pedido->proceso_id' />
 
@@ -69,5 +72,11 @@
 
 @endsection
 
+@section('modals')
+@endsection
+
 @section('scripts')
+@endsection
+
+@section('after.scripts')
 @endsection

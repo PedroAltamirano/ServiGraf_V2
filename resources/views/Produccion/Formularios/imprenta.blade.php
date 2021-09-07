@@ -149,7 +149,7 @@
 
 
 @section('modals2')
-<x-addProveedor />
+<x-add-proveedor />
 
 <!-- Modal Abonos -->
 <div class="modal fade" id="modalAbonos" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
