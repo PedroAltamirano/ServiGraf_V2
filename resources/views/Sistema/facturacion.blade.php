@@ -15,7 +15,7 @@
   ]"
 />
 
-<x-blueBoard
+<x-blue-board
   title='Facturas'
   :foot="[
     ['text'=>'Nueva', 'href'=>'#modalFactura', 'id'=>'newFactura', 'tipo'=> 'modal'],
@@ -62,9 +62,9 @@
     <tfoot>
     </tfoot>
   </table>
-</x-blueBoard>
+</x-blue-board>
 
-<x-blueBoard
+<x-blue-board
   title='Ivas'
   :foot="[
     ['text'=>'Nuevo', 'href'=>'#modalIva', 'id'=>'newIva', 'tipo'=> 'modal'],
@@ -78,9 +78,9 @@
     </div>
     @endforeach
   </div>
-</x-blueBoard>
+</x-blue-board>
 
-<x-blueBoard
+<x-blue-board
   title='Retenciones Iva'
   :foot="[
     ['text'=>'Nueva', 'href'=>'#modalRetencion', 'id'=>'newRetencionIva', 'tipo'=> 'modal'],
@@ -94,9 +94,9 @@
     </div>
     @endforeach
   </div>
-</x-blueBoard>
+</x-blue-board>
 
-<x-blueBoard
+<x-blue-board
   title='Retenciones Fuente'
   :foot="[
     ['text'=>'Nueva', 'href'=>'#modalRetencion', 'id'=>'newRetencionFnt', 'tipo'=> 'modal'],
@@ -110,7 +110,7 @@
     </div>
     @endforeach
   </div>
-</x-blueBoard>
+</x-blue-board>
 
 @include('Sistema.modal-fact-emp')
 @include('Sistema.modal-iva-ret')

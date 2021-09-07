@@ -24,6 +24,6 @@ class AditionalInfo extends Component
    */
   public function render()
   {
-    return view('components.aditionalInfo');
+    return view('components.aditional-info');
   }
 }

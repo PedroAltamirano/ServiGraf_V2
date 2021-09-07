@@ -181,6 +181,6 @@ class PedidosController extends Controller
   {
     $pedido = Pedido::find($request->pedido_id);
     $method = 'PUT';
-    return view('components.modalPedido', compact('pedido', 'method'));
+    return view('components.modal-pedido', compact('pedido', 'method'));
   }
 }

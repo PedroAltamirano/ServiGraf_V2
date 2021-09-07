@@ -14,7 +14,7 @@
   ]"
 />
 
-<x-blueBoard
+<x-blue-board
   title='Listado'
   :foot="[
     ['text'=>'Nuevo', 'href'=>route('usuario.nuevo'), 'id'=>'nuevo', 'tipo'=> 'link']
@@ -35,7 +35,7 @@
     <tfoot>
     </tfoot>
   </table>
-</x-blueBoard>
+</x-blue-board>
 @endsection
 
 @section('scripts')

@@ -41,7 +41,7 @@
   </div>
 </x-filters>
 
-<x-blueBoard
+<x-blue-board
   title='Facturas'
   :foot="[
     ['text'=>'Nueva', 'href'=>route('factura.create'), 'id'=>'nuevo', 'tipo'=> 'link']
@@ -69,7 +69,7 @@
       </tr>
     </tfoot>
   </table>
-</x-blueBoard>
+</x-blue-board>
 @endsection
 
 @section('scripts')

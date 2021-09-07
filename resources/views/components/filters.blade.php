@@ -1,4 +1,4 @@
-<x-blueBoard
+<x-blue-board
   title='Filtros'
   :foot="[]"
   class="d-print-none"
@@ -50,4 +50,4 @@
 
     {{ $slot }}
   </div>
-</x-blueBoard>
+</x-blue-board>

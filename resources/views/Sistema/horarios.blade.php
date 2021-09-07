@@ -14,7 +14,7 @@
   ]"
 />
 
-<x-blueBoard
+<x-blue-board
   title='Horarios'
   :foot="[
     ['text'=>'Nuevo', 'href'=>'#modalHorario', 'id'=>'newHorario', 'tipo'=> 'modal'],
@@ -50,8 +50,8 @@
         <td>{{ $item->espera }}</td>
         <td>{{ $item->gracia }}</td>
         <td><a class='fa fa-edit modHorario' href="#modalHorario" data-toggle="modal"
-          data-route='{{ route('horario.update', $item->id) }}' 
-          data-nombre="{{ $item->nombre }}" 
+          data-route='{{ route('horario.update', $item->id) }}'
+          data-nombre="{{ $item->nombre }}"
           data-llegada_ma="{{ $item->llegada_ma }}"
           data-salida_ma="{{ $item->salida_ma }}"
           data-llegada_ta="{{ $item->llegada_ta }}"
@@ -65,7 +65,7 @@
     <tfoot>
     </tfoot>
   </table>
-</x-blueBoard>
+</x-blue-board>
 
 <!-- Modal CATEGORIA -->
 <div id="modalHorario" class="modal fade">

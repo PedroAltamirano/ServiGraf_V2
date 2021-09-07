@@ -26,7 +26,7 @@
     </div>
   </div>
   <div class="col-12 col-md-4">
-    <x-blueBoard
+    <x-blue-board
       title='Fecha del reporte'
       :foot="[]"
     >
@@ -38,7 +38,7 @@
           <small id="helpId" class="form-text text-muted">Se tomara el mes y año de la fecha seleccionada</small>
         </div>
       </form>
-    </x-blueBoard>
+    </x-blue-board>
   </div>
 </div>
 
@@ -189,7 +189,7 @@
 
 <hr class="m-2 m-md-3"/>
 <h2 class="m-2 m-md-3">Predicción Anual</h2>
-<x-yearPred />
+<x-year-pred />
 
 @endsection
 

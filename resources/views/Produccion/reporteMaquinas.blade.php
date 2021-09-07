@@ -21,7 +21,7 @@
 
 <x-filters :clientes="[]" cli=0 />
 
-<x-blueBoard
+<x-blue-board
   title='Reporte'
   :foot="[
     ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'print', 'tipo'=>'button', 'print-target'=>'table'],
@@ -54,7 +54,7 @@
       </tr>
     </tfoot>
   </table>
-</x-blueBoard>
+</x-blue-board>
 
 <div id="modalPedidoDiv"></div>
 @endsection

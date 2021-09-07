@@ -22,7 +22,7 @@
   ]"
 />
 
-<x-blueBoard
+<x-blue-board
   title='Áreas'
   :foot="[
     ['text'=>'Modal', 'href'=>'#modalName', 'id'=>'newModal', 'tipo'=> 'modal', 'condition' => ''],
@@ -31,7 +31,7 @@
     ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'mes', 'tipo'=> 'button', 'print-target' => 'table'],
   ]"
   class="d-print-none"
-></x-blueBoard>
+></x-blue-board>
 
 <table id="table" class="table table-striped table-sm">
   <thead>
@@ -68,7 +68,7 @@
 
 <x-procesos-area id='procesos' name='proceso_id[]' :old='$pedido->proceso_id' />
 
-<x-aditionalInfo text='' />
+<x-aditional-info text='' />
 
 @endsection
 

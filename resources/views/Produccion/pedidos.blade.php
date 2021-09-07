@@ -14,7 +14,7 @@
   ]"
 />
 
-<x-blueBoard
+<x-blue-board
   title='Pendientes'
   :foot="[
     ['text'=>'Nuevo', 'href'=>route('pedido.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
@@ -46,7 +46,7 @@
     <tfoot>
     </tfoot>
   </table>
-</x-blueBoard>
+</x-blue-board>
 
 <div id="modalPedidoDiv"></div>
 

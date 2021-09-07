@@ -17,7 +17,7 @@
 >
 </x-path>
 
-<x-blueBoard
+<x-blue-board
   :title=$text
   :foot="[
     ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=> 'link']
@@ -502,7 +502,7 @@
       </div>
     </section>
   </form>
-</x-blueBoard>
+</x-blue-board>
 @php
   // EDUCACION
   $opts_educacion = '<option disabled selected>Selecciona uno...</option>';

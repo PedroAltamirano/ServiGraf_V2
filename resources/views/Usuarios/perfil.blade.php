@@ -19,7 +19,7 @@
   ]"
 />
 
-<x-blueBoard
+<x-blue-board
   title='{{ $text }}'
   :foot="[
     ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=> 'link']
@@ -110,7 +110,7 @@
     </table>
 
   </form>
-</x-blueBoard>
+</x-blue-board>
 @endsection
 
 @section('scripts')

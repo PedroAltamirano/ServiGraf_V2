@@ -22,7 +22,7 @@
   </div>
 </x-filters>
 
-<x-blueBoard
+<x-blue-board
   title='Asistencia'
   :foot="[
     ['text'=>'Hoy', 'href'=>'#', 'id'=>'hoy', 'tipo'=> 'link'],
@@ -54,7 +54,7 @@
       </tr>
     </tfoot>
   </table>
-</x-blueBoard>
+</x-blue-board>
 
 <!-- Modal Asistencia -->
 <div class="modal fade" id="modalAsistencia" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">

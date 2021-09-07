@@ -11,14 +11,14 @@
   ]"
 />
 
-<x-blueBoard
+<x-blue-board
   title='Tareas'
   :foot="[
     ['text'=>'Nueva', 'href'=>'#modalTarea', 'id'=>'newTarea', 'tipo'=> 'modal'],
   ]"
 >
   @if ($atrasadas->count())
-  <x-aditionalInfo text='Atrasadas' />
+  <x-aditional-info text='Atrasadas' />
   <div class="table-responsive">
     <table id="table" class="table table-striped table-sm">
       <thead>
@@ -43,7 +43,7 @@
   </div>
   @endif
 
-  <x-aditionalInfo text='Hoy' />
+  <x-aditional-info text='Hoy' />
   <div class="table-responsive">
     <table id="table" class="table table-striped table-sm">
       <thead>
@@ -67,7 +67,7 @@
     </table>
   </div>
 
-  <x-aditionalInfo text='Semana' />
+  <x-aditional-info text='Semana' />
   <div class="table-responsive">
     <table id="table" class="table table-striped table-sm">
       <thead>
@@ -91,7 +91,7 @@
     </table>
   </div>
 
-  <x-aditionalInfo text='Proximas' />
+  <x-aditional-info text='Proximas' />
   <div class="table-responsive">
     <table id="table" class="table table-striped table-sm">
       <thead>
@@ -114,7 +114,7 @@
       </tfoot>
     </table>
   </div>
-</x-blueBoard>
+</x-blue-board>
 
 @section('modals')
 <!-- Modal Tarea -->

@@ -16,7 +16,7 @@
   ]"
 />
 
-<x-blueBoard
+<x-blue-board
   title='Referencias'
   :foot="[
     ['text'=>'Nueva', 'href'=>'#modalReferencia', 'id'=>'newReferencia', 'tipo'=>'modal']
@@ -40,9 +40,9 @@
       @endforeach
     </tbody>
   </table>
-</x-blueBoard>
+</x-blue-board>
 
-<x-blueBoard
+<x-blue-board
   title='Bancos'
   :foot="[
     ['text'=>'Nuevo', 'href'=>'#modalBanco', 'id'=>'newBanco', 'tipo'=> 'modal']
@@ -66,7 +66,7 @@
       @endforeach
     </tbody>
   </table>
-</x-blueBoard>
+</x-blue-board>
 
 <!-- Modal Referencia -->
 <div class="modal fade" id="modalReferencia" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">

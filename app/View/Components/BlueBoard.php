@@ -29,6 +29,6 @@ class BlueBoard extends Component
    */
   public function render()
   {
-    return view('components.blueBoard');
+    return view('components.blue-board');
   }
 }

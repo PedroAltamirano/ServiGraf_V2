@@ -28,7 +28,7 @@
   </div>
 </x-filters>
 
-<x-blueBoard
+<x-blue-board
   title='Flujo de activos'
   :foot="[
     ['text'=>'Nueva Entrada', 'href'=>route('entrada.create'), 'id'=>'newEntrada', 'tipo'=> 'link'],
@@ -62,7 +62,7 @@
       </tr>
     </tfoot>
   </table>
-</x-blueBoard>
+</x-blue-board>
 
 @include('Administracion.modal-recibo')
 

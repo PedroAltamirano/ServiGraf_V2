@@ -14,7 +14,7 @@
   ]"
 />
 
-<x-blueBoard
+<x-blue-board
   title='Áreas'
   :foot="[
     ['text'=>'Nueva', 'href'=>'#modalArea', 'id'=>'newArea', 'tipo'=> 'modal'],
@@ -28,9 +28,9 @@
     </div>
     @endforeach
   </div>
-</x-blueBoard>
+</x-blue-board>
 
-<x-blueBoard
+<x-blue-board
   title='Procesos'
   :foot="[
     ['text'=>'Nuevo', 'href'=>route('proceso.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
@@ -68,7 +68,7 @@
     <tfoot>
     </tfoot>
   </table>
-</x-blueBoard>
+</x-blue-board>
 
 <!-- Modal AREAS -->
 <div id="modalArea" class="modal fade">

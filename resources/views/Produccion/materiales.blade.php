@@ -14,7 +14,7 @@
   ]"
 />
 
-<x-blueBoard
+<x-blue-board
   title='Categorias'
   :foot="[
     ['text'=>'Nuevo', 'href'=>'#modalCat', 'id'=>'newCat', 'tipo'=> 'modal'],
@@ -28,9 +28,9 @@
     </div>
     @endforeach
   </div>
-</x-blueBoard>
+</x-blue-board>
 
-<x-blueBoard
+<x-blue-board
   title='Papeleria'
   :foot="[
     ['text'=>'Nuevo', 'href'=>route('material.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
@@ -67,10 +67,10 @@
     </tbody>
     <tfoot>
     </tfoot>
-  </table> 
-</x-blueBoard>
+  </table>
+</x-blue-board>
 
-<x-blueBoard
+<x-blue-board
   title='Tintas'
   :foot="[
     ['text'=>'Nuevo', 'href'=>'#modalTinta', 'id'=>'newTinta', 'tipo'=> 'modal'],
@@ -84,7 +84,7 @@
     </div>
     @endforeach
   </div>
-</x-blueBoard>
+</x-blue-board>
 
 <!-- Modal TINTA -->
 <div id="modalTinta" class="modal fade">

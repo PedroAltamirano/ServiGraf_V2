@@ -14,7 +14,7 @@
   ]"
 />
 
-<x-blueBoard
+<x-blue-board
   title='Claves'
   :foot="[
     ['text'=>'Nueva', 'href'=>'#modalClave', 'id'=>'newClave', 'tipo'=> 'modal'],
@@ -52,7 +52,7 @@
     <tfoot>
     </tfoot>
   </table>
-</x-blueBoard>
+</x-blue-board>
 
 <!-- Modal CATEGORIA -->
 <div id="modalClave" class="modal fade">

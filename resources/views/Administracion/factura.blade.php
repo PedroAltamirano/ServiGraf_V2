@@ -18,7 +18,7 @@
 <li class="breadcrumb-item" id="fact_num_path"><input type="number" name="number_vis" id="fact_num_vis" class="form-control form-control-sm" value="{{ $fact_num }}" readonly></li>
 </x-path>
 
-<x-blueBoard
+<x-blue-board
   :title=$text
   :foot="[
     ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=> 'link']
@@ -249,7 +249,7 @@
     <x-add-contacto />
     @endsection
   </form>
-</x-blueBoard>
+</x-blue-board>
 @endsection
 
 @section('scripts')

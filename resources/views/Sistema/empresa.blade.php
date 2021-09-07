@@ -15,7 +15,7 @@
   ]"
 />
 
-<x-blueBoard
+<x-blue-board
   title='Datos de la empresa'
   :foot="[
     ['text'=>'Guardar', 'href'=>'#', 'id'=>'formSubmit', 'tipo'=> 'link'],
@@ -67,7 +67,7 @@
         <input type="url" name="web" id="web" class="form-control form-control-sm @error('web') is-invalid @enderror" value="{{ old('web', $empresa->web) }}">
       </div>
 
-      <x-aditionalInfo />
+      <x-aditional-info />
 
       <div class="form-group col-4 col-md-2">
         <label for="inicio">Inicio de pedidos</label>
@@ -83,9 +83,9 @@
       </div>
     </div>
   </form>
-</x-blueBoard>
+</x-blue-board>
 
-<x-blueBoard
+<x-blue-board
   title='Centro de Costos'
   :foot="[
     ['text'=>'Nuevo', 'href'=>'#modalCCostos', 'id'=>'newCCostos', 'tipo'=> 'modal'],
@@ -99,7 +99,7 @@
     </div>
     @endforeach
   </div>
-</x-blueBoard>
+</x-blue-board>
 
 <!-- Modal Centro de Costos -->
 <div class="modal fade" id="modalCCostos" tabindex="-1" role="dialog" aria-hidden="true">

@@ -22,7 +22,7 @@
 @php
   $route_duplicate = $pedido->id ? route('pedido.duplicate', [$pedido->id]) : '#';
 @endphp
-<x-blueBoard
+<x-blue-board
 :title=$text
 :foot="[
   ['text' => $action, 'href' => '#', 'id' => 'formSubmit', 'tipo' => 'link'],
@@ -35,7 +35,7 @@
     @method($method)
     @include('Produccion.formPedido')
   </form>
-</x-blueBoard>
+</x-blue-board>
 @endsection
 
 @section('modals')
