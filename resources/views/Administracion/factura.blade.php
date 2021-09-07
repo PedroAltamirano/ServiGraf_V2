@@ -246,7 +246,7 @@
     </section>
 
     @section('modals1')
-    <x-addCliente/>
+    <x-addCliente />
     @endsection
   </form>
 </x-blueBoard>

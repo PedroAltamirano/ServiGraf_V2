@@ -40,11 +40,11 @@
         <td>{{ Crypt::decryptString($item->refuerzo) }}</td>
         <td>{{ $item->url }}</td>
         <td><a class='fa fa-edit modClave' href="#modalClave" data-toggle="modal"
-          data-route='{{ route('clave.update', $item->id) }}' 
-          data-cuenta="{{ $item->cuenta }}" 
-          data-usuario="{{ $item->usuario }}" 
-          data-clave="{{ Crypt::decryptString($item->clave) }}" 
-          data-refuerzo="{{ Crypt::decryptString($item->refuerzo) }}" 
+          data-route='{{ route('clave.update', $item->id) }}'
+          data-cuenta="{{ $item->cuenta }}"
+          data-usuario="{{ $item->usuario }}"
+          data-clave="{{ Crypt::decryptString($item->clave) }}"
+          data-refuerzo="{{ Crypt::decryptString($item->refuerzo) }}"
           data-url="{{ $item->url }}"></a> <a class='fa fa-trash delClave' href="#deleteAlert" data-toggle="modal" data-route="{{ route('clave.delete', $item->id) }}"></a></td>
       </tr>
       @endforeach

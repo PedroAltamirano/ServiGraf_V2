@@ -84,7 +84,7 @@
 </section>
 
 @section('modals1')
-<x-addCliente/>
+<x-addCliente />
 @endsection
 
 @section('after.scripts')

@@ -19,7 +19,7 @@
   ]"
 ></x-path>
 
-<x-filters :clientes="[]" cli=false />
+<x-filters :clientes="[]" cli=0 />
 
 <x-blueBoard
   title='Reporte'
