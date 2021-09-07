@@ -9,4 +9,5 @@ use Kalnoy\Nestedset\NodeTrait;
 class Comentario extends Model
 {
   use HasFactory, NodeTrait;
+  protected $table = 'comentarios';
 }

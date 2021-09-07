@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Ventas;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
+use App\Models\Ventas\CRM;
+use Carbon\Carbon;
 
 class CRMController extends Controller
 {
@@ -20,7 +23,30 @@ class CRMController extends Controller
    */
   public function index()
   {
-    return view('Ventas.crm');
+    $query = CRM::where('empresa_id', Auth::user()->empresa_id)
+      ->where('estado', 0)
+      ->where(function ($query) {
+        $query->orWhere('creador_id', Auth::id());
+        $query->orWhere('asignado_id', Auth::id());
+      })
+      ->orderBy('hora', 'asc');
+
+    $atrasadas = clone $query;
+    $atrasadas = $atrasadas->where('fecha', '<', date('Y-m-d'))->get();
+
+    $hoy = clone $query;
+    $hoy = $hoy->where('fecha', '=', date('Y-m-d'))->get();
+
+    $tomorrow = Carbon::now()->addDays(1)->format('Y-m-d');
+    $endweek = Carbon::now()->endOfWeek()->format('Y-m-d');
+    $semana = clone $query;
+    $semana = $semana->whereBetween('fecha', [$tomorrow, $endweek])->get();
+
+    $next = Carbon::now()->endOfWeek()->addDays(1)->format('Y-m-d');
+    $proximas = clone $query;
+    $proximas = $proximas->where('fecha', '>', $next)->get();
+
+    return view('Ventas.crm', compact('atrasadas', 'hoy', 'semana', 'proximas'));
   }
 
   /**

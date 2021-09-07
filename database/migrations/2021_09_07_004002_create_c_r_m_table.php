@@ -26,8 +26,8 @@ class CreateCRMTable extends Migration
       $table->foreign('modificador_id')->references('cedula')->on('usuarios');
       $table->unsignedInteger('asignado_id');
       $table->foreign('asignado_id')->references('cedula')->on('usuarios');
-      $table->foreignId('contacto_id')->nullable()->constrained('contactos');
-      $table->boolean('estado')->default(1);
+      $table->foreignId('contacto_id')->constrained('contactos');
+      $table->boolean('estado')->default(0); // 1 terminado, 0 pendiente
       $table->text('fuente')->nullable();
       $table->text('campania')->nullable();
       $table->text('nota')->nullable();

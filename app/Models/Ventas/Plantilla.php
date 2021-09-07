@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plantilla extends Model
 {
-    use HasFactory;
+  use HasFactory;
+  protected $table = 'plantillas';
 }

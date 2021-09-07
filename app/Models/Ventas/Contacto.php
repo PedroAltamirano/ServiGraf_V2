@@ -16,12 +16,28 @@ class Contacto extends Model
     'created_at', 'updated_at'
   ];
 
-  public function getMovilAttribute(){
+  /**
+   * Get the empresa that owns the Contacto
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   */
+  public function empresa()
+  {
+    return $this->belongsTo(Cliente_empresa::class, 'cliente_empresa_id');
+  }
+
+  public function getMovilAttribute()
+  {
     $res = $this->telefono;
-    if($res != ''){
+    if ($res != '') {
       $res .= ' / ';
     }
     $res .= $this->celular;
     return $res;
+  }
+
+  public function getFullNameAttribute()
+  {
+    return $this->nombre . ' ' . $this->apellido;
   }
 }
