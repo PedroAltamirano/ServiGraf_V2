@@ -23,7 +23,7 @@ class Procesos extends Component
     $this->label = $label;
     $this->name = $name;
     $this->old = $old;
-    $this->list = Proceso::where('empresa_id', Auth::user()->empresa_id)->get()->toTree();
+    $this->list = Proceso::where('empresa_id', Auth::user()->empresa_id)->orderBy('proceso')->get()->toTree();
   }
 
   /**
