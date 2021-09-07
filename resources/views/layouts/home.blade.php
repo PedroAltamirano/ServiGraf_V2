@@ -11,12 +11,11 @@
     <meta name="autor" content="Pedro Andrés Altamirano López">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- tab icon -->
+    <!-- Tab icon -->
     <link href="{{ asset('img/sg-2.png') }}" rel="icon" type="text/css">
 
     <title>ServiGraf</title>
 
-    {{-- <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}"> --}}
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=ABeeZee" rel="stylesheet">
 
@@ -78,9 +77,12 @@
     </div>
   </div>
 
-  <script src="{{ asset('js/app.js') }}" type="text/javascript" defer></script>
+  <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
 
   {{-- SWEET ALERT --}}
   @include('sweetalert::alert')
+
+  @yield('scripts')
+
 </body>
 </html>

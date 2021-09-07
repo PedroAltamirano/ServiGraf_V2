@@ -1,3 +1,21 @@
+.floating-action-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.bg-primary-80 {
+  background-color: rgba(59, 89, 152, 0.8) !important;
+  border-color: rgba(59, 89, 152, 0.8) !important;
+}
+
+ul.dropdown-menu {
+  box-shadow: none;
+  border: 0;
+  min-width: 0;
+  background: transparent;
+}
+
 .blue-bg {
   background-color: #3b5998;
 }

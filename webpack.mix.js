@@ -26,6 +26,8 @@ mix.webpackConfig(webpackConfig);
 
 mix
   .js('resources/js/app.js', 'public/js')
+  .js('resources/js/desktop.js', 'public/js')
   .js('resources/js/helpers.js', 'public/js')
   .sass('resources/sass/app.scss', 'public/css')
+  .sass('resources/sass/desktop.scss', 'public/css')
   .sass('resources/sass/styles.scss', 'public/css');

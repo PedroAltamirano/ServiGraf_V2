@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,27 +16,10 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/desktop.css') }}" rel="stylesheet">
   <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
   @yield('links')
-
-  <style>
-    .floating-action-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-    }
-    .bg-primary-80{
-      background-color: rgba(59, 89, 152, 0.8)!important;
-      border-color: rgba(59, 89, 152, 0.8)!important;
-    }
-    ul.dropdown-menu {
-      box-shadow: none;
-      border: 0;
-      min-width:0;
-      background:transparent
-    }
-  </style>
 </head>
 
 <body class="sidebar-toggled">
@@ -66,10 +47,10 @@
     </ul>
   </nav>
 
+  <!-- WRAPPER -->
   <div id="wrapper">
     @include('layouts._sidebar')
 
-    <!-- WRAPPER -->
     <div  id="content-wrapper" class="d-flex flex-column p-0 m-0">
       <div id="content" style="padding:0 0 40px 0;">
         @yield('desktop-content')
@@ -85,7 +66,7 @@
       </footer>
     </div>
   </div>
-  <!-- /#wrapper -->
+  <!-- endwrapper -->
 
   <!-- floating action button -->
   <x-fab></x-fab>
@@ -147,30 +128,17 @@
 
   <!-- JavaScript -->
   <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('js/desktop.js') }}" type="text/javascript"></script>
   <script src="{{ asset('js/helpers.js') }}" type="text/javascript"></script>
   <script src="//cdn.datatables.net/plug-ins/1.10.22/api/sum().js" type="text/javascript"></script>
   <script src="{{ asset('js/printable.js') }}" type="text/javascript"></script>
 
   {{-- SWEET ALERT --}}
   @include('sweetalert::alert')
+  @include('layouts.errors')
 
   @yield('scripts')
   @yield('after.scripts')
 
-  <script>
-    @if($errors->any())
-    $(".alert").fadeTo(10000, 0.5).slideUp(8000);
-    @endif
-
-    $('.confirmModal').on('click', function(){
-      let button = $(this);
-      $('#confirmForm').attr('action', button.data('route'));
-    });
-
-    @yield('document.ready')
-    @yield('after.document.ready')
-  </script>
-
 </body>
-
 </html>
