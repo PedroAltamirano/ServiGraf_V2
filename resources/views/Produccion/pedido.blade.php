@@ -23,6 +23,7 @@
   :title=$text
   :foot="[
     ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=> 'link'],
+    ['text'=>'Duplicar', 'href'=>route('pedido.duplicate', [$pedido->id]), 'id'=>'duplicarPedido', 'tipo'=> 'link'],
     ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'print', 'tipo'=>'button', 'print-target'=>'form']
   ]"
 >

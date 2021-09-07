@@ -94,4 +94,46 @@ class ImprentaController extends Controller
       $proceso->save();
     }
   }
+
+  public function duplicateTintas(Pedido $model, Pedido $new_model)
+  {
+    $relation = $model->tintas_id;
+    if (!$relation->count()) {
+      return;
+    }
+    foreach ($relation as $item) {
+      $new = $item->replicate();
+      $new->pedido_id = $new_model->id;
+      $new->save();
+    }
+    return;
+  }
+
+  public function duplicateSolicitudMaterial(Pedido $model, Pedido $new_model)
+  {
+    $relation = $model->material_id;
+    if (!$relation->count()) {
+      return;
+    }
+    foreach ($relation as $item) {
+      $new = $item->replicate();
+      $new->pedido_id = $new_model->id;
+      $new->save();
+    }
+    return;
+  }
+
+  public function duplicateProcesos(Pedido $model, Pedido $new_model)
+  {
+    $relation = $model->procesos_id;
+    if (!$relation->count()) {
+      return;
+    }
+    foreach ($relation as $item) {
+      $new = $item->replicate();
+      $new->pedido_id = $new_model->id;
+      $new->save();
+    }
+    return;
+  }
 }

@@ -128,6 +128,25 @@ class PedidosController extends Controller
     return redirect()->route('pedido.edit', $pedido->id);
   }
 
+  // duplicar perfil
+  public function duplicate(Pedido $pedido)
+  {
+    $num = Pedido::where('empresa_id', Auth::user()->empresa_id)->orderBy('numero', 'desc')->first()->numero;
+
+    $new_pedido = $pedido->replicate();
+    $new_pedido->numero = $num + 1;
+    $new_pedido->usuario_id = Auth::id();
+    $new_pedido->usuario_mod_id = Auth::id();
+    $new_pedido->save();
+
+    app(ImprentaController::class)->duplicateTintas($pedido, $new_pedido);
+    app(ImprentaController::class)->duplicateSolicitudMaterial($pedido, $new_pedido);
+    app(ImprentaController::class)->duplicateProcesos($pedido, $new_pedido);
+
+    Alert::success('Acción completada', 'Pedido duplicado con éxito');
+    return redirect()->route('pedido.edit', $new_pedido->id);
+  }
+
   public function abonos(Request $request, $data_id)
   {
     Abono::where('pedido_id', $data_id)->delete();
