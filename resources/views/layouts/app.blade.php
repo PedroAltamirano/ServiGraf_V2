@@ -16,7 +16,6 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/desktop.css') }}" rel="stylesheet">
   <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
   @yield('links')
@@ -128,7 +127,6 @@
 
   <!-- JavaScript -->
   <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
-  <script src="{{ asset('js/desktop.js') }}" type="text/javascript"></script>
   <script src="{{ asset('js/helpers.js') }}" type="text/javascript"></script>
   <script src="//cdn.datatables.net/plug-ins/1.10.22/api/sum().js" type="text/javascript"></script>
   <script src="{{ asset('js/printable.js') }}" type="text/javascript"></script>
