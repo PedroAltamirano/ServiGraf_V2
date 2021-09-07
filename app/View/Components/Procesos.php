@@ -13,26 +13,26 @@ class Procesos extends Component
   public $old;
   public $list;
 
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct($label, $name, $old)
-    {
-      $this->label = $label;
-      $this->name = $name;
-      $this->old = $old;
-      $this->list = Proceso::where('empresa_id', Auth::user()->empresa_id)->where('parent_id', null)->get();
-    }
+  /**
+   * Create a new component instance.
+   *
+   * @return void
+   */
+  public function __construct($label, $name, $old)
+  {
+    $this->label = $label;
+    $this->name = $name;
+    $this->old = $old;
+    $this->list = Proceso::where('empresa_id', Auth::user()->empresa_id)->get()->toTree();
+  }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|string
-     */
-    public function render()
-    {
-        return view('components.procesos');
-    }
+  /**
+   * Get the view / contents that represent the component.
+   *
+   * @return \Illuminate\Contracts\View\View|string
+   */
+  public function render()
+  {
+    return view('components.procesos');
+  }
 }

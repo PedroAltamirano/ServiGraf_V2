@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCRMTable extends Migration
+class CreateComentariosTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,8 +13,13 @@ class CreateCRMTable extends Migration
    */
   public function up()
   {
-    Schema::create('crm', function (Blueprint $table) {
+    Schema::create('comentarios', function (Blueprint $table) {
       $table->id();
+      $table->unsignedInteger('creador_id');
+      $table->foreign('creador_id')->references('cedula')->on('usuarios');
+      $table->foreignId('contacto_id')->nullable()->on('contactos');
+      $table->text('comentario');
+      $table->nestedSet();
       $table->timestamps();
       $table->softDeletes();
     });
@@ -27,6 +32,6 @@ class CreateCRMTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('crm');
+    Schema::dropIfExists('comentarios');
   }
 }

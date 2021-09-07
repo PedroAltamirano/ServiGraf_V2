@@ -195,7 +195,7 @@
 @php
   // SOLICITUD MATERIAL
   $opts_mats = "<option disabled selected>Selecciona uno...</option>";
-  if($materiales){
+  if($materiales->count()){
     $first_mat = $materiales->first();
     $group =  $first_mat->categoria_id;
     $cat = $first_mat->categoria->categoria;
@@ -257,7 +257,7 @@
   }
 
   $old_abonos = $pedido->abonos;
-  if($old_abonos != []) $pedido->abonos->each(function($abono){ $abono->usuario_nombre = $abono->nomina->nombre; });
+  if($old_abonos->count()) $pedido->abonos->each(function($abono){ $abono->usuario_nombre = $abono->nomina->nombre; });
   // if($cnt = count(old('abono_fecha') ?? [])) {
   //   for($i = 0; $i < $cnt; $i++){
   //     $model = new \stdClass;

@@ -3,33 +3,38 @@
 namespace App\Models\Produccion;
 
 use Illuminate\Database\Eloquent\Model;
+use Kalnoy\Nestedset\NodeTrait;
 
 class Proceso extends Model
 {
-    protected $table = 'procesos';
+  use NodeTrait;
 
-    public $attributes =[
-    'tipo' => 0 , 'seguimiento' => 0, 'meta' => 0.00
-    ];
+  protected $table = 'procesos';
 
-    protected $fillable = [
-        'empresa_id', 'area_id', 'proceso', 'meta', 'tipo', 'tmaquina', 'toperador', 'seguimiento', 'parent_id'
-    ];
+  public $attributes = [
+    'tipo' => 0, 'seguimiento' => 0, 'meta' => 0.00
+  ];
 
-    protected $hidden = [
-        'created_at', 'updated_at'
-    ];
+  protected $fillable = [
+    'empresa_id', 'area_id', 'proceso', 'meta', 'tipo', 'tmaquina', 'toperador', 'seguimiento', 'parent_id'
+  ];
 
-    public function area()
-    {
-      return $this->belongsTo(Area::class);
-    }
+  protected $hidden = [
+    'created_at', 'updated_at'
+  ];
 
-    public function parent(){
-      return $this->belongsTo(Proceso::class, 'parent_id');
-    }
+  public function area()
+  {
+    return $this->belongsTo(Area::class);
+  }
 
-    public function childs(){
-      return $this->hasMany(Proceso::class, 'parent_id');
-    }
+  // public function parent()
+  // {
+  //   return $this->belongsTo(Proceso::class, 'parent_id');
+  // }
+
+  // public function childs()
+  // {
+  //   return $this->hasMany(Proceso::class, 'parent_id');
+  // }
 }

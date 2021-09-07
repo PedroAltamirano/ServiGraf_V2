@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\Administracion\Horario;
+use App\Models\Sistema\CentroCostos;
 use App\Models\Sistema\Nomina;
 use App\Models\Usuarios\Perfil;
 use App\Models\Usuarios\Usuario;
@@ -29,6 +30,12 @@ class UsuariosSeeder extends Seeder
     $horario->llegada_ta = '14:00';
     $horario->salida_ta = '18:00';
     $horario->save();
+
+    //centro de costos
+    $ccostos = new CentroCostos();
+    $ccostos->empresa_id = 1709636664001;
+    $ccostos->nombre = 'Centro de costos test';
+    $ccostos->save();
 
     //perfil
     $perfil = new Perfil();
@@ -58,7 +65,7 @@ class UsuariosSeeder extends Seeder
     $nomina->estado_civil = 1;
     $nomina->inicio_labor = '2020-01-01';
     $nomina->cargo = 'Administrador';
-    $nomina->centro_costos = 1;
+    $nomina->centro_costos_id = 1;
     $nomina->iess_asumido_empleador = 1;
     $nomina->sueldo = 2000.00;
     $nomina->banco_id = 0;
@@ -96,7 +103,7 @@ class UsuariosSeeder extends Seeder
     $nomina->estado_civil = 1;
     $nomina->inicio_labor = '2020-01-01';
     $nomina->cargo = 'Administrador';
-    $nomina->centro_costos = 1;
+    $nomina->centro_costos_id = 1;
     $nomina->iess_asumido_empleador = 1;
     $nomina->sueldo = 2000.00;
     $nomina->banco_id = 0;

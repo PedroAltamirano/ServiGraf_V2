@@ -19,7 +19,7 @@ class CreateProcesosTable extends Migration
       $table->foreign('empresa_id')->references('id')->on('empresas');
       $table->foreignId('area_id')->references('id')->on('areas');
       $table->string('proceso', 140);
-      $table->foreignId('parent_id')->nullable()->references('id')->on('procesos');
+      $table->nestedSet();
       $table->unsignedDecimal('meta', 7, 2)->default(0.00);
       $table->time('tmaquina', 0)->nullable();
       $table->time('toperador', 0)->nullable();

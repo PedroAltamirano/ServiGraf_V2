@@ -27,7 +27,7 @@ class ProcesosArea extends Component
     $this->old = $old;
     // $this->list = Proceso::where('empresa_id', Auth::user()->empresa_id)->where('parent_id', null)->orderBy('proceso')->get()->groupBy('area_id');
     $this->list = Area::where('empresa_id', Auth::user()->empresa_id)->orderBy('orden')->get()->map(function ($area) {
-      $area->procesos = $area->procesos()->where('parent_id', null)->orderBy('proceso')->get();
+      $area->procesos = $area->procesos()->orderBy('proceso')->get()->toTree();
       if ($area->procesos->count()) {
         return  $area;
       }
