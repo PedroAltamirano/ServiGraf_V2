@@ -89,7 +89,8 @@
 
 @section('after.scripts')
 <script>
-  const route = "{{route('contacto.info')}}";
+  // const route = "{{route('contacto.info')}}";
+  const route = `{{route('cliente.info')}}`;
   function getPhone(){
     axios.post(route, {
       cliente_id: $('#cliente').val(),
@@ -104,11 +105,6 @@
 
   $('#cliente').change(function(){
     getPhone();
-  });
-
-  $('.submitbtn').click(function(){
-    let form = $(this).data('form');
-    $(form).submit();
   });
 
   $(function(){
