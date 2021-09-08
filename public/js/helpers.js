@@ -186,31 +186,6 @@ $("body").delegate(".verPedido", "click", function () {
 
   getModal(pedido_id);
 });
-$('.perfil_all').click(function (event) {
-  var row = $(event.currentTarget).data('row');
-  var check = !$(".".concat(row)).prop('checked');
-  var selector = row;
-
-  switch (row) {
-    case 'crear':
-      selector = check ? '.ver,.crear' : '.crear,.modificar,.eliminar';
-      break;
-
-    case 'modificar':
-      selector = check ? '.ver,.crear,.modificar' : '.modificar,.eliminar';
-      break;
-
-    case 'eliminar':
-      selector = check ? '.ver,.crear,.modificar,.eliminar' : '.eliminar';
-      break;
-
-    default:
-      selector = check ? '.ver' : '.ver,.crear,.modificar,.eliminar';
-      break;
-  }
-
-  $(selector).prop('checked', check);
-});
 
 window.add_error = function (mssg, type) {
   var alert = "<div class=\"alert alert-".concat(type, "\" role=\"alert\">\n      ").concat(mssg, "&nbsp&nbsp\n      <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n      <span aria-hidden=\"true\">&times;</span></button>\n    </div>");
@@ -220,6 +195,10 @@ window.add_error = function (mssg, type) {
 window.change_select = function (selector, val) {
   return $(selector).val(val).trigger("change.select2");
 };
+
+$('.modal').on('show.bs.modal', function () {
+  $('.modal').modal('hide');
+});
 
 /***/ }),
 

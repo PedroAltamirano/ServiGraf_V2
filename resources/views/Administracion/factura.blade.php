@@ -29,7 +29,7 @@
     @method($method)
     <input type="hidden" name="numero" id="fact_num" value="{{ $fact_num }}">
     <section id="datos-cliente">
-      <h6><i class="fas fa-plus" data-toggle="modal" data-target="#modalCliente"></i>&nbsp; Datos del cliente</h6>
+      <h6><i class="fas fa-plus" data-toggle="modal" data-target="#modalContacto"></i>&nbsp; Datos del cliente</h6>
       <hr>
       <div class="form-row">
         <div class="form-group col-12 col-md-3">
@@ -257,7 +257,7 @@
   const fact_num = {{ $fact_num }};
   const fact_new = {{ $factura->id ?? 0 }};
 
-  const route = "{{route('cliente.info')}}";
+  const route = "{{route('contacto.info')}}";
   function getPhone(){
     axios.post(route, {
       // cliente_id: $('#cliente').val(),

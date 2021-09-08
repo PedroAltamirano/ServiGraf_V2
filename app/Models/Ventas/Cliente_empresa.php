@@ -14,6 +14,11 @@ class Cliente_empresa extends Model
 
   public function clientes()
   {
-    return $this->hasMany(Cliente_empresa::class, 'cliente_empresa_id');
+    return $this->hasMany(Cliente::class, 'cliente_empresa_id');
+  }
+
+  public function contactos()
+  {
+    return $this->hasMany(Contacto::class, 'cliente_empresa_id')->orderBy('nombre');
   }
 }

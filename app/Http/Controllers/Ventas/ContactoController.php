@@ -15,14 +15,14 @@ use App\Models\Ventas\Contacto;
 use App\Models\Ventas\Cliente_empresa;
 use App\Models\Ventas\Cliente;
 
-use App\Http\Requests\Ventas\StoreCliente;
-use App\Http\Requests\Ventas\UpdateCliente;
+use App\Http\Requests\Ventas\StoreContacto;
+use App\Http\Requests\Ventas\UpdateContacto;
 
-class ClientesController extends Controller
+class ContactoController extends Controller
 {
   use SoftDeletes;
 
-  public function store(StoreCliente $request)
+  public function store(StoreContacto $request)
   {
     $validator = $request->validated();
     $validator['empresa_id'] = Auth::user()->empresa_id;

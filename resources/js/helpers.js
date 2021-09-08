@@ -101,27 +101,6 @@ $("body").delegate(".verPedido", "click", function() {
   getModal(pedido_id);
 });
 
-$('.perfil_all').click(event => {
-  let row = $(event.currentTarget).data('row');
-  let check = !$(`.${row}`).prop('checked');
-  let selector = row;
-  switch(row){
-    case 'crear':
-      selector = check ? '.ver,.crear' : '.crear,.modificar,.eliminar';
-      break;
-    case 'modificar':
-      selector = check ? '.ver,.crear,.modificar' : '.modificar,.eliminar';
-      break;
-    case 'eliminar':
-      selector = check ? '.ver,.crear,.modificar,.eliminar' : '.eliminar';
-      break;
-    default:
-      selector = check ? '.ver' : '.ver,.crear,.modificar,.eliminar';
-      break;
-  }
-  $(selector).prop('checked', check);
-});
-
 window.add_error = function(mssg, type) {
   let alert = `<div class="alert alert-${type}" role="alert">
       ${mssg}&nbsp&nbsp
@@ -132,3 +111,7 @@ window.add_error = function(mssg, type) {
 }
 
 window.change_select = (selector, val) => $(selector).val(val).trigger("change.select2");
+
+$('.modal').on('show.bs.modal', () => {
+  $('.modal').modal('hide')
+});

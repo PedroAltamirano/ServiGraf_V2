@@ -5,7 +5,7 @@
 <h1 class="text-center d-none d-print-block">{{ session('userInfo.empresa') }}</h1>
 <h3 class="d-none d-print-block">Orden de trabajo No. <span class="font-weight-bold">{{ $pedido->numero }}</span></h3>
 <section id="datos-cliente">
-  <h6><i class="fas fa-plus" data-toggle="modal" data-target="#modalCliente"></i>&nbsp; Datos del cliente</h6>
+  <h6><i class="fas fa-plus" data-toggle="modal" data-target="#modalContacto"></i>&nbsp; Datos del cliente</h6>
   <hr>
   <div class="form-row">
     <div class="form-group col-6 col-md-2 order-1">
@@ -89,7 +89,7 @@
 
 @section('after.scripts')
 <script>
-  const route = "{{route('cliente.info')}}";
+  const route = "{{route('contacto.info')}}";
   function getPhone(){
     axios.post(route, {
       cliente_id: $('#cliente').val(),

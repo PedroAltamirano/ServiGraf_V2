@@ -115,13 +115,26 @@
 
 @section('scripts')
 <script>
-  // $(document).ready(function() {
-  //   $('#table').DataTable({
-  //     "paging":   false,
-  //     "ordering": false,
-  //     "info":     false,
-  //   });
-  // });
+  $('.perfil_all').click(event => {
+    let row = $(event.currentTarget).data('row');
+    let check = !$(`.${row}`).prop('checked');
+    let selector = row;
+    switch(row){
+      case 'crear':
+        selector = check ? '.ver,.crear' : '.crear,.modificar,.eliminar';
+        break;
+      case 'modificar':
+        selector = check ? '.ver,.crear,.modificar' : '.modificar,.eliminar';
+        break;
+      case 'eliminar':
+        selector = check ? '.ver,.crear,.modificar,.eliminar' : '.eliminar';
+        break;
+      default:
+        selector = check ? '.ver' : '.ver,.crear,.modificar,.eliminar';
+        break;
+    }
+    $(selector).prop('checked', check);
+  });
 
   $('.custom-control-input').change(function(){
     var id = this.id.split('-');
