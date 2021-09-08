@@ -85,8 +85,8 @@ class UsuariosSeeder extends Seeder
 
     //nomina
     $nomina = new Nomina();
-    $nomina->empresa_id = 170963666464001;
-    $nomina->cedula = 170963666464;
+    $nomina->empresa_id = 1709636664001;
+    $nomina->cedula = 1709636664;
     $nomina->fecha_nacimiento = '1967-01-19';
     $nomina->lugar_nacimiento = 'Quito';
     $nomina->nacionalidad = 'ecuatoriano';
@@ -114,8 +114,8 @@ class UsuariosSeeder extends Seeder
 
     //usuario
     $usuario = new Usuario();
-    $usuario->cedula = 170963666464;
-    $usuario->empresa_id = 170963666464001;
+    $usuario->cedula = 1709636664;
+    $usuario->empresa_id = 1709636664001;
     $usuario->usuario = 'Samuel';
     $usuario->password = Hash::make('SaMueL7691');
     $usuario->perfil_id = 1;
