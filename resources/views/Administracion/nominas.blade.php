@@ -7,7 +7,7 @@
 <x-path
   :items="[
     [
-      'text' => 'Nominas',
+      'text' => 'Nomina',
       'current' => true,
       'href' => '#',
     ]
@@ -15,7 +15,7 @@
 />
 
 <x-blue-board
-  title='Nominas'
+  title='Nomina'
   :foot="[
     ['text'=>'Nuevo', 'href'=>route('nomina.create'), 'id'=>'nuevo', 'tipo'=> 'link']
   ]"

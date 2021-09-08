@@ -51,13 +51,14 @@ class NominaController extends Controller
     $ccostos = CentroCostos::where('empresa_id', Auth::user()->empresa_id)->get();
     $horarios = Horario::where('empresa_id', Auth::user()->empresa_id)->get();
     $dotacion = Dotacion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
+    $docs = $nomina->documentos ?? new NominaDocs();
     $data = [
       'text' => 'Nueva Nomina',
       'path' => route('nomina.store'),
       'method' => 'POST',
       'action' => 'Crear',
     ];
-    return view('Administracion.nomina', compact('nomina', 'ccostos', 'horarios', 'dotacion'))->with($data);
+    return view('Administracion.nomina', compact('nomina', 'ccostos', 'horarios', 'dotacion', 'docs'))->with($data);
   }
 
   /**
@@ -121,13 +122,14 @@ class NominaController extends Controller
     $ccostos = CentroCostos::where('empresa_id', Auth::user()->empresa_id)->get();
     $horarios = Horario::where('empresa_id', Auth::user()->empresa_id)->get();
     $dotacion = Dotacion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
+    $docs = $nomina->documentos ?? new NominaDocs();
     $data = [
       'text' => 'Modificar Nomina',
       'path' => route('nomina.update', $nomina->cedula),
       'method' => 'PUT',
       'action' => 'Modificar',
     ];
-    return view('Administracion.nomina', compact('nomina', 'ccostos', 'horarios', 'dotacion'))->with($data);
+    return view('Administracion.nomina', compact('nomina', 'ccostos', 'horarios', 'dotacion', 'docs'))->with($data);
   }
 
   /**

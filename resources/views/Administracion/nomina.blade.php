@@ -4,7 +4,7 @@
 <x-path
   :items="[
     [
-      'text' => 'Nominas',
+      'text' => 'Nomina',
       'current' => false,
       'href' => route('nomina'),
     ],
@@ -230,9 +230,6 @@
 
     <hr style="border-width: 3px;">
 
-    @php
-        $docs = $nomina->documentos;
-    @endphp
     <section id="documento">
       <h6 class="font-weight-bold">Documentos entregados</h6>
       <hr>
