@@ -164,13 +164,11 @@ a {
 	text-decoration: none;
 }
 
-.crudCol {
-	width: 2%;
-	max-width: 5%;
-}
-
-.dateCol {
-	width: 10%;
+$widths: 5, 10, 40, 60;
+@each $size in $widths {
+  .w-#{$size} {
+    width: #{$size} + '%';
+  }
 }
 
 .light-blue {

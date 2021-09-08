@@ -29,7 +29,7 @@
         <th scope="col">Correo</th>
         <th scope="col">Cargo</th>
         <th scope="col">Contrato</th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>

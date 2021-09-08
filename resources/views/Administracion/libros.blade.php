@@ -46,7 +46,7 @@
         <th scope="col">Ingreso $</th>
         <th scope="col">Egreso $</th>
         <th scope="col">Saldo $</th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>
@@ -58,7 +58,7 @@
         <td id="total-ingreso"></td>
         <td id="total-egreso"></td>
         <td id="total-saldo"></td>
-        <th scope="col" class="crudCol"></th>
+        <th scope="col" class="w-5"></th>
       </tr>
     </tfoot>
   </table>

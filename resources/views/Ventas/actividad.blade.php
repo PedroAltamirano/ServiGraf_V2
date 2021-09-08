@@ -37,7 +37,7 @@
       <div class="form-group col-12 col-md-3">
         <label for="plantilla_id">Plantilla</label>
         <select class="form-control form-control-sm @error('plantilla_id') is-invalid @enderror" name="plantilla_id" id="plantilla_id">
-          <option selected>Selecciona uno</option>
+          <option disabled selected>Selecciona uno</option>
           @foreach ($plantillas as $item)
           <option value="{{ $item->id }}" {{ old('plantilla_id', $actividad->plantilla_id) == $item->id ? 'select' : '' }}>{{ $item->nombre }}</option>
           @endforeach

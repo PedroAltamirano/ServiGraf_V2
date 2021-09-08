@@ -28,7 +28,7 @@
         <th scope="col" style="width: 25%">Detalle</th>
         <th scope="col">Cant</th>
         <th scope="col" style="width: 40%">Procesos</th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>

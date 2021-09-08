@@ -25,8 +25,8 @@ class StoreActividad extends FormRequest
   {
     return [
       'nombre' => ['required', 'string'],
-      'meta' => ['required', 'numeric', 'min:0', 'max:99999'],
-      'plantilla_id' => ['required', 'numeric', 'exists:plantillas,id'],
+      'meta' => ['nullable', 'numeric', 'min:0', 'max:99999'],
+      'plantilla_id' => ['nullable', 'numeric', 'exists:plantillas,id'],
       'evaluacion' => ['nullable', 'boolean'],
       'seguimiento' => ['nullable', 'boolean'],
     ];

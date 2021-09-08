@@ -26,7 +26,7 @@
       <tr>
         <th scope="col">Nombre</th>
         <th scope="col">Descripción</th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>

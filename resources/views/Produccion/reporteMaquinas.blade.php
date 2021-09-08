@@ -37,8 +37,8 @@
         <th scope="col">{{$proceso->proceso}}</th>
         @endforeach
         <th scope="col">Total $</th>
-        <th scope="col" class="crudCol"></th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5"></th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>

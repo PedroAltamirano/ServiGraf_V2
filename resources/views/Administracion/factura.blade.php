@@ -117,7 +117,7 @@
       <table id="table-articulos" class="table table-sm">
         <thead>
           <tr>
-            <th scope="col" class="crudCol"><i id="addArticulo" class="fas fa-plus"></i></th>
+            <th scope="col" class="w-5"><i id="addArticulo" class="fas fa-plus"></i></th>
             <th scope="col">Cantidad</th>
             <th scope="col" width="50%">Detalle</th>
             <th scope="col">% IVA</th>

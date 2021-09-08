@@ -44,10 +44,10 @@
         <th scope="col">Alto</th>
         <th scope="col">Ancho</th>
         <th scope="col">Precio</th>
-        <th scope="col" class="crudCol">Color</th>
-        <th scope="col" class="crudCol">UV</th>
-        <th scope="col" class="crudCol">Plastificado</th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5">Color</th>
+        <th scope="col" class="w-5">UV</th>
+        <th scope="col" class="w-5">Plastificado</th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>

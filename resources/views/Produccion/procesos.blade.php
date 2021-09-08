@@ -46,8 +46,8 @@
         <th scope="col">T xM</th>
         <th scope="col">T xO</th>
         <th scope="col">Tipo</th>
-        <th scope="col" class="crudCol">Seguimiento</th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5">Seguimiento</th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>

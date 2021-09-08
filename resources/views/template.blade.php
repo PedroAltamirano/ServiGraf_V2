@@ -42,7 +42,7 @@
     <thead>
       <tr>
         <th scope="col"></th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>
@@ -50,7 +50,7 @@
       <tr>
         <td>{{ $item-> }}</td>
         <td>
-          <x-crud :routeSee='route(.edit, [$->id])', :modalSee='$model', :routeEdit='route(.edit, [$->id])', :modalEdit='$model', :routeDelete='route(.edit, [$->id])' />
+          <x-crud :routeSee="route('.show', $item->id)" :modalSee="$model" :routeEdit="route('.edit', $item->id)" :modalEdit="$model" :routeDelete="route('.delete', $item->id)" />
         </td>
       </tr>
       @endforeach

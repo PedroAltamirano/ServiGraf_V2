@@ -36,7 +36,7 @@
         <th scope="col">Salida</th>
         <th scope="col">Espera</th>
         <th scope="col">Gracia</th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>

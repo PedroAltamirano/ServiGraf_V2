@@ -372,7 +372,7 @@
         <table id="table-educacion" class="table table-sm">
           <thead>
             <tr>
-              <th scope="col" class="crudCol"><i id="addEducacion" class="fas fa-plus"></i></th>
+              <th scope="col" class="w-5"><i id="addEducacion" class="fas fa-plus"></i></th>
               <th scope="col">Nivel de Educacion</th>
               <th scope="col">Institución</th>
               <th scope="col">Desde</th>
@@ -395,7 +395,7 @@
         <table id="table-referencia" class="table table-sm">
           <thead>
             <tr>
-              <th scope="col" class="crudCol"><i id="addReferencia" class="fas fa-plus"></i></th>
+              <th scope="col" class="w-5"><i id="addReferencia" class="fas fa-plus"></i></th>
               <th scope="col">Tipo</th>
               <th scope="col">Empresa</th>
               <th scope="col">Contacto</th>
@@ -422,7 +422,7 @@
         <table id="table-dotacion" class="table table-sm">
           <thead>
             <tr>
-              <th scope="col" class="crudCol"><i id="addDotacion" class="fas fa-plus"></i></th>
+              <th scope="col" class="w-5"><i id="addDotacion" class="fas fa-plus"></i></th>
               <th scope="col">Entrega</th>
               <th scope="col">Articulo</th>
             </tr>
@@ -484,7 +484,7 @@
         <table id="table-familia" class="table table-sm">
           <thead>
             <tr>
-              <th scope="col" class="crudCol"><i id="addFamilia" class="fas fa-plus"></i></th>
+              <th scope="col" class="w-5"><i id="addFamilia" class="fas fa-plus"></i></th>
               <th scope="col">Relación</th>
               <th scope="col">Nombre</th>
               <th scope="col">Fecha de Nacimiento</th>

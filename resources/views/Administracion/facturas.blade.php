@@ -56,7 +56,7 @@
         <th scope="col">Cliente</th>
         <th scope="col">Ing./Eg.</th>
         <th scope="col">Valor</th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>
@@ -65,7 +65,7 @@
       <tr>
         <td colspan="5" class="text-right">Total $</td>
         <td class="text-right" id="clmtotal"></td>
-        <td class="crudCol"></td>
+        <td class="w-5"></td>
       </tr>
     </tfoot>
   </table>

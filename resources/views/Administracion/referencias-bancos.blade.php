@@ -27,7 +27,7 @@
       <tr>
         <th scope="col">Nombre</th>
         <th scope="col">Detalle</th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>
@@ -53,7 +53,7 @@
       <tr>
         <th scope="col">Nombre</th>
         <th scope="col">No. de Cuenta</th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>

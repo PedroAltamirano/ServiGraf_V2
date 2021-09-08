@@ -32,8 +32,8 @@
         <th scope="col">Válido de</th>
         <th scope="col">Válido a</th>
         <th scope="col">Logo</th>
-        <th scope="col" class="crudCol">Impresión</th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5">Impresión</th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>

@@ -26,12 +26,12 @@
       <tbody>
         @foreach ($atrasadas as $item)
         <tr>
-          <td class="dateCol">{{ $item->fecha }}</td>
-          <td class="dateCol">{{ $item->hora }}</td>
+          <td class="w-10">{{ $item->fecha }}</td>
+          <td class="w-10">{{ $item->hora }}</td>
           <td>{{ $item->contacto_formated }}</td>
           <td>{{ $item->actividad->nombre }}</td>
           <td>{{ $item->asignado->usuario }}</td>
-          <td class="crudCol">
+          <td class="w-5">
             <x-crud :routeEdit="route('crm.edit', [$item->id])" />
           </td>
         </tr>
@@ -51,12 +51,12 @@
       <tbody>
         @foreach ($hoy as $item)
         <tr>
-          <td class="dateCol">{{ $item->fecha }}</td>
-          <td class="dateCol">{{ $item->hora }}</td>
+          <td class="w-10">{{ $item->fecha }}</td>
+          <td class="w-10">{{ $item->hora }}</td>
           <td>{{ $item->contacto_formated }}</td>
           <td>{{ $item->actividad->nombre }}</td>
           <td>{{ $item->asignado->usuario }}</td>
-          <td class="crudCol">
+          <td class="w-5">
             <x-crud :routeEdit="route('crm.edit', [$item->id])" />
           </td>
         </tr>
@@ -75,12 +75,12 @@
       <tbody>
         @foreach ($semana as $item)
         <tr>
-          <td class="dateCol">{{ $item->fecha }}</td>
-          <td class="dateCol">{{ $item->hora }}</td>
+          <td class="w-10">{{ $item->fecha }}</td>
+          <td class="w-10">{{ $item->hora }}</td>
           <td>{{ $item->contacto_formated }}</td>
           <td>{{ $item->actividad->nombre }}</td>
           <td>{{ $item->asignado->usuario }}</td>
-          <td class="crudCol">
+          <td class="w-5">
             <x-crud :routeEdit="route('crm.edit', [$item->id])" />
           </td>
         </tr>
@@ -99,12 +99,12 @@
       <tbody>
         @foreach ($proximas as $item)
         <tr>
-          <td class="dateCol">{{ $item->fecha }}</td>
-          <td class="dateCol">{{ $item->hora }}</td>
+          <td class="w-10">{{ $item->fecha }}</td>
+          <td class="w-10">{{ $item->hora }}</td>
           <td>{{ $item->contacto_formated }}</td>
           <td>{{ $item->actividad->nombre }}</td>
           <td>{{ $item->asignado->usuario }}</td>
-          <td class="crudCol">
+          <td class="w-5">
             <x-crud :routeEdit="route('crm.edit', [$item->id])" />
           </td>
         </tr>

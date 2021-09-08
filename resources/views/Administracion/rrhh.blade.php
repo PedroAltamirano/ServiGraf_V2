@@ -43,7 +43,7 @@
         <th scope="col">Salida</th>
         <th scope="col">Total</th>
         <th scope="col">H. Ext</th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>

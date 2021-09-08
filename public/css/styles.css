@@ -165,13 +165,20 @@ a {
   text-decoration: none;
 }
 
-.crudCol {
-  width: 2%;
-  max-width: 5%;
+.w-5 {
+  width: 5%;
 }
 
-.dateCol {
+.w-10 {
   width: 10%;
+}
+
+.w-40 {
+  width: 40%;
+}
+
+.w-60 {
+  width: 60%;
 }
 
 .light-blue {

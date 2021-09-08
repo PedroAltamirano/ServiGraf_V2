@@ -28,7 +28,7 @@
         <th scope="col">Clave</th>
         <th scope="col">Refuerzo</th>
         <th scope="col">URL</th>
-        <th scope="col" class="crudCol">Crud</th>
+        <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>
