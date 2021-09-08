@@ -36,17 +36,27 @@ class ContactoController extends Controller
     $validator['usuario_id'] = Auth::id();
     $validator['cliente_empresa_id'] = $cli_empresa->id;
     $contacto = Contacto::create(Arr::except($validator, ['empresa', 'ruc', 'isCliente', 'seguimento']));
+    $mssg = 'Contacto creado con éxito';
 
     if (isset($validator['isCliente'])) {
       $validator['contacto_id'] = $contacto->id;
       $cliente = Cliente::create(Arr::only($validator, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimento']));
+      $mssg = 'Cliente creado con éxito';
     }
 
-    Alert::success('Acción completada', 'Cliente creado con éxito');
+    Alert::success('Acción completada', $mssg);
     return redirect()->back();
   }
 
   public function info(Request $request)
+  {
+    $contacto = Contacto::with(['empresa'])->find($request->contacto_id);
+    $contacto->movil = $contacto->movil;
+
+    return response()->json($contacto);
+  }
+
+  public function infoCliente(Request $request)
   {
     $cli = Cliente::find($request->cliente_id);
     // $cli = Cliente::find();

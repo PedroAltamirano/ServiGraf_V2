@@ -4,7 +4,7 @@ namespace App\Http\Requests\Ventas;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTarea extends FormRequest
+class UpdateTarea extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class StoreTarea extends FormRequest
   public function rules()
   {
     return [
-      'contacto_id' => ['required', 'numeric', 'exists:contactos,id'],
+      'contacto_id' => ['nullable', 'numeric', 'exists:contactos,id'],
       'actividad_id' => ['required', 'numeric', 'exists:actividades,id'],
       'asignado_id' => ['required', 'numeric', 'exists:usuarios,cedula'],
       'estado' => ['nullable', 'boolean'],

@@ -2,8 +2,19 @@
 
 namespace App\Http\Controllers\Ventas;
 
-use App\Models\Ventas\Actividad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+
+use App\Models\Ventas\Actividad;
+
+use App\Http\Requests\Ventas\StoreActividad;
+use App\Http\Requests\Ventas\UpdateActividad;
+use App\Models\Ventas\Plantilla;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class ActividadController extends Controller
 {
@@ -14,7 +25,8 @@ class ActividadController extends Controller
    */
   public function index()
   {
-    //
+    $actividades = Actividad::where('empresa_id', Auth::user()->empresa_id)->get();
+    return view('Ventas.actividades', compact('actividades'));
   }
 
   /**
@@ -24,7 +36,15 @@ class ActividadController extends Controller
    */
   public function create()
   {
-    //
+    $actividad = new Actividad();
+    $plantillas = Plantilla::where('empresa_id', Auth::user()->empresa_id)->get();
+    $data = [
+      'text' => 'Nueva Actividad',
+      'path' => route('actividad.store'),
+      'method' => 'POST',
+      'action' => 'Crear',
+    ];
+    return view('Ventas.actividad', compact('actividad', 'plantillas'))->with($data);
   }
 
   /**
@@ -33,9 +53,27 @@ class ActividadController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(StoreActividad $request)
   {
-    //
+    $validated = $request->validated();
+    $validated['empresa_id'] = Auth::user()->empresa_id;
+    $validated['creador_id'] = Auth::id();
+    $validated['evaluacion'] = $validated['evaluacion'] ?? 0;
+    $validated['seguimiento'] = $validated['seguimiento'] ?? 0;
+
+    DB::beginTransaction();
+    try {
+      if ($actividad = Actividad::create($validated)) {
+        DB::commit();
+        Alert::success('Acción completada', 'Actividad creada con éxito');
+        return redirect()->route('actividad.edit', $actividad);
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::success('Acción completada', 'Actividad no creada');
+      return redirect()->back()->withInput();
+    }
   }
 
   /**
@@ -57,7 +95,14 @@ class ActividadController extends Controller
    */
   public function edit(Actividad $actividad)
   {
-    //
+    $plantillas = Plantilla::where('empresa_id', Auth::user()->empresa_id)->get();
+    $data = [
+      'text' => 'Modificar Actividad',
+      'path' => route('actividad.update', $actividad->id),
+      'method' => 'PUT',
+      'action' => 'Modificar',
+    ];
+    return view('Ventas.actividad', compact('actividad', 'plantillas'))->with($data);
   }
 
   /**
@@ -67,9 +112,26 @@ class ActividadController extends Controller
    * @param  \App\Models\Ventas\Actividad  $actividad
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Actividad $actividad)
+  public function update(UpdateActividad $request, Actividad $actividad)
   {
-    //
+    $validated = $request->validated();
+    $validated['modificador_id'] = Auth::id();
+    $validated['evaluacion'] = $validated['evaluacion'] ?? 0;
+    $validated['seguimiento'] = $validated['seguimiento'] ?? 0;
+
+    DB::beginTransaction();
+    try {
+      if ($actividad->update($validated)) {
+        DB::commit();
+        Alert::success('Acción completada', 'Actividad modificada con éxito');
+        return redirect()->route('actividad.edit', $actividad);
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::success('Acción completada', 'Actividad no modificada');
+      return redirect()->back()->withInput();
+    }
   }
 
   /**
@@ -80,6 +142,18 @@ class ActividadController extends Controller
    */
   public function destroy(Actividad $actividad)
   {
-    //
+    DB::beginTransaction();
+    try {
+      if ($actividad->delete()) {
+        DB::commit();
+        Alert::success('Acción completada', 'Actividad eliminada con éxito');
+        return redirect()->route('actividad.edit', $actividad);
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::success('Acción completada', 'Actividad no eliminada');
+      return redirect()->back()->withInput();
+    }
   }
 }

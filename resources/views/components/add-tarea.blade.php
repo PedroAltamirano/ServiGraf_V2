@@ -8,7 +8,7 @@
           </button>
       </div>
       <div class="modal-body">
-        <form action="" method="post">
+        <form action="{{ route('crm.store') }}" id="tareaForm" method="post">
           @csrf
           <section id="datos-contacto">
             <h6><i class="fas fa-plus" data-toggle="modal" data-target="#modalContacto"></i>&nbsp; Datos del contacto</h6>
@@ -16,7 +16,7 @@
             <div class="form-row">
               <div class="form-group col-12 col-md-6">
                 <label for="contacto_id">Contacto</label>
-                <select class="form-control form-control-sm select2Class @error('contacto_id') is-invalid @enderror" name="contacto_id" id="contacto_id" data-tags="true">
+                <select class="form-control form-control-sm @error('contacto_id') is-invalid @enderror select2Class" name="contacto_id" id="contacto_id" data-tags="true">
                   <option disabled selected>Selecciona uno...</option>
                   @foreach ($empresas as $item)
                     <optgroup label="{{ $item->nombre }}">
@@ -29,19 +29,19 @@
               </div>
               <div class="form-group col-12 col-md-6">
                 <label for="organizacion">Organización</label>
-                <input type="text" id="organizacion" class="form-control form-control-sm" value="{{ old('organizacion') }}" readonly>
+                <input type="text" id="task_organizacion" class="form-control form-control-sm" value="{{ old('organizacion') }}" readonly>
               </div>
               <div class="form-group col-12 col-md-4">
                 <label for="telefono">Telefono</label>
-                <input type="text" id="telefono" class="form-control form-control-sm" value="{{ old('telefono') }}" readonly>
+                <input type="text" id="task_telefono" class="form-control form-control-sm" value="{{ old('telefono') }}" readonly>
               </div>
               <div class="form-group col-12 col-md-4">
                 <label for="email">Email</label>
-                <input type="text" id="email" class="form-control form-control-sm" value="{{ old('email') }}" readonly>
+                <input type="text" id="task_email" class="form-control form-control-sm" value="{{ old('email') }}" readonly>
               </div>
               <div class="form-group col-12 col-md-4">
                 <label for="direccion">Dirección</label>
-                <input type="text" id="direccion" class="form-control form-control-sm" value="{{ old('direccion') }}" readonly>
+                <input type="text" id="task_direccion" class="form-control form-control-sm" value="{{ old('direccion') }}" readonly>
               </div>
             </div>
           </section>
@@ -64,7 +64,7 @@
                 <select class="form-control form-control-sm  @error('asignado_id') is-invalid @enderror" name="asignado_id" id="asignado_id">
                   <option disabled selected>Selecciona uno</option>
                   @foreach ($usuarios as $item)
-                  <option value="{{ $item->id }}" {{ old('asignado_id') == $item->id ? 'selected' : '' }}>{{ $item->usuario }}</option>
+                  <option value="{{ $item->cedula }}" {{ old('asignado_id') == $item->id ? 'selected' : '' }}>{{ $item->usuario }}</option>
                   @endforeach
                 </select>
               </div>
@@ -95,8 +95,29 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary">Agendar</button>
-        <button type="button" class="btn btn-primary">Crear</button>
+        <button type="button" class="btn btn-primary submitbtn" data-form="#tareaForm">Crear</button>
       </div>
     </div>
   </div>
 </div>
+
+@push('component-script')
+<script>
+  const path = `{{ route('contacto.info') }}`;
+  const fill_contact = () => {
+    axios.post(path, {
+      contacto_id: $('#contacto_id').val()
+    }).then(function (res) {
+      var data = res.data;
+      $("#task_organizacion").val(data.empresa.nombre);
+      $("#task_telefono").val(data.movil);
+      $("#task_email").val(data.email);
+      $("#task_direccion").val(data.direccion);
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
+  $('#contacto_id').change(event => fill_contact())
+</script>
+@endpush

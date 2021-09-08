@@ -4,7 +4,7 @@ namespace App\Http\Requests\Ventas;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCliente extends FormRequest
+class UpdateContacto extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.

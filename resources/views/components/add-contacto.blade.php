@@ -9,7 +9,7 @@
           </div>
       <div class="modal-body">
         <div class="container-fluid">
-          <form method="POST" action="{{ route('contacto.store') }}" role="form" id="clientForm">
+          <form method="POST" action="{{ route('contacto.store') }}" role="form" id="contactoForm">
             @csrf
             @include('Ventas.contacto')
           </form>
@@ -17,7 +17,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary submitbtn" data-form="#clientForm">Guardar</button>
+        <button type="button" class="btn btn-primary submitbtn" data-form="#contactoForm">Guardar</button>
       </div>
     </div>
   </div>

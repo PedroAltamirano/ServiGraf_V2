@@ -31,28 +31,34 @@
     ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'mes', 'tipo'=> 'button', 'print-target' => 'table'],
   ]"
   class="d-print-none"
-></x-blue-board>
+>
+  <form action="{{ $path }}" method="POST" id="form">
+    @csrf
+    @method($method)
+    @include('Produccion.formPedido')
+  </form>
 
-<table id="table" class="table table-striped table-sm">
-  <thead>
-    <tr>
-      <th scope="col"></th>
-      <th scope="col" class="crudCol">Crud</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach ($ as $item)
-    <tr>
-      <td>{{ $item-> }}</td>
-      <td>
-        <x-crud :routeSee='route(.edit, [$->id])', :modalSee='$model', :routeEdit='route(.edit, [$->id])', :modalEdit='$model', :routeDelete='route(.edit, [$->id])' />
-      </td>
-    </tr>
-    @endforeach
-  </tbody>
-  <tfoot>
-  </tfoot>
-</table>
+  <table id="table" class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col" class="crudCol">Crud</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach ($ as $item)
+      <tr>
+        <td>{{ $item-> }}</td>
+        <td>
+          <x-crud :routeSee='route(.edit, [$->id])', :modalSee='$model', :routeEdit='route(.edit, [$->id])', :modalEdit='$model', :routeDelete='route(.edit, [$->id])' />
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+    <tfoot>
+    </tfoot>
+  </table>
+</x-blue-board>
 
 <x-report :title="$cli->contacto->nombre.' '.$cli->contacto->apellido" :items="$items"></x-report>
 

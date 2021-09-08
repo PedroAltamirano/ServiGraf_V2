@@ -4,7 +4,16 @@ Route::namespace('Ventas')
   ->group(function () {
     // Route::get('/ventas', '')->name('crm');
     Route::post('contacto/info', 'ContactoController@info')->name('contacto.info');
+    Route::post('cliente/info', 'ContactoController@infoCliente')->name('cliente.info');
     Route::post('contacto/store', 'ContactoController@store')->name('contacto.store');
+
+    // Actividades
+    Route::get('actividades', 'ActividadController@index')->name('actividad')->middleware('hasModRol:51,1');
+    Route::get('actividad/create', 'ActividadController@create')->name('actividad.create')->middleware('hasModRol:51,2');
+    Route::post('actividad/store', 'ActividadController@store')->name('actividad.store')->middleware('hasModRol:51,2');
+    Route::get('actividad/edit/{actividad}', 'ActividadController@edit')->name('actividad.edit')->middleware('hasModRol:51,3');
+    Route::put('actividad/update/{actividad}', 'ActividadController@update')->name('actividad.update')->middleware('hasModRol:51,3');
+    Route::delete('actividad/delete/{actividad}', 'ActividadController@delete')->name('actividad.delete')->middleware('hasModRol:51,4');
 
     // CRM
     Route::get('/crm', 'CRMController@index')->name('crm')->middleware('hasModRol:50,1');

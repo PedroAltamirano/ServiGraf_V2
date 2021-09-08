@@ -6,11 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Ventas\StoreTarea;
+use App\Http\Requests\Ventas\UpdateTarea;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Ventas\CRM;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class CRMController extends Controller
 {
@@ -65,9 +69,25 @@ class CRMController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(StoreTarea $request)
   {
-    Alert::success('Acción completada', 'Evento creado con éxito');
+    $validated = $request->validated();
+    $validated['empresa_id'] = Auth::user()->empresa_id;
+    $validated['creador_id'] = Auth::id();
+
+    DB::beginTransaction();
+    try {
+      if ($tarea = CRM::create($validated)) {
+        DB::commit();
+        Alert::success('Acción completada', 'Tarea creada con éxito');
+        return redirect()->route('crm.edit', $tarea);
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::success('Acción completada', 'Tarea no creada');
+      return redirect()->back()->withInput();
+    }
   }
 
   /**
@@ -87,7 +107,7 @@ class CRMController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function edit(CRM $tarea)
   {
     //
   }
@@ -99,9 +119,24 @@ class CRMController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(UpdateTarea $request, CRM $tarea)
   {
-    //
+    $validated = $request->validated();
+    $validated['modificador_id'] = Auth::id();
+
+    DB::beginTransaction();
+    try {
+      if ($tarea->update($validated)) {
+        DB::commit();
+        Alert::success('Acción completada', 'Tarea modificada con éxito');
+        return redirect()->route('crm.edit', $tarea);
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::success('Acción completada', 'Tarea no modificada');
+      return redirect()->back()->withInput();
+    }
   }
 
   /**
@@ -110,8 +145,20 @@ class CRMController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy(CRM $tarea)
   {
-    //
+    DB::beginTransaction();
+    try {
+      if ($tarea->delete()) {
+        DB::commit();
+        Alert::success('Acción completada', 'Tarea eliminada con éxito');
+        return redirect()->route('crm.edit', $tarea);
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::success('Acción completada', 'Tarea no eliminada');
+      return redirect()->back()->withInput();
+    }
   }
 }

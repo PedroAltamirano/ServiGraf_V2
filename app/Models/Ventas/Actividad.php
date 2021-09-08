@@ -9,4 +9,7 @@ class Actividad extends Model
 {
   use HasFactory;
   protected $table = 'actividades';
+  protected $fillable = [
+    'empresa_id', 'creador_id', 'modificador_id', 'nombre', 'meta', 'plantilla_id', 'evaluacion', 'seguimiento'
+  ];
 }

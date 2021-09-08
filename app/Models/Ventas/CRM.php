@@ -10,6 +10,9 @@ class CRM extends Model
 {
   use HasFactory;
   protected $table = 'crm';
+  protected $fillable = [
+    'empresa_id', 'fecha', 'hora', 'actividad_id', 'creador_id', 'modificador_id', 'asignado_id', 'contacto_id', 'estado', 'fuente', 'campania', 'nota'
+  ];
 
   /**
    * Get the actividad that owns the Crm

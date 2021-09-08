@@ -13,7 +13,7 @@ class StoreActividad extends FormRequest
    */
   public function authorize()
   {
-    return false;
+    return true;
   }
 
   /**
@@ -24,7 +24,11 @@ class StoreActividad extends FormRequest
   public function rules()
   {
     return [
-      //
+      'nombre' => ['required', 'string'],
+      'meta' => ['required', 'numeric', 'min:0', 'max:99999'],
+      'plantilla_id' => ['required', 'numeric', 'exists:plantillas,id'],
+      'evaluacion' => ['nullable', 'boolean'],
+      'seguimiento' => ['nullable', 'boolean'],
     ];
   }
 }

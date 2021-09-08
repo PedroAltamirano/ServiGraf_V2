@@ -137,6 +137,7 @@
 
   @yield('scripts')
   @yield('after.scripts')
+  @stack('component-script')
 
 </body>
 </html>
