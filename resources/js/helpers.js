@@ -37,6 +37,8 @@ if (document.querySelector(".dropify")) {
   });
 }
 
+$(() => $('[data-toggle="tooltip"]').tooltip());
+
 $(document).on("change", ".fixFloat", function() {
   $(this).val(parseFloat($(this).val()).toFixed(2));
 });
@@ -88,8 +90,8 @@ function getModal(pedido_id) {
       maximumSelectionLength: 4
     });
     $("#modalPedido").modal("show");
-  }).catch((jqXhr, textStatus, errorThrown) => {
-    console.log(errorThrown);
+  }).catch(error => {
+    console.log(error);
   })
 }
 
@@ -114,4 +116,15 @@ window.change_select = (selector, val) => $(selector).val(val).trigger("change.s
 
 $('.modal').on('show.bs.modal', () => {
   $('.modal').modal('hide')
+});
+
+// Submit for blue board component
+$('#formSubmit').click(function(){
+  $('#form').submit();
+});
+
+// Submit for modals and others
+$('.submitbtn').click(function(){
+  let form = $(this).data('form');
+  $(form).submit();
 });

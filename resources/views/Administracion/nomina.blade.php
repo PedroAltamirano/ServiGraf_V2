@@ -710,10 +710,5 @@
       add_familia(item.relacion, item.nombre_fam, item.fecha_nacimiento_fam, item.ocupacion, item.telefono_fam, item.celular_fam);
     });
   }
-
-
-  $('#formSubmit').click(function(){
-    $('#form').submit();
-  });
 </script>
 @endsection

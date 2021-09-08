@@ -150,9 +150,5 @@
       }
     }
   });
-
-  $('#formSubmit').click(function(){
-    $('#form').submit();
-  });
 </script>
 @endsection

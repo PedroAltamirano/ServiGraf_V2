@@ -121,9 +121,5 @@
   $('#usuario').change(()=>{
     getLibros();
   });
-
-  $('#formSubmit').click(function(){
-    $('#form').submit();
-  });
 </script>
 @endsection

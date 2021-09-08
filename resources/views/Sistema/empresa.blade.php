@@ -160,9 +160,5 @@
     modal.find('.modal-path').attr('action', routeUpdateCCostos.replace("/0", "/"+data.id));
     modal.find('input[name="_method"]').val('PUT');
   });
-
-  $('#formSubmit').click(function(){
-    $('#form').submit();
-  });
 </script>
 @endsection

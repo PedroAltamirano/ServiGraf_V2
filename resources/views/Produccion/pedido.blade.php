@@ -42,11 +42,3 @@
   @yield('modals1')
   @yield('modals2')
 @endsection
-
-@section('scripts')
-<script>
-  $('#formSubmit').click(function(){
-    $('#form').submit();
-  });
-</script>
-@endsection

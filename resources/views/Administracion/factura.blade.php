@@ -257,10 +257,11 @@
   const fact_num = {{ $fact_num }};
   const fact_new = {{ $factura->id ?? 0 }};
 
-  const route = "{{route('contacto.info')}}";
+  // const route = "{{route('contacto.info')}}";
+  const route = `{{route('cliente.info')}}`;
   function getPhone(){
     axios.post(route, {
-      // cliente_id: $('#cliente').val(),
+      cliente_id: $('#cliente').val(),
     }).then(res => {
       let data = res.data
       $('#ruc').val(data.ruc);
@@ -400,10 +401,6 @@
     $('#articulo_subtotal_'+String(num)).val(parseFloat(parseFloat(cant) * parseFloat(valor)).toFixed(2));
     sumartotal();
   }
-
-  $('#formSubmit').click(function(){
-    $('#form').submit();
-  });
 
   // function print(){
   //   $('#form').printArea();

@@ -130,10 +130,6 @@
     });
   });
 
-  $('#formSubmit').click(function(){
-    $('#form').submit();
-  });
-
   // CATEGORIAS
   const route = "{{route('facturacion-empresas.update', 0)}}";
   $('#newFactura').on('click', function (event) {

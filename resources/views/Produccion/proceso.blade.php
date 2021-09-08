@@ -74,11 +74,3 @@
   </form>
 </x-blue-board>
 @endsection
-
-@section('scripts')
-<script>
-  $('#formSubmit').click(function(){
-    $('#form').submit();
-  });
-</script>
-@endsection
