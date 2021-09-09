@@ -39,7 +39,7 @@
         <select class="form-control form-control-sm @error('plantilla_id') is-invalid @enderror" name="plantilla_id" id="plantilla_id">
           <option disabled selected>Selecciona uno</option>
           @foreach ($plantillas as $item)
-          <option value="{{ $item->id }}" {{ old('plantilla_id', $actividad->plantilla_id) == $item->id ? 'select' : '' }}>{{ $item->nombre }}</option>
+          <option value="{{ $item->id }}" {{ old('plantilla_id', $actividad->plantilla_id) == $item->id ? 'selected' : '' }}>{{ $item->nombre }}</option>
           @endforeach
         </select>
       </div>

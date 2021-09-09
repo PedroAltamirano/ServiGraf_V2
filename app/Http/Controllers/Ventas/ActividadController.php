@@ -147,13 +147,13 @@ class ActividadController extends Controller
       if ($actividad->delete()) {
         DB::commit();
         Alert::success('Acción completada', 'Actividad eliminada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        return redirect()->route('actividad');
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
       Alert::success('Acción completada', 'Actividad no eliminada');
-      return redirect()->back()->withInput();
+      return redirect()->back();
     }
   }
 }

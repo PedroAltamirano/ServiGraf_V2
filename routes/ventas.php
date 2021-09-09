@@ -13,7 +13,15 @@ Route::namespace('Ventas')
     Route::post('actividad/store', 'ActividadController@store')->name('actividad.store')->middleware('hasModRol:51,2');
     Route::get('actividad/edit/{actividad}', 'ActividadController@edit')->name('actividad.edit')->middleware('hasModRol:51,3');
     Route::put('actividad/update/{actividad}', 'ActividadController@update')->name('actividad.update')->middleware('hasModRol:51,3');
-    Route::delete('actividad/delete/{actividad}', 'ActividadController@delete')->name('actividad.delete')->middleware('hasModRol:51,4');
+    Route::delete('actividad/delete/{actividad}', 'ActividadController@destroy')->name('actividad.delete')->middleware('hasModRol:51,4');
+
+    // Plantillas
+    Route::get('plantillas', 'PlantillaController@index')->name('plantilla')->middleware('hasModRol:51,1');
+    Route::get('plantilla/create', 'PlantillaController@create')->name('plantilla.create')->middleware('hasModRol:51,2');
+    Route::post('plantilla/store', 'PlantillaController@store')->name('plantilla.store')->middleware('hasModRol:51,2');
+    Route::get('plantilla/edit/{plantilla}', 'PlantillaController@edit')->name('plantilla.edit')->middleware('hasModRol:51,3');
+    Route::put('plantilla/update/{plantilla}', 'PlantillaController@update')->name('plantilla.update')->middleware('hasModRol:51,3');
+    Route::delete('plantilla/delete/{plantilla}', 'PlantillaController@destroy')->name('plantilla.delete')->middleware('hasModRol:51,4');
 
     // CRM
     Route::get('/crm', 'CRMController@index')->name('crm')->middleware('hasModRol:50,1');

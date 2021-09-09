@@ -39,3 +39,9 @@ $('.confirmModal').on('click', function(){
   let button = $(this);
   $('#confirmForm').attr('action', button.data('route'));
 });
+
+$('.deleteModal').on('click', function(){
+  let button = $(this);
+  $('#deleteText').html(button.data('text'));
+  $('#deleteForm').attr('action', button.data('route'));
+});

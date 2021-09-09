@@ -9,4 +9,7 @@ class Plantilla extends Model
 {
   use HasFactory;
   protected $table = 'plantillas';
+  protected $fillable = [
+    'empresa_id', 'creador_id', 'modificador_id', 'nombre', 'contenido', 'logo'
+  ];
 }

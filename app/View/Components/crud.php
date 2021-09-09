@@ -11,18 +11,20 @@ class Crud extends Component
   public $routeEdit;
   public $modalEdit;
   public $routeDelete;
+  public $textDelete;
   /**
    * Create a new component instance.
    *
    * @return void
    */
-  public function __construct($routeSee = '#', $modalSee = null, $routeEdit = '#', $modalEdit = null, $routeDelete = '#')
+  public function __construct($routeSee = '#', $modalSee = null, $routeEdit = '#', $modalEdit = null, $routeDelete = '#', $textDelete = '')
   {
     $this->routeSee = $routeSee;
     $this->modalSee = $modalSee;
     $this->routeEdit = $routeEdit;
     $this->modalEdit = $modalEdit;
     $this->routeDelete = $routeDelete;
+    $this->textDelete = $textDelete;
   }
 
   /**

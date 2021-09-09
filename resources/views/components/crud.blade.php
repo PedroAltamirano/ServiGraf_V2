@@ -6,6 +6,6 @@
 <a class='fa fa-edit' href='{{ $routeEdit }}' @if($modalEdit) data-toggle="modal" data-modaldata="{{ $modalEdit }}" @endif></a>
 @endif
 @if ($routeDelete != '#')
-<a class='fa fa-trash confirmModal' data-route="{{ $routeDelete }}" href="#"></a>
+<a class='fa fa-trash deleteModal' href="#deleteModal" data-toggle="modal" data-route="{{ $routeDelete }}" data-text="{{ $textDelete }}"></a>
 @endif
 {{ $slot }}

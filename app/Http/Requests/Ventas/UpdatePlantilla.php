@@ -13,7 +13,7 @@ class UpdatePlantilla extends FormRequest
    */
   public function authorize()
   {
-    return false;
+    return true;
   }
 
   /**
@@ -24,7 +24,9 @@ class UpdatePlantilla extends FormRequest
   public function rules()
   {
     return [
-      //
+      'nombre' => ['required', 'string', 'max:255'],
+      'contenido' => ['required', 'string'],
+      'logo' => ['nullable'],
     ];
   }
 }

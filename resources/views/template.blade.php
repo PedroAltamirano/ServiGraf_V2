@@ -25,10 +25,10 @@
 <x-blue-board
   title='Áreas'
   :foot="[
-    ['text'=>'Modal', 'href'=>'#modalName', 'id'=>'newModal', 'tipo'=> 'modal', 'condition' => ''],
-    ['text'=>'Nuevo', 'href'=>route(''), 'id'=>'nuevo', 'tipo'=> 'link'],
-    ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=> 'link'],
-    ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'mes', 'tipo'=> 'button', 'print-target' => 'table'],
+    ['text' => 'Modal', 'href' => '#modalName', 'id' => 'newModal', 'tipo' => 'modal', 'condition' => ''],
+    ['text' => 'Nuevo', 'href' => route(''), 'id' => 'nuevo', 'tipo' => 'link'],
+    ['text' => $action, 'href' => '#', 'id' => 'formSubmit', 'tipo' => 'link'],
+    ['text' => 'fas fa-print', 'href' => '#', 'id' => 'mes', 'tipo' => 'button', 'print-target' => 'table'],
   ]"
   class="d-print-none"
 >
@@ -50,7 +50,7 @@
       <tr>
         <td>{{ $item-> }}</td>
         <td>
-          <x-crud :routeSee="route('.show', $item->id)" :modalSee="$model" :routeEdit="route('.edit', $item->id)" :modalEdit="$model" :routeDelete="route('.delete', $item->id)" />
+          <x-crud :routeSee="route('.show', $item->id)" :modalSee="$model" :routeEdit="route('.edit', $item->id)" :modalEdit="$model" :routeDelete="route('.delete', $item->id)" :textDelete="$item->nombre" />
         </td>
       </tr>
       @endforeach

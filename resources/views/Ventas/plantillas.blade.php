@@ -4,7 +4,7 @@
 <x-path
   :items="[
     [
-      'text' => 'Actividades',
+      'text' => 'Plantillas',
       'current' => true,
       'href' => '#',
     ]
@@ -12,28 +12,25 @@
 />
 
 <x-blue-board
-  title='Actividades'
+  title='Plantillas'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>route('actividad.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
+    ['text' => 'Nueva', 'href' => route('plantilla.create'), 'id' => 'nueva', 'tipo' => 'link'],
   ]"
 >
   <table id="table" class="table table-striped table-sm">
     <thead>
       <tr>
         <th scope="col">Nombre</th>
-        <th scope="col" class="w-10">Meta</th>
-        <th scope="col">Plantilla</th>
         <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
     <tbody>
-      @foreach ($actividades as $item)
+      @foreach ($plantillas as $item)
       <tr>
         <td>{{ $item->nombre }}</td>
-        <td>{{ $item->meta }}</td>
-        <td>{{ $item->plantilla->nombre ?? '' }}</td>
         <td>
-          <x-crud :routeEdit="route('actividad.edit', [$item->id])" :routeDelete="route('actividad.delete', [$item->id])" :textDelete="$item->nombre" />
+          <x-crud :routeEdit="route('plantilla.edit', $item->id)" :routeDelete="route('plantilla.delete', $item->id)" :textDelete="$item->nombre" />
+          {{-- <x-crud :routeSee="route('.show', $item->id)" :modalSee="$model" :routeEdit="route('plantilla.edit', $item->id)" :routeDelete="route('plantilla.delete', $item->id)" :textDelete="$item->nombre" /> --}}
         </td>
       </tr>
       @endforeach
