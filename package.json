@@ -40,6 +40,7 @@
         "pdfmake": "^0.1.65",
         "select2": "^4.0.13",
         "select2-theme-bootstrap4": "^1.0.0",
-        "sweetalert2": "^11.1.4"
+        "sweetalert2": "^11.1.4",
+        "trumbowyg": "^2.25.1"
     }
 }

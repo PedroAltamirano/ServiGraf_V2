@@ -27,5 +27,7 @@ mix.webpackConfig(webpackConfig);
 mix
   .js('resources/js/app.js', 'public/js')
   .js('resources/js/helpers.js', 'public/js')
+  .js('resources/js/trumbowyg.js', 'public/js')
   .sass('resources/sass/app.scss', 'public/css')
-  .sass('resources/sass/styles.scss', 'public/css');
+  .sass('resources/sass/styles.scss', 'public/css')
+  .sass('resources/sass/trumbowyg.scss', 'public/css');

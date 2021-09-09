@@ -94,7 +94,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../css-loader??ref--7-1!../postcss-loader/src??ref--7-2!./animate.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/animate.css/animate.css");
+var content = __webpack_require__(/*! !../css-loader??ref--8-1!../postcss-loader/src??ref--8-2!./animate.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/animate.css/animate.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -22543,7 +22543,7 @@ return src;
 
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/animate.css/animate.css":
 /*!******************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/animate.css/animate.css ***!
+  !*** ./node_modules/css-loader??ref--8-1!./node_modules/postcss-loader/src??ref--8-2!./node_modules/animate.css/animate.css ***!
   \******************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -99368,7 +99368,7 @@ __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
 
 
-__webpack_require__(/*! owl.carousel/dist/owl.carousel */ "./node_modules/owl.carousel/dist/owl.carousel.js");
+__webpack_require__(/*! owl.carousel */ "./node_modules/owl.carousel/dist/owl.carousel.js");
 
 window.Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 
@@ -99387,7 +99387,7 @@ $.fn.select2.defaults.set("theme", "bootstrap");
 
 __webpack_require__(/*! dropify/dist/js/dropify.min.js */ "./node_modules/dropify/dist/js/dropify.min.js");
 
-__webpack_require__(/*! chart.js/dist/Chart.js */ "./node_modules/chart.js/dist/Chart.js"); // import "jszip";
+__webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js"); // import "jszip";
 // import "pdfmake";
 
 
@@ -99537,16 +99537,28 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/sass/trumbowyg.scss":
+/*!***************************************!*\
+  !*** ./resources/sass/trumbowyg.scss ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!******************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/styles.scss ***!
-  \******************************************************************************************/
+/*!**************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/styles.scss ./resources/sass/trumbowyg.scss ***!
+  \**************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /Volumes/Pedro/WORK/ServiGraf_V2/resources/js/app.js */"./resources/js/app.js");
 __webpack_require__(/*! /Volumes/Pedro/WORK/ServiGraf_V2/resources/sass/app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! /Volumes/Pedro/WORK/ServiGraf_V2/resources/sass/styles.scss */"./resources/sass/styles.scss");
+__webpack_require__(/*! /Volumes/Pedro/WORK/ServiGraf_V2/resources/sass/styles.scss */"./resources/sass/styles.scss");
+module.exports = __webpack_require__(/*! /Volumes/Pedro/WORK/ServiGraf_V2/resources/sass/trumbowyg.scss */"./resources/sass/trumbowyg.scss");
 
 
 /***/ })

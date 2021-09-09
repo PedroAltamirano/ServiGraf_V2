@@ -3,7 +3,7 @@ require("jquery");
 import "popper.js";
 import "animate.css";
 
-require('owl.carousel/dist/owl.carousel');
+require('owl.carousel');
 
 window.Swal = require('sweetalert2');
 window.swal = function(title, mssg, icon){
@@ -20,7 +20,7 @@ $.fn.select2.defaults.set("theme", "bootstrap");
 
 require("dropify/dist/js/dropify.min.js");
 
-require("chart.js/dist/Chart.js");
+require("chart.js");
 
 // import "jszip";
 // import "pdfmake";
