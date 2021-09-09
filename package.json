@@ -35,6 +35,8 @@
         "dropify": "^0.2.2",
         "jquery.easing": "^1.4.1",
         "jszip": "^3.4.0",
+        "moment": "^2.29.1",
+        "moment-locales-webpack-plugin": "^1.2.0",
         "npm": "^6.14.6",
         "owl.carousel": "^2.3.4",
         "pdfmake": "^0.1.65",

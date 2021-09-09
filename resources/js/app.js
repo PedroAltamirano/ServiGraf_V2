@@ -1,11 +1,12 @@
 require("./bootstrap");
 require("jquery");
-import "popper.js";
-import "animate.css";
+require("popper.js");
 
-require('owl.carousel');
+window.moment = require("moment");
 
-window.Swal = require('sweetalert2');
+require("owl.carousel");
+
+window.Swal = require("sweetalert2");
 window.swal = function(title, mssg, icon){
   Swal.fire({
     title: title,
@@ -15,19 +16,19 @@ window.swal = function(title, mssg, icon){
   })
 }
 
-require("select2/dist/js/select2.min.js");
+require("select2")
 $.fn.select2.defaults.set("theme", "bootstrap");
 
-require("dropify/dist/js/dropify.min.js");
+require("dropify");
 
 require("chart.js");
 
 // import "jszip";
 // import "pdfmake";
-import "datatables.net-bs4";
+require("datatables.net-bs4");
 // import "datatables.net-keytable-bs4";
 // import "datatables.net-rowgroup-bs4";
-import "datatables.net-responsive-bs4";
+require("datatables.net-responsive-bs4");
 // import "datatables.net-fixedheader-bs4";
 // import "datatables.net-buttons-bs4";
 // import "datatables.net-buttons/js/buttons.html5.js";

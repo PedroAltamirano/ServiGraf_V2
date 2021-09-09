@@ -29,4 +29,11 @@ Route::namespace('Ventas')
     Route::get('tarea/edit/{tarea}', 'CRMController@edit')->name('crm.edit')->middleware('hasModRol:50,3');
     Route::put('tarea/update/{tarea}', 'CRMController@update')->name('crm.update')->middleware('hasModRol:50,3');
     Route::delete('tarea/delete/{tarea}', 'CRMController@delete')->name('crm.delete')->middleware('hasModRol:50,4');
+
+    // Contactos
+    Route::get('contactos', 'ContactoController@index')->name('contacto')->middleware('hasModRol:50,1');
+    Route::post('contacto/store', 'ContactoController@store')->name('contacto.store')->middleware('hasModRol:50,2');
+    Route::get('contacto/show/{contacto}', 'ContactoController@edit')->name('contacto.show')->middleware('hasModRol:50,3');
+    Route::put('contacto/update/{contacto}', 'ContactoController@update')->name('contacto.update')->middleware('hasModRol:50,3');
+    Route::delete('contacto/delete/{contacto}', 'ContactoController@delete')->name('contacto.delete')->middleware('hasModRol:50,4');
   });

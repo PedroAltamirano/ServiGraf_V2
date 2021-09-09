@@ -1,14 +1,18 @@
 const mix = require('laravel-mix');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 var webpackConfig = {
-   // plugins: [
-   //    new CaseSensitivePathsPlugin()
-   // ]
+  plugins: [
+    // new CaseSensitivePathsPlugin(),
+    new MomentLocalesPlugin({
+      localesToKeep: ['es'],
+    }),
+  ]
 
-   // resolve: {
-   //    alias: {
-   //    }
-   // }
+  // resolve: {
+  //    alias: {
+  //    }
+  // }
 }
 
 mix.webpackConfig(webpackConfig);

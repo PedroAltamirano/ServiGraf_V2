@@ -22,6 +22,24 @@ class ContactoController extends Controller
 {
   use SoftDeletes;
 
+  public function index()
+  {
+    $contactos = Contacto::where('empresa_id', Auth::user()->empresa_id)->with(['empresa', 'cliente'])->orderBy('cliente_empresa_id')->orderBy('nombre')->get();
+    return view('Ventas.contactos', compact('contactos'));
+  }
+
+  public function create()
+  {
+    // $contacto = new Contacto();
+    // $data = [
+    //   'text' => 'Nuevo Contacto',
+    //   'path' => route('contacto.store'),
+    //   'method' => 'POST',
+    //   'action' => 'Crear',
+    // ];
+    // return view('Ventas.contacto', compact('contacto'))->with($data);
+  }
+
   public function store(StoreContacto $request)
   {
     $validator = $request->validated();
@@ -46,6 +64,22 @@ class ContactoController extends Controller
 
     Alert::success('Acción completada', $mssg);
     return redirect()->back();
+  }
+
+  public function show(Contacto $contacto)
+  {
+    return view('Ventas.contacto', compact('contacto'));
+  }
+
+  public function edit(Contacto $contacto)
+  {
+    // $data = [
+    //   'text' => 'Modificar Contacto',
+    //   'path' => route('contacto.update', $contacto),
+    //   'method' => 'PUT',
+    //   'action' => 'Modificar',
+    // ];
+    // return view('Ventas.contacto', compact('contacto'))->with($data);
   }
 
   public function info(Request $request)

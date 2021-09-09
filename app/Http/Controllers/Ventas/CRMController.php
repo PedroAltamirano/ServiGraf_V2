@@ -80,7 +80,7 @@ class CRMController extends Controller
       if ($tarea = CRM::create($validated)) {
         DB::commit();
         Alert::success('Acción completada', 'Tarea creada con éxito');
-        return redirect()->route('crm.edit', $tarea);
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
@@ -129,7 +129,7 @@ class CRMController extends Controller
       if ($tarea->update($validated)) {
         DB::commit();
         Alert::success('Acción completada', 'Tarea modificada con éxito');
-        return redirect()->route('crm.edit', $tarea);
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();

@@ -99,7 +99,7 @@
       <a class="dropdown-item" href="{{ route('actividad') }}">Actividades</a>
       @endif
       @if(Security::hasModule('52'))
-      <a class="dropdown-item" href="#">Contactos</a>
+      <a class="dropdown-item" href="{{ route('contacto') }}">Contactos</a>
       @endif
       @if(Security::hasModule('53'))
       <a class="dropdown-item" href="{{ route('plantilla') }}">Plantillas</a>

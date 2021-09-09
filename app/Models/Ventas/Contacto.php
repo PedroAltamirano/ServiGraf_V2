@@ -26,6 +26,16 @@ class Contacto extends Model
     return $this->belongsTo(Cliente_empresa::class, 'cliente_empresa_id');
   }
 
+  /**
+   * Get the cliente associated with the Contacto
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasOne
+   */
+  public function cliente()
+  {
+    return $this->hasOne(Cliente::class);
+  }
+
   public function getMovilAttribute()
   {
     $res = $this->telefono;
