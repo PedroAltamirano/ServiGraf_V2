@@ -1,7 +1,7 @@
 <div class="col-12 col-md-3">
   <h5 class="text-center">{{ $title }}</h5>
   <h5 class="text-center font-weight-bold">$ {{ number_format($items->sum('totalData'), 2) }}</h5>
-  <table class="table table-striped table-sm" style="font-size: 12px;">
+  <table class="table table-responsive table-striped table-sm" style="font-size: 12px;">
     <tbody class="tableitems">
       @foreach ($items as $item)
       <tr class="tableitems">

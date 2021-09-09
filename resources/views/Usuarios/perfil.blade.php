@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <table id="table" class="table table-striped">
+    <table id="table" class="table table-responsive table-striped table-sm">
       <thead>
         <tr>
           <th scope="col" style="width:33.33%">Modulos del perfil</th>

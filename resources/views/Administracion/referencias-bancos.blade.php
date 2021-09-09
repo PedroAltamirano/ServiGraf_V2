@@ -22,7 +22,7 @@
     ['text'=>'Nueva', 'href'=>'#modalReferencia', 'id'=>'newReferencia', 'tipo'=>'modal']
   ]"
 >
-  <table id="tableReferencias" class="table table-striped table-sm">
+  <table id="tableReferencias" class="table table-responsive table-striped table-sm">
     <thead>
       <tr>
         <th scope="col">Nombre</th>
@@ -48,7 +48,7 @@
     ['text'=>'Nuevo', 'href'=>'#modalBanco', 'id'=>'newBanco', 'tipo'=> 'modal']
   ]"
 >
-  <table id="tableBancos" class="table table-striped table-sm">
+  <table id="tableBancos" class="table table-responsive table-striped table-sm">
     <thead>
       <tr>
         <th scope="col">Nombre</th>

@@ -11,7 +11,8 @@
         <div class="container-fluid">
           <form method="POST" action="{{ route('contacto.store') }}" role="form" id="contactoForm">
             @csrf
-            @include('Ventas.contacto')
+            @method('POST')
+            @include('Ventas._contacto')
           </form>
         </div>
       </div>

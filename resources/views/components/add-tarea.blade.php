@@ -10,6 +10,7 @@
       <div class="modal-body">
         <form action="{{ route('crm.store') }}" id="tareaForm" method="post">
           @csrf
+          @method('POST')
           <section id="datos-contacto">
             <h6><i class="fas fa-plus" data-toggle="modal" data-target="#modalContacto"></i>&nbsp; Datos del contacto</h6>
             <hr>
@@ -94,7 +95,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary">Agendar</button>
+        {{-- <button type="button" class="btn btn-secondary">Agendar</button> --}}
         <button type="button" class="btn btn-primary submitbtn" data-form="#tareaForm">Crear</button>
       </div>
     </div>

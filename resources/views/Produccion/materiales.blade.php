@@ -36,7 +36,7 @@
     ['text'=>'Nuevo', 'href'=>route('material.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
   ]"
 >
-  <table id="tableMat" class="table table-striped table-sm">
+  <table id="tableMat" class="table table-responsive table-striped table-sm">
     <thead>
       <tr>
         <th scope="col">Categoria</th>

@@ -128,7 +128,7 @@
 <hr class="m-2 m-md-3"/>
 <h2 class="m-2 m-md-3">Utilidad por pedido</h2>
 <div class="m-2 m-md-3">
-  <table class="table table-striped table-sm">
+  <table class="table table-responsive table-striped table-sm">
     <thead>
       <tr>
         <th>Numero</th>
