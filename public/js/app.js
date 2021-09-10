@@ -89752,11 +89752,11 @@ __webpack_require__(/*! datatables.net-responsive-bs4 */ "./node_modules/datatab
 
 __webpack_require__(/*! ../../resources/js/sb-admin-2.min.js */ "./resources/js/sb-admin-2.min.js");
 
-$('.confirmModal').on('click', function () {
+$('.confirmModal').click(function () {
   var button = $(_this);
   $('#confirmForm').attr('action', button.data('route'));
 });
-$('.deleteModal').on('click', function () {
+$('.deleteModal').click(function () {
   var button = $(_this);
   $('#deleteText').html(button.data('text'));
   $('#deleteForm').attr('action', button.data('route'));

@@ -33,7 +33,7 @@
 <x-blue-board
   title='Procesos'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>route('proceso.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
+    ['text'=>'Nuevo', 'href'=>route('proceso.create'), 'id'=>'nuevo', 'tipo'=>'link'],
   ]"
 >
   <table id="tableProcesos" class="table table-striped table-sm">

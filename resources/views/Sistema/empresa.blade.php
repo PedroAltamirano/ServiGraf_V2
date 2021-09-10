@@ -18,7 +18,7 @@
 <x-blue-board
   title='Datos de la empresa'
   :foot="[
-    ['text'=>'Guardar', 'href'=>'#', 'id'=>'formSubmit', 'tipo'=> 'link'],
+    ['text'=>'Guardar', 'href'=>'#', 'id'=>'formSubmit', 'tipo'=>'link'],
   ]"
 >
   @if ($empresa->id)

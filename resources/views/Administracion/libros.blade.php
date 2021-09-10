@@ -10,6 +10,7 @@
     ]
   ]"
 />
+
 <x-filters :clientes="[]" cli=0 cob=0>
   <div class="col-12 col-md form-group">
     <label for="cliente">Usuarios</label>
@@ -31,9 +32,9 @@
 <x-blue-board
   title='Flujo de activos'
   :foot="[
-    ['text'=>'Nueva Entrada', 'href'=>route('entrada.create'), 'id'=>'newEntrada', 'tipo'=> 'link'],
+    ['text'=>'Nueva Entrada', 'href'=>route('entrada.create'), 'id'=>'newEntrada', 'tipo'=>'link'],
     ['text'=>'Nuevo Libro', 'href'=>'#modalLibro', 'id'=>'modal-libro', 'tipo'=> 'modal'],
-    ['text'=>'Referencias y Bancos', 'href'=>route('referencias-bancos'), 'id'=>'referencias_bancos', 'tipo'=> 'link']
+    ['text'=>'Referencias y Bancos', 'href'=>route('referencias-bancos'), 'id'=>'referencias_bancos', 'tipo'=>'link']
   ]"
 >
   <table id="table" class="table table-striped table-sm">
@@ -63,9 +64,10 @@
     </tfoot>
   </table>
 </x-blue-board>
+@endsection
 
+@section('modals')
 @include('Administracion.modal-recibo')
-
 @endsection
 
 @section('scripts')
@@ -97,6 +99,7 @@
   var dato_fecha = '';
   var dato_color = '';
   var cambio_color = false;
+  const routeAjax = `{{route('libro.api.info')}}`;
   const routeEdit = `{{ route('entrada.edit', 0) }}`;
   var table = $('#table').DataTable({
     "paging":   true,
@@ -109,7 +112,7 @@
       autoPrint: false
     }],
     "ajax": {
-      "url": `{{route('libro.api.info')}}`,
+      "url": routeAjax,
       "method": 'post',
       "dataSrc": '',
       "data": {
@@ -137,9 +140,9 @@
       {"name":"crud", "data":null, "sortable": "false",
         "render": (data, type, full, meta) => {
           let dataJson = JSON.stringify(data);
-          let router = routeEdit.replace("/0", "/"+data.id);
-          let crud = "<a class='fa fa-edit' href='"+router+"' ></a> ";
-          crud += "<a class='fa fa-print' href='#modalRecibo' data-toggle='modal' data-entrada='"+dataJson+"'></a>";
+          let router = routeEdit.replace("/0", `/${data.id}`);
+          let crud = `<a class='fa fa-edit' href='${router}'></a>`;
+          crud += `<a class='fa fa-print' href='#modalRecibo' data-toggle='modal' data-entrada='${dataJson}'></a>`;
           return crud;
         }
       }
@@ -157,7 +160,7 @@
         cambio_color = !cambio_color;
       }
       dato_color = (cambio_color) ? '#6E85B1' : '#69A9C3';
-      $(row).css({'color':''+dato_color +''});
+      $(row).css({'color': `${dato_color}`});
 
       // sumas de saldo
       let debe = parseFloat(data.ingreso);
@@ -180,20 +183,14 @@
       };
 
       // Total over this page
-      let ingTotal = api.column('ingreso:name', {search: 'applied'}).data().reduce(function (a, b){
-        return intVal(a) + intVal(b);
-      }, 0);
-      let egrTotal = api.column('egreso:name', {search: 'applied'}).data().reduce(function (a, b){
-        return intVal(a) + intVal(b);
-      }, 0);
+      let ingTotal = api.column('ingreso:name', {search: 'applied'}).data().reduce((a, b) => intVal(a) + intVal(b), 0);
+      let egrTotal = api.column('egreso:name', {search: 'applied'}).data().reduce((a, b) => intVal(a) + intVal(b), 0);
       let saldo = Math.abs(ingTotal) - Math.abs(egrTotal);
 
       // Update footer
       $("#total-ingreso").html(ingTotal.toFixed(2));
       $("#total-egreso").html(egrTotal.toFixed(2));
-      if(ingTotal < egrTotal){
-        $("#total-saldo").css({'color': "red"});
-      }
+      if(ingTotal < egrTotal) $("#total-saldo").css({'color': "red"});
       $("#total-saldo").html(Math.abs(saldo).toFixed(2));
     },
     "drawCallback": function(settings){

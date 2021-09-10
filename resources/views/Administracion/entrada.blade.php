@@ -15,10 +15,11 @@
     ]
   ]"
 />
+
 <x-blue-board
   :title=$text
   :foot="[
-    ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=> 'link']
+    ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=>'link']
   ]"
 >
   <form action="{{ $path }}" method="POST" id="form">
@@ -92,7 +93,6 @@
     </div>
   </form>
 </x-blue-board>
-
 @endsection
 
 @section('scripts')
@@ -105,21 +105,17 @@
       let data = res.data
       let content;
       $.each(data, (index, value) => {
-        content += '<option value="'+value.id+'">'+value.libro+'</option>';
+        content += `<option value='${value.id}'>${value.libro}</option>`;
       });
       $('#libro_id').empty().append(content);
-    }).catch(err => {
-      swal('Oops!', err, 'error');
-      console.log(err);
+    }).catch(error => {
+      swal('Oops!', 'No hemos podido cargar los libros', 'error');
+      console.log(error);
     });
   }
 
-  $(()=>{
-    getLibros();
-  });
+  $(() => getLibros());
 
-  $('#usuario').change(()=>{
-    getLibros();
-  });
+  $('#usuario').change(() => getLibros());
 </script>
 @endsection

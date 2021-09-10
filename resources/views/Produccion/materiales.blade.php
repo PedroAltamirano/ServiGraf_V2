@@ -33,7 +33,7 @@
 <x-blue-board
   title='Papeleria'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>route('material.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
+    ['text'=>'Nuevo', 'href'=>route('material.create'), 'id'=>'nuevo', 'tipo'=>'link'],
   ]"
 >
   <table id="tableMat" class="table table-striped table-sm">

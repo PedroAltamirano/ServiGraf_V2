@@ -25,10 +25,10 @@
 <x-blue-board
   title='Asistencia'
   :foot="[
-    ['text'=>'Hoy', 'href'=>'#', 'id'=>'hoy', 'tipo'=> 'link'],
-    ['text'=>'Semana', 'href'=>'#', 'id'=>'semana', 'tipo'=> 'link'],
-    ['text'=>'Mes', 'href'=>'#', 'id'=>'mes', 'tipo'=> 'link'],
-    ['text'=>'Horarios', 'href'=>route('horarios'), 'id'=>'horarios', 'tipo'=> 'link'],
+    ['text'=>'Hoy', 'href'=>'#', 'id'=>'hoy', 'tipo'=>'link'],
+    ['text'=>'Semana', 'href'=>'#', 'id'=>'semana', 'tipo'=>'link'],
+    ['text'=>'Mes', 'href'=>'#', 'id'=>'mes', 'tipo'=>'link'],
+    ['text'=>'Horarios', 'href'=>route('horarios'), 'id'=>'horarios', 'tipo'=>'link'],
     ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'mes', 'tipo'=> 'button', 'print-target'=>'table']
   ]"
 >
@@ -55,7 +55,9 @@
     </tfoot>
   </table>
 </x-blue-board>
+@endsection
 
+@section('modals')
 <!-- Modal Asistencia -->
 <div class="modal fade" id="modalAsistencia" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -122,7 +124,6 @@
     </div>
   </div>
 </div>
-
 @endsection
 
 @section('scripts')
@@ -171,8 +172,8 @@
       {"name":"crud", "data":null, "sortable": "false",
         "render": (data, type, full, meta) => {
           let dataJson = JSON.stringify(data);
-          let crud = "<a class='fa fa-edit' href='#modalAsistencia' data-toggle='modal' data-asistencia='"+dataJson+"'></a> ";
-          crud += "<a class='fa fa-trash' href='#deleteAlert' data-toggle='modal' data-asistencia='"+dataJson+"'></a>";
+          let crud = `<a class='fa fa-edit' href='#modalAsistencia' data-toggle='modal' data-asistencia='${dataJson}'></a>`;
+          crud += `<a class='fa fa-trash' href='#deleteAlert' data-toggle='modal' data-asistencia='${dataJson}'></a>`;
           return crud;
         }
       }

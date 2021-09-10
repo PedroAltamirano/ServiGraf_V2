@@ -17,7 +17,7 @@
 <x-blue-board
   title='Listado'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>route('usuario.nuevo'), 'id'=>'nuevo', 'tipo'=> 'link']
+    ['text'=>'Nuevo', 'href'=>route('usuario.nuevo'), 'id'=>'nuevo', 'tipo'=>'link']
   ]"
 >
 

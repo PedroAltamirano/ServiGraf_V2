@@ -144,30 +144,26 @@
 
   $("#modalReferencia").on('show.bs.modal', event => {
     let data = $(event.relatedTarget).data('referencia');
-    let action = data ? referenciaUpdate.replace("/0", "/"+data.id) : referenciaStore;
-    let referencia = data ? data.referencia : '';
-    let detalle = data ? data.descripcion : '';
-    let send = data ? 'Modificar' : 'Crear';
-    let method = data ? 'PUT' : 'POST';
-    $('#referencia-action').attr('action', action);
-    $('.referencia-referencia').val(referencia);
-    $('.referencia-descripcion').val(detalle);
-    $('.referencia-send').html(send);
-    $(this).find("input[name='_method']").val(method);
+    let modal = $(event.target);
+
+    let action = data ? referenciaUpdate.replace('/0', `/${data.id}`) : referenciaStore;
+    modal.find('#referencia-action').attr('action', action);
+    modal.find('.referencia-referencia').val(data ? data.referencia : '');
+    modal.find('.referencia-descripcion').val(data ? data.descripcion : '');
+    modal.find('.referencia-send').html(data ? 'Modificar' : 'Crear');
+    modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
   });
 
   $("#modalBanco").on('show.bs.modal', event => {
     let data = $(event.relatedTarget).data('banco');
+    let modal = $(event.target);
+
     let action = data ? bancoUpdate.replace("/0", "/"+data.id) : bancoStore;
-    let banco = data ? data.banco : '';
-    let cuenta = data ? data.cuenta : '';
-    let send = data ? 'Modificar' : 'Crear';
-    let method = data ? 'PUT' : 'POST';
-    $('#banco-action').attr('action', action);
-    $('.banco-banco').val(banco);
-    $('.banco-cuenta').val(cuenta);
-    $('.banco-send').html(send);
-    $(this).find("input[name='_method']").val(method);
+    modal.find('#banco-action').attr('action', action);
+    modal.find('.banco-banco').val(data ? data.banco : '');
+    modal.find('.banco-cuenta').val(data ? data.cuenta : '');
+    modal.find('.banco-send').html(data ? 'Modificar' : 'Crear');
+    modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
   });
 </script>
 @endsection

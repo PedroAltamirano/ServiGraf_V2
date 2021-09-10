@@ -15,13 +15,15 @@
     ]
   ]"
 >
-<li class="breadcrumb-item" id="fact_num_path"><input type="number" name="number_vis" id="fact_num_vis" class="form-control form-control-sm" value="{{ $fact_num }}" readonly></li>
+  <li class="breadcrumb-item" id="fact_num_path">
+    <input type="number" name="number_vis" id="fact_num_vis" class="form-control form-control-sm" value="{{ $fact_num }}" readonly>
+  </li>
 </x-path>
 
 <x-blue-board
   :title=$text
   :foot="[
-    ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=> 'link']
+    ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=>'link']
   ]"
 >
   <form action="{{ $path }}" method="POST" id="form">
@@ -108,16 +110,11 @@
 
     <hr style="border-width: 3px;">
 
-    @php
-      // $oldArticulos = $factura->articulos ?? json_encode(new stdClass);
-      $artCount = count(old("articulo.cantidad", $factura->productos) ?? []);
-      // dd(old('articulo', $factura->productos[0]->factura_id));
-    @endphp
     <section id="articulos">
       <table id="table-articulos" class="table table-sm">
         <thead>
           <tr>
-            <th scope="col" class="w-5"><i id="addArticulo" class="fas fa-plus"></i></th>
+            <th scope="col" class="w-5"><i id="addProducto" class="fas fa-plus"></i></th>
             <th scope="col">Cantidad</th>
             <th scope="col" width="50%">Detalle</th>
             <th scope="col">% IVA</th>
@@ -126,32 +123,6 @@
           </tr>
         </thead>
         <tbody>
-          @for ($i = 0; $i < $artCount; $i++)
-          <tr id="{{'row-articulo-'.$i}}">
-            <td>
-              <i type="button" name="remove" id="{{ 'articulo-'.$i }}" class="fas fa-times removeRow"></i>
-            </td>
-            <td>
-              <input type="number" name="articulo[cantidad][]" class="form-control form-control-sm text-center" value="{{ old('articulo.cantidad.'.$i, $factura->productos[$i]->cantidad) ?? '0' }}" min="0" id="{{ 'articulo_cantidad_'.$i }}" onchange="sumar({{$i}})" />
-            </td>
-            <td>
-              <input type="text" name="articulo[detalle][]" class="form-control form-control-sm" value="{{ old('articulo.detalle.'.$i, $factura->productos[$i]->detalle) }}" id="{{ 'articulo_detalle_'.$i }}"/>
-            </td>
-            <td>
-              <select class="form-control form-control-sm selectProveedor" name="articulo[iva_id][]" id="{{ 'articulo_iva_'.$i }}" onchange="sumar({{$i}})">
-                @foreach($ivas as $iva)
-                <option value="{{ $iva->id }}" {{ old('articulo.iva_id.'.$i, $factura->productos[$i]->iva_id) == $iva->id ? 'selected' : '' }}>{{ $iva->porcentaje }}</option>
-                @endforeach
-              </select>
-            </td>
-            <td>
-              <input type="number" name="articulo[valor_unitario][]" class="form-control form-control-sm text-right fixFloat" min="0" value="{{ old('articulo.valor_unitario.'.$i, $factura->productos[$i]->valor_unitario) ?? '0.00' }}" id="{{ 'articulo_valor_unitario_'.$i }}" onchange="sumar({{$i}})" />
-            </td>
-            <td>
-              <input type="number" name="articulo[subtotal][]" class="form-control form-control-sm fixFloat text-right" value="{{ old('articulo.subtotal.'.$i, $factura->productos[$i]->subtotal) ?? '0.00' }}" step="0.01" min="0" id="{{ 'articulo_subtotal_'.$i }}" readonly />
-            </td>
-          </tr>
-          @endfor
         </tbody>
         <tfoot>
           <tr class="font-weight-bold">
@@ -223,14 +194,14 @@
 
     <hr style="border-width: 3px;">
     @php
-        $pedidos_old = old('pedidos') ?? [];
+      $pedidos_old = old('pedidos', $old_pedidos) ?? [];
     @endphp
     <section id="ots">
       <div class="form-group">
         <label for="pedidos">Pedidos</label>
         <select multiple class="form-control select2Class" name="pedidos[]" id="pedidos">
           @foreach ($pedidos as $pedido)
-          <option value="{{ $pedido->id }}" {{ (in_array($pedido->id, $old_pedidos) or in_array($pedido->id, $pedidos_old)) ? 'selected' : '' }}>{{ $pedido->numero }}</option>
+          <option value="{{ $pedido->id }}" {{ in_array($pedido->id, $pedidos_old) ? 'selected' : '' }}>{{ $pedido->numero }}</option>
           @endforeach
         </select>
       </div>
@@ -244,12 +215,33 @@
         <textarea class="form-control form-control-sm" name="notas" id="notas" rows="2"> {{ old('notas', $factura->notas) }} </textarea>
       </div>
     </section>
-
-    @section('modals1')
-    <x-add-contacto />
-    @endsection
   </form>
 </x-blue-board>
+
+@php
+  $opts_ivas = '<option disabled selected>Selecciona uno...</option>';
+  foreach($ivas as $item){
+    $opts_ivas .= "<option value='$item->id'>$item->porcentaje</option>";
+  }
+
+  $old_productos = $factura->productos;
+  if($cnt = count(old('articulo_cantidad') ?? [])) {
+    $old_productos = [];
+    for($i = 0; $i < $cnt; $i++){
+      $model = new \stdClass;
+      $model->cantidad = old('articulo_cantidad')[$i];
+      $model->detalle = old('articulo_detalle')[$i];
+      $model->iva_id = old('articulo_iva_id')[$i];
+      $model->valor_unitario = old('articulo_valor_unitario')[$i];
+      $model->subtotal = old('articulo_subtotal')[$i];
+      $old_productos[] = $model;
+    }
+  }
+@endphp
+@endsection
+
+@section('modals')
+<x-add-contacto />
 @endsection
 
 @section('scripts')
@@ -291,30 +283,37 @@
   $('#fact_num_vis').change(() => $('#fact_num').val(parseInt($('#fact_num_vis').val())));
 
   //ARTICULO
-  var i = {{ $artCount }};
-  var ivas_opts = '';
-  $.each(@json($ivas), function(){ ivas_opts += '<option value=' + this.id + '>' + this.porcentaje + '</option>' });
+  var i = 0;
+  const opts_ivas = `@json($opts_ivas)`;
+  const old_productos = JSON.parse(`@json($old_productos)`);
 
-  $('#addArticulo').click(() => {
+  const add_producto = (cantidad_val=0, detalle_val=null, iva_id_val=null, valor_unitario_val='0.00', subtotal_val='0.00') => {
     let table = $('#table-articulos > tbody');
 
-    let button = $('<i />', {'type': 'button', 'class':'fas fa-times removeRow', 'name': 'remove', 'id':'articulo-'+i});
+    let button = $('<i />', {'type': 'button', 'class':'fas fa-times removeRow', 'name': 'remove', 'id': `articulo-${i}`});
 
-    let cantidad = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': '0', 'name': 'articulo[cantidad][]', 'id': 'articulo_cantidad_'+i, 'data-index':i, 'min': '0', 'onchange':'sumar('+i+');'});
+    let cantidad = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': cantidad_val, 'name': 'articulo_cantidad[]', 'id': `articulo_cantidad_${i}`, 'data-index': i, 'min': '0', 'onchange': `sumar(${i});`});
 
-    let detalle = $('<input />', {'type': 'text', 'class': 'form-control form-control-sm', 'name':'articulo[detalle][]'});
+    let detalle = $('<input />', {'type': 'text', 'class': 'form-control form-control-sm', 'name':'articulo_detalle[]', 'id': `articulo_detalle_${i}`, 'value': detalle_val});
 
-    let iva = $('<select />', {'name' : 'articulo[iva_id][]', 'id': 'articulo_iva_'+i, 'class': 'form-control form-control-sm text-center', 'onchange':'sumar('+i+');'}).append(ivas_opts);
+    let iva = $('<select />', {'name' : 'articulo_iva_id[]', 'id': `articulo_iva_${i}`, 'class': 'form-control form-control-sm text-center', 'onchange': `sumar(${i});`}).append(opts_ivas);
+    if(iva_id_val) iva.val(iva_id_val);
 
-    let unitario = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': '0.00', 'name':'articulo[valor_unitario][]', 'id': 'articulo_valor_unitario_'+i, 'min': '0', 'onchange':'sumar('+i+');'});
+    let unitario = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': valor_unitario_val, 'name':'articulo_valor_unitario[]', 'id': `articulo_valor_unitario_${i}`, 'min': '0', 'onchange': `sumar(${i});`});
 
-    let subtotal = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': '0.00', 'name':'articulo[subtotal][]', 'id': 'articulo_subtotal_'+i, 'readonly':'readonly', 'min': '0'});
+    let subtotal = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': subtotal_val, 'name':'articulo_subtotal[]', 'id': `articulo_subtotal_${i}`, 'readonly':'readonly', 'min': '0'});
 
-    newRow(table, [button, cantidad, detalle, iva, unitario, subtotal], 'row-articulo-'+i);
+    newRow(table, [button, cantidad, detalle, iva, unitario, subtotal], `row-articulo-${i}`);
     i++;
-  });
+  }
+  $('#addProducto').click(() => add_producto());
+  if(old_productos != []){
+    old_productos.map(item => {
+      add_producto(item.cantidad, item.detalle, item.iva_id, item.valor_unitario, item.subtotal);
+    });
+  }
 
-  function getDesc(){
+  const getDesc = () => {
     let descp = parseFloat($('#descuento_p').val())/100;
     let desc = (parseFloat($('#subtotal').val()) * descp).toFixed(2);
     $('#descuento').val(desc);
@@ -322,7 +321,7 @@
   }
 
   //funcion para obtener las retenciones
-  function getRet(){
+  const getRet = () => {
     let iva_p = fnt_p = 0;
     let iva = parseFloat($("#iva").val());
     let subtot = parseFloat($("#subtotal").val());
@@ -350,20 +349,17 @@
     $("#tot_cob").val(parseFloat(tot-ret_iva-ret_fnt).toFixed(2));
   }
 
-  $('.retencion').change(()=>{
-    getRet();
-  });
+  $('.retencion').change(() => getRet());
 
   // sumar total procesos
-  function sumartotal(){
-    // debugger
+  const sumartotal = () => {
     let indx, valor = 0, iva_tot = 0, iva_0 = 0;
 
     for(indx = 0; indx < i; indx++){
-      if ($('#row-articulo-'+String(indx)).length == 0) {continue}
+      if ($(`#row-articulo-${String(indx)}`).length == 0) continue;
 
-      let iva = parseFloat($('#articulo_iva_'+String(indx)+' option:selected').text());
-      let sub_prod = parseFloat($('#articulo_subtotal_'+String(indx)).val());
+      let iva = parseFloat($(`#articulo_iva_${String(indx)} option:selected`).text());
+      let sub_prod = parseFloat($(`#articulo_subtotal_${String(indx)}`).val());
       let descp = parseFloat($('#descuento_p').val())/100;
 
       if(iva != 0){
@@ -381,15 +377,14 @@
     $('#iva').val(iva_tot.toFixed(2));
     $('#iva_0').val(iva_0.toFixed(2));
     $('#total').val((valor + iva_tot - desc).toFixed(2));
-    // console.log(valor, desc, iva_tot, iva0);
     getRet();
   }
 
   // funcion para sumar el total
-  function sumar(num){
-    let cant = $('#articulo_cantidad_'+String(num)).val();
-    let valor = $('#articulo_valor_unitario_'+String(num)).val();
-    $('#articulo_subtotal_'+String(num)).val(parseFloat(parseFloat(cant) * parseFloat(valor)).toFixed(2));
+  const sumar = num => {
+    let cant = $(`#articulo_cantidad_${String(num)}`).val();
+    let valor = $(`#articulo_valor_unitario_${String(num)}`).val();
+    $(`#articulo_subtotal_${String(num)}`).val(parseFloat(parseFloat(cant) * parseFloat(valor)).toFixed(2));
     sumartotal();
   }
 

@@ -14,7 +14,7 @@
 <x-blue-board
   title='Actividades'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>route('actividad.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
+    ['text'=>'Nuevo', 'href'=>route('actividad.create'), 'id'=>'nuevo', 'tipo'=>'link'],
   ]"
 >
   <table id="table" class="table table-striped table-sm">

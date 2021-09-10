@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-@section('links')
-@endsection
-
 @section('desktop-content')
 <x-path
   :items="[
@@ -44,7 +41,7 @@
 <x-blue-board
   title='Facturas'
   :foot="[
-    ['text'=>'Nueva', 'href'=>route('factura.create'), 'id'=>'nuevo', 'tipo'=> 'link']
+    ['text'=>'Nueva', 'href'=>route('factura.create'), 'id'=>'nuevo', 'tipo'=>'link']
   ]"
 >
   <table id="table" class="table table-striped table-sm">
@@ -74,13 +71,15 @@
 
 @section('scripts')
 <script>
+  const routeAjax = `{{ route('getFacturacion') }}`;
+  const routeEdit = `{{ route('factura.edit', 0) }}`;
   var table = $('#table').DataTable({
     "paging":   true,
     "ordering": true,
     "info":     false,
     "responsive": true,
     "ajax": {
-      "url": `{{ route('getFacturacion') }}`,
+      "url": routeAjax,
       "method": 'get',
       "data": {
         "fechaini": () => $('#inicio').val(),
@@ -107,7 +106,8 @@
       {"name":"valor", "data":"total_pagar"},
       {"name":"crud", "data":"id", "sortable": "false",
         "render": ( data, type, full, meta ) => {
-          return "<a class='fa fa-edit' href='factura/modificar/"+data+"'></a> <a class='fa fa-print' href='#'></a>";
+          let path = routeEdit.replace('/0', `/${data}`);
+          return `<a class='fa fa-edit' href='${path}'></a> <a class='fa fa-print' href='#'></a>`;
         }
       }
     ],

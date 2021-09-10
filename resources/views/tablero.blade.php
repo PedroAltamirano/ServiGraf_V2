@@ -34,7 +34,7 @@
 <x-blue-board
   title='Pendientes'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>route('pedido.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
+    ['text'=>'Nuevo', 'href'=>route('pedido.create'), 'id'=>'nuevo', 'tipo'=>'link'],
   ]"
 >
   <table id="table" class="table table-striped table-sm">
