@@ -69,7 +69,9 @@
     </tfoot>
   </table>
 </x-blue-board>
+@endsection
 
+@section('modals')
 <!-- Modal AREAS -->
 <div id="modalArea" class="modal fade">
     <div class="modal-dialog">
@@ -103,17 +105,15 @@
 
 @section('scripts')
 <script>
-  $(document).ready(function() {
-    $('#tableProcesos').DataTable({
-      "paging":   true,
-      "ordering": true,
-      "info":     false,
-      "responsive": true,
-    });
+  $('#tableProcesos').DataTable({
+    "paging":   true,
+    "ordering": true,
+    "info":     false,
+    "responsive": true,
   });
 
   // AREAS
-  $('#newArea').on('click', function (event) {
+  $('#newArea').click(function(event){
     var modal = $('#modalArea');
     modal.find('.modal-title').html('Nueva Área');
     modal.find('.modal-area').val('');
@@ -122,7 +122,7 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modArea').on('click', function (event) {
+  $('.modArea').click(function(event){
     var button = $(this);
     var modal = $('#modalArea');
     modal.find('.modal-title').html('Modificar Área');

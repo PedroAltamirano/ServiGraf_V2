@@ -67,7 +67,9 @@
     </tbody>
   </table>
 </x-blue-board>
+@endsection
 
+@section('modals')
 <!-- Modal Referencia -->
 <div class="modal fade" id="modalReferencia" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
   <div class="modal-dialog">
@@ -131,7 +133,6 @@
     </div>
   </div>
 </div>
-
 @endsection
 
 @section('scripts')
@@ -141,7 +142,7 @@
   var bancoStore = "{{ route('banco.store') }}";
   var bancoUpdate = "{{ route('banco.update', 0) }}";
 
-  $("#modalReferencia").on('show.bs.modal', function(event) {
+  $("#modalReferencia").on('show.bs.modal', event => {
     let data = $(event.relatedTarget).data('referencia');
     let action = data ? referenciaUpdate.replace("/0", "/"+data.id) : referenciaStore;
     let referencia = data ? data.referencia : '';
@@ -155,7 +156,7 @@
     $(this).find("input[name='_method']").val(method);
   });
 
-  $("#modalBanco").on('show.bs.modal', function(event) {
+  $("#modalBanco").on('show.bs.modal', event => {
     let data = $(event.relatedTarget).data('banco');
     let action = data ? bancoUpdate.replace("/0", "/"+data.id) : bancoStore;
     let banco = data ? data.banco : '';

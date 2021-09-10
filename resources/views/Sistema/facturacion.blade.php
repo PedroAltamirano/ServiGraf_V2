@@ -118,20 +118,18 @@
 
 @section('scripts')
 <script>
-  let today = "{{ date('Y-m-d') }}";
+  let today = `{{ date('Y-m-d') }}`;
 
-  $(document).ready(function() {
-    $('#table').DataTable({
-      "paging":   true,
-      "ordering": true,
-      "info":     false,
-      "responsive": true,
-    });
+  $('#table').DataTable({
+    "paging":   true,
+    "ordering": true,
+    "info":     false,
+    "responsive": true,
   });
 
   // CATEGORIAS
-  const route = "{{route('facturacion-empresas.update', 0)}}";
-  $('#newFactura').on('click', function (event) {
+  const route = `{{route('facturacion-empresas.update', 0)}}`;
+  $('#newFactura').click(function(event){
     var modal = $('#modalFactura');
     modal.find('.modal-title').html('Nueva Empresa');
     modal.find('.modal-empresa').val('');
@@ -156,7 +154,7 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modFactura').on('click', function (event) {
+  $('.modFactura').click(function(event){
     let data = $(this).data('empresa');
     let modal = $('#modalFactura');
     modal.find('.modal-title').html('Modificar Empresa');
@@ -186,8 +184,8 @@
   });
 
   //Iva
-  const routeUpdateIva = "{{route('iva.update', 0)}}";
-  $('#newIva').on('click', function (event) {
+  const routeUpdateIva = `{{route('iva.update', 0)}}`;
+  $('#newIva').click(function(event){
     var modal = $('#modalIva');
     modal.find('.modal-iva-title').html('Nuevo Iva');
     modal.find('.modal-iva-porcentaje').val('0.00');
@@ -198,7 +196,7 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modIva').on('click', function (event) {
+  $('.modIva').click(function(event){
     let modal = $('#modalIva');
     let data = $(this).data('iva');
     modal.find('.modal-iva-title').html('Modificar Iva');
@@ -211,8 +209,8 @@
   });
 
   //Retencion
-  const routeUpdateRetencion = "{{route('retencion.update', 0)}}";
-  $('#newRetencionIva,#newRetencionFnt').on('click', function (event) {
+  const routeUpdateRetencion = `{{route('retencion.update', 0)}}`;
+  $('#newRetencionIva,#newRetencionFnt').click(function(event){
     var modal = $('#modalRetencion');
     modal.find('.modal-ret-title').html('Nueva Retencion');
     modal.find('.modal-ret-porcentaje').val('0.00');
@@ -225,7 +223,7 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modRetencion').on('click', function (event) {
+  $('.modRetencion').click(function(event){
     let modal = $('#modalRetencion');
     let data = $(this).data('retencion');
     modal.find('.modal-ret-title').html('Modificar Retencion');

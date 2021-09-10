@@ -122,17 +122,15 @@
 
 @section('scripts')
 <script>
-  $(document).ready(function() {
-    $('#table').DataTable({
-      "paging":   true,
-      "ordering": true,
-      "info":     false,
-      "responsive": true,
-    });
+  $('#table').DataTable({
+    "paging":   true,
+    "ordering": true,
+    "info":     false,
+    "responsive": true,
   });
 
   // CATEGORIAS
-  $('#newHorario').on('click', function (event) {
+  $('#newHorario').click(function(event){
     var modal = $('#modalHorario');
     modal.find('.modal-title').html('Nuevo Horario');
     modal.find('.modal-nombre').val('');
@@ -146,7 +144,7 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modHorario').on('click', function (event) {
+  $('.modHorario').click(function(event){
     var button = $(this);
     var modal = $('#modalHorario');
     modal.find('.modal-title').html('Modificar Horario');

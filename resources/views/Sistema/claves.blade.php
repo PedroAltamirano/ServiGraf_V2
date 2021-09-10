@@ -126,17 +126,15 @@
 
 @section('scripts')
 <script>
-  $(document).ready(function() {
-    $('#table').DataTable({
-      "paging":   true,
-      "ordering": true,
-      "info":     false,
-      "responsive": true,
-    });
+  $('#table').DataTable({
+    "paging":   true,
+    "ordering": true,
+    "info":     false,
+    "responsive": true,
   });
 
   // CATEGORIAS
-  $('#newClave').on('click', function (event) {
+  $('#newClave').click(function(event){
     var modal = $('#modalClave');
     modal.find('.modal-title').html('Nueva Clave');
     modal.find('.modal-cuenta').val('');
@@ -148,7 +146,7 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modClave').on('click', function (event) {
+  $('.modClave').click(function(event){
     var button = $(this);
     var modal = $('#modalClave');
     modal.find('.modal-title').html('Modificar Clave');
@@ -161,7 +159,7 @@
     modal.find('input[name="_method"]').val('PUT');
   });
 
-  $('.delClave').on('click', function (event) {
+  $('.delClave').click(function(event){
     var button = $(this);
     var modal = $('#deleteAlert');
     modal.find('.modal-path').attr('action', button.data('route'));

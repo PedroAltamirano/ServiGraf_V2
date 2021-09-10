@@ -50,12 +50,12 @@
   <table id="table" class="table table-striped table-sm">
     <thead>
       <tr>
-        <th scope="col">Número</th>
-        <th scope="col">Emición</th>
-        <th scope="col">Mora</th>
+        <th scope="col" class="w-10">Número</th>
+        <th scope="col" class="w-10">Emición</th>
+        <th scope="col" class="w-10">Mora</th>
         <th scope="col">Cliente</th>
-        <th scope="col">Ing./Eg.</th>
-        <th scope="col">Valor</th>
+        <th scope="col" class="w-10">Ing./Eg.</th>
+        <th scope="col" class="w-10">Valor</th>
         <th scope="col" class="w-5">Crud</th>
       </tr>
     </thead>
@@ -80,19 +80,19 @@
     "info":     false,
     "responsive": true,
     "ajax": {
-      "url": "{{ route('getFacturacion') }}",
+      "url": `{{ route('getFacturacion') }}`,
       "method": 'get',
       "data": {
-        "fechaini": function() { return $('#inicio').val() },
-        "fechafin": function() { return $('#fin').val() },
-        "cliente": function() { return $('#cliente').val() },
-        "empresa": function() { return $('#empresa').val() },
-        "tipo": function() { return $('#tipo').val() },
-        "estado": function() { return $('#estado').val() }
+        "fechaini": () => $('#inicio').val(),
+        "fechafin": () => $('#fin').val(),
+        "cliente": () => $('#cliente').val(),
+        "empresa": () => $('#empresa').val(),
+        "tipo": () => $('#tipo').val(),
+        "estado": () => $('#estado').val(),
       },
-      "error": function(reason) {
+      "error": error => {
         swal('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
-        console.log(reason);
+        console.log(error);
       }
     },
     "columns": [
@@ -101,12 +101,12 @@
       {"name":"mora", "data":"mora"},
       {"name":"cliente", "data":"cli"},
       {"name":"tipo", "data":"tipo",
-        "render":function(data, type, full, meta){
+        "render": (data, type, full, meta) => {
         return data ? 'Ingreso' : 'Egreso';
       }},
       {"name":"valor", "data":"total_pagar"},
       {"name":"crud", "data":"id", "sortable": "false",
-        "render": function ( data, type, full, meta ) {
+        "render": ( data, type, full, meta ) => {
           return "<a class='fa fa-edit' href='factura/modificar/"+data+"'></a> <a class='fa fa-print' href='#'></a>";
         }
       }
@@ -117,7 +117,7 @@
     "footerCallback": function(row, data, start, end, display) {
       var api = this.api(), data;
       // Remove the formatting to get integer data for summation
-      var intVal = function (i) {
+      var intVal = i => {
         return typeof i === 'string' ?
         i.replace(/[\$,]/g, '')*1 :
         typeof i === 'number' ?
@@ -132,8 +132,6 @@
     }
   });
 
-  $('.refresh').on('change', function(){
-    table.ajax.reload(null, false);
-  });
+  $('.refresh').change(() => table.ajax.reload(null, false));
 </script>
 @endsection

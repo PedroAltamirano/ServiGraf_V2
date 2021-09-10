@@ -89707,6 +89707,8 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+var _this = this;
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
@@ -89751,11 +89753,11 @@ __webpack_require__(/*! datatables.net-responsive-bs4 */ "./node_modules/datatab
 __webpack_require__(/*! ../../resources/js/sb-admin-2.min.js */ "./resources/js/sb-admin-2.min.js");
 
 $('.confirmModal').on('click', function () {
-  var button = $(this);
+  var button = $(_this);
   $('#confirmForm').attr('action', button.data('route'));
 });
 $('.deleteModal').on('click', function () {
-  var button = $(this);
+  var button = $(_this);
   $('#deleteText').html(button.data('text'));
   $('#deleteForm').attr('action', button.data('route'));
 });

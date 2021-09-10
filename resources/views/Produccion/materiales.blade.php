@@ -85,7 +85,9 @@
     @endforeach
   </div>
 </x-blue-board>
+@endsection
 
+@section('modals')
 <!-- Modal TINTA -->
 <div id="modalTinta" class="modal fade">
     <div class="modal-dialog">
@@ -141,17 +143,15 @@
 
 @section('scripts')
 <script>
-  $(document).ready(function() {
-    $('#tableMat').DataTable({
-      "paging":   true,
-      "ordering": true,
-      "info":     false,
-      "responsive": true,
-    });
+  $('#tableMat').DataTable({
+    "paging":   true,
+    "ordering": true,
+    "info":     false,
+    "responsive": true,
   });
 
   // TINTAS
-  $('#newTinta').on('click', function (event) {
+  $('#newTinta').click(function(event){
     var modal = $('#modalTinta');
     modal.find('.modal-title').html('Nueva Tinta');
     modal.find('.modal-color').val('');
@@ -159,7 +159,7 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modTinta').on('click', function (event) {
+  $('.modTinta').click(function(event){
     var button = $(this);
     var modal = $('#modalTinta');
     modal.find('.modal-title').html('Modificar Tinta');
@@ -169,7 +169,7 @@
   });
 
   // CATEGORIAS
-  $('#newCat').on('click', function (event) {
+  $('#newCat').click(function(event){
     var modal = $('#modalCat');
     modal.find('.modal-title').html('Nueva Categoria');
     modal.find('.modal-color').val('');
@@ -177,7 +177,7 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modCat').on('click', function (event) {
+  $('.modCat').click(function(event){
     var button = $(this);
     var modal = $('#modalCat');
     modal.find('.modal-title').html('Modificar Categoria');

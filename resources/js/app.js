@@ -7,7 +7,7 @@ window.moment = require("moment");
 require("owl.carousel");
 
 window.Swal = require("sweetalert2");
-window.swal = function(title, mssg, icon){
+window.swal = (title, mssg, icon) => {
   Swal.fire({
     title: title,
     text: mssg,
@@ -36,12 +36,12 @@ require("datatables.net-responsive-bs4");
 
 require("../../resources/js/sb-admin-2.min.js");
 
-$('.confirmModal').on('click', function(){
+$('.confirmModal').on('click', () => {
   let button = $(this);
   $('#confirmForm').attr('action', button.data('route'));
 });
 
-$('.deleteModal').on('click', function(){
+$('.deleteModal').on('click', () => {
   let button = $(this);
   $('#deleteText').html(button.data('text'));
   $('#deleteForm').attr('action', button.data('route'));

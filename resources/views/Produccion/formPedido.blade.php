@@ -91,27 +91,22 @@
 <script>
   // const route = "{{route('contacto.info')}}";
   const route = `{{route('cliente.info')}}`;
-  function getPhone(){
+  const getPhone = () => {
     axios.post(route, {
       cliente_id: $('#cliente').val(),
     }).then(res => {
       let data = res.data
       $('#cli_telefono').val(data.movil);
-    }).catch(err => {
-      swal('Oops!', err, 'error');
-      console.log(err);
+    }).catch(error => {
+      swal('Oops!', 'No hemos podido cargar los datos del cliente', 'error');
+      console.log(error);
     });
   }
 
-  $('#cliente').change(function(){
-    getPhone();
-  });
+  $('#cliente').change(() => getPhone());
 
-  $(function(){
-    @if (old('cliente_id', $pedido->cliente_id))
-    getPhone();
-    @endif
-  });
+  const old_cliente = `{{ old('cliente_id', $pedido->cliente_id) ?? null }}`;
+  $(() => { if(old_cliente) getPhone() });
 </script>
 
 @yield('after.after.scripts')

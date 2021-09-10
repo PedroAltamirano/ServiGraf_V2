@@ -259,7 +259,7 @@
 
   // const route = "{{route('contacto.info')}}";
   const route = `{{route('cliente.info')}}`;
-  function getPhone(){
+  const getPhone = () => {
     axios.post(route, {
       cliente_id: $('#cliente').val(),
     }).then(res => {
@@ -267,24 +267,17 @@
       $('#ruc').val(data.ruc);
       $('#telefono').val(data.movil);
       $('#direccion').val(data.direccion);
-    }).catch(err => {
-      swal('Oops!', err, 'error');
-      console.log(err);
+    }).catch(error => {
+      swal('Oops!', 'No hemos podido cargar los datos del cliente', 'error');
+      console.log(error);
     });
   }
 
-  $('#cliente').change(function(){
-    getPhone();
-  });
+  $('#cliente').change(() => getPhone());
 
+  $(() => { if(fact_new) getPhone() });
 
-  $(()=>{
-    if(fact_new){
-      getPhone();
-    }
-  })
-
-  $('#tipo').change(()=>{
+  $('#tipo').change(() => {
     let tipo = parseInt($('#tipo').val());
     if(tipo){
       $('#fact_num').val(fact_num);
@@ -295,16 +288,14 @@
     }
   });
 
-  $('#fact_num_vis').change(()=>{
-    $('#fact_num').val(parseInt($('#fact_num_vis').val()));
-  });
+  $('#fact_num_vis').change(() => $('#fact_num').val(parseInt($('#fact_num_vis').val())));
 
   //ARTICULO
   var i = {{ $artCount }};
   var ivas_opts = '';
   $.each(@json($ivas), function(){ ivas_opts += '<option value=' + this.id + '>' + this.porcentaje + '</option>' });
 
-  $('#addArticulo').click(function(){
+  $('#addArticulo').click(() => {
     let table = $('#table-articulos > tbody');
 
     let button = $('<i />', {'type': 'button', 'class':'fas fa-times removeRow', 'name': 'remove', 'id':'articulo-'+i});

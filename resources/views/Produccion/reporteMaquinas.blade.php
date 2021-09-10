@@ -64,27 +64,28 @@
   // let procesos = @json($procesos);
   // console.log(areas.length);
 
-  const route = "{{ route('pedido.edit', 0) }}";
+  const route = `{{ route('pedido.edit', 0) }}`;
+  const routeAjax = `{{ route('reporte.maquinas.ajax') }}`;
   var table = $('#table').DataTable({
     "paging":   true,
     "ordering": true,
     "info":     false,
     "responsive": true,
     "ajax": {
-      "url": "{{ route('reporte.maquinas.ajax') }}",
+      "url": routeAjax,
       "method": 'get',
       "dataSrc": '',
       "data": {
-        "fechaini": function() { return $('#inicio').val() },
-        "fechafin": function() { return $('#fin').val() },
-        "cobro": function() { return $('#cobro').val() }
+        "fechaini": () => $('#inicio').val(),
+        "fechafin": () => $('#fin').val(),
+        "cobro": () => $('#cobro').val(),
       },
       // "success": function(data){
       //   console.log(data);
       // },
-      "error": function(reason) {
+      "error": error => {
         swal('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
-        console.log('error -> ', reason);
+        console.log(error);
       }
     },
     "columns": [
@@ -92,14 +93,14 @@
       {"name":"cliente", "data": "cliente_nom"},
       {"name":"detalle", "data": "detalle"},
       @foreach($procesos as $proceso)
-      {"name":"{{ 'serv'.$proceso->id }}", "data":"procesos", "defaultContent": "", "render":function(data, type, full, meta){
+      {"name":"{{ 'serv'.$proceso->id }}", "data":"procesos", "defaultContent": "", "render": (data, type, full, meta) => {
         let proceso = data.find(record => record.proceso_id == '{{ $proceso->id }}');
         return proceso ? proceso.totalProceso : '';
       }},
       @endforeach
       {"name":"total", "data": "total_pedido"},
       {"name":"estado", "data": "estado", "sortable": "false",
-        "render": function ( data, type, full, meta ) {
+        "render": ( data, type, full, meta ) => {
           var rspt;
           if(data == '1') rspt = "<em class='fa fa-times'></em>";
           else if(data == '2') rspt = "<em class='fa fa-check'></em>";
@@ -110,7 +111,7 @@
         },
       },
       {"name":"crud", "data":"id", "sortable": "false",
-        "render": function ( data, type, full, meta ) {
+        "render": (data, type, full, meta) => {
           let router = route.replace("/0", "/"+data);
           let crud = "<a class='fa fa-edit' href='"+router+"'></a> ";
           crud += "<a class='fa fa-eye verPedido' href='#' data-pedido_id='"+data+"'></a>";
@@ -124,7 +125,7 @@
     "footerCallback": function(row, data, start, end, display) {
       var api = this.api(), data;
       // Remove the formatting to get integer data for summation
-      var intVal = function (i) {
+      var intVal = i => {
         return typeof i === 'string' ?
         i.replace(/[\$,]/g, '')*1 :
         typeof i === 'number' ?
@@ -137,15 +138,13 @@
       $("#clmtotal").html(totTotal.toFixed(2));
 
       @foreach($procesos as $proceso)
-      let {{"dataserv".$proceso->id}} = api.column('{{"serv".$proceso->id}}:name', {search: 'applied'}).cache('search');
+      let {{"dataserv".$proceso->id}} = api.column(`{{"serv".$proceso->id}}:name`, {search: 'applied'}).cache('search');
       let {{"totserv".$proceso->id}} = {{'dataserv'.$proceso->id}}.length ? {{'dataserv'.$proceso->id}}.sum() : 0;
-      $("#{{'serv'.$proceso->id}}").html({{'totserv'.$proceso->id}}.toFixed(2));
+      $(`#{{'serv'.$proceso->id}}`).html({{'totserv'.$proceso->id}}.toFixed(2));
       @endforeach
     }
   });
 
-  $('.refresh').on('change', function(){
-    table.ajax.reload(null, false);
-  });
+  $('.refresh').change(() => table.ajax.reload(null, false));
 </script>
 @endsection

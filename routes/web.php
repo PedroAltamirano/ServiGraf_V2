@@ -46,6 +46,7 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::middleware('auth')
   ->group(function () {
     Route::get('/desktop', 'DesktopController@showAdmin')->name('desktop')->middleware('hasModRol:10,1');
+
     Route::get('/tablero', 'DesktopController@show')->name('tablero');
 
     Route::get('cloud', function () {

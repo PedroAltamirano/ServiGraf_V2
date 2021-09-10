@@ -146,16 +146,16 @@
       "method": 'post',
       "dataSrc": '',
       "data": {
-        "fechaini": function() { return $('#inicio').val() },
-        "fechafin": function() { return $('#fin').val() },
-        "usuario": function() { return $('#usuario').val() },
+        "fechaini": () => $('#inicio').val(),
+        "fechafin": () => $('#fin').val(),
+        "usuario": () => $('#usuario').val(),
       },
-      // "success": function(data){
+      // "success": data => {
       //   debugger
       // },
-      "error": function(reason) {
+      "error": error => {
         swal('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
-        console.log('error -> ', reason);
+        console.log(error);
       }
     },
     "columns": [
@@ -168,7 +168,7 @@
       {"name":"total", "data": "total"},
       {"name":"extras", "data": "extras"},
       {"name":"crud", "data":null, "sortable": "false",
-        "render": function ( data, type, full, meta ) {
+        "render": (data, type, full, meta) => {
           let dataJson = JSON.stringify(data);
           let crud = "<a class='fa fa-edit' href='#modalAsistencia' data-toggle='modal' data-asistencia='"+dataJson+"'></a> ";
           crud += "<a class='fa fa-trash' href='#deleteAlert' data-toggle='modal' data-asistencia='"+dataJson+"'></a>";
@@ -203,7 +203,7 @@
     }
   });
 
-  $('.refresh').on('change', function(){
+  $('.refresh').change(() => {
     console.log('refreshing')
     saldo = 0;
     dato_fecha = '';
@@ -212,8 +212,8 @@
     table.ajax.reload(null, false);
   });
 
-  var route = "{{ route('asistencia.update', 0) }}";
-  $("#modalAsistencia").on('show.bs.modal', function(event) {
+  var route = `{{ route('asistencia.update', 0) }}`;
+  $("#modalAsistencia").on('show.bs.modal', event => {
     let data = $(event.relatedTarget).data('asistencia');
     $('#asistencia-action').attr('action', route.replace("/0", "/"+data.id));
     $('.asistencia-usuario').html(data.nombre);
@@ -224,25 +224,25 @@
     $('.asistencia-salida_2').val(data.salida_2);
   });
 
-  var routeDelete = "{{ route('asistencia.delete', 0) }}";
-  $("#deleteAlert").on('show.bs.modal', function(event) {
+  var routeDelete = `{{ route('asistencia.delete', 0) }}`;
+  $("#deleteAlert").on('show.bs.modal', event => {
     let data = $(event.relatedTarget).data('asistencia');
     $('#asistencia-delete-action').attr('action', routeDelete.replace("/0", "/"+data.id));
     $('.asistencia-delete-usuario').html(data.nombre);
     $('.asistencia-delete-fecha').html(data.fecha);
   });
 
-  $('#hoy').on('click', function() {
+  $('#hoy').click(() => {
     $('#inicio').val("{{ date('Y-m-d') }}");
     $('.refresh').change();
   });
 
-  $('#semana').on('click', function() {
+  $('#semana').click(() => {
     $('#inicio').val("{{ date('Y-m-d', strtotime('previous sunday')) }}");
     $('.refresh').change();
   });
 
-  $('#mes').on('click', function() {
+  $('#mes').click(() => {
     $('#inicio').val("{{ date('Y-m-01') }}");
     $('.refresh').change();
   });

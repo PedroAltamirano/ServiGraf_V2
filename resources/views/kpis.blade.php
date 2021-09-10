@@ -5,17 +5,17 @@
 @push('kpis-script')
 <script>
   const kpis = [
-    "{{ route('kpi.facturado') }}",
-    "{{ route('kpi.utilidad') }}",
-    "{{ route('kpi.cobrar') }}",
-    "{{ route('kpi.lob_facturacion') }}",
-    "{{ route('kpi.maquinas') }}",
-    "{{ route('kpi.ots') }}",
-    "{{ route('kpi.lob_ots') }}"
+    `{{ route('kpi.facturado') }}`,
+    `{{ route('kpi.utilidad') }}`,
+    `{{ route('kpi.cobrar') }}`,
+    `{{ route('kpi.lob_facturacion') }}`,
+    `{{ route('kpi.maquinas') }}`,
+    `{{ route('kpi.ots') }}`,
+    `{{ route('kpi.lob_ots') }}`,
   ];
-  const fecha = $('#fecha').val();
 
-  function getKPI(route){
+  const getKPI = route => {
+    let fecha = $('#fecha').val();
     axios.get(route, {
       params: {
         fecha : fecha
@@ -23,14 +23,12 @@
     }).then(res => {
       let data = res.data;
       $("#KPIs").append(data);
-    }).catch(err => {
-      swal('Oops!', err, 'error');
-      console.log(err);
+    }).catch(error => {
+      swal('Oops!', 'No hemos podido cargar los KPIs', 'error');
+      console.log(error);
     });
   }
 
-  $(function(){
-    kpis.forEach(kpi => { getKPI(kpi) })
-  });
+  $(() => kpis.forEach(kpi => getKPI(kpi)));
 </script>
 @endpush

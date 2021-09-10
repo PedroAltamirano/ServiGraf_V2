@@ -3,24 +3,32 @@
   @json($average)
   @json($yearly) --}}
   <canvas id="yearly" height="100"></canvas>
+  @php
+    $actual = $actual->map(function($e)use($months){ return ['x' => $months[$e->month-1], 'y' => $e->total];})->toArray();
+    $promedio = $average->map(function($e)use($months){ return ['x' => $months[$e->month-1], 'y' => $e->total];})->toArray();
+  @endphp
 </div>
 
 @push('year-pred-script')
   <script>
+    const months = `@json($months)`;
+    const actual = `@json($actual)`;
+    const promedio = `@json($promedio)`;
+
     var yearly = new Chart($('#yearly'), {
       type: 'line',
       data: {
-        labels: @json($months),
+        labels: months,
         datasets: [
           {
             label: 'Año actual',
-            data: @json($actual->map(function($e)use($months){ return ['x' => $months[$e->month-1], 'y' => $e->total];})->toArray()),
+            data: actual,
             borderColor: '#3b5998',
             fill: false,
           },
           {
             label: 'Promedio',
-            data: @json($average->map(function($e)use($months){ return ['x' => $months[$e->month-1], 'y' => $e->total];})->toArray()),
+            data: promedio,
             borderDash: [5, 5],
             fill: false,
           },

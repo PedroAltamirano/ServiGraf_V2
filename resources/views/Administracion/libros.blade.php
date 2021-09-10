@@ -71,37 +71,33 @@
 @section('scripts')
 <script src="{{ asset('js/num2word.js') }}" type="text/javascript"></script>
 <script>
-  const route = "{{ route('libro.api.libros') }}";
-  function getLibros(){
-    axios.post(route, {
+  const routeLibros = `{{ route('libro.api.libros') }}`;
+  const getLibros = () => {
+    axios.post(routeLibros, {
       usuario: $('#usuario_id').val(),
     }).then(res => {
       let data = res.data
-      let content;
-      $.each(data, (index, value) => {
-        content += '<option value="'+value.id+'">'+value.libro+'</option>';
+      let content = '';
+      data.forEach(value => {
+        content += `<option value='${value.id}'>${value.libro}</option>`;
       });
-      $('#libro_id').empty().append(content);
+      $('#libro').empty().append(content);
       table.ajax.reload(null, false);
-    }).catch(err => {
-      swal('Oops!', err, 'error');
-      console.log(err);
+    }).catch(error => {
+      swal('Oops!', 'No hemos podido cargar los libros', 'error');
+      console.log(error);
     });
   }
 
-  $(()=>{
-    getLibros();
-  });
+  $(() => getLibros());
 
-  $('#usuario').change(()=>{
-    getLibros();
-  });
+  $('#usuario').change(() => getLibros());
 
   var saldo = 0;
   var dato_fecha = '';
   var dato_color = '';
   var cambio_color = false;
-  const route = "{{ route('entrada.edit', 0) }}";
+  const routeEdit = `{{ route('entrada.edit', 0) }}`;
   var table = $('#table').DataTable({
     "paging":   true,
     "ordering": true,
@@ -113,21 +109,21 @@
       autoPrint: false
     }],
     "ajax": {
-      "url": "{{route('libro.api.info')}}",
+      "url": `{{route('libro.api.info')}}`,
       "method": 'post',
       "dataSrc": '',
       "data": {
-        "fechaini": function() { return $('#inicio').val() },
-        "fechafin": function() { return $('#fin').val() },
-        "usuario": function() { return $('#usuario').val() },
-        "libro": function() { return $('#libro').val() }
+        "fechaini": () => $('#inicio').val(),
+        "fechafin": () => $('#fin').val(),
+        "usuario": () => $('#usuario').val(),
+        "libro": () => $('#libro').val(),
       },
-      // "success": function(data){
+      // "success": data => {
       //   debugger
       // },
-      "error": function(reason) {
+      "error": error => {
         swal('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
-        console.log('error -> ', reason);
+        console.log(error);
       }
     },
     "columns": [
@@ -139,9 +135,9 @@
       {"name":"egreso", "data": "egreso", "class": "text-right"},
       {"name":"saldo", "defaultContent": "0.00", "class": "text-right bold"},
       {"name":"crud", "data":null, "sortable": "false",
-        "render": function ( data, type, full, meta ) {
+        "render": (data, type, full, meta) => {
           let dataJson = JSON.stringify(data);
-          let router = route.replace("/0", "/"+data.id);
+          let router = routeEdit.replace("/0", "/"+data.id);
           let crud = "<a class='fa fa-edit' href='"+router+"' ></a> ";
           crud += "<a class='fa fa-print' href='#modalRecibo' data-toggle='modal' data-entrada='"+dataJson+"'></a>";
           return crud;
@@ -151,7 +147,7 @@
     "columnDefs": [
       { "responsivePriority": 1, "targets": [0, 2, 4, 5] }
     ],
-    "rowCallback": function ( row, data, index ){
+    "rowCallback": function(row, data, index){
       // cabio de olor por fecha
       let fecha = data.fecha;
       let dato_color;
@@ -173,10 +169,10 @@
 
       $('td:eq(6)', row).html(texto);
     },
-    "footerCallback": function(row, data, start, end, display) {
+    "footerCallback": function(row, data, start, end, display){
       var api = this.api(), data;
       // Remove the formatting to get integer data for summation
-      var intVal = function (i) {
+      var intVal = i => {
         return typeof i === 'string' ?
         i.replace(/[\$,]/g, '')*1 :
         typeof i === 'number' ?
@@ -200,12 +196,12 @@
       }
       $("#total-saldo").html(Math.abs(saldo).toFixed(2));
     },
-    "drawCallback": function ( settings ) {
+    "drawCallback": function(settings){
       saldo = 0;
     }
   });
 
-  $('.refresh').on('change', function(){
+  $('.refresh').change(() => {
     saldo = 0;
     dato_fecha = '';
     dato_color = '';
@@ -213,7 +209,7 @@
     table.ajax.reload(null, false);
   });
 
-  $("#modalRecibo").on('show.bs.modal', function(event) {
+  $("#modalRecibo").on('show.bs.modal', event => {
     let data = $(event.relatedTarget).data('entrada');
     let tipo = data.tipo ? 'COBRO' : 'PAGO';
     let ciudad = "{{ Auth::user()->empresa->datos->ciudad ?? '' }}";

@@ -20,7 +20,6 @@
     ['text'=>'Nuevo', 'href'=>route('perfil.nuevo'), 'id'=>'nuevo', 'tipo'=> 'link']
   ]"
 >
-
   <table id="table" class="table table-striped table-sm">
     <thead>
       <tr>
@@ -39,35 +38,36 @@
 
 @section('scripts')
 <script>
-  $(document).ready(function() {
-    $('#table').DataTable({
-      "paging":   true,
-      "ordering": true,
-      "info":     false,
-      "responsive": true,
-      "ajax": {
-        "url": "{{url('/perfiles/get')}}",
-        "method": 'get',
-        "error": function(reason) {
-          swal('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
-          console.log('error -> ', reason);
+  const routeAjax = `{{ route('perfiles.get') }}`;
+  const routeEdit = `{{ route('perfil.modificar', 0) }}`;
+  $('#table').DataTable({
+    "paging":   true,
+    "ordering": true,
+    "info":     false,
+    "responsive": true,
+    "ajax": {
+      "url": routeAjax,
+      "method": 'get',
+      "error": error => {
+        swal('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
+        console.log(error);
+      }
+    },
+    "columns": [
+      {"name":"nombre", "data":"nombre"},
+      {"name":"descripcion", "data":"descripcion", "sortable":"false"},
+      {"name":"crud", "data":"id", "sortable":"false",
+        "render": (data, type, full, meta) => {
+          let path = routeEdit.replace('/0', `/${data}`);
+          return `<a class='fa fa-edit' href='${path}'></a>`;
         }
-      },
-      "columns": [
-        {"name":"nombre", "data":"nombre"},
-        {"name":"descripcion", "data":"descripcion", "sortable":"false"},
-        {"name":"crud", "data":"id", "sortable":"false",
-          "render": function ( data, type, full, meta ) {
-            return "<a class='fa fa-edit' href='perfil/modificar/"+data+"'></a>";
-          }
-        }
-      ],
-      "columnDefs": [
-      ],
-      "rowCallback": function(row, data, index){
-        (data.status == 1) ? $('td:eq(-1)', row).children('a').addClass('text-success') : $('td:eq(-1)', row).children('a').addClass('text-danger');
-      },
-    });
+      }
+    ],
+    "columnDefs": [
+    ],
+    "rowCallback": function(row, data, index){
+      (data.status == 1) ? $('td:eq(-1)', row).children('a').addClass('text-success') : $('td:eq(-1)', row).children('a').addClass('text-danger');
+    },
   });
 </script>
 @endsection

@@ -1,3 +1,5 @@
+const { default: Swal } = require("sweetalert2");
+
 if (document.querySelector(".dropify")) {
   $(".dropify").dropify({
     tpl: {
@@ -48,7 +50,7 @@ $(document).on("click", ".removeRow", function() {
   $("#row-" + button_id + "").remove();
 });
 
-window.newRow = function newRow($table, cols, col_id) {
+window.newRow = ($table, cols, col_id) => {
   $row = $("<tr/>", { id: col_id });
   for (let indx = 0; indx < cols.length; indx++) {
     $col = $("<td/>");
@@ -58,16 +60,14 @@ window.newRow = function newRow($table, cols, col_id) {
   $table.append($row);
 };
 
-$("#print").on("click", event => {
-  // console.log("printing");
+$("#print").click(event => {
   let target = "#" + $("#print").data("target");
   $(".select2Class").select2("destroy");
   $(target).print();
   $(".select2Class").select2();
 });
 
-$("body").delegate("#printer", "click", function() {
-  // console.log("printering");
+$("body").delegate("#printer", "click", () => {
   let target = "#" + $("#printer").data("target");
   $(target).print();
 });
@@ -76,12 +76,11 @@ $(".select2Class").select2({
   width: '100%',
 });
 
-function getModal(pedido_id) {
+const getModal = pedido_id => {
   axios.post('/pedido/modal', {
     pedido_id: pedido_id
   }).then(res => {
     let data = res.data;
-    console.log(data);
     $("#modalPedidoDiv").html(data);
     $("#tinta_tiro").select2({
       maximumSelectionLength: 4
@@ -91,19 +90,18 @@ function getModal(pedido_id) {
     });
     $("#modalPedido").modal("show");
   }).catch(error => {
+    swal('Oops!', 'No hemos podido cargar el contenido', 'error');
     console.log(error);
   })
 }
 
-$("body").delegate(".verPedido", "click", function() {
-  // $(".verPedido").on("click", function() {
+$("body").delegate(".verPedido", "click", () => {
   let pedido_id = $(this).data("pedido_id");
   $("#modalPedidoDiv").empty();
-  // debugger;
   getModal(pedido_id);
 });
 
-window.add_error = function(mssg, type) {
+window.add_error = (mssg, type) => {
   let alert = `<div class="alert alert-${type}" role="alert">
       ${mssg}&nbsp&nbsp
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -114,17 +112,13 @@ window.add_error = function(mssg, type) {
 
 window.change_select = (selector, val) => $(selector).val(val).trigger("change.select2");
 
-$('.modal').on('show.bs.modal', () => {
-  $('.modal').modal('hide')
-});
+$('.modal').on('show.bs.modal', () => $('.modal').modal('hide'));
 
 // Submit for blue board component
-$('#formSubmit').click(function(){
-  $('#form').submit();
-});
+$('#formSubmit').click(() => $('#form').submit());
 
 // Submit for modals and others
-$('.submitbtn').click(function(){
+$('.submitbtn').click(() => {
   let form = $(this).data('form');
   $(form).submit();
 });

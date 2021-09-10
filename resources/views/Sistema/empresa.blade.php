@@ -138,18 +138,16 @@
 
 @section('scripts')
 <script>
-  $(document).ready(function() {
-    $('#table').DataTable({
-      "paging":   true,
-      "ordering": true,
-      "info":     false,
-      "responsive": true,
-    });
+  $('#table').DataTable({
+    "paging":   true,
+    "ordering": true,
+    "info":     false,
+    "responsive": true,
   });
 
   //Centro de Costos
-  const routeUpdateCCostos = "{{route('centro-costos.update', 0)}}";
-  $('#newCCostos').on('click', function (event) {
+  const routeUpdateCCostos = `{{route('centro-costos.update', 0)}}`;
+  $('#newCCostos').click(function(event){
     var modal = $('#modalCCostos');
     modal.find('.modal-title').html('Nuevo Centro de Costos');
     modal.find('.modal-nombre').html('');
@@ -157,7 +155,7 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modCCostos').on('click', function (event) {
+  $('.modCCostos').click(function(event){
     let modal = $('#modalCCostos');
     let data = $(this).data('ccosto');
     modal.find('.modal-title').html('Modificar Centro de Costos');

@@ -79,17 +79,17 @@
       "method": 'get',
       "dataSrc": '',
       "data": {
-        "fechaini": function() { return $('#inicio').val() },
-        "fechafin": function() { return $('#fin').val() },
-        "cliente": function() { return $('#cliente').val() },
-        "cobro": function() { return $('#cobro').val() }
+        "fechaini": () => $('#inicio').val(),
+        "fechafin": () => $('#fin').val(),
+        "cliente": () => $('#cliente').val(),
+        "cobro": () => $('#cobro').val(),
       },
-      // "success": function(data){
+      // "success": data => {
       //   console.log(data);
       // },
-      "error": function(reason) {
+      "error": error => {
         swal('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
-        console.log('error -> ', reason);
+        console.log(error);
       }
     },
     "columns": [
@@ -97,16 +97,18 @@
       {"name":"cliente", "data": "cliente_nom"},
       {"name":"detalle", "data": "detalle"},
       @foreach($areas as $area)
-      {"name":"{{$area->area}}", "data":"areas", "defaultContent": "", "render":function(data, type, full, meta){
-        let area = data.find(record => record.area_id === '{{$area->id}}');
-        return area ? area.totalArea : '';
-      }},
+      {"name":"{{$area->area}}", "data":"areas", "defaultContent": "",
+        "render":(data, type, full, meta) => {
+          let area = data.find(record => record.area_id === '{{$area->id}}');
+          return area ? area.totalArea : '';
+        }
+      },
       @endforeach
       {"name":"total", "data": "total_pedido"},
       {"name":"abonos", "data": "abono"},
       {"name":"saldo", "data": "saldo"},
       {"name":"estado", "data": "estado", "sortable": "false",
-        "render": function ( data, type, full, meta ) {
+        "render": (data, type, full, meta) => {
           var rspt;
           if(data == '1') rspt = "<em class='fa fa-times'></em>";
           else if(data == '2') rspt = "<em class='fa fa-check'></em>";
@@ -117,7 +119,7 @@
         },
       },
       {"name":"crud", "data":"id", "sortable": "false",
-        "render": function ( data, type, full, meta ) {
+        "render": (data, type, full, meta) => {
           let router = route.replace("/0", "/"+data);
           let crud = "<a class='fa fa-edit' href='"+router+"'></a> ";
           crud += "<a class='fa fa-eye verPedido' href='#' data-pedido_id='"+data+"'></a>";
@@ -131,7 +133,7 @@
     "footerCallback": function(row, data, start, end, display) {
       var api = this.api(), data;
       // Remove the formatting to get integer data for summation
-      var intVal = function (i) {
+      var intVal = i => {
         return typeof i === 'string' ?
         i.replace(/[\$,]/g, '')*1 :
         typeof i === 'number' ?
@@ -150,8 +152,6 @@
     }
   });
 
-  $('.refresh').on('change', function(){
-    table.ajax.reload(null, false);
-  });
+  $('.refresh').change(() => table.ajax.reload(null, false));
 </script>
 @endsection

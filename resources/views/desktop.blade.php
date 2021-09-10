@@ -195,11 +195,8 @@
 
 @section('scripts')
 <script>
-  $('#fecha').on('change', function(){
-    $('#fechaForm').submit();
-  });
-</script>
-<script>
+  $('#fecha').change(() => $('#fechaForm').submit());
+
   var interna = new Chart($('#interna'), {
     type: 'horizontalBar',
     data: {

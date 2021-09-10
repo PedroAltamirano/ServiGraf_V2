@@ -39,7 +39,7 @@ class CreateFacturasTable extends Migration
       $table->foreignId('ret_fuente_p')->constrained('retenciones');
       $table->unsignedDecimal('ret_fuente', 8, 2);
       $table->unsignedDecimal('total_pagar', 8, 2);
-      $table->string('notas', 140);
+      $table->string('notas')->nullable();
       $table->timestamps();
       $table->softDeletes();
     });

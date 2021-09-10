@@ -68,9 +68,6 @@
     </tfoot>
   </table>
 </x-blue-board>
-
-{{-- <x-modal-pedido id=1></x-modalPedido> --}}
-<div id="modalPedidoDiv"></div>
 @endif
 
 @if(count($clientes) > 0)
@@ -84,7 +81,12 @@
   @endforeach
 </div>
 @endif
+<button class="btn btn-primary testbtn">Test error</button>
+@endsection
 
+@section('modals')
+{{-- <x-modal-pedido id=1></x-modalPedido> --}}
+<div id="modalPedidoDiv"></div>
 @endsection
 
 @section('scripts')
@@ -95,5 +97,7 @@
     "info":     false,
     "responsive": true,
   });
+
+  $('.testbtn').click(() => add_error('aqui el mensaje', 'danger'))
 </script>
 @endsection
