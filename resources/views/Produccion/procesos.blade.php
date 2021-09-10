@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-@section('links')
-@endsection
-
 @section('desktop-content')
 <x-path
   :items="[
@@ -117,7 +114,7 @@
 
   // AREAS
   const routeStore = `{{ route("area.store") }}`;
-  $('#newArea').click(function(event){
+  $('#newArea').click(event => {
     var modal = $('#modalArea');
     modal.find('.modal-title').html('Nueva Área');
     modal.find('.modal-area').val('');
@@ -126,8 +123,8 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modArea').click(function(event){
-    var button = $(this);
+  $('.modArea').click(event => {
+    var button = $(event.target);
     var modal = $('#modalArea');
     modal.find('.modal-title').html('Modificar Área');
     modal.find('.modal-area').val(button.data('area'));

@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-@section('links')
-@endsection
-
 @section('desktop-content')
 <x-path
   :items="[
@@ -155,7 +152,7 @@
 
   // TINTAS
   let routeStore = `{{ route("tinta.store") }}`;
-  $('#newTinta').click(function(event){
+  $('#newTinta').click(event => {
     var modal = $('#modalTinta');
     modal.find('.modal-title').html('Nueva Tinta');
     modal.find('.modal-color').val('');
@@ -163,8 +160,8 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modTinta').click(function(event){
-    var button = $(this);
+  $('.modTinta').click(event => {
+    var button = $(event.target);
     var modal = $('#modalTinta');
     modal.find('.modal-title').html('Modificar Tinta');
     modal.find('.modal-color').val(button.data('color'));
@@ -174,7 +171,7 @@
 
   // CATEGORIAS
   const routeStoreCat = `{{ route("categoria.store") }}`;
-  $('#newCat').click(function(event){
+  $('#newCat').click(event => {
     var modal = $('#modalCat');
     modal.find('.modal-title').html('Nueva Categoria');
     modal.find('.modal-color').val('');
@@ -182,8 +179,8 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modCat').click(function(event){
-    var button = $(this);
+  $('.modCat').click(event => {
+    var button = $(event.target);
     var modal = $('#modalCat');
     modal.find('.modal-title').html('Modificar Categoria');
     modal.find('.modal-color').val(button.data('color'));

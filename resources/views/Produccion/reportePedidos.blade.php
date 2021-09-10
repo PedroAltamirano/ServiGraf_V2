@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-@section('links')
-@endsection
-
 @section('desktop-content')
 <x-path
   :items="[
@@ -59,7 +56,9 @@
     </tfoot>
   </table>
 </x-blue-board>
+@endsection
 
+@section('modals')
 <div id="modalPedidoDiv"></div>
 @endsection
 
@@ -122,8 +121,8 @@
       {"name":"crud", "data":"id", "sortable": "false",
         "render": (data, type, full, meta) => {
           let router = route.replace("/0", "/"+data);
-          let crud = "<a class='fa fa-edit' href='"+router+"'></a> ";
-          crud += "<a class='fa fa-eye verPedido' href='#' data-pedido_id='"+data+"'></a>";
+          let crud = `<a class='fa fa-edit' href='${router}'></a>`;
+          crud += `<a class='fa fa-eye verPedido' href='#' data-pedido_id='${data}'></a>`;
           return crud;
         }
       }

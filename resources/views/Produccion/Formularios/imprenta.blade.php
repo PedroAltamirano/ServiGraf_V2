@@ -324,7 +324,7 @@
   }
 
   //sumar total pedidos
-  function sumarMaterial(){
+  const sumarMaterial = () => {
     let total = 0.00;
     $('input[name="material_total[]"]').each(function(){
       total += parseFloat($(this).val());
@@ -370,7 +370,7 @@
   }
 
   //funcion para sumar el total
-  function sumar(num){
+  const sumar = num => {
     let tiro = $('#tiro-'+String(num)).val();
     let retiro = $('#retiro-'+String(num)).val();
     let millares = $('#mill-'+String(num)).val();
@@ -381,7 +381,7 @@
   }
 
   // sumar total procesos
-  function sumarProcesos(){
+  const sumarProcesos = () => {
     let total = 0.00;
     $('input[name="proceso_total[]"]').each(function(){
       total += parseFloat($(this).val());
@@ -437,7 +437,7 @@
   }
 
   //sumar total pedidos
-  function sumarAbonos(){
+  const sumarAbonos = () => {
     let total = 0.00;
     $('input[name="abono_valor[]"]').each(function(){
       total += parseFloat($(this).val());
@@ -448,7 +448,7 @@
   }
 
   //funcion para sumar saldo
-  function sumarSaldo(){
+  const sumarSaldo = () => {
     let total = $('#totalProcesos').val();
     let abono = $('#totalAbonos').val();
     $('#totalSaldo').val(parseFloat(total-abono).toFixed(2));
@@ -456,15 +456,21 @@
 
 
   //funcion para check todos los checkbox
-  $('#checkall').on('click', function () {
-    if ($('input[name="proceso_terminado[]"]:checked').length == $('input[name="proceso_terminado[]"]').length){
-      $('input[name="proceso_terminado[]"]').each(() => $(this).prop('checked', false));
+  $('#checkall').click(event => {
+    let checks = $('input[name="proceso_terminado[]"]');
+    let ckecks_finished = $('input[name="proceso_terminado[]"]:checked');
+    if (ckecks_finished.length == checks.length){
+      checks.each(function(){
+        $(this).prop('checked', false);
+      });
     } else {
-      $('input[name="proceso_terminado[]"]').each(() => $(this).prop('checked', true));
+      checks.each(function(){
+        $(this).prop('checked', true);
+      });
     }
   });
 
-  $("#printable").on("click", event => {
+  $("#printable").click(event => {
     let target = "#" + $("#printable").data("target");
     $(".select2Class").select2("destroy");
     $(target).print();

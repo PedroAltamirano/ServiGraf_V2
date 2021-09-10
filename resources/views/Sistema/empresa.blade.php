@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-@section('links')
-@endsection
-
 @section('desktop-content')
 
 <x-path
