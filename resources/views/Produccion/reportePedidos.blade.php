@@ -68,14 +68,15 @@
   // let areas = @json($areas);
   // console.log(areas.length);
 
-  const route = "{{ route('pedido.edit', 0) }}";
+  const route = `{{ route('pedido.edit', 0) }}`;
+  const routeAjax = `{{ route('reporte.pedidos.ajax') }}`;
   var table = $('#table').DataTable({
     "paging":   true,
     "ordering": true,
     "info":     false,
     "responsive": true,
     "ajax": {
-      "url": "{{ route('reporte.pedidos.ajax') }}",
+      "url": routeAjax,
       "method": 'get',
       "dataSrc": '',
       "data": {
@@ -97,9 +98,9 @@
       {"name":"cliente", "data": "cliente_nom"},
       {"name":"detalle", "data": "detalle"},
       @foreach($areas as $area)
-      {"name":"{{$area->area}}", "data":"areas", "defaultContent": "",
+      {"name":`{{$area->area}}`, "data":"areas", "defaultContent": "",
         "render":(data, type, full, meta) => {
-          let area = data.find(record => record.area_id === '{{$area->id}}');
+          let area = data.find(record => record.area_id === `{{$area->id}}`);
           return area ? area.totalArea : '';
         }
       },

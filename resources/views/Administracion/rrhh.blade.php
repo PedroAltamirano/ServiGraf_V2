@@ -131,6 +131,7 @@
   var dato_fecha = '';
   var dato_color = '';
   var cambio_color = false;
+  const routeAjax = `{{ route('rrhh.api')}}`;
   var table = $('#table').DataTable({
     "paging":   true,
     "ordering": true,
@@ -142,7 +143,7 @@
       autoPrint: false
     }],
     "ajax": {
-      "url": "{{ route('rrhh.api')}} ",
+      "url": routeAjax,
       "method": 'post',
       "dataSrc": '',
       "data": {
@@ -233,17 +234,17 @@
   });
 
   $('#hoy').click(() => {
-    $('#inicio').val("{{ date('Y-m-d') }}");
+    $('#inicio').val(moment().format('Y-MM-DD'));
     $('.refresh').change();
   });
 
   $('#semana').click(() => {
-    $('#inicio').val("{{ date('Y-m-d', strtotime('previous sunday')) }}");
+    $('#inicio').val(moment().startOf('isoWeek').format('Y-MM-DD'));
     $('.refresh').change();
   });
 
   $('#mes').click(() => {
-    $('#inicio').val("{{ date('Y-m-01') }}");
+    $('#inicio').val(moment().format('Y-MM-01'));
     $('.refresh').change();
   });
 </script>

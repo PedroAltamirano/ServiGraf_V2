@@ -93,8 +93,8 @@
       {"name":"cliente", "data": "cliente_nom"},
       {"name":"detalle", "data": "detalle"},
       @foreach($procesos as $proceso)
-      {"name":"{{ 'serv'.$proceso->id }}", "data":"procesos", "defaultContent": "", "render": (data, type, full, meta) => {
-        let proceso = data.find(record => record.proceso_id == '{{ $proceso->id }}');
+      {"name":`{{ 'serv'.$proceso->id }}`, "data":"procesos", "defaultContent": "", "render": (data, type, full, meta) => {
+        let proceso = data.find(record => record.proceso_id == `{{ $proceso->id }}`);
         return proceso ? proceso.totalProceso : '';
       }},
       @endforeach

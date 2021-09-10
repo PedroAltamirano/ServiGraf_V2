@@ -130,6 +130,7 @@
   });
 
   // CATEGORIAS
+  const routeStore = `{{ route("horario.store") }}`;
   $('#newHorario').click(function(event){
     var modal = $('#modalHorario');
     modal.find('.modal-title').html('Nuevo Horario');
@@ -140,7 +141,7 @@
     modal.find('.modal-salida_ta').val('');
     modal.find('.modal-espera').val('');
     modal.find('.modal-gracia').val('');
-    modal.find('.modal-path').attr('action', '{{ route("horario.store") }}');
+    modal.find('.modal-path').attr('action', routeStore);
     modal.find('input[name="_method"]').val('POST');
   });
 

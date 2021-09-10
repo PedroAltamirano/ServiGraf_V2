@@ -89,7 +89,7 @@
 
 @section('after.scripts')
 <script>
-  // const route = "{{route('contacto.info')}}";
+  // const route = `{{route('contacto.info')}}`;
   const route = `{{route('cliente.info')}}`;
   const getPhone = () => {
     axios.post(route, {

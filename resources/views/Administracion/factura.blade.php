@@ -257,7 +257,7 @@
   const fact_num = {{ $fact_num }};
   const fact_new = {{ $factura->id ?? 0 }};
 
-  // const route = "{{route('contacto.info')}}";
+  // const route = `{{route('contacto.info')}}`;
   const route = `{{route('cliente.info')}}`;
   const getPhone = () => {
     axios.post(route, {

@@ -137,10 +137,10 @@
 
 @section('scripts')
 <script>
-  var referenciaStore = "{{ route('referencia.store') }}";
-  var referenciaUpdate = "{{ route('referencia.update', 0) }}";
-  var bancoStore = "{{ route('banco.store') }}";
-  var bancoUpdate = "{{ route('banco.update', 0) }}";
+  const referenciaStore = `{{ route('referencia.store') }}`;
+  const referenciaUpdate = `{{ route('referencia.update', 0) }}`;
+  const bancoStore = `{{ route('banco.store') }}`;
+  const bancoUpdate = `{{ route('banco.update', 0) }}`;
 
   $("#modalReferencia").on('show.bs.modal', event => {
     let data = $(event.relatedTarget).data('referencia');

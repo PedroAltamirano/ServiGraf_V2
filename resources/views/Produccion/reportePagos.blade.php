@@ -62,14 +62,15 @@
 
 @section('scripts')
 <script>
-  const route = "{{ route('pedido.edit', 0) }}";
+  const route = `{{ route('pedido.edit', 0) }}`;
+  const routeAjax = `{{ route('reporte.pagos.ajax') }}`;
   var table = $('#table').DataTable({
     "paging":   true,
     "ordering": true,
     "info":     false,
     "responsive": true,
     "ajax": {
-      "url": "{{ route('reporte.pagos.ajax') }}",
+      "url": routeAjax,
       "method": 'get',
       "dataSrc": '',
       "data": {

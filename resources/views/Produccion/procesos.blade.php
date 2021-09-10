@@ -61,7 +61,10 @@
         <td>{{ $item->toperador ?? '' }}</td>
         <td>{{ $item->tipo ? 'Interno' : 'Externo' }}</td>
         <td><i class="{{ $item->seguimiento ? 'fas fa-check' : 'fas fa-times' }}"></i></td>
-        <td><a class='fa fa-edit' href='{{route('proceso.edit', $item->id)}}'></a> <a class='fa fa-eye' id="{{ $item->id }}"></a></td>
+        <td>
+          <a class='fa fa-edit' href='{{ route('proceso.edit', $item->id) }}'></a>
+          <a class='fa fa-eye' id="{{ $item->id }}"></a>
+        </td>
       </tr>
       @endforeach
     </tbody>
@@ -113,12 +116,13 @@
   });
 
   // AREAS
+  const routeStore = `{{ route("area.store") }}`;
   $('#newArea').click(function(event){
     var modal = $('#modalArea');
     modal.find('.modal-title').html('Nueva Área');
     modal.find('.modal-area').val('');
     modal.find('.modal-orden').val('');
-    modal.find('.modal-path').attr('action', '{{ route("area.store") }}');
+    modal.find('.modal-path').attr('action', routeStore);
     modal.find('input[name="_method"]').val('POST');
   });
 

@@ -42,7 +42,7 @@
         <td>{{ $item->cargo }}</td>
         <td>{{ $item->inicio_labor }}</td>
         <td>
-          <a class='fa fa-edit' href='{{route('nomina.edit', $item->cedula)}}'></a>
+          <a class='fa fa-edit' href='{{ route('nomina.edit', $item->cedula) }}'></a>
         </td>
       </tr>
       @endforeach

@@ -21,7 +21,7 @@
         @php
           $w = $pt > 0 ?(abs($pt-$pi)*100)/$pt : 0;
         @endphp
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ $w }}%" aria-valuenow="{{ $pt-$pi }}" aria-valuemin="0" aria-valuemax="{{ $pt }}">{{ $pt-$pi }}</div>
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ $w }}%" aria-valuenow='{{ $pt-$pi }}' aria-valuemin="0" aria-valuemax="{{ $pt }}">{{ $pt-$pi }}</div>
       </div>
     </div>
   </div>

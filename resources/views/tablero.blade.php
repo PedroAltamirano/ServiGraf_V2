@@ -60,7 +60,10 @@
         <td>{{ $item->detalle }}</td>
         <td>{{ $item->cantidad }}</td>
         <td>{{ implode(', ', $item->procesos_incompletos_nombre) }}</td>
-        <td><a class='fa fa-edit' href='{{route('pedido.edit', $item->numero)}}'></a> <a class='fa fa-eye verPedido' data-pedido_id="{{ $item->id }}" id="{{ $item->numero }}" href="#"></a></td>
+        <td>
+          <a class='fa fa-edit' href='{{ route('pedido.edit', $item->numero) }}'></a>
+          <a class='fa fa-eye verPedido' data-pedido_id="{{ $item->id }}" id="{{ $item->numero }}" href="#"></a>
+        </td>
       </tr>
       @endforeach
     </tbody>

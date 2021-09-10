@@ -128,7 +128,8 @@
   });
 
   // CATEGORIAS
-  const route = `{{route('facturacion-empresas.update', 0)}}`;
+  const routeStore = `{{ route("facturacion-empresas.store") }}`;
+  const routeUpdate = `{{route('facturacion-empresas.update', 0)}}`;
   $('#newFactura').click(function(event){
     var modal = $('#modalFactura');
     modal.find('.modal-title').html('Nueva Empresa');
@@ -150,7 +151,7 @@
       modal.find('.modal-activo').click();
     }
     modal.find('.modal-logo').attr('data-default-file', '');
-    modal.find('.modal-path').attr('action', '{{ route("facturacion-empresas.store") }}');
+    modal.find('.modal-path').attr('action', routeStore);
     modal.find('input[name="_method"]').val('POST');
   });
 
@@ -179,11 +180,12 @@
       modal.find('.modal-activo').click();
     }
     modal.find('.modal-logo').data('default-file', $(this).data('logo'));
-    modal.find('.modal-path').attr('action', route.replace("/0", "/"+data.id));
+    modal.find('.modal-path').attr('action', routeUpdate.replace("/0", "/"+data.id));
     modal.find('input[name="_method"]').val('PUT');
   });
 
   //Iva
+  const routeStoreIva = `{{ route("iva.store") }}`;
   const routeUpdateIva = `{{route('iva.update', 0)}}`;
   $('#newIva').click(function(event){
     var modal = $('#modalIva');
@@ -192,7 +194,7 @@
     if(modal.find('.modal-iva-activo').prop('checked') != true){
       modal.find('.modal-iva-activo').click();
     }
-    modal.find('.modal-iva-path').attr('action', '{{ route("iva.store") }}');
+    modal.find('.modal-iva-path').attr('action', routeStoreIva);
     modal.find('input[name="_method"]').val('POST');
   });
 
@@ -209,6 +211,7 @@
   });
 
   //Retencion
+  const routeStoreRetencion = `{{ route("retencion.store") }}`;
   const routeUpdateRetencion = `{{route('retencion.update', 0)}}`;
   $('#newRetencionIva,#newRetencionFnt').click(function(event){
     var modal = $('#modalRetencion');
@@ -219,7 +222,7 @@
     if(modal.find('.modal-ret-activo').prop('checked') != true){
       modal.find('.modal-ret-activo').click();
     }
-    modal.find('.modal-ret-path').attr('action', '{{ route("retencion.store") }}');
+    modal.find('.modal-ret-path').attr('action', routeStoreRetencion);
     modal.find('input[name="_method"]').val('POST');
   });
 

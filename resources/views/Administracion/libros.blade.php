@@ -212,10 +212,10 @@
   $("#modalRecibo").on('show.bs.modal', event => {
     let data = $(event.relatedTarget).data('entrada');
     let tipo = data.tipo ? 'COBRO' : 'PAGO';
-    let ciudad = "{{ Auth::user()->empresa->datos->ciudad ?? '' }}";
+    let ciudad = `{{ Auth::user()->empresa->datos->ciudad ?? '' }}`;
     let fecha = ciudad + ', ' + data.fecha;
     let valor = data.tipo ? data.ingreso : data.egreso;
-    let empresa = "{{ Auth::user()->empresa->nombre }}";
+    let empresa = `{{ Auth::user()->empresa->nombre }}`;
     let valor_texto = numeroALetras(valor);
     $('.recibo-tipo').html(tipo);
     $('.recibo-fecha').html(fecha);

@@ -146,12 +146,13 @@
   });
 
   //Centro de Costos
-  const routeUpdateCCostos = `{{route('centro-costos.update', 0)}}`;
+  const routeStore = `{{ route("centro-costos.store") }}`;
+  const routeUpdate = `{{route('centro-costos.update', 0)}}`;
   $('#newCCostos').click(function(event){
     var modal = $('#modalCCostos');
     modal.find('.modal-title').html('Nuevo Centro de Costos');
     modal.find('.modal-nombre').html('');
-    modal.find('.modal-path').attr('action', '{{ route("centro-costos.store") }}');
+    modal.find('.modal-path').attr('action', routeStore);
     modal.find('input[name="_method"]').val('POST');
   });
 
@@ -160,7 +161,7 @@
     let data = $(this).data('ccosto');
     modal.find('.modal-title').html('Modificar Centro de Costos');
     modal.find('.modal-nombre').val(data.nombre);
-    modal.find('.modal-path').attr('action', routeUpdateCCostos.replace("/0", "/"+data.id));
+    modal.find('.modal-path').attr('action', routeUpdate.replace('/0', `/${data.id}`));
     modal.find('input[name="_method"]').val('PUT');
   });
 </script>

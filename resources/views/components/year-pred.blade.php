@@ -34,9 +34,9 @@
           },
           @foreach ($yearly as $key => $year)
             {
-              label: '{{ $key }}',
+              label: `{{ $key }}`,
               data: @json($year->map(function($e)use($months){ return ['x' => $months[$e->month-1], 'y' => $e->total];})->toArray()),
-              borderColor: '{{ $colors[$loop->index] }}',
+              borderColor: `{{ $colors[$loop->index] }}`,
               borderDash: [5, 5],
               fill: false,
             },

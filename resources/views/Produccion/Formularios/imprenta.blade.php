@@ -391,7 +391,7 @@
 
   //ABONOS
   var index_abono = 0;
-  const method = '{{ $method }}';
+  const method = `{{ $method }}`;
   // const usuarios = `x-usuarios name='abono_usuario[]' id='abono_usuarios' /`;
   const usuario_id = `{{ auth()->id() }}`;
   const usuario_nombre = `{{ session('userInfo.nomina') }}`;

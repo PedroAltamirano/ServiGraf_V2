@@ -134,6 +134,7 @@
   });
 
   // CATEGORIAS
+  const routeStore = `{{ route("clave.store") }}`;
   $('#newClave').click(function(event){
     var modal = $('#modalClave');
     modal.find('.modal-title').html('Nueva Clave');
@@ -142,7 +143,7 @@
     modal.find('.modal-clave').val('');
     modal.find('.modal-refuerzo').val('');
     modal.find('.modal-url').val('');
-    modal.find('.modal-path').attr('action', '{{ route("clave.store") }}');
+    modal.find('.modal-path').attr('action', routeStore);
     modal.find('input[name="_method"]').val('POST');
   });
 

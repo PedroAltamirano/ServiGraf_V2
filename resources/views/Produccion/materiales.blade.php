@@ -61,7 +61,10 @@
         <td><i class="{{ $item->color ? 'fas fa-check' : 'fas fa-times' }}"></i></td>
         <td><i class="{{ $item->uv ? 'fas fa-check' : 'fas fa-times' }}"></i></td>
         <td><i class="{{ $item->plastificado ? 'fas fa-check' : 'fas fa-times' }}"></i></td>
-        <td><a class='fa fa-edit' href='{{route('material.edit', $item->id)}}'></a> <a class='fa fa-eye' id="{{ $item->id }}"></a></td>
+        <td>
+          <a class='fa fa-edit' href='{{ route('material.edit', $item->id) }}'></a>
+          <a class='fa fa-eye' id="{{ $item->id }}"></a>
+        </td>
       </tr>
       @endforeach
     </tbody>
@@ -151,11 +154,12 @@
   });
 
   // TINTAS
+  let routeStore = `{{ route("tinta.store") }}`;
   $('#newTinta').click(function(event){
     var modal = $('#modalTinta');
     modal.find('.modal-title').html('Nueva Tinta');
     modal.find('.modal-color').val('');
-    modal.find('.modal-path').attr('action', '{{ route("tinta.store") }}');
+    modal.find('.modal-path').attr('action', routeStore);
     modal.find('input[name="_method"]').val('POST');
   });
 
@@ -169,11 +173,12 @@
   });
 
   // CATEGORIAS
+  const routeStoreCat = `{{ route("categoria.store") }}`;
   $('#newCat').click(function(event){
     var modal = $('#modalCat');
     modal.find('.modal-title').html('Nueva Categoria');
     modal.find('.modal-color').val('');
-    modal.find('.modal-path').attr('action', '{{ route("categoria.store") }}');
+    modal.find('.modal-path').attr('action', routeStoreCat);
     modal.find('input[name="_method"]').val('POST');
   });
 

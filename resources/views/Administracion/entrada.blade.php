@@ -97,7 +97,7 @@
 
 @section('scripts')
 <script>
-  const route = "{{ route('libro.api.libros') }}";
+  const route = `{{ route('libro.api.libros') }}`;
   function getLibros(){
     axios.post(route, {
       usuario: $('#usuario_id').val(),
