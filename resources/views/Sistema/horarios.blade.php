@@ -20,7 +20,7 @@
     ['text'=>'Nuevo', 'href'=>'#modalHorario', 'id'=>'newHorario', 'tipo'=> 'modal'],
   ]"
 >
-  <table id="table" class="table table-responsive table-striped table-sm">
+  <table id="table" class="table table-striped table-sm">
     <thead>
       <tr>
         <td></td>

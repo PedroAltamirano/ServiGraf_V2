@@ -36,7 +36,7 @@
     ['text'=>'Referencias y Bancos', 'href'=>route('referencias-bancos'), 'id'=>'referencias_bancos', 'tipo'=> 'link']
   ]"
 >
-  <table id="table" class="table table-responsive table-striped table-sm">
+  <table id="table" class="table table-striped table-sm">
     <thead>
       <tr>
         <th scope="col">Fecha</th>

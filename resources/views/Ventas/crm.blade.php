@@ -20,7 +20,7 @@
   @if ($atrasadas->count())
   <x-aditional-info text='Atrasadas' />
   <div class="table-responsive">
-    <table id="table" class="table table-responsive table-striped table-sm">
+    <table id="table" class="table table-striped table-sm">
       <thead>
       </thead>
       <tbody>
@@ -45,7 +45,7 @@
 
   <x-aditional-info text='Hoy' />
   <div class="table-responsive">
-    <table id="table" class="table table-responsive table-striped table-sm">
+    <table id="table" class="table table-striped table-sm">
       <thead>
       </thead>
       <tbody>
@@ -69,7 +69,7 @@
 
   <x-aditional-info text='Semana' />
   <div class="table-responsive">
-    <table id="table" class="table table-responsive table-striped table-sm">
+    <table id="table" class="table table-striped table-sm">
       <thead>
       </thead>
       <tbody>
@@ -93,7 +93,7 @@
 
   <x-aditional-info text='Proximas' />
   <div class="table-responsive">
-    <table id="table" class="table table-responsive table-striped table-sm">
+    <table id="table" class="table table-striped table-sm">
       <thead>
       </thead>
       <tbody>

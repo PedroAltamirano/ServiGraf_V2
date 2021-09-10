@@ -36,7 +36,7 @@
     ['text'=>'Nuevo', 'href'=>route('proceso.create'), 'id'=>'nuevo', 'tipo'=> 'link'],
   ]"
 >
-  <table id="tableProcesos" class="table table-responsive table-striped table-sm">
+  <table id="tableProcesos" class="table table-striped table-sm">
     <thead>
       <tr>
         <th scope="col">Area</th>
