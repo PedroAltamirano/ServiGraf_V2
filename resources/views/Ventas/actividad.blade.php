@@ -61,6 +61,3 @@
   </form>
 </x-blue-board>
 @endsection
-
-@section('scripts')
-@endsection

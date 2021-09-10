@@ -100,7 +100,5 @@
     "info":     false,
     "responsive": true,
   });
-
-  $('.testbtn').click(() => add_error('aqui el mensaje', 'danger'))
 </script>
 @endsection

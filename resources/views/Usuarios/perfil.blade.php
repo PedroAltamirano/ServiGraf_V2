@@ -105,7 +105,6 @@
         @endforeach
       </tbody>
     </table>
-
   </form>
 </x-blue-board>
 @endsection

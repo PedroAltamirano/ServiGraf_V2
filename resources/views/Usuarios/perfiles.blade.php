@@ -62,7 +62,7 @@
     ],
     "columnDefs": [
     ],
-    "rowCallback": function(row, data, index){
+    "rowCallback": (row, data, index) => {
       (data.status == 1) ? $('td:eq(-1)', row).children('a').addClass('text-success') : $('td:eq(-1)', row).children('a').addClass('text-danger');
     },
   });
