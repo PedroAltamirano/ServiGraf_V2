@@ -78,7 +78,7 @@ class NominaController extends Controller
         DB::commit();
 
         if (isset($validated['foto'])) {
-          $foto_name = Archivos::storeImagen($nomina->cedula, $validated['foto'], 'usuarios');
+          $foto_name = Archivos::storeImagen($nomina->cedula, $validated['foto'], 'avatars');
           $nomina->foto = $foto_name;
           $nomina->save();
         }
@@ -149,7 +149,7 @@ class NominaController extends Controller
         DB::commit();
 
         if (isset($validated['foto'])) {
-          $foto_name = Archivos::storeImagen($nomina->cedula, $validated['foto'], 'usuarios');
+          $foto_name = Archivos::storeImagen($nomina->cedula, $validated['foto'], 'avatars');
           $nomina->foto = $foto_name;
           $nomina->save();
         }

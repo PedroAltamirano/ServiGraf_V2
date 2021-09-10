@@ -57,12 +57,12 @@ return [
 
     'facturas' => [
       'driver' => 'local',
-      'root' => storage_path('app/public/facturas'),
+      'root' => public_path('empresa_logo'),
     ],
 
-    'usuarios' => [
+    'avatars' => [
       'driver' => 'local',
-      'root' => storage_path('app/public/usuarios'),
+      'root' => public_path('avatars'),
     ],
 
     's3' => [
@@ -75,10 +75,4 @@ return [
     ],
 
   ],
-
-  'links' => [
-    public_path('usuarios') => storage_path('app/public/usuarios'),
-    public_path('facturas') => storage_path('app/public/facturas'),
-  ],
-
 ];

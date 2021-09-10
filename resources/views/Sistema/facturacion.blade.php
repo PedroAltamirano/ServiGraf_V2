@@ -39,8 +39,7 @@
     <tbody>
       @foreach ($facturas as $item)
       @php
-        $url = 'storage/facturas/'.$item->logo;
-        $logo = Storage::disk('facturas')->exists($item->logo) ? asset($url) : asset('logos/logo.svg');
+        $logo = asset("empresa_logo/$item->logo") : asset('logos/logo.svg');
       @endphp
       <tr>
         <td>{{ $item->empresa }}</td>

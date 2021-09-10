@@ -32,7 +32,7 @@
       <div class="row">
         <div class="form-group col-12 col-md-2">
           <label for="foto">Foto</label>
-          <input type="file" class="form-control-file dropify" name="foto" id="foto" data-default-file="{{ asset("usuarios/$nomina->foto") }}" data-max-file-size="2M" />
+          <input type="file" class="form-control-file dropify" name="foto" id="foto" data-default-file="{{ asset("avatars/$nomina->foto") }}" data-max-file-size="2M" />
         </div>
         <div class="form-row col-12 col-md-10">
           <div class="form-group col-12 col-md-2">
