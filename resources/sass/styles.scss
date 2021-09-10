@@ -164,7 +164,7 @@ a {
 	text-decoration: none;
 }
 
-$widths: 5, 10, 40, 60;
+$widths: 2, 5, 10, 40, 60;
 @each $size in $widths {
   .w-#{$size} {
     width: #{$size} + '%';

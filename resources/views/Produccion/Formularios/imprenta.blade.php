@@ -117,7 +117,9 @@
         <th scope="col" class="text-center">Mill</th>
         <th scope="col" class="text-center">V/U</th>
         <th scope="col" class="text-center">Total</th>
-        <th scope="col" class="w-5"><i class="fas fa-check" id="checkall"></i></th>
+        <th scope="col" class="w-2">
+          <i class="fas fa-check" id="checkall"></i>
+        </th>
       </tr>
     </thead>
     <tbody>
