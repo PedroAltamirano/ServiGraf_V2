@@ -54,6 +54,13 @@
 
 @section('scripts')
 <script>
+  $('#table').DataTable({
+    "info": false,
+    "paging": true,
+    "ordering": true,
+    "responsive": true,
+  });
+
   const routeStore = `{{ route('contacto.store') }}`;
   const routeEdit = `{{ route('contacto.update', 0) }}`;
 
@@ -69,6 +76,7 @@
 
     modal.find('#empresa').val(data ? data.empresa.nombre : '');
     modal.find('#ruc').val(data ? data.empresa.ruc : '');
+
     modal.find('#actividad').val(data ? data.actividad : '');
     modal.find('#titulo').val(data ? data.titulo : '');
     modal.find('#nombre').val(data ? data.nombre : '');
@@ -81,8 +89,11 @@
     modal.find('#extencion').val(data ? data.extencion : '');
     modal.find('#celular').val(data ? data.celular : '');
     modal.find('#web').val(data ? data.web : '');
-    modal.find('#isCliente').val(data ? data.isCliente : '');
-    modal.find('#seguimiento').val(data ? data.seguimiento : '');
+
+    let seguimiento = false;
+    if(data.cliente && data.cliente.seguimiento == '1') seguimiento = true;
+    modal.find('#isCliente').prop('checked', data.cliente ? true : false);
+    modal.find('#seguimiento').prop('checked', seguimiento);
   });
 </script>
 @endsection
