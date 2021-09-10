@@ -17,6 +17,8 @@ use App\Models\Ventas\Cliente;
 
 use App\Http\Requests\Ventas\StoreContacto;
 use App\Http\Requests\Ventas\UpdateContacto;
+use App\Models\Ventas\Comentario;
+use App\Models\Ventas\CRM;
 
 class ContactoController extends Controller
 {
@@ -68,7 +70,9 @@ class ContactoController extends Controller
 
   public function show(Contacto $contacto)
   {
-    return view('Ventas.contacto', compact('contacto'));
+    $tareas = CRM::where('contacto_id', $contacto->id)->orderBy('fecha', 'desc')->get();
+    $comentarios = Comentario::where('contacto_id', $contacto->id)->get()->toTree();
+    return view('Ventas.contacto', compact('contacto', 'tareas', 'comentarios'));
   }
 
   public function edit(Contacto $contacto)

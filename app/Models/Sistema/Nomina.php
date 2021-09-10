@@ -115,4 +115,10 @@ class Nomina extends Model
   {
     return $this->hasMany(NominaReferencia::class, 'nomina_id', 'cedula');
   }
+
+  public function getAvatarAttribute()
+  {
+    if ($this->foto) return asset("avatars/$this->foto");
+    return;
+  }
 }
