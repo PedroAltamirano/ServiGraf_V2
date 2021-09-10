@@ -24,7 +24,7 @@ class UpdatePlantilla extends FormRequest
   public function rules()
   {
     return [
-      'nombre' => ['required', 'string', 'max:255'],
+      'nombre' => ['required', 'string', 'max:250'],
       'contenido' => ['required', 'string'],
       'logo' => ['nullable'],
     ];

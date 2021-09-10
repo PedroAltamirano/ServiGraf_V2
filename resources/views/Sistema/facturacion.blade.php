@@ -8,7 +8,7 @@
 <x-path
   :items="[
     [
-      'text' => 'Facturación de Empresas',
+      'text' => 'Empresas de Facturación',
       'current' => true,
       'href' => '#',
     ]
@@ -39,7 +39,7 @@
     <tbody>
       @foreach ($facturas as $item)
       @php
-        $logo = asset("empresa_logo/$item->logo") : asset('logos/logo.svg');
+        $logo = $item->logo ? "empresa_logo/$item->logo" : 'logos/logo.svg';
       @endphp
       <tr>
         <td>{{ $item->empresa }}</td>
@@ -49,7 +49,7 @@
         <td>{{ $item->inicio }}</td>
         <td>{{ $item->valido_de }}</td>
         <td>{{ $item->valido_a }}</td>
-        <td class="text-center"><img src="{{ $logo }}" alt="{{ $item->id }}" style="max-width: 100px;"></td>
+        <td class="text-center"><img src="{{ asset($logo) }}" alt="{{ $item->id }}" style="max-width: 100px;"></td>
         <td class="text-center">{{ $item->impresion ? 'A4' : 'A5' }}</td>
         <td class="text-center"><a class='fa fa-edit modFactura @if ($item->status) text-success @else text-danger @endif' href="#modalFactura" data-toggle="modal"
           data-empresa='@json($item)'

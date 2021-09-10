@@ -81,6 +81,10 @@
         <label for="cloud">Cloud</label>
         <input type="url" name="cloud" id="cloud" class="form-control form-control-sm @error('cloud') is-invalid @enderror" value="{{ old('cloud', $empresa->cloud) }}">
       </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="mail">Cliente de email</label>
+        <input type="url" name="mail" id="mail" class="form-control form-control-sm @error('mail') is-invalid @enderror" value="{{ old('mail', $empresa->mail) }}">
+      </div>
     </div>
   </form>
 </x-blue-board>
@@ -100,7 +104,9 @@
     @endforeach
   </div>
 </x-blue-board>
+@endsection
 
+@section('modals')
 <!-- Modal Centro de Costos -->
 <div class="modal fade" id="modalCCostos" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -128,7 +134,6 @@
     </div>
   </div>
 </div>
-
 @endsection
 
 @section('scripts')

@@ -37,11 +37,11 @@ class StoreNomina extends FormRequest
       'apellido' => ['required', 'string', 'max:30'],
       'telefono' => ['nullable', 'numeric', 'max:9999999'],
       'celular' => ['required', 'numeric', 'max:999999999'],
-      'correo' => ['required', 'email', 'max:255', 'unique:nomina,correo'],
+      'correo' => ['required', 'email', 'max:250', 'unique:nomina,correo'],
       'cant_hijos' => ['nullable', 'numeric'],
 
       // Datos domiciliarios
-      'direccion' => ['required', 'string', 'max:255'],
+      'direccion' => ['required', 'string', 'max:250'],
       'sector' => ['required', 'string', 'max:30'],
       'visita_domiciliaria' => ['nullable', 'boolean'],
       'fecha_visita' => ['nullable', 'date'],
@@ -58,7 +58,7 @@ class StoreNomina extends FormRequest
       'liquidacion_mensual' => ['nullable', 'boolean'],
       'Txhoras' => ['nullable', 'boolean'],
       'horario_id' => ['required', 'numeric', 'exists:horarios,id'],
-      'observaciones' => ['nullable', 'string', 'max:255'],
+      'observaciones' => ['nullable', 'string', 'max:250'],
       'banco_id' => ['required', 'numeric', 'exists:bancos,id'],
       'tipo_cuenta_banco' => ['required', 'numeric'],
       'numero_cuenta_bancaria' => ['required', 'numeric'],
@@ -88,7 +88,7 @@ class StoreNomina extends FormRequest
       'nombre_institucion.*' => ['required', 'string', 'max:100'],
       'inicio.*' => ['required', 'date'],
       'fin.*' => ['required', 'date'],
-      'titulo.*' => ['required', 'string', 'max:255'],
+      'titulo.*' => ['required', 'string', 'max:250'],
 
       // Referencias
       'tipo_refer.*' => ['required', 'numeric'],
@@ -106,13 +106,13 @@ class StoreNomina extends FormRequest
       'dotacion_id.*' => ['required', 'numeric', 'exists:dotacion,id'],
 
       // Datos medicos
-      'contacto_emergencia_nombre' => ['required', 'string', 'max:255'],
+      'contacto_emergencia_nombre' => ['required', 'string', 'max:250'],
       'contacto_emergencia_domicilio' => ['nullable', 'number', 'max:9999999'],
       'contacto_emergencia_celular' => ['required', 'numeric', 'max:999999999'],
       'contacto_emergencia_oficina' => ['nullable', 'numeric', 'max:9999999'],
       'tipo_sangre' => ['required', 'numeric'],
-      'padecimientos_medicos' => ['nullable', 'string', 'max:255'],
-      'alergias' => ['nullable', 'string', 'max:255'],
+      'padecimientos_medicos' => ['nullable', 'string', 'max:250'],
+      'alergias' => ['nullable', 'string', 'max:250'],
 
       //Familia
       'relacion.*' => ['required', 'numeric'],

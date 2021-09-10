@@ -31,6 +31,7 @@ class CreateDatosEmpresasTable extends Migration
       $table->unsignedMediumInteger('inicio');
       // $table->unsignedTinyInteger('iva');
       $table->string('cloud', 250)->nullable();
+      $table->string('mail', 250)->nullable();
       $table->timestamps();
       $table->softDeletes();
     });
