@@ -63,7 +63,9 @@
     </tfoot>
   </table>
 </x-blue-board>
+@endsection
 
+@section('modals')
 <!-- Modal CATEGORIA -->
 <div id="modalHorario" class="modal fade">
   <div class="modal-dialog modal-lg">
@@ -128,7 +130,7 @@
 
   // CATEGORIAS
   const routeStore = `{{ route("horario.store") }}`;
-  $('#newHorario').click(function(event){
+  $('#newHorario').click(event => {
     var modal = $('#modalHorario');
     modal.find('.modal-title').html('Nuevo Horario');
     modal.find('.modal-nombre').val('');
@@ -142,8 +144,8 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modHorario').click(function(event){
-    var button = $(this);
+  $('.modHorario').click(event => {
+    var button = $(event.target);
     var modal = $('#modalHorario');
     modal.find('.modal-title').html('Modificar Horario');
     modal.find('.modal-nombre').val(button.data('nombre'));

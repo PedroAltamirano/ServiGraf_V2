@@ -145,20 +145,21 @@
   //Centro de Costos
   const routeStore = `{{ route("centro-costos.store") }}`;
   const routeUpdate = `{{route('centro-costos.update', 0)}}`;
-  $('#newCCostos').click(function(event){
+  $('#newCCostos').click(event => {
     var modal = $('#modalCCostos');
     modal.find('.modal-title').html('Nuevo Centro de Costos');
-    modal.find('.modal-nombre').html('');
+    modal.find('.modal-nombre').val('');
     modal.find('.modal-path').attr('action', routeStore);
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modCCostos').click(function(event){
+  $('.modCCostos').click(event => {
     let modal = $('#modalCCostos');
-    let data = $(this).data('ccosto');
+    let data = $(event.target).data('ccosto');
+    let path = routeUpdate.replace('/0', `/${data.id}`);
     modal.find('.modal-title').html('Modificar Centro de Costos');
     modal.find('.modal-nombre').val(data.nombre);
-    modal.find('.modal-path').attr('action', routeUpdate.replace('/0', `/${data.id}`));
+    modal.find('.modal-path').attr('action', path);
     modal.find('input[name="_method"]').val('PUT');
   });
 </script>

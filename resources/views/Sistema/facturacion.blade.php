@@ -107,15 +107,16 @@
     @endforeach
   </div>
 </x-blue-board>
+@endsection
 
+@section('modals')
 @include('Sistema.modal-fact-emp')
 @include('Sistema.modal-iva-ret')
-
 @endsection
 
 @section('scripts')
 <script>
-  let today = `{{ date('Y-m-d') }}`;
+  let today = moment().format('Y-MM-DD');
 
   $('#table').DataTable({
     "paging":   true,
@@ -127,7 +128,7 @@
   // CATEGORIAS
   const routeStore = `{{ route("facturacion-empresas.store") }}`;
   const routeUpdate = `{{route('facturacion-empresas.update', 0)}}`;
-  $('#newFactura').click(function(event){
+  $('#newFactura').click(event => {
     var modal = $('#modalFactura');
     modal.find('.modal-title').html('Nueva Empresa');
     modal.find('.modal-empresa').val('');
@@ -152,8 +153,8 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modFactura').click(function(event){
-    let data = $(this).data('empresa');
+  $('.modFactura').click(event => {
+    let data = $(event.target).data('empresa');
     let modal = $('#modalFactura');
     modal.find('.modal-title').html('Modificar Empresa');
     modal.find('.modal-empresa').val(data.empresa);
@@ -176,15 +177,15 @@
     if(modal.find('.modal-activo').prop('checked') != Boolean(Number(data.status))){
       modal.find('.modal-activo').click();
     }
-    modal.find('.modal-logo').data('default-file', $(this).data('logo'));
-    modal.find('.modal-path').attr('action', routeUpdate.replace("/0", "/"+data.id));
+    modal.find('.modal-logo').data('default-file', $(event.target).data('logo'));
+    modal.find('.modal-path').attr('action', routeUpdate.replace('/0', `/${data.id}`));
     modal.find('input[name="_method"]').val('PUT');
   });
 
   //Iva
   const routeStoreIva = `{{ route("iva.store") }}`;
   const routeUpdateIva = `{{route('iva.update', 0)}}`;
-  $('#newIva').click(function(event){
+  $('#newIva').click(event => {
     var modal = $('#modalIva');
     modal.find('.modal-iva-title').html('Nuevo Iva');
     modal.find('.modal-iva-porcentaje').val('0.00');
@@ -195,22 +196,22 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modIva').click(function(event){
+  $('.modIva').click(event => {
     let modal = $('#modalIva');
-    let data = $(this).data('iva');
+    let data = $(event.target).data('iva');
     modal.find('.modal-iva-title').html('Modificar Iva');
     modal.find('.modal-iva-porcentaje').val(data.porcentaje);
     if(modal.find('.modal-iva-activo').prop('checked') != Boolean(Number(data.status))){
       modal.find('.modal-iva-activo').click();
     }
-    modal.find('.modal-iva-path').attr('action', routeUpdateIva.replace("/0", "/"+data.id));
+    modal.find('.modal-iva-path').attr('action', routeUpdateIva.replace('/0', `/${data.id}`));
     modal.find('input[name="_method"]').val('PUT');
   });
 
   //Retencion
   const routeStoreRetencion = `{{ route("retencion.store") }}`;
   const routeUpdateRetencion = `{{route('retencion.update', 0)}}`;
-  $('#newRetencionIva,#newRetencionFnt').click(function(event){
+  $('#newRetencionIva,#newRetencionFnt').click(event => {
     var modal = $('#modalRetencion');
     modal.find('.modal-ret-title').html('Nueva Retencion');
     modal.find('.modal-ret-porcentaje').val('0.00');
@@ -223,9 +224,9 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modRetencion').click(function(event){
+  $('.modRetencion').click(event => {
     let modal = $('#modalRetencion');
-    let data = $(this).data('retencion');
+    let data = $(event.target).data('retencion');
     modal.find('.modal-ret-title').html('Modificar Retencion');
     modal.find('.modal-ret-porcentaje').val(data.porcentaje);
     modal.find('.modal-ret-tipo').val(data.tipo);
@@ -233,7 +234,7 @@
     if(modal.find('.modal-ret-activo').prop('checked') != Boolean(Number(data.status))){
       modal.find('.modal-ret-activo').click();
     }
-    modal.find('.modal-ret-path').attr('action', routeUpdateRetencion.replace("/0", "/"+data.id));
+    modal.find('.modal-ret-path').attr('action', routeUpdateRetencion.replace('/0', `/${data.id}`));
     modal.find('input[name="_method"]').val('PUT');
   });
 </script>

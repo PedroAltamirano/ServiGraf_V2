@@ -50,7 +50,9 @@
     </tfoot>
   </table>
 </x-blue-board>
+@endsection
 
+@section('modals')
 <!-- Modal CATEGORIA -->
 <div id="modalClave" class="modal fade">
   <div class="modal-dialog modal-lg">
@@ -132,7 +134,7 @@
 
   // CATEGORIAS
   const routeStore = `{{ route("clave.store") }}`;
-  $('#newClave').click(function(event){
+  $('#newClave').click(event => {
     var modal = $('#modalClave');
     modal.find('.modal-title').html('Nueva Clave');
     modal.find('.modal-cuenta').val('');
@@ -144,8 +146,8 @@
     modal.find('input[name="_method"]').val('POST');
   });
 
-  $('.modClave').click(function(event){
-    var button = $(this);
+  $('.modClave').click(event => {
+    var button = $(event.target);
     var modal = $('#modalClave');
     modal.find('.modal-title').html('Modificar Clave');
     modal.find('.modal-cuenta').val(button.data('cuenta'));
@@ -157,11 +159,10 @@
     modal.find('input[name="_method"]').val('PUT');
   });
 
-  $('.delClave').click(function(event){
-    var button = $(this);
+  $('.delClave').click(event => {
+    var button = $(event.target);
     var modal = $('#deleteAlert');
     modal.find('.modal-path').attr('action', button.data('route'));
   });
-
 </script>
 @endsection
