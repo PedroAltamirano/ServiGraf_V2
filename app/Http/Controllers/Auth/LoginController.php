@@ -39,6 +39,8 @@ class LoginController extends Controller
     $userInfo['nomina'] = $user->nomina->nombre;
     $userInfo['empresa'] = $user->empresa->nombre;
     $userInfo['empresa_tipo'] = $user->empresa->tipoEmpresa->nombre;
+    $userInfo['cloud'] = $user->empresa->datos->cloud;
+    $userInfo['mail'] = $user->empresa->datos->mail;
     $request->session()->put('userInfo', $userInfo);
   }
 

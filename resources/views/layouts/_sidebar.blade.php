@@ -71,7 +71,7 @@
   <!-- cloud -->
   @if(Security::hasModule('40'))
   <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="{{ route('cloud') }}">
       <i class="fas fa-fw fa-cloud"></i>
       <span>Cloud</span></a>
   </li>
@@ -80,7 +80,7 @@
   <!-- mail -->
   @if(Security::hasModule('45'))
   <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="{{ route('mail') }}">
       <i class="fas fa-fw fa-envelope"></i>
       <span>Mail</span></a>
   </li>
