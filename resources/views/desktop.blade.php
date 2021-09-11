@@ -49,7 +49,7 @@
     <canvas id="interna" height="50"></canvas>
   </div>
   @php
-  $pa = $pedidos->map(function($p){return $p->id;})->toArray();
+  $pa = $pedidos->pluck('id')->toArray();
   $sa = $procesos->where('tipo', 1)->pluck('id')->toArray();
   $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->whereIn('proceso_id', $sa)->groupBy('proceso_id')->get()->each(function($i){return $i->nombre = $i->proceso; });
   $Id = $items->pluck('totalData');
@@ -64,7 +64,7 @@
     <canvas id="externa" height="50"></canvas>
   </div>
   @php
-  $pa = $pedidos->map(function($p){return $p->id;})->toArray();
+  $pa = $pedidos->pluck('id')->toArray();
   $sa = $procesos->where('tipo', 0)->pluck('id')->toArray();
   $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->whereIn('proceso_id', $sa)->groupBy('proceso_id')->get()->each(function($i){return $i->nombre = $i->proceso->proceso; });
   $Ed = $items->pluck('totalData');
@@ -116,7 +116,7 @@
     <canvas id="materiales" height="50"></canvas>
   </div>
   @php
-  $pa = $pedidos->map(function($p){return $p->id;})->toArray();
+  $pa = $pedidos->pluck('id')->toArray();
   $items = App\Models\Produccion\Solicitud_material::select('material_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->groupBy('material_id')->get()->each(function($i){return $i->nombre = $i->material->descripcion; });
   $Md = $items->pluck('totalData');
   $Ml = $items->pluck('nombre');
@@ -144,7 +144,7 @@
       @foreach ($utilidades as $item)
       <tr>
         <td>{{ $item->numero }}</td>
-        <td>{{ $item->cliente->contacto->nombre.' '.$item->cliente->contacto->apellido }}</td>
+        <td>{{ $item->cliente->full_name }}</td>
         <td>{{ $item->detalle }}</td>
         <td class="text-right">{{ number_format($item->utilidad, 2) }}</td>
       </tr>
@@ -165,10 +165,10 @@
 <div class="m-2 m-md-3 row">
   @foreach ($clientes as $cli)
     @php
-    $pa = $pedidos->where('cliente_id', $cli->id)->map(function($p){return $p->id;})->toArray();
-    $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->groupBy('proceso_id')->get()->each(function($i){return $i->nombre = $i->proceso->proceso; });
+    $pedidos_id = $pedidos->where('cliente_id', $cli->id)->pluck('id')->toArray();
+    $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pedidos_id)->groupBy('proceso_id')->get()->each(function($i){return $i->nombre = $i->proceso->proceso; });
     @endphp
-    <x-report :title="$cli->contacto->nombre.' '.$cli->contacto->apellido" :items="$items"></x-report>
+    <x-report :title="$cli->contacto->full_name" :items="$items" />
   @endforeach
 </div>
 @endif
@@ -179,10 +179,10 @@
 <div class="m-2 m-md-3 row">
   @foreach ($clientes as $cli)
     @php
-    $pa = $pedidos->where('cliente_id', $cli->id)->map(function($p){return $p->id;})->toArray();
+    $pa = $pedidos->where('cliente_id', $cli->id)->pluck('id')->toArray();
     $items = App\Models\Produccion\Solicitud_material::select('material_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->groupBy('material_id')->get()->each(function($i){return $i->nombre = $i->material->descripcion; });
     @endphp
-    <x-report :title="$cli->contacto->nombre.' '.$cli->contacto->apellido" :items="$items"></x-report>
+    <x-report :title="$cli->contacto->full_name" :items="$items"></x-report>
   @endforeach
 </div>
 @endif

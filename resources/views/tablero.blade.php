@@ -50,13 +50,9 @@
     </thead>
     <tbody>
       @foreach($pedidos as $item)
-      @php
-        $cli = $item->cliente;
-        $cli = $cli->empresa->nombre.' / '.$cli->contacto->nombre.' '.$cli->contacto->apellido;
-      @endphp
       <tr>
         <td>{{ $item->numero }}</td>
-        <td>{{ $cli }}</td>
+        <td>{{ $item->cliente->bussiness_name ?? '' }}</td>
         <td>{{ $item->detalle }}</td>
         <td>{{ $item->cantidad }}</td>
         <td>{{ implode(', ', $item->procesos_incompletos_nombre) }}</td>
@@ -73,21 +69,22 @@
 @endif
 
 @if(count($clientes) > 0)
+<hr class="m-2 m-md-3"/>
+<h2 class="m-2 m-md-3">Seguimiento de clientes</h2>
 <div class="m-2 m-md-3 row">
   @foreach ($clientes as $cli)
     @php
-    $pa = App\Models\Produccion\Pedido::select('id')->where('cliente_id', $cli->id)->whereBetween('fecha_entrada', [date('Y-m-01'), date('Y-m-d')])->get()->map(function($p){return $p->id;})->toArray();
-    $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pa)->groupBy('proceso_id')->get()->each(function($i){return $i->nombre = $i->proceso; });
+    $pedidos_id = App\Models\Produccion\Pedido::where('cliente_id', $cli->id)->whereBetween('fecha_entrada', [date('Y-m-01'), date('Y-m-d')])->pluck('id')->toArray();
+    $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))->whereIn('pedido_id', $pedidos_id)->groupBy('proceso_id')->get()->each(function($i){return $i->nombre = $i->proceso->proceso; });
     @endphp
-    <x-report :title="$cli->contacto->nombre.' '.$cli->contacto->apellido" :items="$items"></x-report>
+    <x-report :title="$cli->contacto->full_name" :items="$items" />
   @endforeach
 </div>
 @endif
 @endsection
 
 @section('modals')
-{{-- <x-modal-pedido id=1></x-modalPedido> --}}
-<div id="modalPedidoDiv"></div>
+<x-modal-pedido />
 @endsection
 
 @section('scripts')

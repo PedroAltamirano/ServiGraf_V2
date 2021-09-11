@@ -69,7 +69,9 @@
         <label for="procesos">Procesos</label>
         <select class="custom-select select2Class @error('procesos') is-invalid @enderror" name="procesos[]" id="procesos" multiple>
           <option disabled>Select one</option>
-          @php($array = old('procesos') ?? $usuario->procesos->pluck('id')->toArray())
+          @php
+            $array = old('procesos') ?? $usuario->procesos->pluck('id')->toArray();
+          @endphp
           @foreach ($procesos as $item)
           <option value="{{ $item->id }}" {{ in_array($item->id, $array) ? 'selected':'' }}>
             {{ $item->proceso }}
@@ -81,7 +83,9 @@
         <label for="actividades">Actividades</label>
         <select class="custom-select select2Class @error('actividades') is-invalid @enderror" name="actividades[]" id="actividades" disabled multiple>
           <option disabled>Select one</option>
-          @php($array = old('actividades', $usuario->actividades) ?? [])
+          @php
+            $array = old('actividades', $usuario->actividades) ?? [];
+          @endphp
           @foreach ($actividades as $item)
           <option value="{{ $item->id }}" {{ in_array($item->id, $array) ? 'selected':'' }}>
             {{ $item->nombre }}
@@ -93,7 +97,9 @@
         <label for="clientes">Clientes Seguimiento</label>
         <select class="custom-select select2Class @error('clientes') is-invalid @enderror" name="clientes[]" id="clientes" multiple>
           <option disabled>Select one</option>
-          @php($array = old('clientes') ?? $usuario->clientes->map(function($c){return $c->id;})->toArray())
+          @php
+            $array = old('clientes') ?? $usuario->clientes->pluck('id')->toArray();
+          @endphp
           @foreach ($clientes as $item)
           <option value="{{ $item->id }}" {{ in_array($item->id, $array) ? 'selected':'' }}>
             {{ $item->contacto->nombre.' '.$item->contacto->apellido.' / '.$item->empresa->nombre }}
