@@ -69,22 +69,17 @@ class ProcesosController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($proceso = Proceso::create($validator)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Proceso creado con éxito');
+        return redirect()->route('proceso.edit', $proceso->id);
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Proceso no creado');
       return redirect()->back()->withInput();
-    }
-
-    $proceso = Proceso::create($validator);
-
-    Alert::success('Acción completada', 'Proceso creado con éxito');
-    return redirect()->route('proceso.edit', $proceso->id);
+    };
   }
 
   // Ver modificar
@@ -109,21 +104,16 @@ class ProcesosController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($proceso->update($validator)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Proceso modificado con éxito');
+        return redirect()->route('proceso.edit', $proceso->id);
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Proceso no modificado');
       return redirect()->back()->withInput();
-    }
-
-    $proceso->update($validator);
-
-    Alert::success('Acción completada', 'Proceso modificado con éxito');
-    return redirect()->route('proceso.edit', $proceso->id);
+    };
   }
 }

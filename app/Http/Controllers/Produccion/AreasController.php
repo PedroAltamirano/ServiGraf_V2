@@ -28,22 +28,17 @@ class AreasController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($area = Area::create($validator)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Área creada con éxito');
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Área no creada');
       return redirect()->back()->withInput();
     }
-
-    $area = Area::create($validator);
-
-    Alert::error('Oops!', 'Área creada con éxito');
-    return redirect()->back();
   }
 
   //modificar area
@@ -53,22 +48,17 @@ class AreasController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($area->update($validator)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Área modificada con éxito');
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Área no modificada');
       return redirect()->back()->withInput();
     }
-
-    $area->update($validator);
-
-    Alert::success('Acción completada', 'Área modificada con éxito');
-    return redirect()->back();
   }
 
   public function delete(Area $area)
@@ -76,21 +66,16 @@ class AreasController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($area->delete()) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Área eliminada con éxito');
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
-      return redirect()->back()->withInput();
+      Alert::error('Oops!', 'Área no eliminada');
+      return redirect()->back();
     }
-
-    $area->delete();
-
-    Alert::success('Acción completada', 'Área eliminada con éxito');
-    return redirect()->back();
   }
 }

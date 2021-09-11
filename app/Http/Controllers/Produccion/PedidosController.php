@@ -88,26 +88,21 @@ class PedidosController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($pedido = Pedido::create($validator)) {
+        app(ImprentaController::class)->manageTintas($validator, $pedido);
+        app(ImprentaController::class)->manageSolicitudMaterial($validator, $pedido);
+        app(ImprentaController::class)->manageProcesos($validator, $pedido);
+
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Pedido creado con éxito');
+        return redirect()->route('pedido.edit', $pedido->id);
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Pedido no creado');
       return redirect()->back()->withInput();
-    }
-
-    $model = Pedido::create($validator);
-
-    app(ImprentaController::class)->manageTintas($validator, $model);
-    app(ImprentaController::class)->manageSolicitudMaterial($validator, $model);
-    app(ImprentaController::class)->manageProcesos($validator, $model);
-
-    Alert::success('Acción completada', 'Pedido creado con éxito');
-    return redirect()->route('pedido.edit', $model->id);
+    };
   }
 
   //ver modificar
@@ -137,26 +132,21 @@ class PedidosController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($pedido->update($validator)) {
+        app(ImprentaController::class)->manageTintas($validator, $pedido);
+        app(ImprentaController::class)->manageSolicitudMaterial($validator, $pedido);
+        app(ImprentaController::class)->manageProcesos($validator, $pedido);
+
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Pedido modificado con éxito');
+        return redirect()->route('pedido.edit', $pedido->id);
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Pedido no modificado');
       return redirect()->back()->withInput();
-    }
-
-    $pedido->update($validator);
-
-    app(ImprentaController::class)->manageTintas($validator, $pedido);
-    app(ImprentaController::class)->manageSolicitudMaterial($validator, $pedido);
-    app(ImprentaController::class)->manageProcesos($validator, $pedido);
-
-    Alert::success('Acción completada', 'Pedido modificado con éxito');
-    return redirect()->route('pedido.edit', $pedido->id);
+    };
   }
 
   // duplicar perfil

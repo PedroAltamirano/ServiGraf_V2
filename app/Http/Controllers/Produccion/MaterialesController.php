@@ -75,22 +75,17 @@ class MaterialesController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($material = Material::create($validator)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Material creada con éxito');
+        return redirect()->route('material.edit', $material->id);
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::success('Acción completada', 'Actividad no creada');
+      Alert::success('Acción completada', 'Material no creada');
       return redirect()->back()->withInput();
     }
-
-    $material = Material::create($validator);
-
-    Alert::error('Oops!', 'Material creado con éxito');
-    return redirect()->route('material.edit', $material->id);
   }
 
   //ver modificar
@@ -117,21 +112,16 @@ class MaterialesController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($material->update($validator)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Material modificado con éxito');
+        return redirect()->route('material.edit', $material->id);
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Material no modificado');
       return redirect()->back()->withInput();
-    }
-
-    $material->update($validator);
-
-    Alert::success('Acción completada', 'Material modificado con éxito');
-    return redirect()->route('material.edit', $material->id)->with(['actionStatus' => json_encode($data)]);
+    };
   }
 }

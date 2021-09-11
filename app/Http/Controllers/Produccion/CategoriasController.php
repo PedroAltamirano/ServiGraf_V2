@@ -29,22 +29,17 @@ class CategoriasController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($categoria = Categoria::create($validator)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Categoría creada con éxito');
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Categoría no creada');
       return redirect()->back()->withInput();
     }
-
-    $categoria = Categoria::create($validator);
-
-    Alert::success('Acción completada', 'Categoría creada con éxito');
-    return redirect()->back();
   }
 
   //modificar perfil
@@ -54,21 +49,16 @@ class CategoriasController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($categoria->update($validator)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Categoría modificada con éxito');
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Categoría no modificada');
       return redirect()->back()->withInput();
     }
-
-    $categoria->update($validator);
-
-    Alert::success('Acción completada', 'Categoría modificada con éxito');
-    return redirect()->back();
   }
 }
