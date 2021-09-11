@@ -58,24 +58,19 @@ class EntradaController extends Controller
       $validated['ingreso'] = 0;
     }
 
-    $entrada = Libro_movimientos::create($validated);
-
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($entrada = Libro_movimientos::create($validated)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Entrada creada con éxito');
+        return redirect()->route('entrada.edit', $entrada);
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Entrada no creada');
       return redirect()->back()->withInput();
     }
-
-    Alert::success('Acción completada', 'Entrada creada con éxito');
-    return redirect()->route('entrada.edit', $entrada);
   }
 
   /**
@@ -116,23 +111,18 @@ class EntradaController extends Controller
       $validated['ingreso'] = 0;
     }
 
-    $entrada->update($validated);
-
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($entrada->update($validated)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Entrada modificada con éxito');
+        return redirect()->route('entrada.edit', $entrada);
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Entrada no modificada');
       return redirect()->back()->withInput();
     }
-
-    Alert::success('Acción completada', 'Entrada modificada con éxito');
-    return redirect()->route('entrada.edit', $entrada);
   }
 }

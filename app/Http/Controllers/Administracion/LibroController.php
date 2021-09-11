@@ -50,22 +50,17 @@ class LibroController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($libro = Libro::create($validated)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Libro creado con éxito');
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Libro no creado');
       return redirect()->back()->withInput();
-    }
-
-    $libro = Libro::create($validated);
-
-    Alert::success('Acción completada', 'Libro creado con éxito');
-    return redirect()->back();
+    };
   }
 
   /**
@@ -81,22 +76,17 @@ class LibroController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($libro->update($validated)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
+        Alert::success('Acción completada', 'Libro modificado con éxito');
         return redirect()->route('actividad.edit', $actividad);
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Libro no modificado');
       return redirect()->back()->withInput();
-    }
-
-    $libro->update($validated);
-
-    Alert::success('Acción completada', 'Libro modificado con éxito');
-    return redirect()->back();
+    };
   }
 
   /**
@@ -105,19 +95,19 @@ class LibroController extends Controller
    * @param  int  App\Models\Administracion\  $entrada
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy(Libro $libro)
   {
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($libro->delete()) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Libro eliminado con éxito');
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Libro no eliminado');
       return redirect()->back()->withInput();
     }
   }

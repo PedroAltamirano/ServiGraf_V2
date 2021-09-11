@@ -90,40 +90,35 @@ class FacturacionController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($factura = Factura::create($validator)) {
+        $size = sizeof($validator['articulo']['cantidad'] ?? []);
+        for ($i = 0; $i < $size; $i++) {
+          $prod = new Fact_prod();
+          $prod->factura_id = $factura->id;
+          $prod->cantidad = $validator['articulo']['cantidad'][$i];
+          $prod->detalle = $validator['articulo']['detalle'][$i];
+          $prod->iva_id = $validator['articulo']['iva_id'][$i];
+          $prod->valor_unitario = $validator['articulo']['valor_unitario'][$i];
+          $prod->subtotal = $validator['articulo']['subtotal'][$i];
+          $prod->save();
+        }
+
+        if (isset($validatos['pedidos'])) {
+          foreach ($validatos['pedidos'] as $pedido) {
+            FacturaPedido::create(['factura_id' => $factura->id, 'pedido_id' => $pedido]);
+          }
+        }
+
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Factura creada con éxito');
+        return redirect()->route('factura.edit', $factura);
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Factura no creada');
       return redirect()->back()->withInput();
     }
-
-    $factura = Factura::create($validator);
-
-    $size = sizeof($validator['articulo']['cantidad'] ?? []);
-    for ($i = 0; $i < $size; $i++) {
-      $prod = new Fact_prod();
-      $prod->factura_id = $factura->id;
-      $prod->cantidad = $validator['articulo']['cantidad'][$i];
-      $prod->detalle = $validator['articulo']['detalle'][$i];
-      $prod->iva_id = $validator['articulo']['iva_id'][$i];
-      $prod->valor_unitario = $validator['articulo']['valor_unitario'][$i];
-      $prod->subtotal = $validator['articulo']['subtotal'][$i];
-      $prod->save();
-    }
-
-    if (isset($validatos['pedidos'])) {
-      foreach ($validatos['pedidos'] as $pedido) {
-        FacturaPedido::create(['factura_id' => $factura->id, 'pedido_id' => $pedido]);
-      }
-    }
-
-    Alert::success('Acción completada', 'Factura creada con éxito');
-    return redirect()->route('factura.edit', $factura);
   }
 
   //ver modificar
@@ -161,42 +156,37 @@ class FacturacionController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($factura->update($validator)) {
+        Fact_prod::where('factura_id', $factura->id)->delete();
+        $size = sizeof($validator['articulo']['cantidad'] ?? []);
+        for ($i = 0; $i < $size; $i++) {
+          $prod = new Fact_prod();
+          $prod->factura_id = $factura->id;
+          $prod->cantidad = $validator['articulo']['cantidad'][$i];
+          $prod->detalle = $validator['articulo']['detalle'][$i];
+          $prod->iva_id = $validator['articulo']['iva_id'][$i];
+          $prod->valor_unitario = $validator['articulo']['valor_unitario'][$i];
+          $prod->subtotal = $validator['articulo']['subtotal'][$i];
+          $prod->save();
+        }
+
+        FacturaPedido::where('factura_id', $factura->id)->delete();
+        if (isset($validator['pedidos'])) {
+          foreach ($validator['pedidos'] as $pedido) {
+            FacturaPedido::create(['factura_id' => $factura->id, 'pedido_id' => $pedido]);
+          }
+        }
+
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Factura modificada con éxito');
+        return redirect()->route('factura.edit', $factura->id);
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Factura no modificada');
       return redirect()->back()->withInput();
     }
-
-    $factura->update($validator);
-
-    Fact_prod::where('factura_id', $factura->id)->delete();
-    $size = sizeof($validator['articulo']['cantidad'] ?? []);
-    for ($i = 0; $i < $size; $i++) {
-      $prod = new Fact_prod();
-      $prod->factura_id = $factura->id;
-      $prod->cantidad = $validator['articulo']['cantidad'][$i];
-      $prod->detalle = $validator['articulo']['detalle'][$i];
-      $prod->iva_id = $validator['articulo']['iva_id'][$i];
-      $prod->valor_unitario = $validator['articulo']['valor_unitario'][$i];
-      $prod->subtotal = $validator['articulo']['subtotal'][$i];
-      $prod->save();
-    }
-
-    FacturaPedido::where('factura_id', $factura->id)->delete();
-    if (isset($validator['pedidos'])) {
-      foreach ($validator['pedidos'] as $pedido) {
-        FacturaPedido::create(['factura_id' => $factura->id, 'pedido_id' => $pedido]);
-      }
-    }
-
-    Alert::success('Acción completada', 'Factura modificada con éxito');
-    return redirect()->route('factura.edit', $factura->id);
   }
 
   // AJAX

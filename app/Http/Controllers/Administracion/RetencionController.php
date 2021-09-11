@@ -54,22 +54,17 @@ class RetencionController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($retencion = Retencion::create($validated)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Retención creada con éxito');
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Retención no creada');
       return redirect()->back()->withInput();
-    }
-
-    Retencion::create($validated);
-
-    Alert::success('Acción completada', 'Retención creada con éxito');
-    return redirect()->back();
+    };
   }
 
   /**
@@ -109,22 +104,17 @@ class RetencionController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($retencion->update($validated)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Retención modificada con éxito');
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Retención no modificada');
       return redirect()->back()->withInput();
-    }
-
-    $retencion->update($validated);
-
-    Alert::success('Acción completada', 'Retención modificada con éxito');
-    return redirect()->back();
+    };
   }
 
   /**
@@ -133,19 +123,19 @@ class RetencionController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy(Retencion $retencion)
   {
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($retencion->delete()) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Retención eliminada con éxito');
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Retención no eliminada');
       return redirect()->back()->withInput();
     }
   }
