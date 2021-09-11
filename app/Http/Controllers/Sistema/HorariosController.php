@@ -49,22 +49,17 @@ class HorariosController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($horario = Horario::create($validator)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Horario creado con éxito');
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Horario no creado');
       return redirect()->back()->withInput();
     }
-
-    $horario = Horario::create($validator);
-
-    Alert::success('Acción completada', 'Horario creado con éxito');
-    return redirect()->back();
   }
 
   //modificar perfil
@@ -74,21 +69,16 @@ class HorariosController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($horario->update($validator)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Horario modificado con éxito');
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!' 'Actividad no creada');
+      Alert::error('Oops!', 'Horario no modificado');
       return redirect()->back()->withInput();
     }
-
-    $horario->update($validator);
-
-    Alert::success('Acción completada', 'Horario modificado con éxito');
-    return redirect()->back();
   }
 }

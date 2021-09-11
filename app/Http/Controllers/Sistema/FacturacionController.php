@@ -64,29 +64,24 @@ class FacturacionController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($factura = Fact_empr::create($validated)) {
+        if (isset($file)) {
+          $name = $factura->id;
+          $imageName = Archivos::storeImagen($name, $file, 'facturas');
+          $factura->logo = $imageName;
+          $factura->save();
+        }
+
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Datos de facturación creados con éxito');
+        return redirect()->route('facturacion-empresas');
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Datos de facturación no creados');
       return redirect()->back()->withInput();
     }
-
-    $factura = Fact_empr::create($validated);
-
-    if (isset($file)) {
-      $name = $factura->id;
-      $imageName = Archivos::storeImagen($name, $file, 'facturas');
-      $factura->logo = $imageName;
-      $factura->save();
-    }
-
-    Alert::success('Acción completada', 'Datos de facturación creados con éxito');
-    return redirect()->route('facturacion-empresas');
   }
 
   /**
@@ -126,28 +121,24 @@ class FacturacionController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($factura->update($validated)) {
+        if (isset($validated['logo'])) {
+          $name = $factura->id;
+          $imageName = Archivos::storeImagen($name, $validated['logo'], 'facturas_imgs');
+          $factura->logo = $imageName;
+          $factura->save();
+        }
+
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Datos de facturación modificados con éxito');
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Datos de facturación no modificados');
       return redirect()->back()->withInput();
     }
-
-    $factura->update($validated);
-    if (isset($validated['logo'])) {
-      $name = $factura->id;
-      $imageName = Archivos::storeImagen($name, $validated['logo'], 'facturas_imgs');
-      $factura->logo = $imageName;
-      $factura->save();
-    }
-
-    Alert::success('Acción completada', 'Datos de facturación modificados con éxito');
-    return redirect()->back();
   }
 
   /**
@@ -156,20 +147,20 @@ class FacturacionController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy(Fact_empr $factura)
   {
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($factura->delete()) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Datos de facturación eliminados con éxito');
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
-      return redirect()->back()->withInput();
+      Alert::error('Oops!', 'Datos de facturación no eliminados');
+      return redirect()->back();
     }
   }
 }

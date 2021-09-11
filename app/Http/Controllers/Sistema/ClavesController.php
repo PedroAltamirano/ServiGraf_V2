@@ -39,22 +39,17 @@ class ClavesController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($clave = Clave::create($validated)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Clave creada con éxito');
+        return redirect()->route('tablero');
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Clave no creada');
       return redirect()->back()->withInput();
     }
-
-    $clave = Clave::create($validated);
-
-    Alert::success('Acción completada', 'Clave creada con éxito');
-    return redirect()->route('tablero');
   }
 
   public function update(UpdateClave $request, Clave $clave)
@@ -67,43 +62,33 @@ class ClavesController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($clave->update($validated)) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Clave modificada con éxito');
+        return redirect()->route('tablero');
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Clave no modificada');
       return redirect()->back()->withInput();
     }
-
-    $clave->update($validated);
-
-    Alert::success('Acción completada', 'Clave modificada con éxito');
-    return redirect()->route('tablero');
   }
 
   public function delete(Clave $clave)
   {
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($clave->delete()) {
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Clave eliminada con éxito');
+        return redirect()->route('tablero');
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Clave no eliminada');
       return redirect()->back()->withInput();
     }
-
-    $clave->delete();
-
-    Alert::success('Acción completada', 'Clave eliminada con éxito');
-    return redirect()->route('tablero');
   }
 }
