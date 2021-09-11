@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use Exception;
 use App\Security;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -85,6 +87,21 @@ class FacturacionController extends Controller
     $validator = $request->validated();
     $validator['empresa_id'] = Auth::user()->empresa_id;
     $validator['usuario_id'] = Auth::id();
+
+    DB::beginTransaction();
+    try {
+      if ($actividad = Actividad::create($validated)) {
+        DB::commit();
+        Alert::success('Acción completada', 'Actividad creada con éxito');
+        return redirect()->route('actividad.edit', $actividad);
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Actividad no creada');
+      return redirect()->back()->withInput();
+    }
+
     $factura = Factura::create($validator);
 
     $size = sizeof($validator['articulo']['cantidad'] ?? []);
@@ -141,6 +158,21 @@ class FacturacionController extends Controller
   public function update(UpdateFactura $request, Factura $factura)
   {
     $validator = $request->validated();
+
+    DB::beginTransaction();
+    try {
+      if ($actividad = Actividad::create($validated)) {
+        DB::commit();
+        Alert::success('Acción completada', 'Actividad creada con éxito');
+        return redirect()->route('actividad.edit', $actividad);
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Actividad no creada');
+      return redirect()->back()->withInput();
+    }
+
     $factura->update($validator);
 
     Fact_prod::where('factura_id', $factura->id)->delete();

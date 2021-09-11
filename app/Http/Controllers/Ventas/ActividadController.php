@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Ventas;
 
+use Exception;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -13,8 +16,6 @@ use App\Models\Ventas\Actividad;
 use App\Http\Requests\Ventas\StoreActividad;
 use App\Http\Requests\Ventas\UpdateActividad;
 use App\Models\Ventas\Plantilla;
-use Exception;
-use Illuminate\Support\Facades\Log;
 
 class ActividadController extends Controller
 {
@@ -71,7 +72,7 @@ class ActividadController extends Controller
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::success('Acción completada', 'Actividad no creada');
+      Alert::error('Oops!', 'Actividad no creada');
       return redirect()->back()->withInput();
     }
   }
@@ -129,7 +130,7 @@ class ActividadController extends Controller
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::success('Acción completada', 'Actividad no modificada');
+      Alert::error('Oops!', 'Actividad no modificada');
       return redirect()->back()->withInput();
     }
   }
@@ -152,7 +153,7 @@ class ActividadController extends Controller
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::success('Acción completada', 'Actividad no eliminada');
+      Alert::error('Oops!', 'Actividad no eliminada');
       return redirect()->back();
     }
   }

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Ventas;
 
 use stdClass;
+use Exception;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -55,6 +58,21 @@ class ContactoController extends Controller
 
     $validator['usuario_id'] = Auth::id();
     $validator['cliente_empresa_id'] = $cli_empresa->id;
+
+    DB::beginTransaction();
+    try {
+      if ($plantilla->delete()) {
+        DB::commit();
+        Alert::success('Acción completada', 'Plantilla eliminada con éxito');
+        return redirect()->route('Plantilla');
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Plantilla no eliminada');
+      return redirect()->back();
+    }
+
     $contacto = Contacto::create(Arr::except($validator, ['empresa', 'ruc', 'isCliente', 'seguimento']));
     $mssg = 'Contacto creado con éxito';
 

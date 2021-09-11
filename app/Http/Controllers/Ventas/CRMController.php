@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Ventas;
 
+use Exception;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ventas\StoreTarea;
@@ -12,9 +15,6 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Ventas\CRM;
-use Carbon\Carbon;
-use Exception;
-use Illuminate\Support\Facades\Log;
 
 class CRMController extends Controller
 {
@@ -85,7 +85,7 @@ class CRMController extends Controller
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::success('Acción completada', 'Tarea no creada');
+      Alert::error('Oops!', 'Tarea no creada');
       return redirect()->back()->withInput();
     }
   }
@@ -134,7 +134,7 @@ class CRMController extends Controller
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::success('Acción completada', 'Tarea no modificada');
+      Alert::error('Oops!', 'Tarea no modificada');
       return redirect()->back()->withInput();
     }
   }
@@ -157,7 +157,7 @@ class CRMController extends Controller
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::success('Acción completada', 'Tarea no eliminada');
+      Alert::error('Oops!', 'Tarea no eliminada');
       return redirect()->back()->withInput();
     }
   }

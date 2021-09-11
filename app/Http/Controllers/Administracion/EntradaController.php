@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use Exception;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -57,6 +60,20 @@ class EntradaController extends Controller
 
     $entrada = Libro_movimientos::create($validated);
 
+    DB::beginTransaction();
+    try {
+      if ($actividad = Actividad::create($validated)) {
+        DB::commit();
+        Alert::success('Acción completada', 'Actividad creada con éxito');
+        return redirect()->route('actividad.edit', $actividad);
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Actividad no creada');
+      return redirect()->back()->withInput();
+    }
+
     Alert::success('Acción completada', 'Entrada creada con éxito');
     return redirect()->route('entrada.edit', $entrada);
   }
@@ -100,6 +117,20 @@ class EntradaController extends Controller
     }
 
     $entrada->update($validated);
+
+    DB::beginTransaction();
+    try {
+      if ($actividad = Actividad::create($validated)) {
+        DB::commit();
+        Alert::success('Acción completada', 'Actividad creada con éxito');
+        return redirect()->route('actividad.edit', $actividad);
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Actividad no creada');
+      return redirect()->back()->withInput();
+    }
 
     Alert::success('Acción completada', 'Entrada modificada con éxito');
     return redirect()->route('entrada.edit', $entrada);

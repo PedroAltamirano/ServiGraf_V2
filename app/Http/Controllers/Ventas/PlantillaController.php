@@ -69,7 +69,7 @@ class PlantillaController extends Controller
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::success('Acción completada', 'Plantilla no creada');
+      Alert::error('Oops!', 'Plantilla no creada');
       return redirect()->back()->withInput();
     }
   }
@@ -126,7 +126,7 @@ class PlantillaController extends Controller
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::success('Acción completada', 'Plantilla no modificada');
+      Alert::error('Oops!', 'Plantilla no modificada');
       return redirect()->back()->withInput();
     }
   }
@@ -149,7 +149,7 @@ class PlantillaController extends Controller
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::success('Acción completada', 'Plantilla no eliminada');
+      Alert::error('Oops!', 'Plantilla no eliminada');
       return redirect()->back();
     }
   }

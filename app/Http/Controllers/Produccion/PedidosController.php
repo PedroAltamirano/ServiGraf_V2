@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Produccion;
 
+use Exception;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -83,6 +85,21 @@ class PedidosController extends Controller
       $validator['usuario_cob_id'] = Auth::id();
       $validator['fecha_cobro'] = date('Y-m-d');
     }
+
+    DB::beginTransaction();
+    try {
+      if ($actividad = Actividad::create($validated)) {
+        DB::commit();
+        Alert::success('Acción completada', 'Actividad creada con éxito');
+        return redirect()->route('actividad.edit', $actividad);
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Actividad no creada');
+      return redirect()->back()->withInput();
+    }
+
     $model = Pedido::create($validator);
 
     app(ImprentaController::class)->manageTintas($validator, $model);
@@ -116,6 +133,20 @@ class PedidosController extends Controller
     if ($request->estado == 2) {
       $validator['usuario_cob_id'] = Auth::id();
       $validator['fecha_cobro'] = date('Y-m-d');
+    }
+
+    DB::beginTransaction();
+    try {
+      if ($actividad = Actividad::create($validated)) {
+        DB::commit();
+        Alert::success('Acción completada', 'Actividad creada con éxito');
+        return redirect()->route('actividad.edit', $actividad);
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Actividad no creada');
+      return redirect()->back()->withInput();
     }
 
     $pedido->update($validator);

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Produccion;
 
+use Exception;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -68,11 +72,24 @@ class MaterialesController extends Controller
     $validator['color'] = $validator['color'] ?? 0;
     $validator['uv'] = $validator['uv'] ?? 0;
     $validator['plastificado'] = $validator['plastificado'] ?? 0;
-    // dd($validator);
+
+    DB::beginTransaction();
+    try {
+      if ($actividad = Actividad::create($validated)) {
+        DB::commit();
+        Alert::success('Acción completada', 'Actividad creada con éxito');
+        return redirect()->route('actividad.edit', $actividad);
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::success('Acción completada', 'Actividad no creada');
+      return redirect()->back()->withInput();
+    }
 
     $material = Material::create($validator);
 
-    Alert::success('Acción completada', 'Material creado con éxito');
+    Alert::error('Oops!', 'Material creado con éxito');
     return redirect()->route('material.edit', $material->id);
   }
 
@@ -97,7 +114,20 @@ class MaterialesController extends Controller
     $validator['color'] = $validator['color'] ?? 0;
     $validator['uv'] = $validator['uv'] ?? 0;
     $validator['plastificado'] = $validator['plastificado'] ?? 0;
-    // dd($validator);
+
+    DB::beginTransaction();
+    try {
+      if ($actividad = Actividad::create($validated)) {
+        DB::commit();
+        Alert::success('Acción completada', 'Actividad creada con éxito');
+        return redirect()->route('actividad.edit', $actividad);
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Actividad no creada');
+      return redirect()->back()->withInput();
+    }
 
     $material->update($validator);
 
