@@ -168,7 +168,7 @@
       saldo += debe;
       saldo -= haber;
 
-      let texto = (saldo < 0) ? '<font color="red">'+Math.abs(saldo).toFixed(2)+'</font>' : saldo.toFixed(2);
+      let texto = (saldo < 0) ? '<font color="red">'+Math.abs(saldo).toFixed(4)+'</font>' : saldo.toFixed(4);
 
       $('td:eq(6)', row).html(texto);
     },
@@ -188,10 +188,10 @@
       let saldo = Math.abs(ingTotal) - Math.abs(egrTotal);
 
       // Update footer
-      $("#total-ingreso").html(ingTotal.toFixed(2));
-      $("#total-egreso").html(egrTotal.toFixed(2));
+      $("#total-ingreso").html(ingTotal.toFixed(4));
+      $("#total-egreso").html(egrTotal.toFixed(4));
       if(ingTotal < egrTotal) $("#total-saldo").css({'color': "red"});
-      $("#total-saldo").html(Math.abs(saldo).toFixed(2));
+      $("#total-saldo").html(Math.abs(saldo).toFixed(4));
     },
     "drawCallback": settings => saldo = 0
   });

@@ -130,7 +130,7 @@
       var totTotal = api.column('valor:name', {search: 'applied'}).data().sum();
 
       // Update footer
-      $("#clmtotal").html(totTotal.toFixed(2));
+      $("#clmtotal").html(totTotal.toFixed(4));
     }
   });
 

@@ -12,8 +12,8 @@
   <div class="form-row">
     <div class="form-group col-12 col-md-6">
       <div class="form-group">
-        <label for="descripcion"><b>Descripcion del trabajo</b></label>
-        <textarea class="form-control form-control-sm" name="detalle" id="descripcion" rows="1">{{ old('detalle', $pedido->detalle) }}</textarea>
+        <label for="detalle"><b>Descripcion del trabajo</b></label>
+        <textarea class="form-control form-control-sm" name="detalle" id="detalle" rows="1">{{ old('detalle', $pedido->detalle) }}</textarea>
       </div>
     </div>
     <div class="form-group col-8 col-md-4">
@@ -99,7 +99,7 @@
         <td colspan="2"><a class="text-muted d-print-none" href="http://www.pplanos.com/" target="_blank">Corte de papel</a></td>
         <td colspan="4" class="text-right"></td>
         <td colspan="2" class="text-right"><a id="printable" data-target="material" class="d-print-none"><i class="fas fa-print pr-2"></i></a>  Total material $</td>
-        <td class="text-center"><input type="number" name="total_material" id="totalMaterial" value="{{ old('total_material', $pedido->total_material) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
+        <td class="text-center"><input type="number" name="total_material" id="total_material" value="{{ old('total_material', $pedido->total_material) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
       </tr>
     </tfoot>
   </table>
@@ -132,17 +132,17 @@
           </div>
         </td>
         <td colspan="2" class="text-right">Total Pedido $</td>
-        <td class="text-center"><input type="number" id="totalProcesos" name="total_pedido" value="{{ old('total_pedido', $pedido->total_pedido) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
+        <td class="text-center"><input type="number" id="total_pedido" name="total_pedido" value="{{ old('total_pedido', $pedido->total_pedido) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
         <td></td>
       </tr>
       <tr>
         <td colspan="2" class="text-right">Abonos $</td>
-        <td class="text-center"><input type="number" id="totalAbonos" name="abono" value="{{ old('abono', $pedido->abono) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
+        <td class="text-center"><input type="number" id="abono" name="abono" value="{{ old('abono', $pedido->abono) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
         <td><i data-toggle="modal" data-target="#modalAbonos" class="fas fa-eye"></i></td>
       </tr>
       <tr>
         <td colspan="2" class="text-right">Saldo $</td>
-        <td class="text-center"><input type="number" id="totalSaldo" name="saldo" value="{{ old('saldo', $pedido->saldo) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
+        <td class="text-center"><input type="number" id="saldo" name="saldo" value="{{ old('saldo', $pedido->saldo) ?? '0.00'}}" class="form-control form-control-sm text-center" readonly></td>
         <td></td>
       </tr>
     </tfoot>
@@ -181,7 +181,7 @@
           <tfoot>
             <tr class="font-weight-bold">
               <td colspan="4" class="text-right">Total $</td>
-              <td class="text-center"><input id="abonos" class="form-control form-control-sm text-center" type="number" readonly name="totalAbonos" value="{{old('totalAbonos', $pedido->abono) ?? '0.00'}}"></td>
+              <td class="text-center"><input id="abonos" class="form-control form-control-sm text-center" type="number" readonly name="abono" value="{{old('abono', $pedido->abono) ?? '0.00'}}"></td>
             </tr>
           </tfoot>
         </table>
@@ -310,7 +310,7 @@
 
     let factura = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': material_factura, 'name':'material_factura[]', 'id': `material_factura_${index_material}`, 'min': '0'});
 
-    let total = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': material_total, 'name':'material_total[]', 'id': `material_total_${index_material}`, 'min': '0', 'step':'0.01', 'onchange':'sumarMaterial();'});
+    let total = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': material_total, 'name':'material_total[]', 'id': `material_total_${index_material}`, 'min': '0', 'step':'0.0001', 'onchange':'sumarMaterial();'});
 
     newRow(table, [button, material, cantidad, corte_alt, corte_anc, tamanios, proveedor, factura, total], `row-material-${index_material}`);
     $('.select2Class').select2();
@@ -329,7 +329,7 @@
     $('input[name="material_total[]"]').each(function(){
       total += parseFloat($(this).val());
     });
-    $('#totalMaterial').val(parseFloat(total).toFixed(2));
+    $('#total_material').val(parseFloat(total).toFixed(4));
   }
 
 
@@ -352,11 +352,11 @@
 
     let millar = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center', 'value': proceso_millar, 'name':'proceso_millar[]', 'id': `mill-${index_procesos}`, 'min': '0', 'onchange':`sumar(${index_procesos});`});
 
-    let valor = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center fixFloat', 'value': proceso_valor, 'step': '0.01', 'name':'proceso_valor[]', 'id': `valor-${index_procesos}`, 'min': '0', 'onchange':`sumar(${index_procesos});`});
+    let valor = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center fixFloat', 'value': proceso_valor, 'step': '0.0001', 'name':'proceso_valor[]', 'id': `valor-${index_procesos}`, 'min': '0', 'onchange':`sumar(${index_procesos});`});
 
-    let total = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center fixFloat', 'value': proceso_total, 'step': '0.01', 'name':'proceso_total[]', 'id': `total_proceso-${index_procesos}`, 'min': '0', 'onchange':`sumar(${index_procesos});`, 'readonly': 'readonly'});
+    let total = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-center fixFloat', 'value': proceso_total, 'step': '0.0001', 'name':'proceso_total[]', 'id': `total_proceso-${index_procesos}`, 'min': '0', 'onchange':`sumar(${index_procesos});`, 'readonly': 'readonly'});
 
-    let terminado = $('<input />', {'type': 'checkbox', 'class': 'form-control form-control-sm text-center', 'value': 1, 'name':'proceso_terminado[]', 'id': `proceso_terminado-${index_procesos}`}).prop('checked', proceso_terminado == 1 ? true : false);
+    let terminado = $('<input />', {'type': 'checkbox', 'class': 'form-control form-control-sm text-center', 'value': 1, 'name': `proceso_terminado[${index_procesos}]`, 'id': `proceso_terminado-${index_procesos}`}).prop('checked', proceso_terminado == 1 ? true : false);
 
     newRow(table, [button, proceso, tiro, retiro, millar, valor, total, terminado], `row-proceso-${index_procesos}`);
     $('.select2Class').select2();
@@ -376,7 +376,7 @@
     let millares = $('#mill-'+String(num)).val();
     let valor = $('#valor-'+String(num)).val();
     let sum = ((parseFloat(tiro) + parseFloat(retiro)) * parseFloat(millares)) * parseFloat(valor);
-    $('#total_proceso-'+String(num)).val(parseFloat(sum).toFixed(2));
+    $('#total_proceso-'+String(num)).val(parseFloat(sum).toFixed(4));
     sumarProcesos();
   }
 
@@ -386,7 +386,7 @@
     $('input[name="proceso_total[]"]').each(function(){
       total += parseFloat($(this).val());
     });
-    $('#totalProcesos').val(parseFloat(total).toFixed(2));
+    $('#total_pedido').val(parseFloat(total).toFixed(4));
     sumarSaldo();
   }
 
@@ -417,7 +417,7 @@
     let pago = $('<select />', {'class': 'form-control form-control-sm', 'name':'abono_pago[]', 'id': `abono_pago_${index_abono}`}).append(opts_pagos);
     if(abono_pago) pago.val(abono_pago);
 
-    let valor = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': abono_valor, 'name':'abono_valor[]', 'id': `abono_valor_${index_abono}`, 'min': '0', 'step': '0.01', 'onchange':'sumarAbonos();'});
+    let valor = $('<input />', {'type': 'number', 'class': 'form-control form-control-sm text-right fixFloat', 'value': abono_valor, 'name':'abono_valor[]', 'id': `abono_valor_${index_abono}`, 'min': '0', 'step': '0.0001', 'onchange':'sumarAbonos();'});
 
     newRow(table, [button, fecha, usuario_div, pago, valor], `row-abono-${index_abono}`);
     // $('.select2Class').select2();
@@ -442,16 +442,16 @@
     $('input[name="abono_valor[]"]').each(function(){
       total += parseFloat($(this).val());
     });
-    $('#totalAbonos').val(parseFloat(total).toFixed(2));
-    $('#abonos').val(parseFloat(total).toFixed(2));
+    $('#abono').val(parseFloat(total).toFixed(4));
+    $('#abonos').val(parseFloat(total).toFixed(4));
     sumarSaldo();
   }
 
   //funcion para sumar saldo
   const sumarSaldo = () => {
-    let total = $('#totalProcesos').val();
-    let abono = $('#totalAbonos').val();
-    $('#totalSaldo').val(parseFloat(total-abono).toFixed(2));
+    let total = $('#total_pedido').val();
+    let abono = $('#abono').val();
+    $('#saldo').val(parseFloat(total-abono).toFixed(4));
   }
 
 

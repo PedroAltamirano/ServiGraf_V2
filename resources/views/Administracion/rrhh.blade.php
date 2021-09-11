@@ -199,7 +199,7 @@
       // saldo += debe;
       // saldo -= haber;
 
-      // let texto = (saldo < 0) ? '<font color="red">'+Math.abs(saldo).toFixed(2)+'</font>' : saldo.toFixed(2);
+      // let texto = (saldo < 0) ? '<font color="red">'+Math.abs(saldo).toFixed(4)+'</font>' : saldo.toFixed(4);
 
       // $('td:eq(6)', row).html(texto);
     }

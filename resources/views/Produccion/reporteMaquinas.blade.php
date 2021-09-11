@@ -134,12 +134,12 @@
       // Total over this page
       var totTotal = api.column('total:name', {search: 'applied'}).data().sum();
       // Update footer
-      $("#clmtotal").html(totTotal.toFixed(2));
+      $("#clmtotal").html(totTotal.toFixed(4));
 
       @foreach($procesos as $proceso)
       let {{"dataserv".$proceso->id}} = api.column(`{{"serv".$proceso->id}}:name`, {search: 'applied'}).cache('search');
       let {{"totserv".$proceso->id}} = {{'dataserv'.$proceso->id}}.length ? {{'dataserv'.$proceso->id}}.sum() : 0;
-      $(`#{{'serv'.$proceso->id}}`).html({{'totserv'.$proceso->id}}.toFixed(2));
+      $(`#{{'serv'.$proceso->id}}`).html({{'totserv'.$proceso->id}}.toFixed(4));
       @endforeach
     }
   });

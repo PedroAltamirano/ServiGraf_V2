@@ -146,9 +146,9 @@
       var salTotal = api.column('saldo:name', {search: 'applied'}).data().sum();
 
       // Update footer
-      $("#clmtotal").html(totTotal.toFixed(2));
-      $("#clmabonos").html(aboTotal.toFixed(2));
-      $("#clmsaldo").html(salTotal.toFixed(2));
+      $("#clmtotal").html(totTotal.toFixed(4));
+      $("#clmabonos").html(aboTotal.toFixed(4));
+      $("#clmsaldo").html(salTotal.toFixed(4));
     }
   });
 

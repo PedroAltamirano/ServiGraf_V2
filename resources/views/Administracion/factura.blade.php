@@ -315,7 +315,7 @@
 
   const getDesc = () => {
     let descp = parseFloat($('#descuento_p').val())/100;
-    let desc = (parseFloat($('#subtotal').val()) * descp).toFixed(2);
+    let desc = (parseFloat($('#subtotal').val()) * descp).toFixed(4);
     $('#descuento').val(desc);
     return desc;
   }
@@ -341,12 +341,12 @@
     let ret_iva_p = parseFloat(iva_p)/100;
     let ret_fnt_p = parseFloat(fnt_p)/100;
     // debugger
-    let ret_iva = (iva*ret_iva_p).toFixed(2);
-    let ret_fnt = (subtot*ret_fnt_p).toFixed(2);
+    let ret_iva = (iva*ret_iva_p).toFixed(4);
+    let ret_fnt = (subtot*ret_fnt_p).toFixed(4);
 
     $("#ret_iva").val(ret_iva);
     $("#ret_fnt").val(ret_fnt);
-    $("#tot_cob").val(parseFloat(tot-ret_iva-ret_fnt).toFixed(2));
+    $("#tot_cob").val(parseFloat(tot-ret_iva-ret_fnt).toFixed(4));
   }
 
   $('.retencion').change(() => getRet());
@@ -372,11 +372,11 @@
       valor += sub_prod;
     }
 
-    $('#subtotal').val(valor.toFixed(2));
+    $('#subtotal').val(valor.toFixed(4));
     let desc = getDesc();
-    $('#iva').val(iva_tot.toFixed(2));
-    $('#iva_0').val(iva_0.toFixed(2));
-    $('#total').val((valor + iva_tot - desc).toFixed(2));
+    $('#iva').val(iva_tot.toFixed(4));
+    $('#iva_0').val(iva_0.toFixed(4));
+    $('#total').val((valor + iva_tot - desc).toFixed(4));
     getRet();
   }
 
@@ -384,7 +384,7 @@
   const sumar = num => {
     let cant = $(`#articulo_cantidad_${String(num)}`).val();
     let valor = $(`#articulo_valor_unitario_${String(num)}`).val();
-    $(`#articulo_subtotal_${String(num)}`).val(parseFloat(parseFloat(cant) * parseFloat(valor)).toFixed(2));
+    $(`#articulo_subtotal_${String(num)}`).val(parseFloat(parseFloat(cant) * parseFloat(valor)).toFixed(4));
     sumartotal();
   }
 

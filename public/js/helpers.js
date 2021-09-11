@@ -126,7 +126,7 @@ $(function () {
   return $('[data-toggle="tooltip"]').tooltip();
 });
 $(document).on("change", ".fixFloat", function (event) {
-  $(event.target).val(parseFloat($(event.target).val()).toFixed(2));
+  $(event.target).val(parseFloat($(event.target).val()).toFixed(4));
 });
 $(document).on("click", ".removeRow", function (event) {
   var button_id = $(event.target).attr("id");

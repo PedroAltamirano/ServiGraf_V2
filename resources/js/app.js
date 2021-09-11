@@ -1,6 +1,6 @@
 require("./bootstrap");
-require("jquery");
-require("popper.js");
+// require("jquery");
+// require("popper.js");
 
 window.moment = require("moment");
 

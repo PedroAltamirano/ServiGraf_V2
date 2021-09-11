@@ -48,7 +48,7 @@
       </div>
       <div class="form-group col-6 col-md-2">
         <label for="precio">Precio</label>
-        <input type="number" step="0.01" min="0" name="precio" id="precio" class="form-control form-control-sm fixFloat @error('precio') is-invalid @enderror" value="{{ old('precio', $material->precio) }}">
+        <input type="number" step="0.0001" min="0" name="precio" id="precio" class="form-control form-control-sm fixFloat @error('precio') is-invalid @enderror" value="{{ old('precio', $material->precio) }}">
       </div>
       <div class="form-group col-3 col-md-2">
         <label for="color">Color</label>

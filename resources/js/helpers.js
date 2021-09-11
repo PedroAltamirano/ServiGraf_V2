@@ -40,7 +40,7 @@ if (document.querySelector(".dropify")) {
 $(() => $('[data-toggle="tooltip"]').tooltip());
 
 $(document).on("change", ".fixFloat", event => {
-  $(event.target).val(parseFloat($(event.target).val()).toFixed(2));
+  $(event.target).val(parseFloat($(event.target).val()).toFixed(4));
 });
 
 $(document).on("click", ".removeRow", event => {
