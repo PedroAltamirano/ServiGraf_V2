@@ -381,5 +381,22 @@ class ModulesSeeder extends Seeder
         'rol_id' => 4,
       ]
     ]);
+
+    DB::table('modulo_perfil')->insert([
+      [
+        'created_at' => date('Y-m-d H:i:s'),
+        'updated_at' => date('Y-m-d H:i:s'),
+        'perfil_id' => 2,
+        'modulo_id' => 70,
+        'rol_id' => 4,
+      ],
+      [
+        'created_at' => date('Y-m-d H:i:s'),
+        'updated_at' => date('Y-m-d H:i:s'),
+        'perfil_id' => 2,
+        'modulo_id' => 71,
+        'rol_id' => 4,
+      ]
+    ]);
   }
 }
