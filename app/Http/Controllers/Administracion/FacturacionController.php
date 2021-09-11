@@ -13,14 +13,14 @@ use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Models\Administracion\Factura;
-use App\Models\Administracion\Fact_prod;
-use App\Models\Administracion\Iva;
-use App\Models\Administracion\Retencion;
 use App\Models\Ventas\Cliente;
 use App\Models\Sistema\Fact_empr;
-use App\Models\Administracion\FacturaPedido;
 use App\Models\Produccion\Pedido;
+use App\Models\Administracion\Iva;
+use App\Models\Administracion\Factura;
+use App\Models\Administracion\FactProd;
+use App\Models\Administracion\Retencion;
+use App\Models\Administracion\FacturaPedido;
 
 use App\Http\Requests\Administracion\StoreFactura;
 use App\Http\Requests\Administracion\UpdateFactura;
@@ -91,23 +91,8 @@ class FacturacionController extends Controller
     DB::beginTransaction();
     try {
       if ($factura = Factura::create($validator)) {
-        $size = sizeof($validator['articulo']['cantidad'] ?? []);
-        for ($i = 0; $i < $size; $i++) {
-          $prod = new Fact_prod();
-          $prod->factura_id = $factura->id;
-          $prod->cantidad = $validator['articulo']['cantidad'][$i];
-          $prod->detalle = $validator['articulo']['detalle'][$i];
-          $prod->iva_id = $validator['articulo']['iva_id'][$i];
-          $prod->valor_unitario = $validator['articulo']['valor_unitario'][$i];
-          $prod->subtotal = $validator['articulo']['subtotal'][$i];
-          $prod->save();
-        }
-
-        if (isset($validatos['pedidos'])) {
-          foreach ($validatos['pedidos'] as $pedido) {
-            FacturaPedido::create(['factura_id' => $factura->id, 'pedido_id' => $pedido]);
-          }
-        }
+        $this->manageProductos($validator, $factura);
+        $this->managePedidos($validator, $factura);
 
         DB::commit();
         Alert::success('Acción completada', 'Factura creada con éxito');
@@ -157,25 +142,8 @@ class FacturacionController extends Controller
     DB::beginTransaction();
     try {
       if ($factura->update($validator)) {
-        Fact_prod::where('factura_id', $factura->id)->delete();
-        $size = sizeof($validator['articulo']['cantidad'] ?? []);
-        for ($i = 0; $i < $size; $i++) {
-          $prod = new Fact_prod();
-          $prod->factura_id = $factura->id;
-          $prod->cantidad = $validator['articulo']['cantidad'][$i];
-          $prod->detalle = $validator['articulo']['detalle'][$i];
-          $prod->iva_id = $validator['articulo']['iva_id'][$i];
-          $prod->valor_unitario = $validator['articulo']['valor_unitario'][$i];
-          $prod->subtotal = $validator['articulo']['subtotal'][$i];
-          $prod->save();
-        }
-
-        FacturaPedido::where('factura_id', $factura->id)->delete();
-        if (isset($validator['pedidos'])) {
-          foreach ($validator['pedidos'] as $pedido) {
-            FacturaPedido::create(['factura_id' => $factura->id, 'pedido_id' => $pedido]);
-          }
-        }
+        $this->manageProductos($validator, $factura);
+        $this->managePedidos($validator, $factura);
 
         DB::commit();
         Alert::success('Acción completada', 'Factura modificada con éxito');
@@ -186,6 +154,46 @@ class FacturacionController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Factura no modificada');
       return redirect()->back()->withInput();
+    }
+  }
+
+  public function manageProductos($request, Factura $model)
+  {
+    if (!isset($request['articulo']['cantidad'])) {
+      return 0;
+    }
+
+    $relation = $model->productos();
+    if ($relation->count()) {
+      $relation->delete();
+    }
+
+    $cnt = count($request['articulo']['cantidad'] ?? []);
+    for ($i = 0; $i < $cnt; $i++) {
+      $prod = new FactProd();
+      $prod->factura_id = $model->id;
+      $prod->cantidad = $request['articulo']['cantidad'][$i];
+      $prod->detalle = $request['articulo']['detalle'][$i];
+      $prod->iva_id = $request['articulo']['iva_id'][$i];
+      $prod->valor_unitario = $request['articulo']['valor_unitario'][$i];
+      $prod->subtotal = $request['articulo']['subtotal'][$i];
+      $prod->save();
+    }
+  }
+
+  public function managePedidos($request, Factura $model)
+  {
+    if (!isset($request['pedidos'])) {
+      return 0;
+    }
+
+    $relation = $model->pedidos_id();
+    if ($relation->count()) {
+      $relation->delete();
+    }
+
+    foreach ($request['pedidos'] as $pedido) {
+      FacturaPedido::create(['factura_id' => $model->id, 'pedido_id' => $pedido]);
     }
   }
 

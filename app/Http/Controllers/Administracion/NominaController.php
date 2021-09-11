@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Administracion;
 
 use Exception;
-use Carbon\Carbon;
 use App\Helpers\Archivos;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -14,17 +12,17 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Sistema\Nomina;
-use App\Models\Sistema\CentroCostos;
 use App\Models\Sistema\Horario;
+use App\Models\Sistema\CentroCostos;
 use App\Models\Administracion\Dotacion;
-
-use App\Http\Requests\Administracion\StoreNomina;
-use App\Http\Requests\Administracion\UpdateNomina;
 use App\Models\Administracion\NominaDocs;
 use App\Models\Administracion\NominaDotacion;
 use App\Models\Administracion\NominaEducacion;
 use App\Models\Administracion\NominaFamilia;
 use App\Models\Administracion\NominaReferencia;
+
+use App\Http\Requests\Administracion\StoreNomina;
+use App\Http\Requests\Administracion\UpdateNomina;
 
 class NominaController extends Controller
 {

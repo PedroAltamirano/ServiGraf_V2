@@ -3,7 +3,7 @@
 namespace App\Models\Administracion;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Administracion\Fact_prod;
+use App\Models\Administracion\FactProd;
 use App\Models\Produccion\Pedido;
 use App\Models\Ventas\Cliente;
 
@@ -19,15 +19,23 @@ class Factura extends Model
     'tipo' => 1
   ];
 
-  public function cliente() {
+  public function cliente()
+  {
     return $this->belongsTo(Cliente::class);
   }
 
-  public function productos() {
-    return $this->hasMany(Fact_prod::class);
+  public function productos()
+  {
+    return $this->hasMany(FactProd::class);
   }
 
-  public function pedidos() {
+  public function pedidos_id()
+  {
+    return $this->hasMany(FacturaPedido::class);
+  }
+
+  public function pedidos()
+  {
     return $this->belongsToMany(Pedido::class, 'factura_ots');
   }
 }
