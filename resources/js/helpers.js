@@ -39,13 +39,13 @@ if (document.querySelector(".dropify")) {
 
 $(() => $('[data-toggle="tooltip"]').tooltip());
 
-$(document).on("change", ".fixFloat", function() {
-  $(this).val(parseFloat($(this).val()).toFixed(2));
+$(document).on("change", ".fixFloat", event => {
+  $(event.target).val(parseFloat($(event.target).val()).toFixed(2));
 });
 
-$(document).on("click", ".removeRow", function() {
-  var button_id = $(this).attr("id");
-  $("#row-" + button_id + "").remove();
+$(document).on("click", ".removeRow", event => {
+  var button_id = $(event.target).attr("id");
+  $(`#row-${button_id}`).remove();
 });
 
 window.newRow = ($table, cols, col_id) => {
@@ -93,8 +93,8 @@ const getModal = pedido_id => {
   })
 }
 
-$("body").delegate(".verPedido", "click", () => {
-  let pedido_id = $(this).data("pedido_id");
+$("body").delegate(".verPedido", "click", event => {
+  let pedido_id = $(event.target).data("pedido_id");
   $("#modalPedidoDiv").empty();
   getModal(pedido_id);
 });

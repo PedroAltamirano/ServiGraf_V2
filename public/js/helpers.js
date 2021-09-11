@@ -93,8 +93,6 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var _this = this;
-
 if (document.querySelector(".dropify")) {
   $(".dropify").dropify({
     tpl: {
@@ -127,12 +125,12 @@ if (document.querySelector(".dropify")) {
 $(function () {
   return $('[data-toggle="tooltip"]').tooltip();
 });
-$(document).on("change", ".fixFloat", function () {
-  $(this).val(parseFloat($(this).val()).toFixed(2));
+$(document).on("change", ".fixFloat", function (event) {
+  $(event.target).val(parseFloat($(event.target).val()).toFixed(2));
 });
-$(document).on("click", ".removeRow", function () {
-  var button_id = $(this).attr("id");
-  $("#row-" + button_id + "").remove();
+$(document).on("click", ".removeRow", function (event) {
+  var button_id = $(event.target).attr("id");
+  $("#row-".concat(button_id)).remove();
 });
 
 window.newRow = function ($table, cols, col_id) {
@@ -182,8 +180,8 @@ var getModal = function getModal(pedido_id) {
   });
 };
 
-$("body").delegate(".verPedido", "click", function () {
-  var pedido_id = $(_this).data("pedido_id");
+$("body").delegate(".verPedido", "click", function (event) {
+  var pedido_id = $(event.target).data("pedido_id");
   $("#modalPedidoDiv").empty();
   getModal(pedido_id);
 });
