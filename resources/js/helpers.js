@@ -74,31 +74,6 @@ $(".select2Class").select2({
   width: '100%',
 });
 
-const getModal = pedido_id => {
-  axios.post('/pedido/modal', {
-    pedido_id: pedido_id
-  }).then(res => {
-    let data = res.data;
-    $("#modalPedidoDiv").html(data);
-    $("#tinta_tiro").select2({
-      maximumSelectionLength: 4
-    });
-    $("#tinta_retiro").select2({
-      maximumSelectionLength: 4
-    });
-    $("#modalPedido").modal("show");
-  }).catch(error => {
-    swal('Oops!', 'No hemos podido cargar el contenido', 'error');
-    console.log(error);
-  })
-}
-
-$("body").delegate(".verPedido", "click", event => {
-  let pedido_id = $(event.target).data("pedido_id");
-  $("#modalPedidoDiv").empty();
-  getModal(pedido_id);
-});
-
 window.add_error = (mssg, type) => {
   let alert = `<div class="alert alert-${type}" role="alert">
       ${mssg}&nbsp&nbsp

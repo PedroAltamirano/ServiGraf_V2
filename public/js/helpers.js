@@ -161,31 +161,6 @@ $(".select2Class").select2({
   width: '100%'
 });
 
-var getModal = function getModal(pedido_id) {
-  axios.post('/pedido/modal', {
-    pedido_id: pedido_id
-  }).then(function (res) {
-    var data = res.data;
-    $("#modalPedidoDiv").html(data);
-    $("#tinta_tiro").select2({
-      maximumSelectionLength: 4
-    });
-    $("#tinta_retiro").select2({
-      maximumSelectionLength: 4
-    });
-    $("#modalPedido").modal("show");
-  })["catch"](function (error) {
-    swal('Oops!', 'No hemos podido cargar el contenido', 'error');
-    console.log(error);
-  });
-};
-
-$("body").delegate(".verPedido", "click", function (event) {
-  var pedido_id = $(event.target).data("pedido_id");
-  $("#modalPedidoDiv").empty();
-  getModal(pedido_id);
-});
-
 window.add_error = function (mssg, type) {
   var alert = "<div class=\"alert alert-".concat(type, "\" role=\"alert\">\n      ").concat(mssg, "&nbsp&nbsp\n      <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n      <span aria-hidden=\"true\">&times;</span></button>\n    </div>");
   $('#errorDiv').append(alert);
