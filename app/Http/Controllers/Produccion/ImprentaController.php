@@ -42,7 +42,7 @@ class ImprentaController extends Controller
 
   public function manageSolicitudMaterial($request, Pedido $model)
   {
-    if (!isset($request['tipo_refer'])) {
+    if (!isset($request['material_id'])) {
       return 0;
     }
 

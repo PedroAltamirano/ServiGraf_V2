@@ -37,8 +37,8 @@
 
 @section('scripts')
 <script>
-  let routeAjax = `{{ route('usuarios.get') }}`;
-  let routeEdit = `{{ route('usuarios.modificar', 0) }}`;
+  const routeAjax = `{{ route('usuarios.get') }}`;
+  const routeEdit = `{{ route('usuario.modificar', 0) }}`;
   $('#table').DataTable({
     "paging":   true,
     "ordering": true,
