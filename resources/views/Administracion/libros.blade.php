@@ -33,7 +33,7 @@
   title='Flujo de activos'
   :foot="[
     ['text'=>'Nueva Entrada', 'href'=>route('entrada.create'), 'id'=>'newEntrada', 'tipo'=>'link'],
-    ['text'=>'Nuevo Libro', 'href'=>'#modalLibro', 'id'=>'modal-libro', 'tipo'=> 'modal'],
+    ['text'=>'Nuevo Libro', 'href'=>'#modalLibro', 'id'=>'modal-libro', 'tipo'=>'modal'],
     ['text'=>'Referencias y Bancos', 'href'=>route('referencias-bancos'), 'id'=>'referencias_bancos', 'tipo'=>'link']
   ]"
 >
@@ -150,7 +150,7 @@
     "columnDefs": [
       { "responsivePriority": 1, "targets": [0, 2, 4, 5] }
     ],
-    "rowCallback": function(row, data, index){
+    "rowCallback": (row, data, index) => {
       // cabio de olor por fecha
       let fecha = data.fecha;
       let dato_color;
@@ -193,9 +193,7 @@
       if(ingTotal < egrTotal) $("#total-saldo").css({'color': "red"});
       $("#total-saldo").html(Math.abs(saldo).toFixed(2));
     },
-    "drawCallback": function(settings){
-      saldo = 0;
-    }
+    "drawCallback": settings => saldo = 0
   });
 
   $('.refresh').change(() => {

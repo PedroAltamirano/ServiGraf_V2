@@ -29,7 +29,7 @@
     ['text'=>'Semana', 'href'=>'#', 'id'=>'semana', 'tipo'=>'link'],
     ['text'=>'Mes', 'href'=>'#', 'id'=>'mes', 'tipo'=>'link'],
     ['text'=>'Horarios', 'href'=>route('horarios'), 'id'=>'horarios', 'tipo'=>'link'],
-    ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'mes', 'tipo'=> 'button', 'print-target'=>'table']
+    ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'mes', 'tipo'=>'button', 'print-target'=>'table']
   ]"
 >
   <table id="table" class="table table-striped table-sm">
@@ -206,7 +206,6 @@
   });
 
   $('.refresh').change(() => {
-    console.log('refreshing')
     saldo = 0;
     dato_fecha = '';
     dato_color = '';

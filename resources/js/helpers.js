@@ -116,7 +116,7 @@ $('.modal').on('show.bs.modal', () => $('.modal').modal('hide'));
 $('#formSubmit').click(() => $('#form').submit());
 
 // Submit for modals and others
-$('.submitbtn').click(() => {
-  let form = $(this).data('form');
+$('.submitbtn').click(event => {
+  let form = $(event.target).data('form');
   $(form).submit();
 });

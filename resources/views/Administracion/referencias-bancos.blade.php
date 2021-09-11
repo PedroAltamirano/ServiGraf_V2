@@ -45,7 +45,7 @@
 <x-blue-board
   title='Bancos'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>'#modalBanco', 'id'=>'newBanco', 'tipo'=> 'modal']
+    ['text'=>'Nuevo', 'href'=>'#modalBanco', 'id'=>'newBanco', 'tipo'=>'modal']
   ]"
 >
   <table id="tableBancos" class="table table-striped table-sm">

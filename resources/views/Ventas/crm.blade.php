@@ -14,7 +14,7 @@
 <x-blue-board
   title='Tareas'
   :foot="[
-    ['text'=>'Nueva', 'href'=>'#modalTarea', 'id'=>'newTarea', 'tipo'=> 'modal'],
+    ['text'=>'Nueva', 'href'=>'#modalTarea', 'id'=>'newTarea', 'tipo'=>'modal'],
   ]"
 >
   @if ($atrasadas->count())

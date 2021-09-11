@@ -89,13 +89,13 @@
 <x-blue-board
   title='Centro de Costos'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>'#modalCCostos', 'id'=>'newCCostos', 'tipo'=> 'modal'],
+    ['text'=>'Nuevo', 'href'=>'#modalCCostos', 'id'=>'newCCostos', 'tipo'=>'modal'],
   ]"
 >
   <div class="row">
     @foreach ($ccostos as $item)
     <div class="col-6 col-md-2">
-    <a class="fas fa-edit modCCostos" href="#modalCCostos" data-toggle="modal" data-ccosto='@json($item)'></a>
+      <a class="fas fa-edit" href="#modalCCostos" data-toggle="modal" data-modaldata='@json($item)'></a>
       &nbsp;&nbsp;{{ $item->nombre }}
     </div>
     @endforeach
@@ -120,12 +120,12 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="porcentaje">Nombre del Centro de Costos</label>
-            <input type="text" name="nombre" id="nombre_ccosto" class="form-control modal-nombre">
+            <input type="text" name="nombre" id="nombre_ccosto" class="form-control">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="submit" class="btn btn-primary submitbtn">Crear</button>
         </div>
       </form>
     </div>
@@ -145,22 +145,17 @@
   //Centro de Costos
   const routeStore = `{{ route("centro-costos.store") }}`;
   const routeUpdate = `{{route('centro-costos.update', 0)}}`;
-  $('#newCCostos').click(event => {
-    var modal = $('#modalCCostos');
-    modal.find('.modal-title').html('Nuevo Centro de Costos');
-    modal.find('.modal-nombre').val('');
-    modal.find('.modal-path').attr('action', routeStore);
-    modal.find('input[name="_method"]').val('POST');
-  });
+  $('#modalCCostos').on('show.bs.modal', event => {
+    let data = $(event.relatedTarget).data('modaldata');
+    let modal = $(event.target);
 
-  $('.modCCostos').click(event => {
-    let modal = $('#modalCCostos');
-    let data = $(event.target).data('ccosto');
-    let path = routeUpdate.replace('/0', `/${data.id}`);
-    modal.find('.modal-title').html('Modificar Centro de Costos');
-    modal.find('.modal-nombre').val(data.nombre);
+    let path = data ? routeUpdate.replace('/0', `/${data.id}`) : routeStore;
+    modal.find('.modal-title').html(data ? 'Modificar Centro de Costos' : 'Nueva Centro de Costos');
     modal.find('.modal-path').attr('action', path);
-    modal.find('input[name="_method"]').val('PUT');
+    modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
+    modal.find(".submitbtn").html(data ? 'Modificar' : 'Crear');
+
+    modal.find('#nombre_ccosto').val(data ? data.nombre : '');
   });
 </script>
 @endsection

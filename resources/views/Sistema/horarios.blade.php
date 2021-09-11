@@ -14,7 +14,7 @@
 <x-blue-board
   title='Horarios'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>'#modalHorario', 'id'=>'newHorario', 'tipo'=> 'modal'],
+    ['text'=>'Nuevo', 'href'=>'#modalHorario', 'id'=>'newHorario', 'tipo'=>'modal'],
   ]"
 >
   <table id="table" class="table table-striped table-sm">
@@ -46,16 +46,9 @@
         <td>{{ $item->salida_ta }}</td>
         <td>{{ $item->espera }}</td>
         <td>{{ $item->gracia }}</td>
-        <td><a class='fa fa-edit modHorario' href="#modalHorario" data-toggle="modal"
-          data-route='{{ route('horario.update', $item->id) }}'
-          data-nombre="{{ $item->nombre }}"
-          data-llegada_ma="{{ $item->llegada_ma }}"
-          data-salida_ma="{{ $item->salida_ma }}"
-          data-llegada_ta="{{ $item->llegada_ta }}"
-          data-salida_ta="{{ $item->salida_ta }}"
-          data-espera="{{ $item->espera }}"
-          data-gracia="{{ $item->gracia }}"
-          ></a></td>
+        <td>
+          <a class='fa fa-edit' href="#modalHorario" data-toggle="modal" data-modaldata='@json($item)'></a>
+        </td>
       </tr>
       @endforeach
     </tbody>
@@ -81,37 +74,37 @@
           <div class="form-row">
             <div class="form-group col-12">
               <label for="nombre">Nombre</label>
-              <input type="text" name="nombre" id="nombre" class="form-control modal-nombre @error('nombre') is-invalid @enderror" value="{{ old('nombre') }}">
+              <input type="text" name="nombre" id="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{ old('nombre') }}">
             </div>
             <div class="form-group col-6">
               <label for="tillegada_mame">Llegada mañana</label>
-              <input type="time" name="llegada_ma" id="llegada_ma" class="form-control modal-llegada_ma @error('llegada_ma') is-invalid @enderror" value="{{ old('llegada_ma') }}">
+              <input type="time" name="llegada_ma" id="llegada_ma" class="form-control @error('llegada_ma') is-invalid @enderror" value="{{ old('llegada_ma') }}">
             </div>
             <div class="form-group col-6">
               <label for="salida_ma">Salida mañana</label>
-              <input type="time" name="salida_ma" id="salida_ma" class="form-control modal-salida_ma @error('salida_ma') is-invalid @enderror" value="{{ old('salida_ma') }}">
+              <input type="time" name="salida_ma" id="salida_ma" class="form-control @error('salida_ma') is-invalid @enderror" value="{{ old('salida_ma') }}">
             </div>
             <div class="form-group col-6">
               <label for="llegada_ta">Llegada tarde</label>
-              <input type="time" name="llegada_ta" id="llegada_ta" class="form-control modal-llegada_ta @error('llegada_ta') is-invalid @enderror" value="{{ old('llegada_ta') }}">
+              <input type="time" name="llegada_ta" id="llegada_ta" class="form-control @error('llegada_ta') is-invalid @enderror" value="{{ old('llegada_ta') }}">
             </div>
             <div class="form-group col-6">
               <label for="salida_ta">Salida tarde</label>
-              <input type="time" name="salida_ta" id="salida_ta" class="form-control modal-salida_ta @error('salida_ta') is-invalid @enderror" value="{{ old('salida_ta') }}">
+              <input type="time" name="salida_ta" id="salida_ta" class="form-control @error('salida_ta') is-invalid @enderror" value="{{ old('salida_ta') }}">
             </div>
             <div class="form-group col-6">
               <label for="espera">Espera</label>
-              <input type="number" max="60" min="" name="espera" id="espera" class="form-control modal-espera @error('espera') is-invalid @enderror" value="{{ old('espera') }}">
+              <input type="number" max="60" min="" name="espera" id="espera" class="form-control @error('espera') is-invalid @enderror" value="{{ old('espera') }}">
             </div>
             <div class="form-group col-6">
               <label for="gracia">gracia</label>
-              <input type="number" max="60" min="" name="gracia" id="gracia" class="form-control modal-gracia @error('gracia') is-invalid @enderror" value="{{ old('gracia') }}">
+              <input type="number" max="60" min="" name="gracia" id="gracia" class="form-control @error('gracia') is-invalid @enderror" value="{{ old('gracia') }}">
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="submit" class="btn btn-primary submitbtn">Crear</button>
         </div>
       </form>
     </div>
@@ -129,34 +122,29 @@
   });
 
   // CATEGORIAS
-  const routeStore = `{{ route("horario.store") }}`;
-  $('#newHorario').click(event => {
-    var modal = $('#modalHorario');
-    modal.find('.modal-title').html('Nuevo Horario');
-    modal.find('.modal-nombre').val('');
-    modal.find('.modal-llegada_ma').val('');
-    modal.find('.modal-salida_ma').val('');
-    modal.find('.modal-llegada_ta').val('');
-    modal.find('.modal-salida_ta').val('');
-    modal.find('.modal-espera').val('');
-    modal.find('.modal-gracia').val('');
-    modal.find('.modal-path').attr('action', routeStore);
-    modal.find('input[name="_method"]').val('POST');
-  });
+  const routeStore = `{{ route('horario.store') }}`;
+  const routeUpdate = `{{ route('horario.update', 0) }}`;
+  $('#modalHorario').on('show.bs.modal', event => {
+    let data = $(event.relatedTarget).data('modaldata');
+    let modal = $(event.target);
 
-  $('.modHorario').click(event => {
-    var button = $(event.target);
-    var modal = $('#modalHorario');
-    modal.find('.modal-title').html('Modificar Horario');
-    modal.find('.modal-nombre').val(button.data('nombre'));
-    modal.find('.modal-llegada_ma').val(button.data('llegada_ma'));
-    modal.find('.modal-salida_ma').val(button.data('salida_ma'));
-    modal.find('.modal-llegada_ta').val(button.data('llegada_ta'));
-    modal.find('.modal-salida_ta').val(button.data('salida_ta'));
-    modal.find('.modal-espera').val(button.data('espera'));
-    modal.find('.modal-gracia').val(button.data('gracia'));
-    modal.find('.modal-path').attr('action', button.data('route'));
-    modal.find('input[name="_method"]').val('PUT');
+    let path = data ? routeUpdate.replace('/0', `/${data.id}`) : routeStore;
+    modal.find('.modal-title').html(data ? 'Modificar Horario' : 'Nueva Horario');
+    modal.find('.modal-path').attr('action', path);
+    modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
+    modal.find(".submitbtn").html(data ? 'Modificar' : 'Crear');
+
+    let llegada_ma = data ? moment(data.llegada_ma, "HH:mm:ss").format('HH:mm') : '';
+    let salida_ma = data ? moment(data.salida_ma, "HH:mm:ss").format('HH:mm') : '';
+    let llegada_ta = data ? moment(data.llegada_ta, "HH:mm:ss").format('HH:mm') : '';
+    let salida_ta = data ? moment(data.salida_ta, "HH:mm:ss").format('HH:mm') : '';
+    modal.find('#nombre').val(data ? data.nombre : '');
+    modal.find('#llegada_ma').val(llegada_ma);
+    modal.find('#salida_ma').val(salida_ma);
+    modal.find('#llegada_ta').val(llegada_ta);
+    modal.find('#salida_ta').val(salida_ta);
+    modal.find('#espera').val(data ? data.espera : '');
+    modal.find('#gracia').val(data ? data.gracia : '');
   });
 </script>
 @endsection

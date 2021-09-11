@@ -34,5 +34,11 @@ class EmpresasSeeder extends Seeder
     $empresa->tipo_empresa_id = 2;
     $empresa->nombre = 'GrupoED';
     $empresa->save();
+
+    $empresa = new \App\Models\Sistema\Empresas;
+    $empresa->id = 1719953281001;
+    $empresa->tipo_empresa_id = 1;
+    $empresa->nombre = 'Empresa Demo';
+    $empresa->save();
   }
 }

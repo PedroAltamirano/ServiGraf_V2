@@ -14,13 +14,13 @@
 <x-blue-board
   title='Categorias'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>'#modalCat', 'id'=>'newCat', 'tipo'=> 'modal'],
+    ['text'=>'Nuevo', 'href'=>'#modalCat', 'id'=>'nuevo', 'tipo'=>'modal'],
   ]"
 >
   <div class="row">
     @foreach ($categorias as $item)
     <div class="col-6 col-md-2">
-    <a class="fas fa-edit modCat" href="#modalCat" data-toggle="modal" data-route="{{ route('categoria.update', $item->id) }}" data-color="{{ $item->categoria }}"></a>
+      <a class="fas fa-edit" href="#modalCat" data-toggle="modal" data-modaldata='@json($item)'></a>
       &nbsp;&nbsp;{{ $item->categoria }}
     </div>
     @endforeach
@@ -73,13 +73,13 @@
 <x-blue-board
   title='Tintas'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>'#modalTinta', 'id'=>'newTinta', 'tipo'=> 'modal'],
+    ['text'=>'Nuevo', 'href'=>'#modalTinta', 'id'=>'nuevo', 'tipo'=>'modal'],
   ]"
 >
   <div class="row">
     @foreach ($tintas as $item)
     <div class="col-6 col-md-2">
-    <a class="fas fa-edit modTinta" href="#modalTinta" data-toggle="modal" data-route="{{ route('tinta.update', $item->id) }}" data-color="{{ $item->color }}"></a>
+      <a class="fas fa-edit" href="#modalTinta" data-toggle="modal" data-modaldata='@json($item)'></a>
       &nbsp;&nbsp;{{ $item->color }}
     </div>
     @endforeach
@@ -102,12 +102,12 @@
               <div class="modal-body">
                 <div class="form-group">
                   <label for="color">Color</label>
-                  <input type="text" name="color" id="color" class="form-control modal-color">
+                  <input type="text" name="color" id="color" class="form-control">
                 </div>
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-primary">Guardar</button>
+                  <button type="submit" class="btn btn-primary submitbtn">Crear</button>
               </div>
             </form>
         </div>
@@ -127,13 +127,13 @@
               @method('POST')
               <div class="modal-body">
                 <div class="form-group">
-                  <label for="color">Categoria</label>
-                  <input type="text" name="categoria" id="categoria" class="form-control modal-color">
+                  <label for="categoria">Categoria</label>
+                  <input type="text" name="categoria" id="categoria" class="form-control">
                 </div>
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-primary">Guardar</button>
+                  <button type="submit" class="btn btn-primary submitbtn">Crear</button>
               </div>
             </form>
         </div>
@@ -151,41 +151,35 @@
   });
 
   // TINTAS
-  let routeStore = `{{ route("tinta.store") }}`;
-  $('#newTinta').click(event => {
-    var modal = $('#modalTinta');
-    modal.find('.modal-title').html('Nueva Tinta');
-    modal.find('.modal-color').val('');
-    modal.find('.modal-path').attr('action', routeStore);
-    modal.find('input[name="_method"]').val('POST');
-  });
+  const routeStore = `{{ route("tinta.store") }}`;
+  const routeUpdate = `{{ route("tinta.update", 0) }}`;
+  $('#modalTinta').on('show.bs.modal', event => {
+    let data = $(event.relatedTarget).data('modaldata');
+    let modal = $(event.target);
 
-  $('.modTinta').click(event => {
-    var button = $(event.target);
-    var modal = $('#modalTinta');
-    modal.find('.modal-title').html('Modificar Tinta');
-    modal.find('.modal-color').val(button.data('color'));
-    modal.find('.modal-path').attr('action', button.data('route'));
-    modal.find('input[name="_method"]').val('PUT');
+    let path = data ? routeUpdate.replace('/0', `/${data.id}`) : routeStore;
+    modal.find('.modal-title').html(data ? 'Modificar Tinta' : 'Nueva Tinta');
+    modal.find('.modal-path').attr('action', path);
+    modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
+    modal.find(".submitbtn").html(data ? 'Modificar' : 'Crear');
+
+    modal.find('#color').val(data ? data.color : '');
   });
 
   // CATEGORIAS
-  const routeStoreCat = `{{ route("categoria.store") }}`;
-  $('#newCat').click(event => {
-    var modal = $('#modalCat');
-    modal.find('.modal-title').html('Nueva Categoria');
-    modal.find('.modal-color').val('');
-    modal.find('.modal-path').attr('action', routeStoreCat);
-    modal.find('input[name="_method"]').val('POST');
-  });
+  const routeStoreCat = `{{ route('categoria.store') }}`;
+  const routeUpdateCat = `{{ route('categoria.update', 0) }}`;
+  $('#modalCat').on('show.bs.modal', event => {
+    let data = $(event.relatedTarget).data('modaldata');
+    let modal = $(event.target);
 
-  $('.modCat').click(event => {
-    var button = $(event.target);
-    var modal = $('#modalCat');
-    modal.find('.modal-title').html('Modificar Categoria');
-    modal.find('.modal-color').val(button.data('color'));
-    modal.find('.modal-path').attr('action', button.data('route'));
-    modal.find('input[name="_method"]').val('PUT');
+    let path = data ? routeUpdateCat.replace('/0', `/${data.id}`) : routeStoreCat;
+    modal.find('.modal-title').html(data ? 'Modificar Categoría' : 'Nueva Categoría');
+    modal.find('.modal-path').attr('action', path);
+    modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
+    modal.find(".submitbtn").html(data ? 'Modificar' : 'Crear');
+
+    modal.find('#categoria').val(data ? data.categoria : '');
   });
 </script>
 @endsection

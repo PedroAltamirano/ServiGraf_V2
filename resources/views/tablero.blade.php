@@ -84,7 +84,6 @@
   @endforeach
 </div>
 @endif
-<button class="btn btn-primary testbtn">Test error</button>
 @endsection
 
 @section('modals')

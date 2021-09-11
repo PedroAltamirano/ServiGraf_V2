@@ -205,8 +205,8 @@ $('#formSubmit').click(function () {
   return $('#form').submit();
 }); // Submit for modals and others
 
-$('.submitbtn').click(function () {
-  var form = $(_this).data('form');
+$('.submitbtn').click(function (event) {
+  var form = $(event.target).data('form');
   $(form).submit();
 });
 

@@ -88,7 +88,6 @@
 
   const routeStore = `{{ route('crm.store') }}`;
   const routeEdit = `{{ route('crm.update', 0) }}`;
-
   $('#modalTarea').on('show.bs.modal', event => {
     let data = $(event.relatedTarget).data('modaldata');
     let modal = $(event.target);

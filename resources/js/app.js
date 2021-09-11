@@ -36,13 +36,13 @@ require("datatables.net-responsive-bs4");
 
 require("../../resources/js/sb-admin-2.min.js");
 
-$('.confirmModal').click(() => {
-  let button = $(this);
+$('.confirmModal').click(event => {
+  let button = $(event.target);
   $('#confirmForm').attr('action', button.data('route'));
 });
 
-$('.deleteModal').click(() => {
-  let button = $(this);
+$('.deleteModal').click(event => {
+  let button = $(event.target);
   $('#deleteText').html(button.data('text'));
   $('#deleteForm').attr('action', button.data('route'));
 });

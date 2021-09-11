@@ -14,7 +14,7 @@
 <x-blue-board
   title='Claves'
   :foot="[
-    ['text'=>'Nueva', 'href'=>'#modalClave', 'id'=>'newClave', 'tipo'=> 'modal'],
+    ['text'=>'Nueva', 'href'=>'#modalClave', 'id'=>'newClave', 'tipo'=>'modal'],
   ]"
 >
   <table id="table" class="table table-striped table-sm">
@@ -36,13 +36,9 @@
         <td>{{ Crypt::decryptString($item->clave) }}</td>
         <td>{{ Crypt::decryptString($item->refuerzo) }}</td>
         <td>{{ $item->url }}</td>
-        <td><a class='fa fa-edit modClave' href="#modalClave" data-toggle="modal"
-          data-route='{{ route('clave.update', $item->id) }}'
-          data-cuenta="{{ $item->cuenta }}"
-          data-usuario="{{ $item->usuario }}"
-          data-clave="{{ Crypt::decryptString($item->clave) }}"
-          data-refuerzo="{{ Crypt::decryptString($item->refuerzo) }}"
-          data-url="{{ $item->url }}"></a> <a class='fa fa-trash delClave' href="#deleteAlert" data-toggle="modal" data-route="{{ route('clave.delete', $item->id) }}"></a></td>
+        <td>
+          <x-crud routeEdit="#modalClave" :modalEdit="$item" :routeDelete="route('clave.delete', $item->id)" :textDelete="$item->cuenta" />
+        </td>
       </tr>
       @endforeach
     </tbody>
@@ -68,54 +64,29 @@
           <div class="form-row">
             <div class="form-group col-6 col-md-6">
               <label for="cuenta">Cuenta</label>
-              <input type="text" name="cuenta" id="cuenta" class="form-control modal-cuenta @error('cuenta') is-invalid @enderror" value="{{ old('cuenta') }}">
+              <input type="text" name="cuenta" id="cuenta" class="form-control @error('cuenta') is-invalid @enderror" value="{{ old('cuenta') }}">
             </div>
             <div class="form-group col-6 col-md-6">
               <label for="usuario">Usuario</label>
-              <input type="text" name="usuario" id="usuario" class="form-control modal-usuario @error('usuario') is-invalid @enderror" value="{{ old('usuario') }}">
+              <input type="text" name="usuario" id="usuario" class="form-control @error('usuario') is-invalid @enderror" value="{{ old('usuario') }}">
             </div>
             <div class="form-group col-6 col-md-6">
               <label for="clave">Clave</label>
-              <input type="text" name="clave" id="clave" class="form-control modal-clave @error('clave') is-invalid @enderror" value="{{ old('clave') }}">
+              <input type="text" name="clave" id="clave" class="form-control @error('clave') is-invalid @enderror" value="{{ old('clave') }}">
             </div>
             <div class="form-group col-12 col-md-6">
               <label for="refuerzo">Refuerzo</label>
-              <input type="text" name="refuerzo" id="refuerzo" class="form-control modal-refuerzo @error('refuerzo') is-invalid @enderror" value="{{ old('refuerzo') }}">
+              <input type="text" name="refuerzo" id="refuerzo" class="form-control @error('refuerzo') is-invalid @enderror" value="{{ old('refuerzo') }}">
             </div>
             <div class="form-group col-12 col-md-6">
               <label for="url">Url</label>
-              <input type="text" name="url" id="url" class="form-control modal-url @error('url') is-invalid @enderror" value="{{ old('url') }}">
+              <input type="text" name="url" id="url" class="form-control @error('url') is-invalid @enderror" value="{{ old('url') }}">
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- danger modal -->
-<div class="modal fade" id="deleteAlert" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-danger text-white">
-        <h4 class="modal-title text-white"><i class="fe-alert-triangle mr-2"></i> Eliminar Clave</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true" class="text-white">&times;</span>
-        </button>
-      </div>
-      <form action="#" method="POST" role="form" class="modal-path">
-        @csrf
-        @method('DELETE')
-        <div class="modal-body">
-            <div class="text-danger">Está seguro que desea eliminar esta clave?</div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+          <button type="submit" class="btn btn-primary submitbtn">Crear</button>
         </div>
       </form>
     </div>
@@ -133,36 +104,23 @@
   });
 
   // CATEGORIAS
-  const routeStore = `{{ route("clave.store") }}`;
-  $('#newClave').click(event => {
-    var modal = $('#modalClave');
-    modal.find('.modal-title').html('Nueva Clave');
-    modal.find('.modal-cuenta').val('');
-    modal.find('.modal-usuario').val('');
-    modal.find('.modal-clave').val('');
-    modal.find('.modal-refuerzo').val('');
-    modal.find('.modal-url').val('');
-    modal.find('.modal-path').attr('action', routeStore);
-    modal.find('input[name="_method"]').val('POST');
-  });
+  const routeStore = `{{ route('clave.store') }}`;
+  const routeUpdate = `{{ route('clave.update', 0) }}`;
+  $('#modalClave').on('show.bs.modal', event => {
+    let data = $(event.relatedTarget).data('modaldata');
+    let modal = $(event.target);
 
-  $('.modClave').click(event => {
-    var button = $(event.target);
-    var modal = $('#modalClave');
-    modal.find('.modal-title').html('Modificar Clave');
-    modal.find('.modal-cuenta').val(button.data('cuenta'));
-    modal.find('.modal-usuario').val(button.data('usuario'));
-    modal.find('.modal-clave').val(button.data('clave'));
-    modal.find('.modal-refuerzo').val(button.data('refuerzo'));
-    modal.find('.modal-url').val(button.data('url'));
-    modal.find('.modal-path').attr('action', button.data('route'));
-    modal.find('input[name="_method"]').val('PUT');
-  });
+    let path = data ? routeUpdate.replace('/0', `/${data.id}`) : routeStore;
+    modal.find('.modal-title').html(data ? 'Modificar Clave' : 'Nueva Clave');
+    modal.find('.modal-path').attr('action', path);
+    modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
+    modal.find(".submitbtn").html(data ? 'Modificar' : 'Crear');
 
-  $('.delClave').click(event => {
-    var button = $(event.target);
-    var modal = $('#deleteAlert');
-    modal.find('.modal-path').attr('action', button.data('route'));
+    modal.find('#cuenta').val(data ? data.cuenta : '');
+    modal.find('#usuario').val(data ? data.usuario : '');
+    modal.find('#clave').val(data ? data.clave : '');
+    modal.find('#refuerzo').val(data ? data.refuerzo : '');
+    modal.find('#url').val(data ? data.url : '');
   });
 </script>
 @endsection

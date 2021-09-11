@@ -14,13 +14,13 @@
 <x-blue-board
   title='Áreas'
   :foot="[
-    ['text'=>'Nueva', 'href'=>'#modalArea', 'id'=>'newArea', 'tipo'=> 'modal'],
+    ['text'=>'Nueva', 'href'=>'#modalArea', 'id'=>'newArea', 'tipo'=>'modal'],
   ]"
 >
   <div class="row">
     @foreach ($areas as $item)
     <div class="col-6 col-md-2">
-    <a class="fas fa-edit modArea" href="#modalArea" data-toggle="modal" data-route="{{ route('area.update', $item->id) }}" data-area="{{ $item->area }}" data-orden="{{ $item->orden }}"></a>
+      <a class="fas fa-edit" href="#modalArea" data-toggle="modal" data-modaldata='@json($item)'></a>
       &nbsp;&nbsp;{{ $item->area }}
     </div>
     @endforeach
@@ -86,16 +86,16 @@
               <div class="modal-body">
                 <div class="form-group">
                   <label for="area">Área</label>
-                  <input type="text" name="area" id="area" class="form-control modal-area">
+                  <input type="text" name="area" id="area" class="form-control">
                 </div>
                 <div class="form-group">
                   <label for="orden">Orden</label>
-                  <input type="number" name="orden" id="orden" class="form-control modal-orden">
+                  <input type="number" name="orden" id="orden" class="form-control">
                 </div>
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-primary">Guardar</button>
+                  <button type="submit" class="btn btn-primary submitbtn">Crear</button>
               </div>
             </form>
         </div>
@@ -113,24 +113,20 @@
   });
 
   // AREAS
-  const routeStore = `{{ route("area.store") }}`;
-  $('#newArea').click(event => {
-    var modal = $('#modalArea');
-    modal.find('.modal-title').html('Nueva Área');
-    modal.find('.modal-area').val('');
-    modal.find('.modal-orden').val('');
-    modal.find('.modal-path').attr('action', routeStore);
-    modal.find('input[name="_method"]').val('POST');
-  });
+  const routeStore = `{{ route('area.store') }}`;
+  const routeUpdate = `{{ route('area.update', 0) }}`;
+  $('#modalArea').on('show.bs.modal', event => {
+    let data = $(event.relatedTarget).data('modaldata');
+    let modal = $(event.target);
 
-  $('.modArea').click(event => {
-    var button = $(event.target);
-    var modal = $('#modalArea');
-    modal.find('.modal-title').html('Modificar Área');
-    modal.find('.modal-area').val(button.data('area'));
-    modal.find('.modal-orden').val(button.data('orden'));
-    modal.find('.modal-path').attr('action', button.data('route'));
-    modal.find('input[name="_method"]').val('PUT');
+    let path = data ? routeUpdate.replace('/0', `/${data.id}`) : routeStore;
+    modal.find('.modal-title').html(data ? 'Modificar Área' : 'Nueva Área');
+    modal.find('.modal-path').attr('action', path);
+    modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
+    modal.find(".submitbtn").html(data ? 'Modificar' : 'Crear');
+
+    modal.find('#area').val(data ? data.area : '');
+    modal.find('#orden').val(data ? data.orden : '');
   });
 </script>
 @endsection

@@ -15,7 +15,7 @@
 <x-blue-board
   title='Facturas'
   :foot="[
-    ['text'=>'Nueva', 'href'=>'#modalFactura', 'id'=>'newFactura', 'tipo'=> 'modal'],
+    ['text'=>'Nueva', 'href'=>'#modalFactura', 'id'=>'newFactura', 'tipo'=>'modal'],
   ]"
 >
   <table id="table" class="table table-striped table-sm">
@@ -36,7 +36,7 @@
     <tbody>
       @foreach ($facturas as $item)
       @php
-        $logo = $item->logo ? "empresa_logo/$item->logo" : 'logos/logo.svg';
+        $logo = $item->logo ? asset("empresa_logo/$item->logo") : asset('logos/logo.svg');
       @endphp
       <tr>
         <td>{{ $item->empresa }}</td>
@@ -46,12 +46,12 @@
         <td>{{ $item->inicio }}</td>
         <td>{{ $item->valido_de }}</td>
         <td>{{ $item->valido_a }}</td>
-        <td class="text-center"><img src="{{ asset($logo) }}" alt="{{ $item->id }}" style="max-width: 100px;"></td>
+        <td class="text-center"><img src="{{ $logo }}" alt="{{ $item->id }}" style="max-width: 100px;"></td>
         <td class="text-center">{{ $item->impresion ? 'A4' : 'A5' }}</td>
-        <td class="text-center"><a class='fa fa-edit modFactura @if ($item->status) text-success @else text-danger @endif' href="#modalFactura" data-toggle="modal"
-          data-empresa='@json($item)'
+        <td class="text-center">
+          <a class='fa fa-edit @if ($item->status) text-success @else text-danger @endif' href="#modalFactura" data-toggle="modal"
+          data-modaldata='@json($item)'
           data-logo="{{ $logo }}"></a>
-          {{-- <a class='fa fa-eye' id="{{ $item->id }}"></a></td> --}}
       </tr>
       @endforeach
     </tbody>
@@ -63,13 +63,13 @@
 <x-blue-board
   title='Ivas'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>'#modalIva', 'id'=>'newIva', 'tipo'=> 'modal'],
+    ['text'=>'Nuevo', 'href'=>'#modalIva', 'id'=>'newIva', 'tipo'=>'modal'],
   ]"
 >
   <div class="row">
     @foreach ($ivas as $item)
     <div class="col-6 col-md-2">
-    <a class="fas fa-edit modIva @if ($item->status) text-success @else text-danger @endif" href="#modalIva" data-toggle="modal" data-iva='@json($item)'></a>
+      <a class="fas fa-edit @if ($item->status) text-success @else text-danger @endif" href="#modalIva" data-toggle="modal" data-modaldata='@json($item)'></a>
       &nbsp;&nbsp;{{ $item->porcentaje }}
     </div>
     @endforeach
@@ -79,13 +79,13 @@
 <x-blue-board
   title='Retenciones Iva'
   :foot="[
-    ['text'=>'Nueva', 'href'=>'#modalRetencion', 'id'=>'newRetencionIva', 'tipo'=> 'modal'],
+    ['text'=>'Nueva', 'href'=>'#modalRetencion', 'id'=>'newRetencionIva', 'tipo'=>'modal'],
   ]"
 >
   <div class="row">
     @foreach ($ret_iva as $item)
     <div class="col-6 col-md-2">
-    <a class="fas fa-edit modRetencion @if ($item->status) text-success @else text-danger @endif" href="#modalRetencion" data-toggle="modal" data-retencion='@json($item)'></a>
+      <a class="fas fa-edit @if ($item->status) text-success @else text-danger @endif" href="#modalRetencion" data-toggle="modal" data-modaldata='@json($item)'></a>
       &nbsp;&nbsp;{{ $item->porcentaje }}
     </div>
     @endforeach
@@ -95,13 +95,13 @@
 <x-blue-board
   title='Retenciones Fuente'
   :foot="[
-    ['text'=>'Nueva', 'href'=>'#modalRetencion', 'id'=>'newRetencionFnt', 'tipo'=> 'modal'],
+    ['text'=>'Nueva', 'href'=>'#modalRetencion', 'id'=>'newRetencionFnt', 'tipo'=>'modal'],
   ]"
 >
   <div class="row">
     @foreach ($ret_fnt as $item)
     <div class="col-6 col-md-2">
-    <a class="fas fa-edit modRetencion @if ($item->status) text-success @else text-danger @endif" href="#modalRetencion" data-toggle="modal" data-retencion='@json($item)'></a>
+      <a class="fas fa-edit @if ($item->status) text-success @else text-danger @endif" href="#modalRetencion" data-toggle="modal" data-modaldata='@json($item)'></a>
       &nbsp;&nbsp;{{ $item->porcentaje }}
     </div>
     @endforeach
@@ -125,117 +125,79 @@
     "responsive": true,
   });
 
-  // CATEGORIAS
+  // Empresa de facturacion
   const routeStore = `{{ route("facturacion-empresas.store") }}`;
   const routeUpdate = `{{route('facturacion-empresas.update', 0)}}`;
-  $('#newFactura').click(event => {
-    var modal = $('#modalFactura');
-    modal.find('.modal-title').html('Nueva Empresa');
-    modal.find('.modal-empresa').val('');
-    modal.find('.modal-representante').val('');
-    modal.find('.modal-direccion').val('');
-    modal.find('.modal-correo').val('');
-    modal.find('.modal-telefono').val('');
-    modal.find('.modal-celular').val('');
-    modal.find('.modal-ruc').val('');
-    modal.find('.modal-valido_de').val(today);
-    modal.find('.modal-valido_a').val(today);
-    modal.find('.modal-clave_sri').val('');
-    modal.find('.modal-clave_firma_sri').val('');
-    modal.find('.modal-caja').val('');
-    modal.find('.modal-inicio').val('');
-    modal.find('.modal-impresion').val('1');
-    if(modal.find('.modal-activo').prop('checked') != true){
-      modal.find('.modal-activo').click();
-    }
-    modal.find('.modal-logo').attr('data-default-file', '');
-    modal.find('.modal-path').attr('action', routeStore);
-    modal.find('input[name="_method"]').val('POST');
+  $('#modalFactura').on('show.bs.modal', event => {
+    let data = $(event.relatedTarget).data('modaldata');
+    let logo = $(event.relatedTarget).data('logo') || null;
+    let modal = $(event.target);
+
+    let path = data ? routeUpdate.replace('/0', `/${data.id}`) : routeStore;
+    modal.find('.modal-title').html(data ? 'Modificar Empresa de Facturación' : 'Nueva Empresa de Facturación');
+    modal.find('.modal-path').attr('action', path);
+    modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
+    modal.find(".submitbtn").html(data ? 'Modificar' : 'Crear');
+
+    modal.find('#empresa').val(data ? data.empresa : '');
+    modal.find('#representante').val(data ? data.representante : '');
+    modal.find('#direccion').val(data ? data.direccion : '');
+    modal.find('#correo').val(data ? data.correo : '');
+    modal.find('#telefono').val(data ? data.telefono : '');
+    modal.find('#celular').val(data ? data.celular : '');
+    modal.find('#ruc').val(data ? data.ruc : '');
+    modal.find('#valido_de').val(data ? data.valido_de : '');
+    modal.find('#valido_a').val(data ? data.valido_a : '');
+    modal.find('#clave_sri').val(data ? data.clave_sri : '');
+    modal.find('#clave_firma_sri').val(data ? data.clave_firma_sri : '');
+    modal.find('#caja').val(data ? data.caja : '');
+    modal.find('#inicio').val(data ? data.inicio : '');
+    modal.find('#iva_id').val(data ? data.iva_id : '');
+    modal.find('#ret_iva_id').val(data ? data.ret_iva_id : '');
+    modal.find('#ret_fuente_id').val(data ? data.ret_fuente_id : '');
+    modal.find('#impresion').val(data ? data.impresion : '');
+    modal.find('#status').prop('checked', data ? Boolean(Number(data.status)) : false);
+    modal.find('#logo').attr('data-default-file', logo).dropify();
   });
 
-  $('.modFactura').click(event => {
-    let data = $(event.target).data('empresa');
-    let modal = $('#modalFactura');
-    modal.find('.modal-title').html('Modificar Empresa');
-    modal.find('.modal-empresa').val(data.empresa);
-    modal.find('.modal-representante').val(data.representante);
-    modal.find('.modal-direccion').val(data.direccion);
-    modal.find('.modal-correo').val(data.correo);
-    modal.find('.modal-telefono').val(data.telefono);
-    modal.find('.modal-celular').val(data.celular);
-    modal.find('.modal-ruc').val(data.ruc);
-    modal.find('.modal-valido_de').val(data.valido_de);
-    modal.find('.modal-valido_a').val(data.valido_a);
-    modal.find('.modal-clave_sri').val(data.clave_sri);
-    modal.find('.modal-clave_firma_sri').val(data.clave_firma_sri);
-    modal.find('.modal-caja').val(data.caja);
-    modal.find('.modal-inicio').val(data.inicio);
-    modal.find('.modal-iva_id').val(data.iva_id);
-    modal.find('.modal-ret_iva_id').val(data.ret_iva_id);
-    modal.find('.modal-ret_fuente_id').val(data.ret_fuente_id);
-    modal.find('.modal-impresion').val(data.impresion);
-    if(modal.find('.modal-activo').prop('checked') != Boolean(Number(data.status))){
-      modal.find('.modal-activo').click();
-    }
-    modal.find('.modal-logo').data('default-file', $(event.target).data('logo'));
-    modal.find('.modal-path').attr('action', routeUpdate.replace('/0', `/${data.id}`));
-    modal.find('input[name="_method"]').val('PUT');
-  });
 
-  //Iva
-  const routeStoreIva = `{{ route("iva.store") }}`;
+  // Iva
+  const routeStoreIva = `{{ route('iva.store') }}`;
   const routeUpdateIva = `{{route('iva.update', 0)}}`;
-  $('#newIva').click(event => {
-    var modal = $('#modalIva');
-    modal.find('.modal-iva-title').html('Nuevo Iva');
-    modal.find('.modal-iva-porcentaje').val('0.00');
-    if(modal.find('.modal-iva-activo').prop('checked') != true){
-      modal.find('.modal-iva-activo').click();
-    }
-    modal.find('.modal-iva-path').attr('action', routeStoreIva);
-    modal.find('input[name="_method"]').val('POST');
+  $('#modalIva').on('show.bs.modal', event => {
+    let data = $(event.relatedTarget).data('modaldata');
+    let modal = $(event.target);
+
+    let path = data ? routeUpdateIva.replace('/0', `/${data.id}`) : routeStoreIva;
+    modal.find('.modal-title').html(data ? 'Modificar Iva' : 'Nuevo Iva');
+    modal.find('.modal-path').attr('action', path);
+    modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
+    modal.find(".submitbtn").html(data ? 'Modificar' : 'Crear');
+
+    modal.find('#porcentaje-iva').val(data ? data.porcentaje : '');
+    modal.find('#status-iva').prop('checked', data ? Boolean(Number(data.status)) : false);
   });
 
-  $('.modIva').click(event => {
-    let modal = $('#modalIva');
-    let data = $(event.target).data('iva');
-    modal.find('.modal-iva-title').html('Modificar Iva');
-    modal.find('.modal-iva-porcentaje').val(data.porcentaje);
-    if(modal.find('.modal-iva-activo').prop('checked') != Boolean(Number(data.status))){
-      modal.find('.modal-iva-activo').click();
-    }
-    modal.find('.modal-iva-path').attr('action', routeUpdateIva.replace('/0', `/${data.id}`));
-    modal.find('input[name="_method"]').val('PUT');
-  });
 
-  //Retencion
-  const routeStoreRetencion = `{{ route("retencion.store") }}`;
+  // Retencion
+  const routeStoreRetencion = `{{ route('retencion.store') }}`;
   const routeUpdateRetencion = `{{route('retencion.update', 0)}}`;
-  $('#newRetencionIva,#newRetencionFnt').click(event => {
-    var modal = $('#modalRetencion');
-    modal.find('.modal-ret-title').html('Nueva Retencion');
-    modal.find('.modal-ret-porcentaje').val('0.00');
-    modal.find('.modal-ret-tipo').val('1');
-    modal.find('.modal-ret-descripcion').html('');
-    if(modal.find('.modal-ret-activo').prop('checked') != true){
-      modal.find('.modal-ret-activo').click();
-    }
-    modal.find('.modal-ret-path').attr('action', routeStoreRetencion);
-    modal.find('input[name="_method"]').val('POST');
-  });
+  $('#modalRetencion').on('show.bs.modal', event => {
+    let data = $(event.relatedTarget).data('modaldata');
+    let modal = $(event.target);
+    let a = Boolean(Number(data.status))
+    debugger;
 
-  $('.modRetencion').click(event => {
-    let modal = $('#modalRetencion');
-    let data = $(event.target).data('retencion');
-    modal.find('.modal-ret-title').html('Modificar Retencion');
-    modal.find('.modal-ret-porcentaje').val(data.porcentaje);
-    modal.find('.modal-ret-tipo').val(data.tipo);
-    modal.find('.modal-ret-descripcion').html(data.descripcion);
-    if(modal.find('.modal-ret-activo').prop('checked') != Boolean(Number(data.status))){
-      modal.find('.modal-ret-activo').click();
-    }
-    modal.find('.modal-ret-path').attr('action', routeUpdateRetencion.replace('/0', `/${data.id}`));
-    modal.find('input[name="_method"]').val('PUT');
+    let path = data ? routeUpdateRetencion.replace('/0', `/${data.id}`) : routeStoreRetencion;
+    modal.find('.modal-title').html(data ? 'Modificar Retención' : 'Nueva Retención');
+    modal.find('.modal-path').attr('action', path);
+    modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
+    modal.find(".submitbtn").html(data ? 'Modificar' : 'Crear');
+
+    modal.find('#porcentaje-ret').val(data ? data.porcentaje : '');
+    modal.find('#tipo').val(data ? data.tipo : '');
+    modal.find('#descripcion').val(data ? data.descripcion : '');
+    modal.find('#status-ret').prop('checked', data ? Boolean(Number(data.status)) : false);
   });
 </script>
 @endsection
