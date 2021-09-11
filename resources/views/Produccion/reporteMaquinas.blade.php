@@ -111,9 +111,9 @@
       },
       {"name":"crud", "data":"id", "sortable": "false",
         "render": (data, type, full, meta) => {
-          let router = route.replace("/0", "/"+data);
+          let router = route.replace('/0', `/${data}`);
           let crud = `<a class='fa fa-edit' href='${router}'></a>`;
-          crud += `<a class='fa fa-eye verPedido' href='#' data-pedido_id='${data}'></a>`;
+          crud += `<a class='fa fa-eye' href='#modalPedido' data-modaldata='${data}'></a>`;
           return crud;
         }
       }

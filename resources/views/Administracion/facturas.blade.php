@@ -107,7 +107,9 @@
       {"name":"crud", "data":"id", "sortable": "false",
         "render": ( data, type, full, meta ) => {
           let path = routeEdit.replace('/0', `/${data}`);
-          return `<a class='fa fa-edit' href='${path}'></a> <a class='fa fa-print' href='#'></a>`;
+          let crud = `<a class='fa fa-edit' href='${path}'></a>`;
+          crud += `<a class='fa fa-print' href='#'></a>`;
+          return crud;
         }
       }
     ],

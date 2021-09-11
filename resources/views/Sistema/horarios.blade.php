@@ -47,7 +47,7 @@
         <td>{{ $item->espera }}</td>
         <td>{{ $item->gracia }}</td>
         <td>
-          <a class='fa fa-edit' href="#modalHorario" data-toggle="modal" data-modaldata='@json($item)'></a>
+          <x-crud routeEdit="#modalHorario" :modalEdit="$item" />
         </td>
       </tr>
       @endforeach

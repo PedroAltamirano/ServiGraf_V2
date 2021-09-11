@@ -20,7 +20,7 @@
   <div class="row">
     @foreach ($areas as $item)
     <div class="col-6 col-md-2">
-      <a class="fas fa-edit" href="#modalArea" data-toggle="modal" data-modaldata='@json($item)'></a>
+      <x-crud routeEdit="#modalArea" :modalEdit="$item" />
       &nbsp;&nbsp;{{ $item->area }}
     </div>
     @endforeach
@@ -59,8 +59,7 @@
         <td>{{ $item->tipo ? 'Interno' : 'Externo' }}</td>
         <td><i class="{{ $item->seguimiento ? 'fas fa-check' : 'fas fa-times' }}"></i></td>
         <td>
-          <a class='fa fa-edit' href='{{ route('proceso.edit', $item->id) }}'></a>
-          <a class='fa fa-eye' id="{{ $item->id }}"></a>
+          <x-crud :routeEdit="route('proceso.edit', $item->id)" />
         </td>
       </tr>
       @endforeach

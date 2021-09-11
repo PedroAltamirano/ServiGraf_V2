@@ -39,7 +39,7 @@
         <td>{{ $item->cargo }}</td>
         <td>{{ $item->inicio_labor }}</td>
         <td>
-          <a class='fa fa-edit' href='{{ route('nomina.edit', $item->cedula) }}'></a>
+          <x-crud :routeEdit="route('nomina.edit', $item->cedula)"/>
         </td>
       </tr>
       @endforeach

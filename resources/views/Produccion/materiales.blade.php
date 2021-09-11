@@ -20,7 +20,7 @@
   <div class="row">
     @foreach ($categorias as $item)
     <div class="col-6 col-md-2">
-      <a class="fas fa-edit" href="#modalCat" data-toggle="modal" data-modaldata='@json($item)'></a>
+      <x-crud routeEdit="#modalCat" :modalEdit="$item" />
       &nbsp;&nbsp;{{ $item->categoria }}
     </div>
     @endforeach
@@ -59,8 +59,7 @@
         <td><i class="{{ $item->uv ? 'fas fa-check' : 'fas fa-times' }}"></i></td>
         <td><i class="{{ $item->plastificado ? 'fas fa-check' : 'fas fa-times' }}"></i></td>
         <td>
-          <a class='fa fa-edit' href='{{ route('material.edit', $item->id) }}'></a>
-          <a class='fa fa-eye' id="{{ $item->id }}"></a>
+          <x-crud :routeEdit="route('material.edit', $item->id)" />
         </td>
       </tr>
       @endforeach
@@ -79,7 +78,7 @@
   <div class="row">
     @foreach ($tintas as $item)
     <div class="col-6 col-md-2">
-      <a class="fas fa-edit" href="#modalTinta" data-toggle="modal" data-modaldata='@json($item)'></a>
+      <x-crud routeEdit="#modalTinta" :modalEdit="$item" />
       &nbsp;&nbsp;{{ $item->color }}
     </div>
     @endforeach

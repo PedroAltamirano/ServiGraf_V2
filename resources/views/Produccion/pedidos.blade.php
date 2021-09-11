@@ -37,8 +37,7 @@
         <td>{{ $item->cantidad }}</td>
         <td>{{ implode(', ', $item->procesos_incompletos_nombre) }}</td>
         <td>
-          <a class='fa fa-edit' href='{{ route('pedido.edit', $item->numero) }}'></a>
-          <a class='fa fa-eye verPedido' data-pedido_id="{{ $item->id }}" id="{{ $item->numero }}" href="#"></a>
+          <x-crud routeSee="#modalPedido" :modalSee="$item->id" :routeEdit="route('pedido.edit', $item->numero)" />
         </td>
       </tr>
       @endforeach
@@ -47,9 +46,10 @@
     </tfoot>
   </table>
 </x-blue-board>
+@endsection
 
-<div id="modalPedidoDiv"></div>
-
+@section('modals')
+<x-modal-pedido />
 @endsection
 
 @section('scripts')

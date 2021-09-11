@@ -37,6 +37,7 @@
       @foreach ($facturas as $item)
       @php
         $logo = $item->logo ? asset("empresa_logo/$item->logo") : asset('logos/logo.svg');
+        $class = $item->status ? 'text-success' : 'text-danger';
       @endphp
       <tr>
         <td>{{ $item->empresa }}</td>
@@ -49,9 +50,7 @@
         <td class="text-center"><img src="{{ $logo }}" alt="{{ $item->id }}" style="max-width: 100px;"></td>
         <td class="text-center">{{ $item->impresion ? 'A4' : 'A5' }}</td>
         <td class="text-center">
-          <a class='fa fa-edit @if ($item->status) text-success @else text-danger @endif' href="#modalFactura" data-toggle="modal"
-          data-modaldata='@json($item)'
-          data-logo="{{ $logo }}"></a>
+          <x-crud routeEdit="#modalFactura" :modalEdit="$item" :classEdit="$class" />
       </tr>
       @endforeach
     </tbody>
@@ -69,7 +68,7 @@
   <div class="row">
     @foreach ($ivas as $item)
     <div class="col-6 col-md-2">
-      <a class="fas fa-edit @if ($item->status) text-success @else text-danger @endif" href="#modalIva" data-toggle="modal" data-modaldata='@json($item)'></a>
+      <x-crud routeEdit="#modalIva" :modalEdit="$item" :classEdit="$item->status ? 'text-success' : 'text-danger'" />
       &nbsp;&nbsp;{{ $item->porcentaje }}
     </div>
     @endforeach
@@ -85,7 +84,8 @@
   <div class="row">
     @foreach ($ret_iva as $item)
     <div class="col-6 col-md-2">
-      <a class="fas fa-edit @if ($item->status) text-success @else text-danger @endif" href="#modalRetencion" data-toggle="modal" data-modaldata='@json($item)'></a>
+      <x-crud routeEdit="#modalRetencion" :modalEdit="$item" :classEdit="$item->status ? 'text-success' : 'text-danger'" />
+
       &nbsp;&nbsp;{{ $item->porcentaje }}
     </div>
     @endforeach
@@ -101,7 +101,7 @@
   <div class="row">
     @foreach ($ret_fnt as $item)
     <div class="col-6 col-md-2">
-      <a class="fas fa-edit @if ($item->status) text-success @else text-danger @endif" href="#modalRetencion" data-toggle="modal" data-modaldata='@json($item)'></a>
+      <x-crud routeEdit="#modalRetencion" :modalEdit="$item" :classEdit="$item->status ? 'text-success' : 'text-danger'" />
       &nbsp;&nbsp;{{ $item->porcentaje }}
     </div>
     @endforeach
@@ -130,7 +130,7 @@
   const routeUpdate = `{{route('facturacion-empresas.update', 0)}}`;
   $('#modalFactura').on('show.bs.modal', event => {
     let data = $(event.relatedTarget).data('modaldata');
-    let logo = $(event.relatedTarget).data('logo') || null;
+    // let logo = $(event.relatedTarget).data('logo') || null;
     let modal = $(event.target);
 
     let path = data ? routeUpdate.replace('/0', `/${data.id}`) : routeStore;
@@ -157,7 +157,7 @@
     modal.find('#ret_fuente_id').val(data ? data.ret_fuente_id : '');
     modal.find('#impresion').val(data ? data.impresion : '');
     modal.find('#status').prop('checked', data ? Boolean(Number(data.status)) : false);
-    modal.find('#logo').attr('data-default-file', logo).dropify();
+    // modal.find('#logo').attr('data-default-file', logo).dropify();
   });
 
 

@@ -95,7 +95,7 @@
   <div class="row">
     @foreach ($ccostos as $item)
     <div class="col-6 col-md-2">
-      <a class="fas fa-edit" href="#modalCCostos" data-toggle="modal" data-modaldata='@json($item)'></a>
+      <x-crud routeEdit="#modalCCostos" :modalEdit="$item" />
       &nbsp;&nbsp;{{ $item->nombre }}
     </div>
     @endforeach

@@ -35,7 +35,9 @@
       <tr>
         <td scope="col">{{ $item->referencia }}</td>
         <td scope="col">{{ $item->descripcion }}</td>
-        <td scope="col"><a class='fa fa-edit' href='#modalReferencia' data-toggle="modal" data-referencia="{{ $item }}"></a></td>
+        <td scope="col">
+          <x-crud routeEdit="#modalReferencia" :modalEdit="$item" />
+        </td>
       </tr>
       @endforeach
     </tbody>
@@ -61,7 +63,9 @@
       <tr>
         <td scope="col">{{ $item->banco }}</td>
         <td scope="col">{{ $item->cuenta }}</td>
-        <td scope="col"><a class='fa fa-edit' href='#modalBanco' data-toggle="modal" data-banco="{{ $item }}"></a></td>
+        <td scope="col">
+          <x-crud routeEdit="#modalBanco" :modalEdit="$item" />
+        </td>
       </tr>
       @endforeach
     </tbody>
@@ -143,7 +147,7 @@
   const bancoUpdate = `{{ route('banco.update', 0) }}`;
 
   $("#modalReferencia").on('show.bs.modal', event => {
-    let data = $(event.relatedTarget).data('referencia');
+    let data = $(event.relatedTarget).data('modaldata');
     let modal = $(event.target);
 
     let action = data ? referenciaUpdate.replace('/0', `/${data.id}`) : referenciaStore;
@@ -155,7 +159,7 @@
   });
 
   $("#modalBanco").on('show.bs.modal', event => {
-    let data = $(event.relatedTarget).data('banco');
+    let data = $(event.relatedTarget).data('modaldata');
     let modal = $(event.target);
 
     let action = data ? bancoUpdate.replace("/0", "/"+data.id) : bancoStore;

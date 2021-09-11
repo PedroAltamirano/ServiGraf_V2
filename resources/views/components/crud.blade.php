@@ -1,5 +1,4 @@
 @if ($routeSee != '#')
-{{-- <a class='fa fa-eye verPedido' data-pedido_id="{{ $item->id }}" id="{{ $item->numero }}" href="#"></a> --}}
 <a class='fa fa-eye {{ $classSee }}' href="{{ $routeSee }}" @if($modalSee) data-toggle="modal" data-modaldata='@json($modalSee)' @endif></a>
 @endif
 @if ($routeEdit != '#')
