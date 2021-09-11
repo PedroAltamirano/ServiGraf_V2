@@ -64,7 +64,7 @@ class RetencionController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Retención no creada');
       return redirect()->back()->withInput();
-    };
+    }
   }
 
   /**
@@ -114,7 +114,7 @@ class RetencionController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Retención no modificada');
       return redirect()->back()->withInput();
-    };
+    }
   }
 
   /**

@@ -122,6 +122,6 @@ class MaterialesController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Material no modificado');
       return redirect()->back()->withInput();
-    };
+    }
   }
 }

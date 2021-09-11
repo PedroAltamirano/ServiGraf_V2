@@ -38,6 +38,6 @@ class ProveedoresController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Proveedor no creado');
       return redirect()->back()->withInput();
-    };
+    }
   }
 }

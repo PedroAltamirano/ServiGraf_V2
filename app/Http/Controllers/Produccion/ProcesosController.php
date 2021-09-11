@@ -79,7 +79,7 @@ class ProcesosController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Proceso no creado');
       return redirect()->back()->withInput();
-    };
+    }
   }
 
   // Ver modificar
@@ -114,6 +114,6 @@ class ProcesosController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Proceso no modificado');
       return redirect()->back()->withInput();
-    };
+    }
   }
 }

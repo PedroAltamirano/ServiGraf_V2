@@ -64,7 +64,7 @@ class CentroCostosController extends Controller
       Log::error($error);
       Alert::success('Acción completada', 'Centro de costos no creado');
       return redirect()->back()->withInput();
-    };
+    }
   }
 
   /**

@@ -71,31 +71,26 @@ class PerfilesController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($perfil = Perfil::create($validator)) {
+        ModPerfRol::where('perfil_id', $perfil->id)->delete();
+        foreach ($validator['mod'] as $key => $value) {
+          $modPerfRol = new ModPerfRol;
+          $modPerfRol->perfil_id = $perfil->id;
+          $modPerfRol->modulo_id = $key;
+          $modPerfRol->rol_id = count($value);
+          $modPerfRol->save();
+        }
+
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Perfil creado con éxito');
+        return redirect()->route('perfil.modificar', $perfil->id);
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Perfil no creado');
       return redirect()->back()->withInput();
     }
-
-    $perfil = Perfil::create($validator);
-
-    ModPerfRol::where('perfil_id', $perfil->id)->delete();
-    foreach ($validator['mod'] as $key => $value) {
-      $modPerfRol = new ModPerfRol;
-      $modPerfRol->perfil_id = $perfil->id;
-      $modPerfRol->modulo_id = $key;
-      $modPerfRol->rol_id = count($value);
-      $modPerfRol->save();
-    }
-
-    Alert::success('Acción completada', 'Perfil creado con exito');
-    return redirect()->route('perfil.modificar', $perfil->id);
   }
 
   //ver modificar perfil
@@ -122,31 +117,26 @@ class PerfilesController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($actividad = Actividad::create($validated)) {
+      if ($perfil->update($validator)) {
+        ModPerfRol::where('perfil_id', $perfil->id)->delete();
+        foreach ($validator['mod'] as $key => $value) {
+          $modPerfRol = new ModPerfRol;
+          $modPerfRol->perfil_id = $perfil->id;
+          $modPerfRol->modulo_id = $key;
+          $modPerfRol->rol_id = count($value);
+          $modPerfRol->save();
+        }
+
         DB::commit();
-        Alert::success('Acción completada', 'Actividad creada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        Alert::success('Acción completada', 'Perfil modificado con éxito');
+        return redirect()->route('perfil.modificar', $perfil->id);
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Actividad no creada');
+      Alert::error('Oops!', 'Perfil no modificado');
       return redirect()->back()->withInput();
     }
-
-    $perfil->update($validator);
-
-    ModPerfRol::where('perfil_id', $perfil->id)->delete();
-    foreach ($validator['mod'] as $key => $value) {
-      $modPerfRol = new ModPerfRol;
-      $modPerfRol->perfil_id = $perfil->id;
-      $modPerfRol->modulo_id = $key;
-      $modPerfRol->rol_id = count($value);
-      $modPerfRol->save();
-    }
-
-    Alert::success('Acción completada', 'Perfil modificado con exito');
-    return redirect()->route('perfil.modificar', $perfil->id);
   }
 
 

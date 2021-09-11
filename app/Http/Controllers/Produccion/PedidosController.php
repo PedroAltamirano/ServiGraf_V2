@@ -102,7 +102,7 @@ class PedidosController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Pedido no creado');
       return redirect()->back()->withInput();
-    };
+    }
   }
 
   //ver modificar
@@ -146,7 +146,7 @@ class PedidosController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Pedido no modificado');
       return redirect()->back()->withInput();
-    };
+    }
   }
 
   // duplicar perfil

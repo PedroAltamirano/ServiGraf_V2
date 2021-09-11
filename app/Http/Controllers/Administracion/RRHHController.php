@@ -122,7 +122,7 @@ class RRHHController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Asistencia no modificada');
       return redirect()->back()->withInput();
-    };
+    }
   }
 
   /**
@@ -145,7 +145,7 @@ class RRHHController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Asistencia no eliminada');
       return redirect()->back();
-    };
+    }
   }
 
   public function api(Request $request)

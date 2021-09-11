@@ -64,7 +64,7 @@ class IvaController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Iva no creado');
       return redirect()->back()->withInput();
-    };
+    }
   }
 
   /**
@@ -113,7 +113,7 @@ class IvaController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Iva no modificado');
       return redirect()->back()->withInput();
-    };
+    }
   }
 
   /**

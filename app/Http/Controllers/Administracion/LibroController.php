@@ -60,7 +60,7 @@ class LibroController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Libro no creado');
       return redirect()->back()->withInput();
-    };
+    }
   }
 
   /**
@@ -86,7 +86,7 @@ class LibroController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Libro no modificado');
       return redirect()->back()->withInput();
-    };
+    }
   }
 
   /**

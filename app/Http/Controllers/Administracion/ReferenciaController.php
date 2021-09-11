@@ -45,7 +45,7 @@ class ReferenciaController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Referencia no creada');
       return redirect()->back()->withInput();
-    };
+    }
   }
 
   /**
@@ -71,6 +71,6 @@ class ReferenciaController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Referencia no modificada');
       return redirect()->back()->withInput();
-    };
+    }
   }
 }

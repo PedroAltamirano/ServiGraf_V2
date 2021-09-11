@@ -55,35 +55,29 @@ class ContactoController extends Controller
     } else {
       $cli_empresa = Cliente_empresa::create(['nombre' => $validator['empresa'], 'ruc' => $validator['ruc'], 'empresa_id' => $validator['empresa_id'],]);
     }
-
     $validator['usuario_id'] = Auth::id();
     $validator['cliente_empresa_id'] = $cli_empresa->id;
 
     DB::beginTransaction();
     try {
-      if ($plantilla->delete()) {
+      if ($contacto = Contacto::create(Arr::except($validator, ['empresa', 'ruc', 'isCliente', 'seguimento']))) {
+        $mssg = 'Contacto creado con éxito';
+        if (isset($validator['isCliente'])) {
+          $validator['contacto_id'] = $contacto->id;
+          $cliente = Cliente::create(Arr::only($validator, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimento']));
+          $mssg = 'Cliente creado con éxito';
+        }
+
         DB::commit();
-        Alert::success('Acción completada', 'Plantilla eliminada con éxito');
-        return redirect()->route('Plantilla');
+        Alert::success('Acción completada', $mssg);
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();
       Log::error($error);
-      Alert::error('Oops!', 'Plantilla no eliminada');
+      Alert::error('Oops!', 'Contacto no creado');
       return redirect()->back();
     }
-
-    $contacto = Contacto::create(Arr::except($validator, ['empresa', 'ruc', 'isCliente', 'seguimento']));
-    $mssg = 'Contacto creado con éxito';
-
-    if (isset($validator['isCliente'])) {
-      $validator['contacto_id'] = $contacto->id;
-      $cliente = Cliente::create(Arr::only($validator, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimento']));
-      $mssg = 'Cliente creado con éxito';
-    }
-
-    Alert::success('Acción completada', $mssg);
-    return redirect()->back();
   }
 
   public function show(Contacto $contacto)
