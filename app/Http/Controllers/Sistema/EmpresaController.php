@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Sistema;
 
 use Exception;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -12,9 +10,8 @@ use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Models\Sistema\DatosEmpresa;
-use App\Models\Sistema\Fact_empr;
 use App\Models\Sistema\CentroCostos;
+use App\Models\Sistema\DatosEmpresa;
 
 use App\Http\Requests\Sistema\StoreEmpresa;
 use App\Http\Requests\Sistema\UpdateEmpresa;

@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Usuarios;
 
 use Exception;
 use App\Security;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -14,8 +12,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Models\Usuarios\Perfil;
 use App\Models\Usuarios\Modulo;
+use App\Models\Usuarios\Perfil;
 use App\Models\Usuarios\ModPerfRol;
 
 use App\Http\Requests\Usuarios\StorePerfil;
@@ -60,7 +58,7 @@ class PerfilesController extends Controller
       'method' => 'POST',
       // 'modules'=>json_decode($modules)
     ];
-    return view('Usuarios/perfil', compact('modules', 'perfil', 'modPerf'))->with($data);
+    return view('Usuarios.perfil', compact('modules', 'perfil', 'modPerf'))->with($data);
   }
 
   //crear nuevo perfil
@@ -72,14 +70,7 @@ class PerfilesController extends Controller
     DB::beginTransaction();
     try {
       if ($perfil = Perfil::create($validator)) {
-        ModPerfRol::where('perfil_id', $perfil->id)->delete();
-        foreach ($validator['mod'] as $key => $value) {
-          $modPerfRol = new ModPerfRol;
-          $modPerfRol->perfil_id = $perfil->id;
-          $modPerfRol->modulo_id = $key;
-          $modPerfRol->rol_id = count($value);
-          $modPerfRol->save();
-        }
+        $this->manageModPerfRol($validator, $perfil);
 
         DB::commit();
         Alert::success('Acción completada', 'Perfil creado con éxito');
@@ -106,7 +97,7 @@ class PerfilesController extends Controller
 
     $modPerf = $perfil->modulos;
 
-    return view('Usuarios/perfil', compact('modules', 'perfil', 'modPerf'))->with($data);
+    return view('Usuarios.perfil', compact('modules', 'perfil', 'modPerf'))->with($data);
   }
 
   //modificar perfil
@@ -118,14 +109,7 @@ class PerfilesController extends Controller
     DB::beginTransaction();
     try {
       if ($perfil->update($validator)) {
-        ModPerfRol::where('perfil_id', $perfil->id)->delete();
-        foreach ($validator['mod'] as $key => $value) {
-          $modPerfRol = new ModPerfRol;
-          $modPerfRol->perfil_id = $perfil->id;
-          $modPerfRol->modulo_id = $key;
-          $modPerfRol->rol_id = count($value);
-          $modPerfRol->save();
-        }
+        $this->manageModPerfRol($validator, $perfil);
 
         DB::commit();
         Alert::success('Acción completada', 'Perfil modificado con éxito');
@@ -136,6 +120,26 @@ class PerfilesController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Perfil no modificado');
       return redirect()->back()->withInput();
+    }
+  }
+
+  public function manageModPerfRol($request, Perfil $model)
+  {
+    if (!isset($request['mod'])) {
+      return 0;
+    }
+
+    $relation = $model->modulos();
+    if ($relation->count()) {
+      $relation->delete();
+    }
+
+    foreach ($request['mod'] as $key => $value) {
+      $modPerfRol = new ModPerfRol;
+      $modPerfRol->perfil_id = $model->id;
+      $modPerfRol->modulo_id = $key;
+      $modPerfRol->rol_id = count($value);
+      $modPerfRol->save();
     }
   }
 

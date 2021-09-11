@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Usuarios;
 
 use Exception;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -13,13 +11,13 @@ use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Models\Ventas\Cliente;
+use App\Models\Sistema\Nomina;
+use App\Models\Usuarios\Perfil;
 use App\Models\Usuarios\Usuario;
+use App\Models\Produccion\Proceso;
 use App\Models\Usuarios\UsuarioProceso;
 use App\Models\Usuarios\UsuarioClientes;
-use App\Models\Usuarios\Perfil;
-use App\Models\Sistema\Nomina;
-use App\Models\Produccion\Proceso;
-use App\Models\Ventas\Cliente;
 
 use App\Http\Requests\Usuarios\Store;
 use App\Http\Requests\Usuarios\Update;
@@ -51,6 +49,7 @@ class UsuariosController extends Controller
   //crear usuario view
   public function create()
   {
+    $usuario = new Usuario;
     $nomina = Nomina::availables();
     $perfiles = Perfil::where('empresa_id', Auth::user()->empresa_id)->select('id', 'nombre')->get();
     $procesos = Proceso::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
@@ -60,12 +59,9 @@ class UsuariosController extends Controller
       'path' => route('usuario.nuevo'),
       'text' => 'Nuevo usuario',
       'action' => 'Crear',
-      // 'nomina'=>json_decode($nomina),
-      // 'perfiles'=>json_decode($perfiles),
       'method' => 'POST'
     ];
 
-    $usuario = new Usuario;
     return view('Usuarios/usuario', compact('usuario', 'nomina', 'perfiles', 'procesos', 'actividades', 'clientes'))->with($data);
   }
 
@@ -79,6 +75,9 @@ class UsuariosController extends Controller
     DB::beginTransaction();
     try {
       if ($usuario = Usuario::create($validator)) {
+        $this->manageProcesos($validator, $usuario);
+        $this->manageClientes($validator, $usuario);
+
         DB::commit();
         Alert::success('Acción completada', 'Usuario creado con éxito');
         return redirect()->route('usuario.modificar', $usuario->cedula);
@@ -100,11 +99,9 @@ class UsuariosController extends Controller
     $actividades = [];
     $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->where('seguimiento', 1)->get();
     $data = [
-      'path' => route('usuario.modificar', [$usuario->cedula]),
+      'path' => route('usuario.modificar', $usuario->cedula),
       'text' => 'Modificar usuario',
       'action' => 'Modificar',
-      // 'nomina'=>json_decode($nomina),
-      // 'perfiles'=>json_decode($perfiles),
       'method' => 'PUT'
     ];
 
@@ -121,21 +118,8 @@ class UsuariosController extends Controller
     DB::beginTransaction();
     try {
       if ($usuario->update($validator)) {
-        UsuarioProceso::where('usuario_id', Auth::id())->delete();
-        foreach ($validator['procesos'] ?? [] as $pro) {
-          $new = new UsuarioProceso;
-          $new->usuario_id = Auth::id();
-          $new->proceso_id = $pro;
-          $new->save();
-        }
-
-        UsuarioClientes::where('usuario_id', Auth::id())->delete();
-        foreach ($validator['clientes'] ?? [] as $cli) {
-          $new = new UsuarioClientes;
-          $new->usuario_id = Auth::id();
-          $new->cliente_id = $cli;
-          $new->save();
-        }
+        $this->manageProcesos($validator, $usuario);
+        $this->manageClientes($validator, $usuario);
 
         DB::commit();
         Alert::success('Acción completada', 'Usuario modificado con éxito');
@@ -149,13 +133,51 @@ class UsuariosController extends Controller
     }
   }
 
+  public function manageProcesos($request, Usuario $model)
+  {
+    $relation = $model->procesos_id();
+    if ($relation->count()) {
+      $relation->delete();
+    }
+
+    if (!isset($request['procesos'])) {
+      return 0;
+    }
+
+    foreach ($request['procesos'] ?? [] as $pro) {
+      $new = new UsuarioProceso;
+      $new->usuario_id = Auth::id();
+      $new->proceso_id = $pro;
+      $new->save();
+    }
+  }
+
+  public function manageClientes($request, Usuario $model)
+  {
+    $relation = $model->clientes_id();
+    if ($relation->count()) {
+      $relation->delete();
+    }
+
+    if (!isset($request['clientes'])) {
+      return 0;
+    }
+
+    foreach ($request['clientes'] ?? [] as $cli) {
+      $new = new UsuarioClientes;
+      $new->usuario_id = Auth::id();
+      $new->cliente_id = $cli;
+      $new->save();
+    }
+  }
+
 
   //AJAX
   //get todos los perfiles
   public function get()
   {
     $data['data'] = Usuario::join('nomina as N', 'N.cedula', '=', 'usuarios.cedula')
-      ->where('N.empresa_id', 1709636664001)
+      ->where('N.empresa_id', Auth::user()->empresa_id)
       ->select(['usuarios.cedula', 'usuarios.status', 'perfil' => Perfil::select('nombre as perfil')->whereColumn('id', 'usuarios.perfil_id'), 'N.nombre', 'N.apellido'])
       ->get();
     // echo json_encode($data);

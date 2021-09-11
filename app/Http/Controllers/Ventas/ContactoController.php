@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Ventas;
 
-use stdClass;
 use Exception;
-use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,14 +12,14 @@ use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Models\Ventas\Contacto;
-use App\Models\Ventas\Cliente_empresa;
+use App\Models\Ventas\CRM;
 use App\Models\Ventas\Cliente;
+use App\Models\Ventas\Contacto;
+use App\Models\Ventas\Comentario;
+use App\Models\Ventas\Cliente_empresa;
 
 use App\Http\Requests\Ventas\StoreContacto;
 use App\Http\Requests\Ventas\UpdateContacto;
-use App\Models\Ventas\Comentario;
-use App\Models\Ventas\CRM;
 
 class ContactoController extends Controller
 {

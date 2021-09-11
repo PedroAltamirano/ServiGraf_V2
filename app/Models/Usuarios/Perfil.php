@@ -2,8 +2,8 @@
 
 namespace App\Models\Usuarios;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-use Auth;
 
 class Perfil extends Model
 {
@@ -24,10 +24,11 @@ class Perfil extends Model
 
   public function modulos()
   {
-      return $this->hasMany('App\Models\Usuarios\ModPerfRol');
+    return $this->hasMany(ModPerfRol::class);
   }
 
-  public static function todos(){
+  public static function todos()
+  {
     return Perfil::select('id', 'nombre', 'descripcion', 'status')->where('empresa_id', '=', Auth::user()->empresa_id)->get();
   }
 }

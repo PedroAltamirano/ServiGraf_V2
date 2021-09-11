@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Produccion\Pedido;
-use App\Models\Produccion\Pedido_proceso;
 use App\Models\Produccion\Proceso;
 use App\Models\Administracion\Factura;
+use App\Models\Produccion\Pedido_proceso;
 
 class KPIController extends Controller
 {

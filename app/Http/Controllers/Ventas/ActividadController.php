@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Ventas;
 
 use Exception;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -12,10 +10,10 @@ use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
 
 use App\Models\Ventas\Actividad;
+use App\Models\Ventas\Plantilla;
 
 use App\Http\Requests\Ventas\StoreActividad;
 use App\Http\Requests\Ventas\UpdateActividad;
-use App\Models\Ventas\Plantilla;
 
 class ActividadController extends Controller
 {

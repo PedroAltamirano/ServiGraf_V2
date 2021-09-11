@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-use App\Models\Produccion\Pedido;
-use App\Models\Produccion\Pedido_proceso;
-use App\Models\Produccion\Proceso;
-use App\Models\Produccion\Solicitud_material;
 use App\Models\Ventas\Cliente;
+use App\Models\Produccion\Pedido;
+use App\Models\Produccion\Proceso;
+use App\Models\Produccion\Pedido_proceso;
+use App\Models\Produccion\Solicitud_material;
 
 class DesktopController extends Controller
 {
@@ -45,9 +45,7 @@ class DesktopController extends Controller
     $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->get();
     $pt = $pedidos->count();
     $pi = Pedido::incompletas($request->get('fecha'))->count();
-    $materiales = Solicitud_material::whereIn('pedido_id', $pedidos->map(function ($p) {
-      return $p->id;
-    })->toArray())->get();
+    $materiales = Solicitud_material::whereIn('pedido_id', $pedidos->pluck('id')->toArray())->get();
     $procesos = Proceso::where('empresa_id', Auth::user()->empresa_id)->get();
     $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->orderBy('cliente_empresa_id')->get();
     return view('desktop', compact('clientes', 'pedidos', 'pt', 'pi', 'procesos', 'materiales', 'fecha'));
@@ -58,9 +56,7 @@ class DesktopController extends Controller
     Pedido::$own = true;
     $clientes = auth()->user()->clientes;
     $procesos = auth()->user()->procesos;
-    $proc = $procesos->map(function ($p) {
-      return $p->id;
-    })->toArray();
+    $proc = $procesos->pluck('id')->toArray();
     $pedidos = Pedido::incompletas();
     return view('tablero', compact('pedidos', 'clientes', 'procesos'));
   }
