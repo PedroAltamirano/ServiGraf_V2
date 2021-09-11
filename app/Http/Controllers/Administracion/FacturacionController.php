@@ -159,13 +159,13 @@ class FacturacionController extends Controller
 
   public function manageProductos($request, Factura $model)
   {
-    if (!isset($request['articulo']['cantidad'])) {
-      return 0;
-    }
-
     $relation = $model->productos();
     if ($relation->count()) {
       $relation->delete();
+    }
+
+    if (!isset($request['articulo']['cantidad'])) {
+      return 0;
     }
 
     $cnt = count($request['articulo']['cantidad'] ?? []);
@@ -183,13 +183,13 @@ class FacturacionController extends Controller
 
   public function managePedidos($request, Factura $model)
   {
-    if (!isset($request['pedidos'])) {
-      return 0;
-    }
-
     $relation = $model->pedidos_id();
     if ($relation->count()) {
       $relation->delete();
+    }
+
+    if (!isset($request['pedidos'])) {
+      return 0;
     }
 
     foreach ($request['pedidos'] as $pedido) {

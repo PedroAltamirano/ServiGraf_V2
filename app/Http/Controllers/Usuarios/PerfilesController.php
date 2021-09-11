@@ -125,13 +125,13 @@ class PerfilesController extends Controller
 
   public function manageModPerfRol($request, Perfil $model)
   {
-    if (!isset($request['mod'])) {
-      return 0;
-    }
-
     $relation = $model->modulos();
     if ($relation->count()) {
       $relation->delete();
+    }
+
+    if (!isset($request['mod'])) {
+      return 0;
     }
 
     foreach ($request['mod'] as $key => $value) {

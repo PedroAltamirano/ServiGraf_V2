@@ -14,13 +14,13 @@ class ImprentaController extends Controller
 {
   public function manageTintas($request, Pedido $model)
   {
-    if (!isset($request['tinta_tiro']) and !isset($request['tinta_retiro'])) {
-      return 0;
-    }
-
     $relation = $model->tintas_id();
     if ($relation->count()) {
       $relation->delete();
+    }
+
+    if (!isset($request['tinta_tiro']) and !isset($request['tinta_retiro'])) {
+      return 0;
     }
 
     foreach ($request['tinta_tiro'] ?? [] as $ttiro) {
@@ -42,13 +42,13 @@ class ImprentaController extends Controller
 
   public function manageSolicitudMaterial($request, Pedido $model)
   {
-    if (!isset($request['material_id'])) {
-      return 0;
-    }
-
     $relation = $model->material_id();
     if ($relation->count()) {
       $relation->delete();
+    }
+
+    if (!isset($request['material_id'])) {
+      return 0;
     }
 
     $cnt = count($request['material_id'] ?? []);
@@ -70,13 +70,13 @@ class ImprentaController extends Controller
 
   public function manageProcesos($request, Pedido $model)
   {
-    if (!isset($request['proceso_id'])) {
-      return 0;
-    }
-
     $relation = $model->procesos_id();
     if ($relation->count()) {
       $relation->delete();
+    }
+
+    if (!isset($request['proceso_id'])) {
+      return 0;
     }
 
     $cnt = count($request['proceso_id'] ?? []);

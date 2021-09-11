@@ -186,13 +186,13 @@ class NominaController extends Controller
 
   public function manageEducacion($request, Nomina $nomina)
   {
-    if (!isset($request['nivel_educ'])) {
-      return 0;
-    }
-
     $educacion = $nomina->educacion;
     if ($educacion != null && $educacion->count()) {
       $nomina->educacion()->delete();
+    }
+
+    if (!isset($request['nivel_educ'])) {
+      return 0;
     }
 
     for ($i = 0; $i < sizeof($request['nivel_educ']); $i++) {
@@ -211,13 +211,13 @@ class NominaController extends Controller
 
   public function manageReferencias($request, Nomina $nomina)
   {
-    if (!isset($request['tipo_refer'])) {
-      return 0;
-    }
-
     $referencias = $nomina->referencias;
     if ($referencias != null && $referencias->count()) {
       $nomina->referencias()->delete();
+    }
+
+    if (!isset($request['tipo_refer'])) {
+      return 0;
     }
 
     for ($i = 0; $i < sizeof($request['tipo_refer']); $i++) {
@@ -240,13 +240,13 @@ class NominaController extends Controller
 
   public function manageDotacion($request, Nomina $nomina)
   {
-    if (!isset($request['entrega'])) {
-      return 0;
-    }
-
     $dotacion = $nomina->dotacion;
     if ($dotacion != null && $dotacion->count()) {
       $nomina->dotacion()->delete();
+    }
+
+    if (!isset($request['entrega'])) {
+      return 0;
     }
 
     for ($i = 0; $i < sizeof($request['entrega']); $i++) {
@@ -262,13 +262,13 @@ class NominaController extends Controller
 
   public function manageFamiliares($request, Nomina $nomina)
   {
-    if (!isset($request['nombre_fam'])) {
-      return 0;
-    }
-
     $familiares = $nomina->familiares;
     if ($familiares != null && $familiares->count()) {
       $nomina->familiares()->delete();
+    }
+
+    if (!isset($request['nombre_fam'])) {
+      return 0;
     }
 
     for ($i = 0; $i < sizeof($request['nombre_fam']); $i++) {
