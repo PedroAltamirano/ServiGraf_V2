@@ -177,10 +177,14 @@ class PedidosController extends Controller
     $data['data'] = Pedido::todos();
   }
 
-  public function modal(Request $request)
+  public function modal(Pedido $pedido)
   {
-    $pedido = Pedido::find($request->pedido_id);
-    $method = 'PUT';
-    return view('Produccion.formPedido', compact('pedido', 'method'));
+    $data = [
+      'pedido' => $pedido,
+      'tintas' => $pedido->tintas_id,
+      'materiales' => $pedido->material_id,
+      'procesos' => $pedido->procesos_id,
+    ];
+    return response()->json($data);
   }
 }

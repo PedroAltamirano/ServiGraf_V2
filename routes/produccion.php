@@ -10,7 +10,7 @@ Route::namespace('Produccion')
     Route::get('pedido/modificar/{pedido}', 'PedidosController@edit')->name('pedido.edit')->middleware('hasModRol:30,3');
     Route::put('pedido/modificar/{pedido}', 'PedidosController@update')->name('pedido.update')->middleware('hasModRol:30,3');
     Route::get('pedido/duplicar/{pedido}', 'PedidosController@duplicate')->name('pedido.duplicate')->middleware('hasModRol:30,3');
-    Route::post('pedido/modal', 'PedidosController@modal')->name('pedido.modal')->middleware('hasModRol:30,1');
+    Route::get('pedido/modal/{pedido}', 'PedidosController@modal')->name('pedido.modal')->middleware('hasModRol:30,1');
     Route::post('abonos/{pedido}', 'PedidosController@abonos')->name('abonos')->middleware('hasModRol:30,3');
 
     // REPORTE DE PEDIDOS
