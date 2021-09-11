@@ -39,9 +39,9 @@ class StorePedidoImprenta extends FormRequest
       'numerado_inicio' => 'required|numeric|min:0',
       'numerado_fin' => 'required|numeric|min:0',
       'total_material' => 'required|numeric|min:0',
-      'total_pedido' => 'required|numeric|min:0.01',
+      'total_pedido' => 'required|numeric|min:0.0001',
       'abono' => 'required|numeric|min:0',
-      'saldo' => 'required|numeric|min:0.01',
+      'saldo' => 'required|numeric|min:0.0001',
       'notas' => 'nullable|string|max:256',
 
       'material_id.*' => 'required|numeric|exists:materiales,id',
@@ -51,14 +51,14 @@ class StorePedidoImprenta extends FormRequest
       'material_tamanios.*' => 'required|numeric|min:1',
       'material_proveedor.*' => 'required|numeric|exists:proveedores,id',
       'material_factura.*' => 'nullable|numeric',
-      'material_total.*' => 'required|numeric|min:0.01',
+      'material_total.*' => 'required|numeric|min:0.0001',
 
       'proceso_id.*' => 'required|numeric',
       'proceso_tiro.*' => 'required|numeric|min:1',
       'proceso_retiro.*' => 'required|numeric|min:0',
       'proceso_millar.*' => 'required|numeric|min:1',
-      'proceso_valor.*' => 'required|numeric|min:0.01',
-      'proceso_total.*' => 'required|numeric|min:0.01',
+      'proceso_valor.*' => 'required|numeric|min:0.0001',
+      'proceso_total.*' => 'required|numeric|min:0.0001',
       'proceso_terminado.*' => 'nullable|boolean',
     ];
   }

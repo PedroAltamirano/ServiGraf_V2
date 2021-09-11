@@ -88,7 +88,7 @@
       </div>
       <div class="form-group col-6 col-md-3">
         <label for="valor">Valor</label>
-        <input type="number" min="0" step="0.01" class="form-control form-control-sm fixFloat" name="valor" id="valor" value="{{ old('valor', ($entrada->tipo ? $entrada->ingreso : $entrada->egreso)) }}">
+        <input type="number" min="0" step="0.0001" class="form-control form-control-sm fixFloat" name="valor" id="valor" value="{{ old('valor', ($entrada->tipo ? $entrada->ingreso : $entrada->egreso)) }}">
       </div>
     </div>
   </form>
