@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Produccion;
 
 use Exception;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +11,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Produccion\Area;
+
 use App\Http\Requests\Produccion\StoreArea;
 use App\Http\Requests\Produccion\UpdateArea;
 
@@ -63,7 +62,6 @@ class AreasController extends Controller
 
   public function delete(Area $area)
   {
-
     DB::beginTransaction();
     try {
       if ($area->delete()) {

@@ -15,14 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Controllers\Produccion\ImprentaController;
 
 use App\Models\Produccion\Pedido;
-use App\Models\Produccion\Tinta;
-use App\Models\Produccion\Material;
-use App\Models\Produccion\Pedido_proceso;
-use App\Models\Produccion\Pedido_tintas;
-use App\Models\Produccion\Solicitud_material;
 use App\Models\Produccion\Abono;
-use App\Models\Ventas\Cliente;
-use App\View\Components\modalPedido;
 
 use App\Http\Requests\Produccion\StorePedidoImprenta;
 use App\Http\Requests\Produccion\UpdatePedidoImprenta;

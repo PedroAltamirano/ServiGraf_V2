@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers\Produccion;
 
-use Exception;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Models\Ventas\Cliente;
 use App\Models\Produccion\Area;
 use App\Models\Produccion\Pedido;
-use App\Models\Ventas\Cliente;
 use App\Models\Produccion\Proceso;
 use App\Models\Produccion\Pedido_proceso;
 

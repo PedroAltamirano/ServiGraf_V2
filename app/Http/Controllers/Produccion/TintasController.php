@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Produccion;
 
 use Exception;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -12,9 +10,10 @@ use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Models\Produccion\Tinta;
+
 use App\Http\Requests\Produccion\StoreTinta;
 use App\Http\Requests\Produccion\UpdateTinta;
-use App\Models\Produccion\Tinta;
 
 class TintasController extends Controller
 {
@@ -51,7 +50,7 @@ class TintasController extends Controller
       if ($tinta->update($validator)) {
         DB::commit();
         Alert::success('Acción completada', 'Tinta modificada con éxito');
-        return redirect()->route('actividad.edit', $actividad);
+        return redirect()->back();
       }
     } catch (Exception $error) {
       DB::rollBack();

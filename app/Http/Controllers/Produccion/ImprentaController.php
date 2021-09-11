@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers\Produccion;
 
-use Exception;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
 use App\Models\Produccion\Pedido;
 use App\Models\Produccion\Pedido_tintas;
-use App\Models\Produccion\Solicitud_material;
 use App\Models\Produccion\Pedido_proceso;
+use App\Models\Produccion\Solicitud_material;
 
 class ImprentaController extends Controller
 {
