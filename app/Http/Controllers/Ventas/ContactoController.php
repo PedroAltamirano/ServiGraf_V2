@@ -80,9 +80,10 @@ class ContactoController extends Controller
 
   public function show(Contacto $contacto)
   {
-    $tareas = CRM::where('contacto_id', $contacto->id)->orderBy('fecha', 'desc')->get();
+    $empresa = $contacto->empresa;
+    $tareas = CRM::where('contacto_id', $contacto->id)->orderBy('fecha', 'desc')->with('contacto')->get();
     $comentarios = Comentario::where('contacto_id', $contacto->id)->get()->toTree();
-    return view('Ventas.contacto', compact('contacto', 'tareas', 'comentarios'));
+    return view('Ventas.contacto', compact('contacto', 'empresa', 'tareas', 'comentarios'));
   }
 
   public function edit(Contacto $contacto)

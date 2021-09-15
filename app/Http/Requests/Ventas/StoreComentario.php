@@ -13,7 +13,7 @@ class StoreComentario extends FormRequest
    */
   public function authorize()
   {
-    return false;
+    return true;
   }
 
   /**
@@ -24,7 +24,9 @@ class StoreComentario extends FormRequest
   public function rules()
   {
     return [
-      //
+      'contacto_id' => ['required', 'numeric', 'exists:contactos,id'],
+      'comentario' => ['required', 'string', 'max:250'],
+      'parent_id' => ['nullable', 'numeric', 'exists:comentarios,id'],
     ];
   }
 }

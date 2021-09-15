@@ -2,10 +2,16 @@
 
 namespace App\View\Components;
 
+use App\Models\Ventas\Cliente_empresa;
 use Illuminate\View\Component;
+
+use App\Models\Ventas\Contacto;
 
 class AddContacto extends Component
 {
+  public $contacto;
+  public $empresa;
+
   /**
    * Create a new component instance.
    *
@@ -13,7 +19,8 @@ class AddContacto extends Component
    */
   public function __construct()
   {
-    //
+    $this->contacto = new Contacto();
+    $this->empresa = new Cliente_empresa();
   }
 
   /**

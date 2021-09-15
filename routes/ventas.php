@@ -2,7 +2,6 @@
 Route::namespace('Ventas')
   ->middleware('hasModRol:50,1')
   ->group(function () {
-    // Route::get('/ventas', '')->name('crm');
     Route::post('contacto/info', 'ContactoController@info')->name('contacto.info');
     Route::post('cliente/info', 'ContactoController@infoCliente')->name('cliente.info');
     Route::post('contacto/store', 'ContactoController@store')->name('contacto.store');
@@ -24,7 +23,7 @@ Route::namespace('Ventas')
     Route::delete('plantilla/delete/{plantilla}', 'PlantillaController@destroy')->name('plantilla.delete')->middleware('hasModRol:51,4');
 
     // CRM
-    Route::get('/crm', 'CRMController@index')->name('crm')->middleware('hasModRol:50,1');
+    Route::get('crm', 'CRMController@index')->name('crm')->middleware('hasModRol:50,1');
     Route::post('tarea/store', 'CRMController@store')->name('crm.store')->middleware('hasModRol:50,2');
     Route::get('tarea/edit/{tarea}', 'CRMController@edit')->name('crm.edit')->middleware('hasModRol:50,3');
     Route::put('tarea/update/{tarea}', 'CRMController@update')->name('crm.update')->middleware('hasModRol:50,3');
@@ -36,4 +35,9 @@ Route::namespace('Ventas')
     Route::get('contacto/show/{contacto}', 'ContactoController@show')->name('contacto.show')->middleware('hasModRol:50,3');
     Route::put('contacto/update/{contacto}', 'ContactoController@update')->name('contacto.update')->middleware('hasModRol:50,3');
     Route::delete('contacto/delete/{contacto}', 'ContactoController@delete')->name('contacto.delete')->middleware('hasModRol:50,4');
+
+    // Comentarios
+    Route::post('comentario/store', 'ComentarioController@store')->name('comentario.store')->middleware('hasModRol:50,2');
+    Route::put('comentario/update/{contacto}', 'ComentarioController@update')->name('comentario.update')->middleware('hasModRol:50,3');
+    Route::delete('comentario/delete/{contacto}', 'ComentarioController@delete')->name('comentario.delete')->middleware('hasModRol:50,4');
   });

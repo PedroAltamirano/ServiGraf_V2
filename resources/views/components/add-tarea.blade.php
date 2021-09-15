@@ -104,12 +104,17 @@
 
 @push('component-script')
 <script>
-  const path = `{{ route('contacto.info') }}`;
+  const routeInfo = `{{ route('contacto.info') }}`;
   const fill_contact = () => {
-    axios.post(path, {
+    $("#task_organizacion").val('');
+    $("#task_telefono").val('');
+    $("#task_email").val('');
+    $("#task_direccion").val('');
+
+    axios.post(routeInfo, {
       contacto_id: $('#contacto_id').val()
-    }).then(function (res) {
-      var data = res.data;
+    }).then(res => {
+      let data = res.data;
       $("#task_organizacion").val(data.empresa.nombre);
       $("#task_telefono").val(data.movil);
       $("#task_email").val(data.email);
@@ -120,5 +125,28 @@
   }
 
   $('#contacto_id').change(event => fill_contact())
+
+  const routeStoreTarea = `{{ route('crm.store') }}`;
+  const routeEditTarea = `{{ route('crm.update', 0) }}`;
+  $('#modalTarea').on('show.bs.modal', event => {
+    let data = $(event.relatedTarget).data('modaldata');
+    let modal = $(event.target);
+
+    let path = data ? routeEditTarea.replace('/0', `/${data.id}`) : routeStoreTarea;
+    modal.find('#tareaForm').attr('action', path);
+    modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
+    modal.find(".submitbtn").html(data ? 'Modificar' : 'Crear');
+
+    let time = data ? moment(data.hora, "HH:mm:ss").format('HH:mm') : '';
+    modal.find('#contacto_id').val(data ? data.contacto.id : '');
+    modal.find('#contacto_id').trigger('change.select2');
+    modal.find('#contacto_id').trigger('change');
+    modal.find('#actividad_id').val(data ? data.actividad.id : '');
+    modal.find('#asignado_id').val(data ? data.asignado.cedula : '');
+    modal.find('#estado').val(data ? data.estado : '');
+    modal.find('#fecha').val(data ? data.fecha : '');
+    modal.find('#hora').val(time);
+    modal.find('#nota').val(data ? data.nota : '');
+  });
 </script>
 @endpush
