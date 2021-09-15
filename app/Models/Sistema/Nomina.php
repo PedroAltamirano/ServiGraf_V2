@@ -2,14 +2,17 @@
 
 namespace App\Models\Sistema;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+
+use App\Models\Usuarios\Usuario;
+use App\Models\Administracion\Horario;
 use App\Models\Administracion\NominaDocs;
 use App\Models\Administracion\NominaDotacion;
 use App\Models\Administracion\NominaEducacion;
 use App\Models\Administracion\NominaFamilia;
 use App\Models\Administracion\NominaReferencia;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Usuarios\Usuario;
 
 class Nomina extends Model
 {
@@ -114,6 +117,44 @@ class Nomina extends Model
   public function referencias()
   {
     return $this->hasMany(NominaReferencia::class, 'nomina_id', 'cedula');
+  }
+
+  /**
+   * Get all of the horario for the Nomina
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function horario()
+  {
+    return $this->belongsTo(Horario::class);
+  }
+
+  /**
+   * Get all of the horario for the Nomina
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function getHorarioRangeAttribute()
+  {
+    $horario = $this->horario;
+    if ($horario == null) return null;
+
+    $llegada_ma_1 = (new Carbon($horario->llegada_ma))->subMinutes($horario->espera)->format('H:i:s');
+    $salida_ma_1 = (new Carbon($horario->salida_ma))->subMinutes($horario->espera)->format('H:i:s');
+    $llegada_ta_1 = (new Carbon($horario->llegada_ta))->subMinutes($horario->espera)->format('H:i:s');
+    $salida_ta_1 = (new Carbon($horario->salida_ta))->subMinutes($horario->espera)->format('H:i:s');
+
+    $llegada_ma_2 = (new Carbon($horario->llegada_ma))->addMinutes($horario->espera)->addMinutes($horario->gracia)->format('H:i:s');
+    $salida_ma_2 = (new Carbon($horario->salida_ma))->addMinutes($horario->espera)->addMinutes($horario->gracia)->format('H:i:s');
+    $llegada_ta_2 = (new Carbon($horario->llegada_ta))->addMinutes($horario->espera)->addMinutes($horario->gracia)->format('H:i:s');
+    $salida_ta_2 = (new Carbon($horario->salida_ta))->addMinutes($horario->espera)->addMinutes($horario->gracia)->format('H:i:s');
+
+    $horario->llegada_ma = [$llegada_ma_1, $llegada_ma_2];
+    $horario->salida_ma = [$salida_ma_1, $salida_ma_2];
+    $horario->llegada_ta = [$llegada_ta_1, $llegada_ta_2];
+    $horario->salida_ta = [$salida_ta_1, $salida_ta_2];
+
+    return $horario;
   }
 
   public function getAvatarAttribute()

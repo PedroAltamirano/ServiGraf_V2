@@ -40,6 +40,8 @@ Route::namespace('Administracion')
 
     Route::get('rrhh', 'RRHHController@index')->name('rrhh')->middleware('hasModRol:25,1');
     Route::post('rrhh/api', 'RRHHController@api')->name('rrhh.api')->middleware('hasModRol:25,1');
+    Route::get('asistencia/marcar', 'RRHHController@marcar')->name('asistencia.marcar')->middleware('hasModRol:25,2');
+    Route::get('asistencia/store', 'RRHHController@store')->name('asistencia.store')->middleware('hasModRol:25,2');
     Route::put('asistencia/modificar/{asistencia}', 'RRHHController@update')->name('asistencia.update')->middleware('hasModRol:25,3');
     Route::delete('asistencia/eliminar/{asistencia}', 'RRHHController@destroy')->name('asistencia.delete')->middleware('hasModRol:25,4');
   });
