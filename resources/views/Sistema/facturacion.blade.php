@@ -185,8 +185,6 @@
   $('#modalRetencion').on('show.bs.modal', event => {
     let data = $(event.relatedTarget).data('modaldata');
     let modal = $(event.target);
-    let a = Boolean(Number(data.status))
-    debugger;
 
     let path = data ? routeUpdateRetencion.replace('/0', `/${data.id}`) : routeStoreRetencion;
     modal.find('.modal-title').html(data ? 'Modificar Retención' : 'Nueva Retención');
