@@ -67,7 +67,6 @@
   $('#modalContacto').on('show.bs.modal', event => {
     let data = $(event.relatedTarget).data('modaldata');
     let modal = $(event.target);
-    debugger;
 
     let path = data ? routeEdit.replace('/0', `/${data.id}`) : routeStore;
     modal.find('#tareaForm').attr('action', path);

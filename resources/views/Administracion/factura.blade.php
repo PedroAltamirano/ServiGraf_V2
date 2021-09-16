@@ -340,7 +340,6 @@
     }
     let ret_iva_p = parseFloat(iva_p)/100;
     let ret_fnt_p = parseFloat(fnt_p)/100;
-    // debugger
     let ret_iva = (iva*ret_iva_p).toFixed(4);
     let ret_fnt = (subtot*ret_fnt_p).toFixed(4);
 
