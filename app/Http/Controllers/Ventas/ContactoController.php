@@ -82,7 +82,7 @@ class ContactoController extends Controller
   {
     $empresa = $contacto->empresa;
     $tareas = CRM::where('contacto_id', $contacto->id)->orderBy('fecha', 'desc')->with('contacto')->get();
-    $comentarios = Comentario::where('contacto_id', $contacto->id)->get()->toTree();
+    $comentarios = Comentario::where('contacto_id', $contacto->id)->orderBy('created_at', 'desc')->limit(50)->get()->toTree();
     return view('Ventas.contacto', compact('contacto', 'empresa', 'tareas', 'comentarios'));
   }
 

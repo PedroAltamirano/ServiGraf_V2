@@ -63,6 +63,7 @@ class ComentarioController extends Controller
   public function update(UpdateComentario $request, Comentario $comentario)
   {
     $validated = $request->validated();
+    // dd($comentario);
 
     DB::beginTransaction();
     try {
@@ -75,7 +76,7 @@ class ComentarioController extends Controller
       DB::rollBack();
       Log::error($error);
       Alert::error('Oops!', 'Comentario no modificado');
-      return redirect()->back()->withInput();
+      return redirect()->back();
     }
   }
 

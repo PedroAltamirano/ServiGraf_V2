@@ -24,9 +24,9 @@ class UpdateComentario extends FormRequest
   public function rules()
   {
     return [
-      'contacto_id' => ['required', 'numeric', 'exists:contactos,id'],
+      // 'contacto_id' => ['required', 'numeric', 'exists:contactos,id'],
       'comentario' => ['required', 'string', 'max:250'],
-      'parent_id' => ['nullable', 'numeric', 'exists:comentarios,id'],
+      // 'parent_id' => ['nullable', 'numeric', 'exists:comentarios,id'],
     ];
   }
 }

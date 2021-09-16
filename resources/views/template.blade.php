@@ -73,6 +73,9 @@
 
 <x-aditional-info text='' />
 
+<x-comentarios :comentarios="$comentarios" />
+<x-add-comentario :contactoId="$contacto->id" />
+
 @endsection
 
 @section('modals')

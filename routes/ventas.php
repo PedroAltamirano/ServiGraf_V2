@@ -38,6 +38,6 @@ Route::namespace('Ventas')
 
     // Comentarios
     Route::post('comentario/store', 'ComentarioController@store')->name('comentario.store')->middleware('hasModRol:50,2');
-    Route::put('comentario/update/{contacto}', 'ComentarioController@update')->name('comentario.update')->middleware('hasModRol:50,3');
-    Route::delete('comentario/delete/{contacto}', 'ComentarioController@delete')->name('comentario.delete')->middleware('hasModRol:50,4');
+    Route::put('comentario/update/{comentario}', 'ComentarioController@update')->name('comentario.update')->middleware('hasModRol:50,3');
+    Route::delete('comentario/delete/{comentario}', 'ComentarioController@delete')->name('comentario.delete')->middleware('hasModRol:50,4');
   });
