@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Ventas\Cliente;
 use App\Models\Sistema\Nomina;
@@ -24,7 +23,6 @@ use App\Http\Requests\Usuarios\Update;
 
 class UsuariosController extends Controller
 {
-  use SoftDeletes;
   /**
    * Create a new controller instance.
    *

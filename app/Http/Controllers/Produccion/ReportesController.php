@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Ventas\Cliente;
 use App\Models\Produccion\Area;
@@ -16,8 +15,6 @@ use App\Models\Produccion\Pedido_proceso;
 
 class ReportesController extends Controller
 {
-  use SoftDeletes;
-
   /**
    * Create a new controller instance.
    *

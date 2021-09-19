@@ -2,12 +2,16 @@
 
 namespace App\Models\Produccion;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 use App\Models\Sistema\Nomina;
 use App\Models\Usuarios\Usuario;
-use Illuminate\Database\Eloquent\Model;
 
 class Abono extends Model
 {
+  use SoftDeletes;
+
   protected $table = 'abonos';
 
   /**

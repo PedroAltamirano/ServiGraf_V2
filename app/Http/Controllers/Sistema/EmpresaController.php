@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Sistema\CentroCostos;
 use App\Models\Sistema\DatosEmpresa;
@@ -18,8 +17,6 @@ use App\Http\Requests\Sistema\UpdateEmpresa;
 
 class EmpresaController extends Controller
 {
-  use SoftDeletes;
-
   public function show()
   {
     $empresa = Auth::user()->empresa->datos ?? new DatosEmpresa;

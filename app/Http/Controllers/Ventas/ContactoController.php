@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Ventas\CRM;
 use App\Models\Ventas\Cliente;
@@ -23,8 +22,6 @@ use App\Http\Requests\Ventas\UpdateContacto;
 
 class ContactoController extends Controller
 {
-  use SoftDeletes;
-
   public function index()
   {
     $contactos = Contacto::where('empresa_id', Auth::user()->empresa_id)->with(['empresa', 'cliente'])->orderBy('cliente_empresa_id')->orderBy('nombre')->get();

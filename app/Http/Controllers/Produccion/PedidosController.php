@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Http\Controllers\Produccion\ImprentaController;
 
@@ -22,8 +21,6 @@ use App\Http\Requests\Produccion\UpdatePedidoImprenta;
 
 class PedidosController extends Controller
 {
-  use SoftDeletes;
-
   /**
    * Create a new controller instance.
    *

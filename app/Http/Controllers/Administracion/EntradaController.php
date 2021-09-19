@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Usuarios\Usuario;
 use App\Models\Administracion\Banco;
@@ -20,8 +19,6 @@ use App\Http\Requests\Administracion\UpdateEntrada;
 
 class EntradaController extends Controller
 {
-  use SoftDeletes;
-
   public function create()
   {
     $entrada = new Libro_movimientos();

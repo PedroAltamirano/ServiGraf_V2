@@ -10,7 +10,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Usuarios\Modulo;
 use App\Models\Usuarios\Perfil;
@@ -21,7 +20,6 @@ use App\Http\Requests\Usuarios\UpdatePerfil;
 
 class PerfilesController extends Controller
 {
-  use SoftDeletes;
   /**
    * Create a new controller instance.
    *

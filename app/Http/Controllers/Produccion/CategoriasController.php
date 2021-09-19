@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Produccion\Categoria;
 
@@ -17,8 +16,6 @@ use App\Http\Requests\Produccion\UpdateCategoria;
 
 class CategoriasController extends Controller
 {
-  use SoftDeletes;
-
   // crear nuevo
   public function store(StoreCategoria $request)
   {

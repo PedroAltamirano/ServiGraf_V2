@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Sistema\Clave;
 
@@ -18,8 +17,6 @@ use App\Http\Requests\Sistema\UpdateClave;
 
 class ClavesController extends Controller
 {
-  use SoftDeletes;
-
   public function show()
   {
     $claves = Clave::where('empresa_id', Auth::user()->empresa_id)->get();

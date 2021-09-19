@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Administracion\Retencion;
 
@@ -16,8 +15,6 @@ use App\Http\Requests\Administracion\StoreRetencion;
 
 class RetencionController extends Controller
 {
-  use SoftDeletes;
-
   /**
    * Display a listing of the resource.
    *

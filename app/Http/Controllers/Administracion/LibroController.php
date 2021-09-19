@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Usuarios\Usuario;
 use App\Models\Administracion\Libro;
@@ -23,8 +22,6 @@ use App\Http\Resources\Administracion\LibroResource;
 
 class LibroController extends Controller
 {
-  use SoftDeletes;
-
   /**
    * Display a listing of the resource.
    *

@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Produccion\Area;
 use App\Models\Produccion\Proceso;
@@ -18,8 +17,6 @@ use App\Http\Requests\Produccion\UpdateProceso;
 
 class ProcesosController extends Controller
 {
-  use SoftDeletes;
-
   /**
    * Create a new controller instance.
    *

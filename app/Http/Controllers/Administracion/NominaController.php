@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Sistema\Nomina;
 use App\Models\Sistema\Horario;
@@ -26,8 +25,6 @@ use App\Http\Requests\Administracion\UpdateNomina;
 
 class NominaController extends Controller
 {
-  use SoftDeletes;
-
   /**
    * Display a listing of the resource.
    *

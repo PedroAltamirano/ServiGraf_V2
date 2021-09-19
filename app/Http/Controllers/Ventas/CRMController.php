@@ -11,14 +11,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Ventas\StoreTarea;
 use App\Http\Requests\Ventas\UpdateTarea;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Ventas\CRM;
 
 class CRMController extends Controller
 {
-  use SoftDeletes;
-
   /**
    * Display a listing of the resource.
    *
