@@ -97,7 +97,7 @@ class MaterialesController extends Controller
     return view('Produccion.material', compact('material', 'categorias'))->with($data);
   }
 
-  //modificar perfil
+  // modificar material
   public function update(UpdateMaterial $request, Material $material)
   {
     $validator = $request->validated();
@@ -117,6 +117,24 @@ class MaterialesController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Material no modificado');
       return redirect()->back()->withInput();
+    }
+  }
+
+  // eliminar material
+  public function delete(Material $material)
+  {
+    DB::beginTransaction();
+    try {
+      if ($material->delete()) {
+        DB::commit();
+        Alert::success('Acción completada', 'Material eliminado con éxito');
+        return redirect()->route('materiales');
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Material no eliminado');
+      return redirect()->back();
     }
   }
 }

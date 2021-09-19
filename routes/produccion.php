@@ -44,7 +44,9 @@ Route::namespace('Produccion')
     Route::post('material/nuevo', 'MaterialesController@store')->name('material.store')->middleware('hasModRol:36,2');
     Route::get('material/modificar/{material}', 'MaterialesController@edit')->name('material.edit')->middleware('hasModRol:36,3');
     Route::put('material/modificar/{material}', 'MaterialesController@update')->name('material.update')->middleware('hasModRol:36,3');
+    Route::delete('material/eliminar/{material}', 'MaterialesController@delete')->name('material.delete')->middleware('hasModRol:36,4');
 
+    // CATEGORIAS
     Route::post('categoria/nuevo', 'CategoriasController@store')->name('categoria.store')->middleware('hasModRol:36,2');
     Route::put('categoria/modificar/{categoria}', 'CategoriasController@update')->name('categoria.update')->middleware('hasModRol:36,3');
     Route::delete('categoria/eliminar/{categoria}', 'CategoriasController@delete')->name('categoria.delete')->middleware('hasModRol:36,4');

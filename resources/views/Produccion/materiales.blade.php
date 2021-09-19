@@ -59,7 +59,7 @@
         <td><i class="{{ $item->uv ? 'fas fa-check' : 'fas fa-times' }}"></i></td>
         <td><i class="{{ $item->plastificado ? 'fas fa-check' : 'fas fa-times' }}"></i></td>
         <td>
-          <x-crud :routeEdit="route('material.edit', $item->id)" />
+          <x-crud :routeEdit="route('material.edit', $item->id)" :routeDelete="route('material.delete', $item->id)" :textDelete="$item->descripcion" />
         </td>
       </tr>
       @endforeach
