@@ -20,7 +20,7 @@
   <div class="row">
     @foreach ($categorias as $item)
     <div class="col-6 col-md-2">
-      <x-crud routeEdit="#modalCat" :modalEdit="$item" />
+      <x-crud routeEdit="#modalCat" :modalEdit="$item" :routeDelete="route('categoria.delete', $item->id)" :textDelete="$item->categoria" />
       &nbsp;&nbsp;{{ $item->categoria }}
     </div>
     @endforeach

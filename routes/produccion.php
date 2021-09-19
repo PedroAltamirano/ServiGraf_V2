@@ -47,6 +47,7 @@ Route::namespace('Produccion')
 
     Route::post('categoria/nuevo', 'CategoriasController@store')->name('categoria.store')->middleware('hasModRol:36,2');
     Route::put('categoria/modificar/{categoria}', 'CategoriasController@update')->name('categoria.update')->middleware('hasModRol:36,3');
+    Route::delete('categoria/eliminar/{categoria}', 'CategoriasController@delete')->name('categoria.delete')->middleware('hasModRol:36,4');
 
     Route::post('tinta/nuevo', 'TintasController@store')->name('tinta.store')->middleware('hasModRol:36,2');
     Route::put('tinta/modificar/{tinta}', 'TintasController@update')->name('tinta.update')->middleware('hasModRol:36,3');

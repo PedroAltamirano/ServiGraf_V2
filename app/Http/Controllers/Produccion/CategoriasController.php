@@ -37,7 +37,7 @@ class CategoriasController extends Controller
     }
   }
 
-  //modificar perfil
+  // modificar categoria
   public function update(UpdateCategoria $request, Categoria $categoria)
   {
     $validator = $request->validated();
@@ -53,6 +53,24 @@ class CategoriasController extends Controller
       DB::rollBack();
       Log::error($error);
       Alert::error('Oops!', 'Categoría no modificada');
+      return redirect()->back()->withInput();
+    }
+  }
+
+  // Eliminar categoria
+  public function delete(Categoria $categoria)
+  {
+    DB::beginTransaction();
+    try {
+      if ($categoria->delete()) {
+        DB::commit();
+        Alert::success('Acción completada', 'Categoría eliminada con éxito');
+        return redirect()->back();
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Categoría no eliminada');
       return redirect()->back()->withInput();
     }
   }
