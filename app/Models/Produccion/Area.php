@@ -4,10 +4,11 @@ namespace App\Models\Produccion;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Dyrynda\Database\Support\CascadeSoftDeletes;
 
 class Area extends Model
 {
-  use SoftDeletes;
+  use SoftDeletes, CascadeSoftDeletes;
 
   protected $table = 'areas';
 
@@ -18,6 +19,8 @@ class Area extends Model
   protected $hidden = [
     'created_at', 'updated_at',
   ];
+
+  protected $cascadeDeletes = ['procesos'];
 
   /**
    * Get all of the procesos for the Area

@@ -2,10 +2,10 @@
 
 namespace App\Models\Produccion;
 
-use Dyrynda\Database\Support\CascadeSoftDeletes;
+use Kalnoy\Nestedset\NodeTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Kalnoy\Nestedset\NodeTrait;
+use Dyrynda\Database\Support\CascadeSoftDeletes;
 
 class Proceso extends Model
 {
