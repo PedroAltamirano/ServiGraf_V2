@@ -23,8 +23,20 @@ class Material extends Model
     'created_at', 'updated_at',
   ];
 
+  protected $cascadeDeletes = ['solicitudes'];
+
   public function categoria()
   {
     return $this->belongsTo(Categoria::class);
+  }
+
+  /**
+   * Get all of the solicitudes for the Material
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function solicitudes()
+  {
+    return $this->hasMany(Solicitud_material::class);
   }
 }
