@@ -50,7 +50,7 @@ class PerfilesController extends Controller
     $perfil = new Perfil;
     $modPerf = new Collection([]);
     $data = [
-      'path' => route('perfil.nuevo'),
+      'path' => route('perfil.store'),
       'text' => 'Nuevo perfil',
       'action' => 'Crear',
       'method' => 'POST',
@@ -72,7 +72,7 @@ class PerfilesController extends Controller
 
         DB::commit();
         Alert::success('Acción completada', 'Perfil creado con éxito');
-        return redirect()->route('perfil.modificar', $perfil->id);
+        return redirect()->route('perfil.edit', $perfil->id);
       }
     } catch (Exception $error) {
       DB::rollBack();
@@ -87,7 +87,7 @@ class PerfilesController extends Controller
   {
     $modules = Modulo::todos();
     $data = [
-      'path' => route('perfil.modificar', $perfil->id),
+      'path' => route('perfil.update', $perfil->id),
       'text' => 'Modificar perfil',
       'action' => 'Modificar',
       'method' => 'PUT',
@@ -111,7 +111,7 @@ class PerfilesController extends Controller
 
         DB::commit();
         Alert::success('Acción completada', 'Perfil modificado con éxito');
-        return redirect()->route('perfil.modificar', $perfil->id);
+        return redirect()->route('perfil.edit', $perfil->id);
       }
     } catch (Exception $error) {
       DB::rollBack();

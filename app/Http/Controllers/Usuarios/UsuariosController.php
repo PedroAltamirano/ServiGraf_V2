@@ -54,7 +54,7 @@ class UsuariosController extends Controller
     $actividades = [];
     $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->where('seguimiento', 1)->get();
     $data = [
-      'path' => route('usuario.nuevo'),
+      'path' => route('usuario.store'),
       'text' => 'Nuevo usuario',
       'action' => 'Crear',
       'method' => 'POST'
@@ -78,7 +78,7 @@ class UsuariosController extends Controller
 
         DB::commit();
         Alert::success('Acción completada', 'Usuario creado con éxito');
-        return redirect()->route('usuario.modificar', $usuario->cedula);
+        return redirect()->route('usuario.edit', $usuario->cedula);
       }
     } catch (Exception $error) {
       DB::rollBack();
@@ -97,7 +97,7 @@ class UsuariosController extends Controller
     $actividades = [];
     $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->where('seguimiento', 1)->get();
     $data = [
-      'path' => route('usuario.modificar', $usuario->cedula),
+      'path' => route('usuario.update', $usuario->cedula),
       'text' => 'Modificar usuario',
       'action' => 'Modificar',
       'method' => 'PUT'
@@ -121,7 +121,7 @@ class UsuariosController extends Controller
 
         DB::commit();
         Alert::success('Acción completada', 'Usuario modificado con éxito');
-        return redirect()->route('usuario.modificar', $usuario->cedula);
+        return redirect()->route('usuario.edit', $usuario->cedula);
       }
     } catch (Exception $error) {
       DB::rollBack();

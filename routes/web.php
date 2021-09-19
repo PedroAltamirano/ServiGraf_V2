@@ -15,39 +15,39 @@ Route::get('/', function () {
   return view('Landing.welcome');
 })->name('welcome');
 
-Route::get('/about-us', function () {
+Route::get('about-us', function () {
   return view('Landing.about-us');
 })->name('about-us');
 
-Route::get('/services', function () {
+Route::get('services', function () {
   return view('Landing.services');
 })->name('services');
 
-Route::get('/galery', function () {
+Route::get('galery', function () {
   return view('Landing.galery');
 })->name('galery');
 
-Route::get('/contact', function () {
+Route::get('contact', function () {
   return view('Landing.contact');
 })->name('contact');
-Route::post('/contact', 'contactMail@send')->name('contact.send');
+Route::post('contact', 'contactMail@send')->name('contact.send');
 
 //PHP TEST
-Route::get('/test', function () {
+Route::get('test', function () {
   return view('test');
 })->name('test');
 
 //LOGED ROUTES
 Auth::routes();
-Route::get('/login', 'Auth\LoginController@show')->name('login');
-Route::post('/login', 'Auth\LoginController@login')->name('login');
-Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('login', 'Auth\LoginController@show')->name('login');
+Route::post('login', 'Auth\LoginController@login')->name('login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::middleware('auth')
   ->group(function () {
-    Route::get('/desktop', 'DesktopController@showAdmin')->name('desktop')->middleware('hasModRol:10,1');
+    Route::get('desktop', 'DesktopController@showAdmin')->name('desktop')->middleware('hasModRol:10,1');
 
-    Route::get('/tablero', 'DesktopController@show')->name('tablero');
+    Route::get('tablero', 'DesktopController@show')->name('tablero');
 
     Route::get('cloud', function () {
       return view('cloud');

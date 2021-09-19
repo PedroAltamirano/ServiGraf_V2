@@ -14,7 +14,7 @@
 <x-blue-board
   title='Listado'
   :foot="[
-    ['text'=>'Nuevo', 'href'=>route('perfil.nuevo'), 'id'=>'nuevo', 'tipo'=>'link']
+    ['text'=>'Nuevo', 'href'=>route('perfil.create'), 'id'=>'nuevo', 'tipo'=>'link']
   ]"
 >
   <table id="table" class="table table-striped table-sm">
@@ -36,7 +36,7 @@
 @section('scripts')
 <script>
   const routeAjax = `{{ route('perfiles.get') }}`;
-  const routeEdit = `{{ route('perfil.modificar', 0) }}`;
+  const routeEdit = `{{ route('perfil.update', 0) }}`;
   $('#table').DataTable({
     "paging":   true,
     "ordering": true,
