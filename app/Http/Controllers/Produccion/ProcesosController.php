@@ -93,7 +93,7 @@ class ProcesosController extends Controller
     return view('Produccion.proceso', compact('proceso', 'areas'))->with($data);
   }
 
-  // Modificar perfil
+  // Modificar proceso
   public function update(UpdateProceso $request, Proceso $proceso)
   {
     $validator = $request->validated();
@@ -111,6 +111,24 @@ class ProcesosController extends Controller
       DB::rollBack();
       Log::error($error);
       Alert::error('Oops!', 'Proceso no modificado');
+      return redirect()->back()->withInput();
+    }
+  }
+
+  // Eliminar proceso
+  public function delete(Proceso $proceso)
+  {
+    DB::beginTransaction();
+    try {
+      if ($proceso->delete()) {
+        DB::commit();
+        Alert::success('Acción completada', 'Proceso eliminado con éxito');
+        return redirect()->back();
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Proceso no eliminado');
       return redirect()->back()->withInput();
     }
   }

@@ -2,12 +2,14 @@
 
 namespace App\Models\Produccion;
 
+use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Kalnoy\Nestedset\NodeTrait;
 
 class Proceso extends Model
 {
-  use NodeTrait;
+  use NodeTrait, SoftDeletes, CascadeSoftDeletes;
 
   protected $table = 'procesos';
 
@@ -23,18 +25,20 @@ class Proceso extends Model
     'created_at', 'updated_at'
   ];
 
+  protected $cascadeDeletes = ['pedido_proceso'];
+
   public function area()
   {
     return $this->belongsTo(Area::class);
   }
 
-  // public function parent()
-  // {
-  //   return $this->belongsTo(Proceso::class, 'parent_id');
-  // }
-
-  // public function childs()
-  // {
-  //   return $this->hasMany(Proceso::class, 'parent_id');
-  // }
+  /**
+   * Get all of the pedido_proceso for the Proceso
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function pedido_proceso()
+  {
+    return $this->hasMany(Pedido_proceso::class);
+  }
 }

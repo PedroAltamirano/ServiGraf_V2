@@ -27,14 +27,16 @@ Route::namespace('Produccion')
 
     // PROCESOS
     Route::get('procesos', 'ProcesosController@show')->name('procesos')->middleware('hasModRol:35,1');
-
     Route::get('proceso/nuevo', 'ProcesosController@create')->name('proceso.create')->middleware('hasModRol:35,2');
     Route::post('proceso/nuevo', 'ProcesosController@store')->name('proceso.store')->middleware('hasModRol:35,2');
     Route::get('proceso/modificar/{proceso}', 'ProcesosController@edit')->name('proceso.edit')->middleware('hasModRol:35,3');
     Route::put('proceso/modificar/{proceso}', 'ProcesosController@update')->name('proceso.update')->middleware('hasModRol:35,3');
+    Route::delete('proceso/eliminar/{proceso}', 'ProcesosController@delete')->name('proceso.delete')->middleware('hasModRol:35,4');
 
+    // AREA
     Route::post('area/nuevo', 'AreasController@store')->name('area.store')->middleware('hasModRol:35,2');
     Route::put('area/modificar/{area}', 'AreasController@update')->name('area.update')->middleware('hasModRol:35,3');
+    Route::delete('area/eliminar/{area}', 'AreasController@delete')->name('area.delete')->middleware('hasModRol:35,4');
 
     // MATERIALES
     Route::get('materiales', 'MaterialesController@show')->name('materiales')->middleware('hasModRol:36,1');

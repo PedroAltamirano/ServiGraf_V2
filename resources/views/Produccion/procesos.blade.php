@@ -20,7 +20,7 @@
   <div class="row">
     @foreach ($areas as $item)
     <div class="col-6 col-md-2">
-      <x-crud routeEdit="#modalArea" :modalEdit="$item" />
+      <x-crud routeEdit="#modalArea" :modalEdit="$item" :routeDelete="route('area.delete', $item->id)" :textDelete="$item->area" />
       &nbsp;&nbsp;{{ $item->area }}
     </div>
     @endforeach
@@ -59,7 +59,7 @@
         <td>{{ $item->tipo ? 'Interno' : 'Externo' }}</td>
         <td><i class="{{ $item->seguimiento ? 'fas fa-check' : 'fas fa-times' }}"></i></td>
         <td>
-          <x-crud :routeEdit="route('proceso.edit', $item->id)" />
+          <x-crud :routeEdit="route('proceso.edit', $item->id)" :routeDelete="route('proceso.delete', $item->id)" :textDelete="$item->proceso" />
         </td>
       </tr>
       @endforeach
