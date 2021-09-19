@@ -16,7 +16,7 @@ class CreateDotacionTable extends Migration
     Schema::create('dotacion', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->string('dotacion');
       $table->boolean('status')->default(1);
       $table->timestamps();

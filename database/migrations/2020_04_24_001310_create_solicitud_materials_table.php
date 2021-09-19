@@ -16,14 +16,14 @@ class CreateSolicitudMaterialsTable extends Migration
     Schema::create('solicitud_materials', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
-      $table->foreignId('pedido_id')->constrained('pedidos');
-      $table->foreignId('material_id')->constrained('materiales');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
+      $table->foreignId('pedido_id')->constrained('pedidos')->onDelete('cascade');
+      $table->foreignId('material_id')->constrained('materiales')->onDelete('cascade');
       $table->unsignedMediumInteger('cantidad');
       $table->unsignedDecimal('corte_alto', 5, 2);
       $table->unsignedDecimal('corte_ancho', 5, 2);
       $table->unsignedMediumInteger('tamanos');
-      $table->foreignId('proveedor_id')->constrained('proveedores');
+      $table->foreignId('proveedor_id')->constrained('proveedores')->onDelete('cascade');
       $table->unsignedMediumInteger('factura')->nullable();
       $table->unsignedDecimal('total', 8, 2);
       $table->timestamps();

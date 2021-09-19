@@ -17,16 +17,16 @@ class CreatePedidosTable extends Migration
       // Cpmposite id empresa_id + id
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->unsignedMediumInteger('numero');
       $table->unique(['empresa_id', 'numero']); //ver en migracion
       $table->unsignedInteger('usuario_id');
-      $table->foreign('usuario_id')->references('cedula')->on('usuarios');
+      $table->foreign('usuario_id')->references('cedula')->on('usuarios')->onDelete('cascade');
       $table->unsignedInteger('usuario_mod_id');
-      $table->foreign('usuario_mod_id')->references('cedula')->on('usuarios');
+      $table->foreign('usuario_mod_id')->references('cedula')->on('usuarios')->onDelete('cascade');
       $table->unsignedInteger('usuario_cob_id')->nullable();
-      $table->foreign('usuario_cob_id')->references('cedula')->on('usuarios');
-      $table->foreignId('cliente_id')->constrained('clientes');
+      $table->foreign('usuario_cob_id')->references('cedula')->on('usuarios')->onDelete('cascade');
+      $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
       $table->date('fecha_entrada');
       $table->date('fecha_salida');
       $table->date('fecha_cobro')->nullable();

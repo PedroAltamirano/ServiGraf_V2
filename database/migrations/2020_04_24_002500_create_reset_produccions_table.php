@@ -17,7 +17,7 @@ class CreateResetProduccionsTable extends Migration
       $table->id();
       $table->timestamp('reset');
       $table->unsignedInteger('usuario_id');
-      $table->foreign('usuario_id')->references('cedula')->on('usuarios');
+      $table->foreign('usuario_id')->references('cedula')->on('usuarios')->onDelete('cascade');
       $table->timestamps();
       $table->softDeletes();
     });

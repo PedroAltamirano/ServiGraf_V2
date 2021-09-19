@@ -16,9 +16,9 @@ class CreateNominaDocumentosTable extends Migration
     Schema::create('nomina_docs', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->unsignedInteger('nomina_id');
-      $table->foreign('nomina_id')->references('cedula')->on('nomina');
+      $table->foreign('nomina_id')->references('cedula')->on('nomina')->onDelete('cascade');
       $table->boolean('aviso_entrada')->default(0);
       $table->boolean('contrato_trabajo')->default(0);
       $table->boolean('solicitud_empleo')->default(0);

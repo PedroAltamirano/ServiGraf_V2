@@ -16,8 +16,8 @@ class CreateUsuarioProcesoTable extends Migration
     Schema::create('usuario_proceso', function (Blueprint $table) {
       $table->id();
       $table->unsignedInteger('usuario_id');
-      $table->foreign('usuario_id')->references('cedula')->on('usuarios');
-      $table->foreignId('proceso_id')->constrained('procesos');
+      $table->foreign('usuario_id')->references('cedula')->on('usuarios')->onDelete('cascade');
+      $table->foreignId('proceso_id')->constrained('procesos')->onDelete('cascade');
       $table->timestamps();
       $table->softDeletes();
     });

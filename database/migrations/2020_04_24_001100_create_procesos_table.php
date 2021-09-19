@@ -16,8 +16,8 @@ class CreateProcesosTable extends Migration
     Schema::create('procesos', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
-      $table->foreignId('area_id')->constrained('areas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
+      $table->foreignId('area_id')->constrained('areas')->onDelete('cascade');
       $table->string('proceso', 140);
       $table->nestedSet();
       $table->unsignedDecimal('meta', 7, 2)->default(0.00);

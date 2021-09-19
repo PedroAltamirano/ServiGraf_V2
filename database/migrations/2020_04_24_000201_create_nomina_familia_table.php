@@ -16,9 +16,9 @@ class CreateNominaFamiliaTable extends Migration
     Schema::create('nomina_familia', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->unsignedInteger('nomina_id');
-      $table->foreign('nomina_id')->references('cedula')->on('nomina');
+      $table->foreign('nomina_id')->references('cedula')->on('nomina')->onDelete('cascade')->onDelete('cascade');
       $table->unsignedTinyInteger('relacion'); //1padre, 2madre, 3conyuge, 4hijo, 5otros
       $table->string('nombre_fam', 100);
       $table->date('fecha_nacimiento_fam');

@@ -16,9 +16,9 @@ class CreateLibrosTable extends Migration
     Schema::create('libros', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->unsignedInteger('usuario_id');
-      $table->foreign('usuario_id')->references('cedula')->on('usuarios');
+      $table->foreign('usuario_id')->references('cedula')->on('usuarios')->onDelete('cascade');
       $table->string('libro', 30);
       $table->timestamps();
       $table->softDeletes();

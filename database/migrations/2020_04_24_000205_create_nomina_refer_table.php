@@ -16,9 +16,9 @@ class CreateNominaReferTable extends Migration
     Schema::create('nomina_refer', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->unsignedInteger('nomina_id');
-      $table->foreign('nomina_id')->references('cedula')->on('nomina');
+      $table->foreign('nomina_id')->references('cedula')->on('nomina')->onDelete('cascade');
       $table->boolean('tipo_refer');
       $table->string('empresa', 50)->nullable($value = true);
       $table->string('contacto', 100);

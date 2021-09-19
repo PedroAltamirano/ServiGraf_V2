@@ -16,7 +16,7 @@ class CreateClavesTable extends Migration
     Schema::create('claves', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->string('cuenta', 30);
       $table->string('usuario', 30);
       $table->text('clave');

@@ -16,9 +16,9 @@ class CreateAsistenciasTable extends Migration
     Schema::create('asistencias', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->unsignedInteger('usuario_id');
-      $table->foreign('usuario_id')->references('cedula')->on('usuarios');
+      $table->foreign('usuario_id')->references('cedula')->on('usuarios')->onDelete('cascade');
       $table->date('fecha');
       $table->time('llegada_mañana');
       $table->time('salida_mañana')->nullable();

@@ -16,9 +16,9 @@ class CreatePedidoProcesoTable extends Migration
     Schema::create('pedido_proceso', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
-      $table->foreignId('pedido_id')->constrained('pedidos');
-      $table->foreignId('proceso_id')->constrained('procesos');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
+      $table->foreignId('pedido_id')->constrained('pedidos')->onDelete('cascade');
+      $table->foreignId('proceso_id')->constrained('procesos')->onDelete('cascade');
       $table->unsignedTinyInteger('tiro');
       $table->unsignedTinyInteger('retiro');
       $table->unsignedTinyInteger('millares');

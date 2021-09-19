@@ -17,14 +17,14 @@ class CreateUsersTable extends Migration
       // $table->id();
       //datos de usuario
       $table->unsignedInteger('cedula')->unique();
-      $table->foreign('cedula')->references('cedula')->on('nomina');
+      $table->foreign('cedula')->references('cedula')->on('nomina')->onDelete('cascade');
       //datos de validacion
       $table->rememberToken();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->string('usuario', 20)->unique();
       $table->string('password', 128);
-      $table->foreignId('perfil_id')->constrained('perfiles');
+      $table->foreignId('perfil_id')->constrained('perfiles')->onDelete('cascade');
       //permisos adicionales
       $table->boolean('status')->default(1);
       $table->boolean('reservarot')->default(0);

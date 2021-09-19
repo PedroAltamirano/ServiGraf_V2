@@ -16,9 +16,9 @@ class CreateDatosEmpresasTable extends Migration
     Schema::create('datos_empresas', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->unsignedInteger('usuario_id_mod');
-      $table->foreign('usuario_id_mod')->references('cedula')->on('usuarios');
+      $table->foreign('usuario_id_mod')->references('cedula')->on('usuarios')->onDelete('cascade');
       $table->string('nombre', 50);
       $table->string('representante', 50);
       $table->string('ruc', 14);

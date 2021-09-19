@@ -16,7 +16,7 @@ class CreateFactEmprsTable extends Migration
     Schema::create('fact_empresa', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->string('empresa', 50);
       $table->string('representante', 50);
       $table->string('direccion');
@@ -30,9 +30,9 @@ class CreateFactEmprsTable extends Migration
       $table->text('clave_firma_sri')->nullable();
       $table->string('caja', 7);
       $table->unsignedMediumInteger('inicio');
-      $table->foreignId('iva_id')->constrained('ivas');
-      $table->foreignId('ret_iva_id')->constrained('retenciones');
-      $table->foreignId('ret_fuente_id')->constrained('retenciones');
+      $table->foreignId('iva_id')->constrained('ivas')->onDelete('cascade');
+      $table->foreignId('ret_iva_id')->constrained('retenciones')->onDelete('cascade');
+      $table->foreignId('ret_fuente_id')->constrained('retenciones')->onDelete('cascade');
       $table->boolean('impresion');
       $table->string('logo')->nulable();
       $table->boolean('status');

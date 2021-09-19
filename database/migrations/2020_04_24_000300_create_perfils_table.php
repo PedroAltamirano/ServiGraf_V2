@@ -16,7 +16,7 @@ class CreatePerfilsTable extends Migration
     Schema::create('perfiles', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->string('nombre', 50);
       $table->string('descripcion', 140);
       $table->boolean('status')->default(1);

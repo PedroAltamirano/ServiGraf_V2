@@ -16,7 +16,7 @@ class CreateRetencionsTable extends Migration
     Schema::create('retenciones', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->boolean('tipo')->comment('1->iva, 0->fuente');
       $table->unsignedDecimal('porcentaje', 5, 2);
       $table->string('descripcion', 140);

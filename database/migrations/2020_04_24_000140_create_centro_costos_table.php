@@ -16,7 +16,7 @@ class CreateCentroCostosTable extends Migration
     Schema::create('centro_costos', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->string('nombre');
       $table->timestamps();
       $table->softDeletes();
@@ -30,6 +30,6 @@ class CreateCentroCostosTable extends Migration
    */
   public function down()
   {
-      Schema::dropIfExists('centro_costos');
+    Schema::dropIfExists('centro_costos');
   }
 }

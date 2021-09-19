@@ -16,7 +16,7 @@ class CreateIvasTable extends Migration
     Schema::create('ivas', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->unsignedDecimal('porcentaje', 5, 2);
       $table->boolean('status')->comment('1->activo, 0->inactivo');
       $table->timestamps();

@@ -16,10 +16,10 @@ class CreateComentariosTable extends Migration
     Schema::create('comentarios', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->unsignedInteger('creador_id');
-      $table->foreign('creador_id')->references('cedula')->on('usuarios');
-      $table->foreignId('contacto_id')->nullable()->constrained('contactos');
+      $table->foreign('creador_id')->references('cedula')->on('usuarios')->onDelete('cascade');
+      $table->foreignId('contacto_id')->nullable()->constrained('contactos')->onDelete('cascade');
       $table->text('comentario');
       $table->nestedSet();
       $table->timestamps();

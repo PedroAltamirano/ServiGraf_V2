@@ -16,11 +16,11 @@ class CreateClientesTable extends Migration
     Schema::create('clientes', function ($table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->unsignedInteger('usuario_id');
-      $table->foreign('usuario_id')->references('cedula')->on('usuarios');
-      $table->foreignId('contacto_id')->constrained('contactos');
-      $table->foreignId('cliente_empresa_id')->constrained('cliente_empresas');
+      $table->foreign('usuario_id')->references('cedula')->on('usuarios')->onDelete('cascade');
+      $table->foreignId('contacto_id')->constrained('contactos')->onDelete('cascade');
+      $table->foreignId('cliente_empresa_id')->constrained('cliente_empresas')->onDelete('cascade');
       $table->boolean('seguimiento')->default(0);
       $table->timestamps();
       $table->softDeletes();

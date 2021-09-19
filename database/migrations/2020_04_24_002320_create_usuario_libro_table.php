@@ -16,8 +16,8 @@ class CreateUsuarioLibroTable extends Migration
     Schema::create('usuario_libro', function (Blueprint $table) {
       $table->id();
       $table->unsignedInteger('usuario_id');
-      $table->foreign('usuario_id')->references('cedula')->on('usuarios');
-      $table->foreignId('libro_id')->constrained('libros');
+      $table->foreign('usuario_id')->references('cedula')->on('usuarios')->onDelete('cascade');
+      $table->foreignId('libro_id')->constrained('libros')->onDelete('cascade');
       $table->timestamps();
       $table->softDeletes();
     });

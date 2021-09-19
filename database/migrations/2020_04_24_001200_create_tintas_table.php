@@ -16,7 +16,7 @@ class CreateTintasTable extends Migration
     Schema::create('tintas', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->string('color', 50);
       $table->timestamps();
       $table->softDeletes();

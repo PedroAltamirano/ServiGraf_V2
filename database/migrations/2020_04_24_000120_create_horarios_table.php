@@ -16,7 +16,7 @@ class CreateHorariosTable extends Migration
     Schema::create('horarios', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->string('nombre', 30);
       $table->time('llegada_ma');
       $table->time('salida_ma');

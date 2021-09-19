@@ -16,10 +16,10 @@ class CreateContactosTable extends Migration
     Schema::create('contactos', function ($table) {
       $table->id();
       $table->unsignedBigInteger('empresa_id');
-      $table->foreign('empresa_id')->references('id')->on('empresas');
+      $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->unsignedInteger('usuario_id');
-      $table->foreign('usuario_id')->references('cedula')->on('usuarios');
-      $table->foreignId('cliente_empresa_id')->nullable()->constrained('cliente_empresas');
+      $table->foreign('usuario_id')->references('cedula')->on('usuarios')->onDelete('cascade');
+      $table->foreignId('cliente_empresa_id')->nullable()->constrained('cliente_empresas')->onDelete('cascade');
       $table->string('actividad', 200)->nullable();
       $table->string('titulo', 50)->nullable();
       $table->string('nombre', 50);
