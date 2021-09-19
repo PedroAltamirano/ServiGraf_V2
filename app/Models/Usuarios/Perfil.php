@@ -4,9 +4,12 @@ namespace App\Models\Usuarios;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Perfil extends Model
 {
+  use SoftDeletes;
+
   protected $table = 'perfiles';
   protected $primaryKey = 'id';
 

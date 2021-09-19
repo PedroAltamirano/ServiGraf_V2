@@ -5,6 +5,7 @@ namespace App\Models\Sistema;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Usuarios\Usuario;
 use App\Models\Administracion\Horario;
@@ -16,6 +17,8 @@ use App\Models\Administracion\NominaReferencia;
 
 class Nomina extends Model
 {
+  use SoftDeletes;
+
   protected $table = 'nomina';
   protected $primaryKey = 'cedula';
   public $incrementing = false;

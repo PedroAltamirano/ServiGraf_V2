@@ -2,38 +2,46 @@
 
 namespace App\Models\Sistema;
 
-use App\Models\Usuarios\Usuario;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Sistema\DatosEmpresa;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 use App\Models\Sistema\Nomina;
+use App\Models\Usuarios\Usuario;
+use App\Models\Sistema\DatosEmpresa;
 use App\Models\Sistema\Tipo_empresa;
 
-class Empresas extends Model{
-    protected $table = 'empresas';
-    public $incrementing = false;
+class Empresas extends Model
+{
+  use SoftDeletes;
 
-    protected $attributes = [
-        'status' => 1,
-    ];
+  protected $table = 'empresas';
+  public $incrementing = false;
 
-    protected $fillable = [
-        'id', 'nombre', 'status'
-    ];
+  protected $attributes = [
+    'status' => 1,
+  ];
 
-    public function datos()
-    {
-        return $this->hasOne(DatosEmpresa::class, 'empresa_id');
-    }
+  protected $fillable = [
+    'id', 'nombre', 'status'
+  ];
 
-    public function nomina() {
-        return $this->hasMany(Nomina::class, 'empresa_id');
-    }
+  public function datos()
+  {
+    return $this->hasOne(DatosEmpresa::class, 'empresa_id');
+  }
 
-    public function usuarios() {
-        return $this->hasMany(Usuario::class, 'empresa_id');
-    }
+  public function nomina()
+  {
+    return $this->hasMany(Nomina::class, 'empresa_id');
+  }
 
-    public function tipoEmpresa() {
-        return $this->belongsTo(Tipo_empresa::class);
-    }
+  public function usuarios()
+  {
+    return $this->hasMany(Usuario::class, 'empresa_id');
+  }
+
+  public function tipoEmpresa()
+  {
+    return $this->belongsTo(Tipo_empresa::class);
+  }
 }

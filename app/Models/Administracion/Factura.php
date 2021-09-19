@@ -3,12 +3,17 @@
 namespace App\Models\Administracion;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Administracion\FactProd;
-use App\Models\Produccion\Pedido;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 use App\Models\Ventas\Cliente;
+use App\Models\Produccion\Pedido;
+use App\Models\Administracion\FactProd;
 
 class Factura extends Model
 {
+  use SoftDeletes;
+
+
   protected $table = 'facturas';
 
   protected $fillable = [

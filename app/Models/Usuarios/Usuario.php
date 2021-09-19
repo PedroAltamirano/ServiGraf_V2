@@ -2,22 +2,23 @@
 
 namespace App\Models\Usuarios;
 
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
+use App\Models\Ventas\Cliente;
 use App\Models\Sistema\Nomina;
 use App\Models\Sistema\Empresas;
-use App\Models\Usuarios\ModPerfRol;
 use App\Models\Produccion\Proceso;
-use App\Models\Usuarios\UsuarioProceso;
-use App\Models\Ventas\Cliente;
-use App\Models\Usuarios\UsuarioClientes;
+use App\Models\Usuarios\ModPerfRol;
 use App\Models\Administracion\Libro;
+use App\Models\Usuarios\UsuarioProceso;
+use App\Models\Usuarios\UsuarioClientes;
 
 class Usuario extends Authenticatable
 {
-  use Notifiable;
+  use Notifiable, SoftDeletes;
 
   protected $table = 'usuarios';
   protected $primaryKey = 'cedula';

@@ -2,16 +2,20 @@
 
 namespace App\Models\Produccion;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\Produccion\Pedido_proceso;
-use App\Models\Produccion\Proceso;
-use App\Models\Usuarios\Usuario;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 use App\Models\Ventas\Cliente;
+use App\Models\Usuarios\Usuario;
+use App\Models\Produccion\Proceso;
+use App\Models\Produccion\Pedido_proceso;
 
 class Pedido extends Model
 {
+  use SoftDeletes;
+
   public static $own = false;
   protected $table = 'pedidos';
 

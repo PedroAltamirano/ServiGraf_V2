@@ -2,12 +2,13 @@
 
 namespace App\Models\Administracion;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class NominaReferencia extends Model
 {
-  use HasFactory;
+  use HasFactory, SoftDeletes;
 
   protected $table = 'nomina_refer';
   protected $fillable = [

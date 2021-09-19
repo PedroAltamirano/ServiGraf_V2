@@ -2,13 +2,13 @@
 
 namespace App\Models\Administracion;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class FacturaPedido extends Pivot
 {
-  use HasFactory;
+  use HasFactory, SoftDeletes;
 
   protected $table = 'factura_ots';
 

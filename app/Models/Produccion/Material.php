@@ -3,12 +3,15 @@
 namespace App\Models\Produccion;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Material extends Model
 {
+  use SoftDeletes;
+
   protected $table = 'materiales';
 
-  public $attributes =[
+  public $attributes = [
     'color' => 0, 'uv' => 0, 'plastificado' => 0
   ];
 
@@ -20,7 +23,8 @@ class Material extends Model
     'created_at', 'updated_at',
   ];
 
-  public function categoria(){
+  public function categoria()
+  {
     return $this->belongsTo(Categoria::class);
   }
 }

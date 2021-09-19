@@ -2,13 +2,16 @@
 
 namespace App\Models\Ventas;
 
-use App\Models\Usuarios\Usuario;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+use App\Models\Usuarios\Usuario;
 
 class CRM extends Model
 {
-  use HasFactory;
+  use HasFactory, SoftDeletes;
+
   protected $table = 'crm';
   protected $fillable = [
     'empresa_id', 'fecha', 'hora', 'actividad_id', 'creador_id', 'modificador_id', 'asignado_id', 'contacto_id', 'estado', 'fuente', 'campania', 'nota'

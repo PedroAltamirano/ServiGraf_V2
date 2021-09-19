@@ -3,12 +3,15 @@
 namespace App\Models\Sistema;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Clave extends Model
 {
-    protected $table = 'claves';
+  use SoftDeletes;
 
-    protected $fillable = [
-        'empresa_id', 'cuenta', 'usuario', 'clave', 'refuerzo', 'url'
-    ];
+  protected $table = 'claves';
+
+  protected $fillable = [
+    'empresa_id', 'cuenta', 'usuario', 'clave', 'refuerzo', 'url'
+  ];
 }

@@ -3,10 +3,12 @@
 namespace App\Models\Usuarios;
 
 use Illuminate\Database\Eloquent\Model;
-use Auth;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Modulo extends Model
 {
+  use SoftDeletes;
+
   protected $table = 'modulos';
   public $incrementing = false;
 

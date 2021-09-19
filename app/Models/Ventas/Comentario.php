@@ -2,15 +2,18 @@
 
 namespace App\Models\Ventas;
 
+use Kalnoy\Nestedset\NodeTrait;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use App\Models\Sistema\Nomina;
 use App\Models\Usuarios\Usuario;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Kalnoy\Nestedset\NodeTrait;
 
 class Comentario extends Model
 {
-  use HasFactory, NodeTrait;
+  use HasFactory, NodeTrait, SoftDeletes;
+
   protected $table = 'comentarios';
   protected $fillable = [
     'empresa_id', 'creador_id', 'contacto_id', 'comentario', 'parent_id'

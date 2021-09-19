@@ -3,10 +3,15 @@
 namespace App\Models\Administracion;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 use App\Models\Administracion\Factura;
 
 class FactProd extends Model
 {
+  use SoftDeletes;
+
+
   protected $table = 'fact_prods';
 
   protected $fillable = [

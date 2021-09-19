@@ -2,11 +2,15 @@
 
 namespace App\Models\Sistema;
 
-use App\Models\Sistema\Empresas;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+use App\Models\Sistema\Empresas;
 
 class DatosEmpresa extends Model
 {
+  use SoftDeletes;
+
   protected $table = 'datos_empresas';
 
   protected $fillable = [

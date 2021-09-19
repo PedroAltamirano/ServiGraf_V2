@@ -2,15 +2,18 @@
 
 namespace App\Models\Ventas;
 
-use Illuminate\Database\Eloquent\Model;
 use Auth;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Ventas\Contacto;
-use App\Models\Ventas\Cliente_empresa;
 use App\Models\Produccion\Pedido;
+use App\Models\Ventas\Cliente_empresa;
 
 class Cliente extends Model
 {
+  use SoftDeletes;
+
   protected $table = 'clientes';
 
   public $attributes = [
