@@ -37,7 +37,7 @@ class TintasController extends Controller
     }
   }
 
-  //modificar perfil
+  // modificar tinta
   public function update(UpdateTinta $request, Tinta $tinta)
   {
     $validator = $request->validated();
@@ -54,6 +54,24 @@ class TintasController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Tinta no modificada');
       return redirect()->back()->withInput();
+    }
+  }
+
+  // eliminar tinta
+  public function delete(Tinta $tinta)
+  {
+    DB::beginTransaction();
+    try {
+      if ($tinta->delete()) {
+        DB::commit();
+        Alert::success('Acción completada', 'Tinta eliminada con éxito');
+        return redirect()->back();
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Tinta no eliminada');
+      return redirect()->back();
     }
   }
 }

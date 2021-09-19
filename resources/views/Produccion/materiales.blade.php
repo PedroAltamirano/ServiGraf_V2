@@ -78,7 +78,7 @@
   <div class="row">
     @foreach ($tintas as $item)
     <div class="col-6 col-md-2">
-      <x-crud routeEdit="#modalTinta" :modalEdit="$item" />
+      <x-crud routeEdit="#modalTinta" :modalEdit="$item" :routeDelete="route('tinta.delete', $item->id)" :textDelete="$item->color" />
       &nbsp;&nbsp;{{ $item->color }}
     </div>
     @endforeach
