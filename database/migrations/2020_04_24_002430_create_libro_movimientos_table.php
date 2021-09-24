@@ -21,12 +21,12 @@ class CreateLibroMovimientosTable extends Migration
       $table->foreignId('libro_ref_id')->constrained('libro_refs')->onDelete('cascade');
       $table->date('fecha');
       $table->string('beneficiario', 50);
-      $table->unsignedInteger('ci');
+      $table->unsignedInteger('ci')->nullable();
       $table->string('detalle', 140);
       $table->boolean('tipo')->comment('1:ingreso, 0:egreso');
       $table->unsignedDecimal('ingreso', 7, 2)->nullable();
       $table->unsignedDecimal('egreso', 7, 2)->nullable();
-      $table->foreignId('banco_id')->constrained('bancos')->onDelete('cascade');
+      $table->foreignId('banco_id')->nullable()->constrained('bancos')->onDelete('cascade');
       $table->unsignedInteger('cuenta')->nullable();
       $table->unsignedInteger('cheque')->nullable();
       $table->timestamps();

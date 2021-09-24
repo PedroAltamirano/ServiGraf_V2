@@ -73,6 +73,7 @@
       <div class="form-group col-6 col-md-3">
         <label for="banco_id">Banco</label>
         <select class="form-control form-control-sm" name="banco_id" id="banco_id">
+          <option value="">Selecciona</option>
           @foreach ($bancos as $item)
           <option value="{{ $item->id }}" {{ old('banco_id', $entrada->banco_id) == $item->id ? 'selected' : '' }}>{{ $item->banco }}</option>
           @endforeach

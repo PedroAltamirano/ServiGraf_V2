@@ -18,6 +18,7 @@ use App\Models\Produccion\Abono;
 
 use App\Http\Requests\Produccion\StorePedidoImprenta;
 use App\Http\Requests\Produccion\UpdatePedidoImprenta;
+use App\Models\Sistema\DatosEmpresa;
 
 class PedidosController extends Controller
 {
@@ -62,7 +63,7 @@ class PedidosController extends Controller
   // crear nuevo
   public function store(StorePedidoImprenta $request)
   {
-    $num = Pedido::where('empresa_id', Auth::user()->empresa_id)->orderBy('numero', 'desc')->first()->numero;
+    $num = Pedido::where('empresa_id', Auth::user()->empresa_id)->orderBy('numero', 'desc')->first()->numero ?? (DatosEmpresa::where('empresa_id', Auth::user()->empresa_id)->first()->inicio - 1);
 
     $validator = $request->validated();
     $validator['numero'] = $num + 1;
