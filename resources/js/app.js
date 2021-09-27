@@ -4,19 +4,17 @@ require("./bootstrap");
 
 window.moment = require("moment");
 
-require("owl.carousel");
-
 window.Swal = require("sweetalert2");
 window.swal = (title, mssg, icon) => {
   Swal.fire({
     title: title,
     text: mssg,
     icon: icon,
-    width: '25em'
-  })
-}
+    width: "25em"
+  });
+};
 
-require("select2")
+require("select2");
 $.fn.select2.defaults.set("theme", "bootstrap");
 
 require("dropify");
@@ -36,13 +34,13 @@ require("datatables.net-responsive-bs4");
 
 require("../../resources/js/sb-admin-2.min.js");
 
-$('.confirmModal').click(event => {
+$(".confirmModal").click(event => {
   let button = $(event.target);
-  $('#confirmForm').attr('action', button.data('route'));
+  $("#confirmForm").attr("action", button.data("route"));
 });
 
-$('.deleteModal').click(event => {
+$(".deleteModal").click(event => {
   let button = $(event.target);
-  $('#deleteText').html(button.data('text'));
-  $('#deleteForm').attr('action', button.data('route'));
+  $("#deleteText").html(button.data("text"));
+  $("#deleteForm").attr("action", button.data("route"));
 });

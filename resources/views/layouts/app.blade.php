@@ -14,7 +14,6 @@
 
   <!-- ASSETS -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
@@ -40,41 +39,32 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
           @php
-            $now = date('H:i:s');
-            $horario = session('userInfo.horario');
-            $see_horario = false;
-            $text = 'Trabajando...';
-            if (!session('userInfo.horas')) {
-              $asis_class = App\Models\Administracion\Asistencia::class;
-              $asistencia = $asis_class::where('empresa_id', Auth::user()->empresa_id)->where('usuario_id', Auth::id())->where('fecha', date('Y-m-d'))->first() ?? new $asis_class();
-              if (!$asistencia->llegada_mañana && $now >= $horario['llegada_ma'][0] && $now <= $horario['llegada_ma'][1]) {
-                $text = 'Marcar Entrada';
-                $see_horario = true;
-              } elseif (!$asistencia->salida_mañana && $now >= $horario['salida_ma'][0] && $now <= $horario['salida_ma'][1]) {
-                $text = 'Marcar Salida';
-                $see_horario = true;
-              } elseif ($now > $horario['salida_ma'][1] && $now < $horario['llegada_ta'][0]) {
-                $text = 'Descanso...';
-              } elseif (!$asistencia->llegada_tarde && $now >= $horario['llegada_ta'][0] && $now <= $horario['llegada_ta'][1]) {
-                $text = 'Marcar Entrada';
-                $see_horario = true;
-              } elseif (!$asistencia->salida_tarde && $now >= $horario['salida_ta'][0] && $now <= $horario['salida_ta'][1]) {
-                $text = 'Marcar Salida';
-                $see_horario = true;
-              } elseif ($now > $horario['salida_ta'][1] || $now < $horario['llegada_ma'][0]) {
-                $text = 'Casita...';
-              }
-            }
-          @endphp
-          <h6 class="dropdown-header">Bienvenido {{ session('userInfo.nomina') }}</h6>
-          @if ($see_horario)
-          <a class="dropdown-item" href="{{ route('asistencia.marcar') }}">{{ $text }}</a>
-          @else
-          <a class="dropdown-item" href="#">{{ $text }}</a>
-          @endif
-          <a class="dropdown-item" href="#">Ajustes</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">Salir</a>
+          $now = date('H:i:s');
+          $horario = session('userInfo.horario');
+          $see_horario = false;
+          $text = 'Trabajando...';
+          if (!session('userInfo.horas')) {
+          $asis_class = App\Models\Administracion\Asistencia::class;
+          $asistencia = $asis_class::where('empresa_id', Auth::user()->empresa_id)->where('usuario_id',
+          Auth::id())->where('fecha', date('Y-m-d'))->first() ?? new $asis_class();
+          if (!$asistencia->llegada_mañana && $now >= $horario['llegada_ma'][0] && $now <= $horario['llegada_ma'][1]) {
+            $text='Marcar Entrada' ; $see_horario=true; } elseif (!$asistencia->salida_mañana && $now >=
+            $horario['salida_ma'][0] && $now <= $horario['salida_ma'][1]) { $text='Marcar Salida' ; $see_horario=true; }
+              elseif ($now> $horario['salida_ma'][1] && $now < $horario['llegada_ta'][0]) { $text='Descanso...' ; }
+                elseif (!$asistencia->llegada_tarde && $now >= $horario['llegada_ta'][0] && $now <=
+                  $horario['llegada_ta'][1]) { $text='Marcar Entrada' ; $see_horario=true; } elseif (!$asistencia->
+                  salida_tarde && $now >= $horario['salida_ta'][0] && $now <= $horario['salida_ta'][1]) {
+                    $text='Marcar Salida' ; $see_horario=true; } elseif ($now> $horario['salida_ta'][1] || $now <
+                      $horario['llegada_ma'][0]) { $text='Casita...' ; } } @endphp <h6 class="dropdown-header">
+                      Bienvenido {{ session('userInfo.nomina') }}</h6>
+                      @if ($see_horario)
+                      <a class="dropdown-item" href="{{ route('asistencia.marcar') }}">{{ $text }}</a>
+                      @else
+                      <a class="dropdown-item" href="#">{{ $text }}</a>
+                      @endif
+                      <a class="dropdown-item" href="#">Ajustes</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">Salir</a>
         </div>
       </li>
     </ul>

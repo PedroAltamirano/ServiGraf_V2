@@ -1,0 +1,21 @@
+// Fonts
+// @import url("https://fonts.googleapis.com/css?family=Nunito");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+// Import Custom SB Admin 2 Variables (Overrides Default Bootstrap Variables)
+@import "variables";
+
+// Import Bootstrap
+@import "~bootstrap/scss/bootstrap";
+@import "~animate.css/animate.min.css";
+
+// Font awesome
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+
+// Plugins
+@import "~sweetalert2/dist/sweetalert2";
+@import "~owl.carousel/dist/assets/owl.carousel.min.css";
+@import "~owl.carousel/dist/assets/owl.theme.default.min.css";
