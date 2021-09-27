@@ -20,7 +20,7 @@ class CreateNominaEducTable extends Migration
       $table->unsignedInteger('nomina_id');
       $table->foreign('nomina_id')->references('cedula')->on('nomina')->onDelete('cascade')->onDelete('cascade');
       $table->unsignedTinyInteger('nivel_educ'); //1primaria, 2secu, 3superior, 4maestria, 5diplomado, 6idiomas, 7otros
-      $table->string('nombre_institucion', 100);
+      $table->string('nombre_institucion');
       $table->date('inicio');
       $table->date('fin');
       $table->string('titulo');

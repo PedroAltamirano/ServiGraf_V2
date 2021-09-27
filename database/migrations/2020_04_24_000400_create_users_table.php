@@ -22,8 +22,8 @@ class CreateUsersTable extends Migration
       $table->rememberToken();
       $table->unsignedBigInteger('empresa_id');
       $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
-      $table->string('usuario', 20)->unique();
-      $table->string('password', 128);
+      $table->string('usuario')->unique();
+      $table->string('password');
       $table->foreignId('perfil_id')->constrained('perfiles')->onDelete('cascade');
       //permisos adicionales
       $table->boolean('status')->default(1);

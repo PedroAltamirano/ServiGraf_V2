@@ -17,8 +17,8 @@ class CreatePerfilsTable extends Migration
       $table->id();
       $table->unsignedBigInteger('empresa_id');
       $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
-      $table->string('nombre', 50);
-      $table->string('descripcion', 140);
+      $table->string('nombre');
+      $table->string('descripcion');
       $table->boolean('status')->default(1);
       $table->timestamps();
       $table->softDeletes();

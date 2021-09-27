@@ -17,8 +17,8 @@ class CreateClavesTable extends Migration
       $table->id();
       $table->unsignedBigInteger('empresa_id');
       $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
-      $table->string('cuenta', 30);
-      $table->string('usuario', 30);
+      $table->string('cuenta');
+      $table->string('usuario');
       $table->text('clave');
       $table->text('refuerzo')->nullable();
       $table->string('url')->nullable();

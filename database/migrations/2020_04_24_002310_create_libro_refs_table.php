@@ -19,8 +19,8 @@ class CreateLibroRefsTable extends Migration
       $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->unsignedInteger('usuario_id');
       $table->foreign('usuario_id')->references('cedula')->on('usuarios')->onDelete('cascade');
-      $table->string('referencia', 50);
-      $table->string('descripcion', 140);
+      $table->string('referencia');
+      $table->string('descripcion');
       $table->timestamps();
       $table->softDeletes();
     });

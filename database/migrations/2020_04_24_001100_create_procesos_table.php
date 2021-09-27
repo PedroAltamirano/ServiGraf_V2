@@ -18,7 +18,7 @@ class CreateProcesosTable extends Migration
       $table->unsignedBigInteger('empresa_id');
       $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->foreignId('area_id')->constrained('areas')->onDelete('cascade');
-      $table->string('proceso', 140);
+      $table->string('proceso');
       $table->nestedSet();
       $table->unsignedDecimal('meta', 7, 2)->default(0.00);
       $table->time('tmaquina', 0)->nullable();

@@ -15,7 +15,7 @@ class CreateTipoEmpresaTable extends Migration
   {
     Schema::create('tipo_empresa', function (Blueprint $table) {
       $table->id();
-      $table->string('nombre', 20);
+      $table->string('nombre');
       $table->timestamps();
       $table->softDeletes();
     });

@@ -17,7 +17,7 @@ class CreateAreasTable extends Migration
       $table->id();
       $table->unsignedBigInteger('empresa_id');
       $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
-      $table->string('area', 30);
+      $table->string('area');
       $table->unsignedTinyInteger('orden');
       $table->timestamps();
       $table->softDeletes();

@@ -17,7 +17,7 @@ class CreateMaterialsTable extends Migration
       $table->id();
       $table->unsignedBigInteger('empresa_id');
       $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
-      $table->string('descripcion', 140);
+      $table->string('descripcion');
       $table->foreignId('categoria_id')->constrained('categorias')->onDelete('cascade');
       $table->boolean('color');
       $table->unsignedDecimal('alto', 5, 2)->nullable();

@@ -20,9 +20,9 @@ class CreateLibroMovimientosTable extends Migration
       $table->foreignId('libro_id')->constrained('libros')->onDelete('cascade');
       $table->foreignId('libro_ref_id')->constrained('libro_refs')->onDelete('cascade');
       $table->date('fecha');
-      $table->string('beneficiario', 50);
+      $table->string('beneficiario');
       $table->unsignedInteger('ci')->nullable();
-      $table->string('detalle', 140);
+      $table->string('detalle');
       $table->boolean('tipo')->comment('1:ingreso, 0:egreso');
       $table->unsignedDecimal('ingreso', 7, 2)->nullable();
       $table->unsignedDecimal('egreso', 7, 2)->nullable();

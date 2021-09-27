@@ -17,7 +17,7 @@ class CreateHorariosTable extends Migration
       $table->id();
       $table->unsignedBigInteger('empresa_id');
       $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
-      $table->string('nombre', 30);
+      $table->string('nombre');
       $table->time('llegada_ma');
       $table->time('salida_ma');
       $table->time('llegada_ta');

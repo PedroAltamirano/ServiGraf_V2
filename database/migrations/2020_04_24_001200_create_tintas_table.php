@@ -17,7 +17,7 @@ class CreateTintasTable extends Migration
       $table->id();
       $table->unsignedBigInteger('empresa_id');
       $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
-      $table->string('color', 50);
+      $table->string('color');
       $table->timestamps();
       $table->softDeletes();
     });

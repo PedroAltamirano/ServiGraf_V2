@@ -20,13 +20,13 @@ class CreateNominaTable extends Migration
       $table->unsignedInteger('cedula')->primary();
       $table->string('foto')->nullable();
       $table->date('fecha_nacimiento');
-      $table->string('lugar_nacimiento', 100);
-      $table->string('nacionalidad', 50);
-      $table->string('idioma_nativo', 50);
-      $table->string('nombre', 30);
-      $table->string('apellido', 30);
+      $table->string('lugar_nacimiento');
+      $table->string('nacionalidad');
+      $table->string('idioma_nativo');
+      $table->string('nombre');
+      $table->string('apellido');
       $table->string('direccion');
-      $table->string('sector', 30);
+      $table->string('sector');
       $table->boolean('visita_domiciliaria')->default(0);
       $table->date('fecha_visita')->nullable();
       $table->unsignedInteger('telefono')->nullable();
@@ -46,7 +46,7 @@ class CreateNominaTable extends Migration
       //DATOS EMPRESARIALES
       $table->date('inicio_labor');
       $table->date('fin_labor')->nullable();
-      $table->string('cargo', 50);
+      $table->string('cargo');
       $table->foreignId('centro_costos_id')->constrained('centro_costos')->onDelete('cascade');
       $table->date('ingreso_iess')->nullable();
       $table->boolean('iess_asumido_empleador')->default(0);
@@ -55,7 +55,7 @@ class CreateNominaTable extends Migration
       //pago
       $table->unsignedTinyInteger('banco_id');
       $table->unsignedTinyInteger('tipo_cuenta_banco'); //1ahorros, 2corriente
-      $table->string('numero_cuenta_bancaria', 20);
+      $table->string('numero_cuenta_bancaria');
       $table->string('observaciones')->nullable();
       //permisos adicionales
       $table->boolean('status')->default(1); //estado del empeado

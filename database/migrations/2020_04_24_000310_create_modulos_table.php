@@ -17,7 +17,7 @@ class CreateModulosTable extends Migration
       $table->id();
       $table->unsignedBigInteger('empresa_id');
       $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
-      $table->string('nombre', 30);
+      $table->string('nombre');
       $table->boolean('principal');
       $table->timestamps();
       $table->softDeletes();
