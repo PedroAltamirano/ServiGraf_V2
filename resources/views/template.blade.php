@@ -39,7 +39,7 @@
     <thead>
       <tr>
         <th scope="col"></th>
-        <th scope="col" class="w-5">Crud</th>
+        <th scope="col" class="w-2">Crud</th>
       </tr>
     </thead>
     <tbody>

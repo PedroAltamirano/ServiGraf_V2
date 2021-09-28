@@ -110,7 +110,7 @@ $oldTintasRetiro =
   <table id="table-materiales" class="table table-sm table-responsive">
     <thead>
       <tr>
-        <th scope="col" class="w-5"><i id="addMaterial" class="fas fa-plus"></i></th>
+        <th scope="col" class="w-2"><i id="addMaterial" class="fas fa-plus"></i></th>
         <th scope="col" style="width: 30%; min-width:150px"><b>Solicitud de material</b></th>
         <th scope="col" class="text-center">Cantidad</th>
         <th scope="col" colspan="2" class="text-center">Corte</th>
@@ -143,7 +143,7 @@ $oldTintasRetiro =
   <table id="table-procesos" class="table table-sm table-responsive-sm">
     <thead>
       <tr>
-        <th scope="col" class="w-5"><i id="addProceso" class="fas fa-plus"></i></th>
+        <th scope="col" class="w-2"><i id="addProceso" class="fas fa-plus"></i></th>
         <th scope="col" style="width: 50%; min-width:200px"><b>Procesos</b></th>
         <th scope="col" class="text-center">T</th>
         <th scope="col" class="text-center">R</th>
@@ -209,7 +209,7 @@ $oldTintasRetiro =
             <table id="table-abonos" class="table table-sm table-responsive">
               <thead>
                 <tr>
-                  <td scope="col" class="w-5"><i id="addAbono" class="fas fa-plus"></i></td>
+                  <td scope="col" class="w-2"><i id="addAbono" class="fas fa-plus"></i></td>
                   <td scope="col" class="w-25">Fecha</td>
                   <td scope="col">Usuario</td>
                   <td scope="col" class="w-25">Forma de pago</td>
