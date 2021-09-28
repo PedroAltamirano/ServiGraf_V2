@@ -24,14 +24,13 @@
 </head>
 
 <body style="min-height: 100%; height: 100%;">
-  <!-- ERRORS ALERT -->
-  <x-errors />
+  @include('layouts.errors')
 
   <div id="app" class="h-100">
     <nav class="navbar navbar-dark navbar-expand-md fixed-top navigation-clean-search" id="homenav">
       <div class="container-fluid">
         <a class="navbar-brand" href="#" style="background-image: url(&quot;img/sg-2.png&quot;);opacity: 1;"></a>
-        <button class="navbar-toggler text-white custom-toggler {{$tooglercolor}}" data-toggle="collapse"
+        <button class="navbar-toggler text-white custom-toggler {{ $tooglercolor }}" data-toggle="collapse"
           data-target="#navcol">
           <span class="sr-only">Toggle navigation</span>
           <span class="navbar-toggler-icon"></span>
@@ -40,28 +39,28 @@
           style="font-family: ABeeZee, sans-serif;">
           <ul class="nav navbar-nav text-center ml-auto" id="nav_items">
             <li class="nav-item" role="presentation">
-              <a class="nav-link nav-color {{request()->is('/') ? 'active' : ''}} {{$txtcolor}}"
-                href="{{route('welcome')}}">Inicio</a>
+              <a class="nav-link nav-color {{ request()->is('/') ? 'active' : '' }} {{ $txtcolor }}"
+                href="{{ route('welcome') }}">Inicio</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link nav-color {{request()->is('about-us') ? 'active' : ''}} {{$txtcolor}}"
-                href="{{route('about-us')}}">Sobre Nosotros</a>
+              <a class="nav-link nav-color {{ request()->is('about-us') ? 'active' : '' }} {{ $txtcolor }}"
+                href="{{ route('about-us') }}">Sobre Nosotros</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link nav-color {{request()->is('services') ? 'active' : ''}} {{$txtcolor}}"
-                href="{{route('services')}}">Servicios</a>
+              <a class="nav-link nav-color {{ request()->is('services') ? 'active' : '' }} {{ $txtcolor }}"
+                href="{{ route('services') }}">Servicios</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link nav-color {{request()->is('galery') ? 'active' : ''}} {{$txtcolor}}"
-                href="{{route('galery')}}">Galería</a>
+              <a class="nav-link nav-color {{ request()->is('galery') ? 'active' : '' }} {{ $txtcolor }}"
+                href="{{ route('galery') }}">Galería</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link nav-color {{request()->is('contact') ? 'active' : ''}} {{$txtcolor}}"
-                href="{{route('contact')}}">Contacto</a>
+              <a class="nav-link nav-color {{ request()->is('contact') ? 'active' : '' }} {{ $txtcolor }}"
+                href="{{ route('contact') }}">Contacto</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link nav-color {{request()->is('login') ? 'active' : ''}} {{$txtcolor}}"
-                href="{{route('login')}}">Usuario</a>
+              <a class="nav-link nav-color {{ request()->is('login') ? 'active' : '' }} {{ $txtcolor }}"
+                href="{{ route('login') }}">Usuario</a>
             </li>
           </ul>
         </div>
@@ -93,6 +92,7 @@
   @include('sweetalert::alert')
 
   @yield('scripts')
+  @stack('component-script')
 
 </body>
 
