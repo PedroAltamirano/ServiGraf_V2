@@ -15,4 +15,8 @@ class Dotacion extends Model
   protected $fillable = [
     'empresa_id', 'dotacion', 'status',
   ];
+
+  protected $attribute = [
+    'status' => 0,
+  ];
 }

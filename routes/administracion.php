@@ -45,6 +45,11 @@ Route::namespace('Administracion')
     Route::put('retencion/modificar/{retencion}', 'RetencionController@update')->name('retencion.update')->middleware('hasModRol:22,3');
     Route::delete('retencion/eliminar/{retencion}', 'RetencionController@delete')->name('retencion.delete')->middleware('hasModRol:22,4');
 
+    // DOTACION
+    Route::post('dotacion/crear', 'DotacionController@store')->name('dotacion.store')->middleware('hasModRol:24,2');
+    Route::put('dotacion/modificar/{dotacion}', 'DotacionController@update')->name('dotacion.update')->middleware('hasModRol:24,3');
+    Route::delete('dotacion/eliminar/{dotacion}', 'DotacionController@delete')->name('dotacion.delete')->middleware('hasModRol:24,4');
+
     // NOMINA
     Route::get('nominas', 'NominaController@index')->name('nomina')->middleware('hasModRol:24,1');
     Route::get('nomina/crear', 'NominaController@create')->name('nomina.create')->middleware('hasModRol:24,2');

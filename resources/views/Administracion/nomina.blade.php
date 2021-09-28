@@ -2,21 +2,21 @@
 
 @section('desktop-content')
   <x-path :items="[
-      [
-        'text' => 'Nomina',
-        'current' => false,
-        'href' => route('nomina'),
-      ],
-      [
-        'text' => $text,
-        'current' => true,
-        'href' => '#',
-      ]
-    ]" />
+                    [
+                      'text' => 'Nomina',
+                      'current' => false,
+                      'href' => route('nomina'),
+                    ],
+                    [
+                      'text' => $text,
+                      'current' => true,
+                      'href' => '#',
+                    ]
+                  ]" />
 
   <x-blue-board :title=$text :foot="[
-      ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=>'link']
-    ]">
+                    ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=>'link']
+                  ]">
     <form action="{{ $path }}" method="POST" id="form" enctype="multipart/form-data">
       @csrf
       @method($method)
@@ -469,11 +469,11 @@
           <table id="table-educacion" class="table table-sm">
             <thead>
               <tr>
-                <th scope="col" class="w-5"><i id="addEducacion" class="fas fa-plus"></i></th>
+                <th scope="col" class="w-2"><i id="addEducacion" class="fas fa-plus"></i></th>
                 <th scope="col">Nivel de Educacion</th>
                 <th scope="col">Institución</th>
-                <th scope="col">Desde</th>
-                <th scope="col">Hasta</th>
+                <th scope="col" class="w-10">Desde</th>
+                <th scope="col" class="w-10">Hasta</th>
                 <th scope="col">Título</th>
               </tr>
             </thead>
@@ -492,14 +492,14 @@
           <table id="table-referencia" class="table table-sm">
             <thead>
               <tr>
-                <th scope="col" class="w-5"><i id="addReferencia" class="fas fa-plus"></i></th>
+                <th scope="col" class="w-2"><i id="addReferencia" class="fas fa-plus"></i></th>
                 <th scope="col">Tipo</th>
                 <th scope="col">Empresa</th>
                 <th scope="col">Contacto</th>
-                <th scope="col">Teléfono</th>
+                <th scope="col" class="w-10">Teléfono</th>
                 <th scope="col">Afinidad</th>
-                <th scope="col">Inicio Laboral</th>
-                <th scope="col">Fin Laboral</th>
+                <th scope="col" class="w-10">Inicio Laboral</th>
+                <th scope="col" class="w-10">Fin Laboral</th>
                 <th scope="col">Cargo</th>
                 <th scope="col">Razón de Desvinculación</th>
               </tr>
@@ -519,8 +519,8 @@
           <table id="table-dotacion" class="table table-sm">
             <thead>
               <tr>
-                <th scope="col" class="w-5"><i id="addDotacion" class="fas fa-plus"></i></th>
-                <th scope="col">Entrega</th>
+                <th scope="col" class="w-2"><i id="addDotacion" class="fas fa-plus"></i></th>
+                <th scope="col" class="w-10">Entrega</th>
                 <th scope="col">Articulo</th>
               </tr>
             </thead>
@@ -598,13 +598,13 @@
           <table id="table-familia" class="table table-sm">
             <thead>
               <tr>
-                <th scope="col" class="w-5"><i id="addFamilia" class="fas fa-plus"></i></th>
-                <th scope="col">Relación</th>
+                <th scope="col" class="w-2"><i id="addFamilia" class="fas fa-plus"></i></th>
+                <th scope="col" class="w-10">Relación</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Fecha de Nacimiento</th>
+                <th scope="col" class="w-10">Fecha de Nacimiento</th>
                 <th scope="col">Ocupación</th>
-                <th scope="col">Teléfono</th>
-                <th scope="col">Celular</th>
+                <th scope="col" class="w-10">Teléfono</th>
+                <th scope="col" class="w-10">Celular</th>
               </tr>
             </thead>
             <tbody>

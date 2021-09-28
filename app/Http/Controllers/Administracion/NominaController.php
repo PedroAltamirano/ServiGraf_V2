@@ -33,7 +33,8 @@ class NominaController extends Controller
   public function index()
   {
     $nominas = Nomina::where('empresa_id', Auth::user()->empresa_id)->get();
-    return view('Administracion.nominas', compact('nominas'));
+    $dotacion = Dotacion::where('empresa_id', Auth::user()->empresa_id)->get();
+    return view('Administracion.nominas', compact('nominas', 'dotacion'));
   }
 
   /**

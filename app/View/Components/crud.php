@@ -6,6 +6,7 @@ use Illuminate\View\Component;
 
 class Crud extends Component
 {
+  public $status;
   public $routeSee;
   public $modalSee;
   public $classSee;
@@ -19,8 +20,9 @@ class Crud extends Component
    *
    * @return void
    */
-  public function __construct($routeSee = '#', $modalSee = null, $classSee = '', $routeEdit = '#', $modalEdit = null, $classEdit = '', $routeDelete = '#', $textDelete = '')
+  public function __construct($status = 1, $routeSee = '#', $modalSee = null, $classSee = '', $routeEdit = '#', $modalEdit = null, $classEdit = '', $routeDelete = '#', $textDelete = '')
   {
+    $this->status = $status;
     $this->routeSee = $routeSee;
     $this->modalSee = $modalSee;
     $this->classSee = $classSee;
