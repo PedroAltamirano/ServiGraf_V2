@@ -97,10 +97,10 @@ class UpdateNomina extends FormRequest
       'contacto.*' => ['required', 'string', 'max:100'],
       'telefono_refer.*' => ['required', 'numeric', 'max:9999999999'],
       'afinidad.*' => ['required', 'string', 'max:50'],
-      'inicio_labor_refer.*' => ['required', 'date'],
-      'fin_labor_refer.*' => ['required', 'date'],
-      'cargo_refer.*' => ['required', 'string', 'max:50'],
-      'razon_separacion.*' => ['required', 'string', 'max:250'],
+      'inicio_labor_refer.*' => ['required_if:tipo_refer,2', 'date'],
+      'fin_labor_refer.*' => ['required_if:tipo_refer,2', 'date'],
+      'cargo_refer.*' => ['required_if:tipo_refer,2', 'string', 'max:50'],
+      'razon_separacion.*' => ['required_if:tipo_refer,2', 'string', 'max:250'],
 
       // Dotacion
       'entrega.*' => ['required', 'date'],
