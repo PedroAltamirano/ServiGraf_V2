@@ -2,12 +2,12 @@
 
 @section('desktop-content')
   <x-path :items="[
-      [
-        'text' => 'Libro Diario',
-        'current' => true,
-        'href' => '#',
-      ]
-    ]" />
+        [
+          'text' => 'Libro Diario',
+          'current' => true,
+          'href' => '#',
+        ]
+      ]" />
 
   <x-filters :clientes="[]" cli=0 cob=0>
     <div class="col-12 col-md form-group">
@@ -29,21 +29,23 @@
   </x-filters>
 
   <x-blue-board title='Flujo de activos' :foot="[
-      ['text'=>'Nueva Entrada', 'href'=>route('entrada.create'), 'id'=>'newEntrada', 'tipo'=>'link'],
-      ['text'=>'Nuevo Libro', 'href'=>'#modalLibro', 'id'=>'modal-libro', 'tipo'=>'modal'],
-      ['text'=>'Referencias y Bancos', 'href'=>route('referencias-bancos'), 'id'=>'referencias_bancos', 'tipo'=>'link']
-    ]">
+        ['text'=>'Nueva Entrada', 'href'=>route('entrada.create'), 'id'=>'newEntrada', 'tipo'=>'link'],
+        ['text'=>'Nuevo Libro', 'href'=>'#modalLibro', 'id'=>'modal-libro', 'tipo'=>'modal'],
+        ['text'=>'Referencias y Bancos', 'href'=>route('referencias-bancos'), 'id'=>'referencias_bancos', 'tipo'=>'link']
+      ]">
     <table id="table" class="table table-striped table-sm">
       <thead>
         <tr>
-          <th scope="col">Fecha</th>
-          <th scope="col">Referencia</th>
-          <th scope="col">Beneficiario</th>
-          <th scope="col">Descripción</th>
-          <th scope="col">Ingreso $</th>
-          <th scope="col">Egreso $</th>
-          <th scope="col">Saldo $</th>
-          <th scope="col" class="w-2">Crud</th>
+          <th scope="col" class="w-10">Fecha</th>
+          <th scope="col" class="">Referencia</th>
+          <th scope=" col"
+            class="">Beneficiario</th>
+          <th scope=" col" class="w-20">Descripción</th>
+          <th scope="col" class="">Ingreso $</th>
+          <th scope=" col" class="">Egreso $</th>
+          <th scope="
+            col" class="">Saldo $</th>
+          <th scope=" col" class="w-2">Crud</th>
         </tr>
       </thead>
       <tbody>

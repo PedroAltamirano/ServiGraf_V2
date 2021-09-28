@@ -111,14 +111,15 @@ $oldTintasRetiro =
     <thead>
       <tr>
         <th scope="col" class="w-2"><i id="addMaterial" class="fas fa-plus"></i></th>
-        <th scope="col" style="width: 30%; min-width:150px"><b>Solicitud de material</b></th>
+        <th scope="col" class="w-30"><b>Solicitud de material</b></th>
         <th scope="col" class="text-center">Cantidad</th>
         <th scope="col" colspan="2" class="text-center">Corte</th>
         <th scope="col" class="text-center">Tamaños</th>
-        <th scope="col" style="width: 20%; min-width:150px"><i data-toggle="modal" data-target="#modalProveedor"
-            class="fas fa-plus"></i> Proveedor</th>
+        <th scope="col" class="w-20">
+          <i data-toggle=" modal" data-target="#modalProveedor" class="fas fa-plus"></i> Proveedor
+        </th>
         <th scope="col" class="text-center">Factura</th>
-        <th scope="col" class="text-center" style="width:10%">Total</th>
+        <th scope="col" class="text-center">Total</th>
       </tr>
     </thead>
     <tbody>
@@ -144,8 +145,8 @@ $oldTintasRetiro =
     <thead>
       <tr>
         <th scope="col" class="w-2"><i id="addProceso" class="fas fa-plus"></i></th>
-        <th scope="col" style="width: 50%; min-width:200px"><b>Procesos</b></th>
-        <th scope="col" class="text-center">T</th>
+        <th scope="col" class="w-50""><b>Procesos</b></th>
+        <th scope=" col" class="text-center">T</th>
         <th scope="col" class="text-center">R</th>
         <th scope="col" class="text-center">Mill</th>
         <th scope="col" class="text-center">V/U</th>
@@ -213,7 +214,7 @@ $oldTintasRetiro =
                   <td scope="col" class="w-25">Fecha</td>
                   <td scope="col">Usuario</td>
                   <td scope="col" class="w-25">Forma de pago</td>
-                  <td scope="col" style="width:15%">Valor $</td>
+                  <td scope="col" class="w-10">Valor $</td>
                 </tr>
               </thead>
               <tbody>
@@ -409,7 +410,7 @@ $oldTintasRetiro =
 
       let total = $('<input />', {
         'type': 'number',
-        'class': 'form-control form-control-sm text-right fixFloat',
+        'class': 'form-control form-control-sm text-center fixFloat',
         'value': material_total,
         'name': 'material_total[]',
         'id': `material_total_${index_material}`,

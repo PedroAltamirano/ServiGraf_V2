@@ -2,12 +2,12 @@
 
 @section('desktop-content')
   <x-path :items="[
-      [
-        'text' => session('userInfo.nomina'),
-        'current' => true,
-        'href' => '#',
-      ]
-    ]" />
+        [
+          'text' => session('userInfo.nomina'),
+          'current' => true,
+          'href' => '#',
+        ]
+      ]" />
 
   @if (count($procesos) > 0)
     @php
@@ -35,16 +35,16 @@
 
   @if (count($procesos) > 0)
     <x-blue-board title='Pendientes' :foot="[
-      ['text'=>'Nuevo', 'href'=>route('pedido.create'), 'id'=>'nuevo', 'tipo'=>'link'],
-    ]">
+        ['text'=>'Nuevo', 'href'=>route('pedido.create'), 'id'=>'nuevo', 'tipo'=>'link'],
+      ]">
       <table id="table" class="table table-striped table-sm">
         <thead>
           <tr>
             <th scope="col">Numero</th>
             <th scope="col">Cliente</th>
-            <th scope="col" style="width: 25%">Detalle</th>
+            <th scope="col" class="w-25">Detalle</th>
             <th scope="col">Cant</th>
-            <th scope="col" style="width: 40%">Procesos</th>
+            <th scope="col" class="w-40">Procesos</th>
             <th scope="col" class="w-2">Crud</th>
           </tr>
         </thead>
