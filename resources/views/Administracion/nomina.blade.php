@@ -2,21 +2,21 @@
 
 @section('desktop-content')
   <x-path :items="[
-                    [
-                      'text' => 'Nomina',
-                      'current' => false,
-                      'href' => route('nomina'),
-                    ],
-                    [
-                      'text' => $text,
-                      'current' => true,
-                      'href' => '#',
-                    ]
-                  ]" />
+                                                          [
+                                                            'text' => 'Nomina',
+                                                            'current' => false,
+                                                            'href' => route('nomina'),
+                                                          ],
+                                                          [
+                                                            'text' => $text,
+                                                            'current' => true,
+                                                            'href' => '#',
+                                                          ]
+                                                        ]" />
 
   <x-blue-board :title=$text :foot="[
-                    ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=>'link']
-                  ]">
+                                                          ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=>'link']
+                                                        ]">
     <form action="{{ $path }}" method="POST" id="form" enctype="multipart/form-data">
       @csrf
       @method($method)
@@ -888,20 +888,22 @@
       });
 
       let articulo = $('<select />', {
-        'type': 'text',
-        'class': 'form-control form-control-sm',
-        'name': 'dotacion_id[]',
-        'id': `dotacion_id_${index_dotacion}`
+        'type': 'number',
+        'class': 'form-control form-control-sm select2Class',
+        'name': `dotacion_id[${index_dotacion}][]`,
+        'id': `dotacion_id_${index_dotacion}`,
+        'multiple': 'multiple'
       }).append(articulos);
       if (dotacion_id_val) articulo.val(dotacion_id_val);
 
       newRow(table, [button, entrega, articulo], `row-dotacion-${index_dotacion}`);
+      $('.select2Class').select2();
       index_dotacion++;
     };
     $('#addDotacion').click(() => add_dotacion());
     if (old_dotacion != []) {
       old_dotacion.map(item => {
-        add_dotacion(item.entrega, item.dotacion_id);
+        add_dotacion(item.entrega, JSON.parse(item.dotacion_id));
       });
     }
 

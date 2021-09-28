@@ -247,12 +247,21 @@ class NominaController extends Controller
       return 0;
     }
 
+    function toInt($str_int)
+    {
+      return (int)$str_int;
+    }
+
     for ($i = 0; $i < sizeof($request['entrega']); $i++) {
+      $array = array_map(function ($val) {
+        return intval($val);
+      }, $request['dotacion_id'][$i]);
+
       $model = new NominaDotacion();
       $model->empresa_id = Auth::user()->empresa_id;
       $model->nomina_id = $nomina->cedula;
       $model->entrega = $request['entrega'][$i];
-      $model->dotacion_id = $request['dotacion_id'][$i];
+      $model->dotacion_id = json_encode($array);
       $model->save();
     }
     return 1;

@@ -104,7 +104,7 @@ class StoreNomina extends FormRequest
 
       // Dotacion
       'entrega.*' => ['required', 'date'],
-      'dotacion_id.*' => ['required', 'numeric', 'exists:dotacion,id'],
+      'dotacion_id.*.*' => ['required', 'numeric', 'exists:dotacion,id'],
 
       // Datos medicos
       'contacto_emergencia_nombre' => ['required', 'string', 'max:250'],
