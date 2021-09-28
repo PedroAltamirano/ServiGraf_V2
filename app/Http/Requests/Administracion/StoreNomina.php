@@ -59,7 +59,8 @@ class StoreNomina extends FormRequest
       'Txhoras' => ['nullable', 'boolean'],
       'horario_id' => ['required', 'numeric', 'exists:horarios,id'],
       'observaciones' => ['nullable', 'string', 'max:250'],
-      'banco_id' => ['required', 'numeric', 'exists:bancos,id'],
+      // 'banco_id' => ['required', 'numeric', 'exists:bancos,id'],
+      'banco_id' => ['required', 'numeric'],
       'tipo_cuenta_banco' => ['required', 'numeric'],
       'numero_cuenta_bancaria' => ['required', 'numeric'],
 

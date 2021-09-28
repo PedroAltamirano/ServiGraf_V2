@@ -59,7 +59,8 @@ class UpdateNomina extends FormRequest
       'Txhoras' => ['nullable', 'boolean'],
       'horario_id' => ['required', 'numeric', 'exists:horarios,id'],
       'observaciones' => ['nullable', 'string', 'max:250'],
-      'banco_id' => ['nullable', 'numeric', 'exists:bancos,id'],
+      // 'banco_id' => ['nullable', 'numeric', 'exists:bancos,id'],
+      'banco_id' => ['nullable', 'numeric'],
       'tipo_cuenta_banco' => ['nullable', 'numeric'],
       'numero_cuenta_bancaria' => ['nullable', 'numeric'],
 
