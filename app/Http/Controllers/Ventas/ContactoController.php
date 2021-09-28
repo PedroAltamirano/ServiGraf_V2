@@ -19,6 +19,7 @@ use App\Models\Ventas\Cliente_empresa;
 
 use App\Http\Requests\Ventas\StoreContacto;
 use App\Http\Requests\Ventas\UpdateContacto;
+use App\Models\Usuarios\Usuario;
 
 class ContactoController extends Controller
 {

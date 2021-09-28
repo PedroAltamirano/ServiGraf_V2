@@ -16,7 +16,7 @@ class Comentario extends Model
 
   protected $table = 'comentarios';
   protected $fillable = [
-    'empresa_id', 'creador_id', 'contacto_id', 'comentario', 'parent_id'
+    'empresa_id', 'creador_id', 'asignado_id', 'contacto_id', 'comentario', 'parent_id'
   ];
 
   /**
@@ -32,6 +32,11 @@ class Comentario extends Model
   public function creador()
   {
     return $this->belongsTo(Usuario::class, 'creador_id', 'cedula');
+  }
+
+  public function asignado()
+  {
+    return $this->belongsTo(Usuario::class, 'asignado_id', 'cedula');
   }
 
   public function nomina()

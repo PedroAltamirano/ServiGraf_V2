@@ -13,6 +13,7 @@ use App\Models\Ventas\Comentario;
 
 use App\Http\Requests\Ventas\StoreComentario;
 use App\Http\Requests\Ventas\UpdateComentario;
+use App\Notifications\NewComment;
 
 class ComentarioController extends Controller
 {
@@ -41,6 +42,7 @@ class ComentarioController extends Controller
     DB::beginTransaction();
     try {
       if ($comentario = Comentario::create($validated)) {
+        $comentario->asignado->notify(new NewComment($comentario));
         DB::commit();
         Alert::success('Acción completada', 'Comentario creado con éxito');
         return redirect()->back();

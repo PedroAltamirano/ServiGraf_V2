@@ -25,6 +25,7 @@ class UpdateComentario extends FormRequest
   {
     return [
       // 'contacto_id' => ['required', 'numeric', 'exists:contactos,id'],
+      // 'asignado_id' => ['required', 'numeric', 'exists:usuarios,cedula'],
       'comentario' => ['required', 'string', 'max:250'],
       // 'parent_id' => ['nullable', 'numeric', 'exists:comentarios,id'],
     ];
