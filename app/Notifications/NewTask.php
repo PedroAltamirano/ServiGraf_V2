@@ -6,22 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use App\Models\Ventas\Comentario;
+use App\Models\Ventas\CRM;
 
-class NewComment extends Notification implements ShouldQueue
+class NewTask extends Notification implements ShouldQueue
 {
   use Queueable;
 
-  protected $comentario;
+  protected $task;
 
   /**
    * Create a new notification instance.
    *
    * @return void
    */
-  public function __construct(Comentario $comentario)
+  public function __construct(CRM $task)
   {
-    $this->comentario = $comentario;
+    $this->task = $task;
   }
 
   /**
@@ -44,11 +44,11 @@ class NewComment extends Notification implements ShouldQueue
   public function toArray($notifiable)
   {
     return [
-      'icon' => 'fas fa-address-book',
-      'from' => $this->comentario->creador->usuario,
-      'to' => $this->comentario->contacto->full_name,
-      'mssg' => $this->comentario->comentario,
-      'route' => route('contacto.show', $this->comentario->contacto->id)
+      'icon' => 'fas fa-tasks',
+      'from' => $this->task->creador->usuario,
+      'to' => $this->task->contacto->full_name,
+      'mssg' => $this->task->actividad->nombre,
+      'route' => route('crm'),
     ];
   }
 }

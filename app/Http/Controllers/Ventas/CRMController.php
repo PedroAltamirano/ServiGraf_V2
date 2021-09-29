@@ -13,6 +13,7 @@ use App\Http\Requests\Ventas\UpdateTarea;
 use RealRashid\SweetAlert\Facades\Alert;
 
 use App\Models\Ventas\CRM;
+use App\Notifications\NewTask;
 
 class CRMController extends Controller
 {
@@ -74,6 +75,7 @@ class CRMController extends Controller
     DB::beginTransaction();
     try {
       if ($tarea = CRM::create($validated)) {
+        $tarea->asignado->notify(new NewTask($tarea));
         DB::commit();
         Alert::success('Acción completada', 'Tarea creada con éxito');
         return redirect()->back();

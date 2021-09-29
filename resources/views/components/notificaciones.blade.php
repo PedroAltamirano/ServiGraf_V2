@@ -7,18 +7,18 @@
   <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
     aria-labelledby="notificationsDropdown">
     <h6 class="dropdown-header">
-      Message Center
+      Notificaciones
     </h6>
     @foreach ($notificaciones as $item)
-      <a class="dropdown-item d-flex align-items-center" href="#">
+      <a class="dropdown-item d-flex align-items-center" href="{{ $item['data']['route'] }}">
         <div class="dropdown-list-image mr-3">
           <div class="icon-circle bg-primary">
             <i class="{{ $item['data']['icon'] }} text-white"></i>
           </div>
         </div>
         <div class="font-weight-bold">
-          <div class="text-truncate">{{ $item['data']['comentario'] }}</div>
-          <div class="small text-muted">{{ $item['data']['de'] }} · {{ $item['data']['contacto'] }}</div>
+          <div class="text-truncate">{{ $item['data']['mssg'] }}</div>
+          <div class="small text-muted">{{ $item['data']['from'] }} · {{ $item['data']['to'] }}</div>
         </div>
       </a>
     @endforeach

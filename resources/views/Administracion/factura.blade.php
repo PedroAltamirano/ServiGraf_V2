@@ -181,7 +181,7 @@
                       @endforeach
                     </select>
                     <label class="mr-2" for="ret_iva">%:</label>
-                    <input type="number" class="form-control form-control-sm text-right fixFloat"
+                    <input type="number" class="form-control form-control-sm text-right fixFloat w-25"
                       value="{{ old('ret_iva', $factura->ret_iva) ?? '0.00' }}" name="ret_iva" id="ret_iva" readonly>
                   </div>
                   <div class="form-group col form-inline d-flex justify-content-end">
@@ -194,7 +194,7 @@
                       @endforeach
                     </select>
                     <label class="mr-2" for="ret_fnt">%:</label>
-                    <input type="number" class="form-control form-control-sm text-right fixFloat"
+                    <input type="number" class="form-control form-control-sm text-right fixFloat w-25"
                       value="{{ old('ret_fuente', $factura->ret_fuente) ?? '0.00' }}" name="ret_fuente" id="ret_fnt"
                       readonly>
                   </div>
