@@ -21,7 +21,7 @@ class Factura extends Model
   ];
 
   public $attributes = [
-    'tipo' => 1
+    'tipo' => 1, 'estado' => 1,
   ];
 
   public function cliente()

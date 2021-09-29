@@ -14,7 +14,7 @@ class Proceso extends Model
   protected $table = 'procesos';
 
   public $attributes = [
-    'tipo' => 0, 'seguimiento' => 0, 'meta' => 0.00
+    'tipo' => 0, 'seguimiento' => 0, 'meta' => 0.00, 'tipo' => 1,
   ];
 
   protected $fillable = [

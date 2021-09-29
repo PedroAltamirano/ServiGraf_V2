@@ -78,24 +78,29 @@
           <div class="col-6 col-md form-group">
             <label for="tipo">Tipo</label>
             <select name="tipo" id="tipo" class="form-control form-control-sm refresh">
-              <option value="1" {{ old('tipo', $factura->tipo) == 1 ? 'selected' : '' }}>Ingreso</option>
-              <option value="0" {{ old('tipo', $factura->tipo) == 0 ? 'selected' : '' }}>Egreso</option>
+              @foreach (config('factura.tipo') as $key => $val)
+                <option value="{{ $key }}" {{ old('tipo', $factura->tipo) == $key ? 'selected' : '' }}>
+                  {{ $val }}</option>
+              @endforeach
             </select>
           </div>
           <div class="col-6 col-md form-group">
             <label for="tipo_pago">Pago</label>
             <select class="form-control form-control-sm refresh" name="tipo_pago" id="tipo_pago">
-              <option value="1" {{ old('tipo_pago', $factura->tipo_pago) == 1 ? 'selected' : '' }}>Efectivo</option>
-              <option value="2" {{ old('tipo_pago', $factura->tipo_pago) == 2 ? 'selected' : '' }}>Cheque</option>
-              <option value="3" {{ old('tipo_pago', $factura->tipo_pago) == 3 ? 'selected' : '' }}>Canje</option>
+              @foreach (config('factura.tipo_pago') as $key => $val)
+                <option value="{{ $key }}"
+                  {{ old('tipo_pago', $factura->tipo_pago) == $key ? 'selected' : '' }}>
+                  {{ $val }}</option>
+              @endforeach
             </select>
           </div>
           <div class="col-6 col-md form-group">
             <label for="estado">Estado</label>
             <select name="estado" id="estado" class="form-control form-control-sm refresh">
-              <option value="1" {{ old('estado', $factura->estado) == 1 ? 'selected' : '' }}>Pendiente</option>
-              <option value="0" {{ old('estado', $factura->estado) == 0 ? 'selected' : '' }}>Pagado</option>
-              <option value="2" {{ old('estado', $factura->estado) == 2 ? 'selected' : '' }}>Anulado</option>
+              @foreach (config('factura.estado') as $key => $val)
+                <option value="{{ $key }}" {{ old('estado', $factura->estado) == $key ? 'selected' : '' }}>
+                  {{ $val }}</option>
+              @endforeach
             </select>
           </div>
         </div>

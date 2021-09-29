@@ -2,12 +2,12 @@
 
 @section('desktop-content')
   <x-path :items="[
-      [
-        'text' => 'Facturación',
-        'current' => true,
-        'href' => route('facturacion'),
-      ]
-    ]" />
+                    [
+                      'text' => 'Facturación',
+                      'current' => true,
+                      'href' => route('facturacion'),
+                    ]
+                  ]" />
 
   <x-filters :clientes="$clientes" cob=0>
     <div class="col-6 col-md form-group">
@@ -22,23 +22,24 @@
       <label for="tipo">Tipo</label>
       <select name="tipo" id="tipo" class="form-control form-control-sm refresh">
         <option value="none" selected>Todo</option>
-        <option value="1">Ingreso</option>
-        <option value="0">Egreso</option>
+        @foreach (config('factura.tipo') as $key => $val)
+          <option value="{{ $key }}">{{ $val }}</option>
+        @endforeach
       </select>
     </div>
     <div class="col-6 col-md form-group">
       <label for="estado">Estado</label>
       <select name="estado" id="estado" class="form-control form-control-sm refresh">
         <option value="none" selected>Todo</option>
-        <option value="1">Pendiente</option>
-        <option value="0">Pagado</option>
+        @foreach (config('factura.estado') as $key => $val)
+          <option value="{{ $key }}">{{ $val }}</option>
+        @endforeach
       </select>
     </div>
   </x-filters>
 
-  <x-blue-board title='Facturas' :foot="[
-      ['text'=>'Nueva', 'href'=>route('factura.create'), 'id'=>'nuevo', 'tipo'=>'link']
-    ]">
+  <x-blue-board title='Facturas'
+    :foot="[ ['text'=>'Nueva', 'href'=>route('factura.create'), 'id'=>'nuevo', 'tipo'=>'link'] ]">
     <table id="table" class="table table-striped table-sm">
       <thead>
         <tr>
