@@ -9,8 +9,7 @@ use App\Models\Administracion\Factura;
 
 class FactProd extends Model
 {
-  use SoftDeletes;
-
+  // use SoftDeletes;
 
   protected $table = 'fact_prods';
 

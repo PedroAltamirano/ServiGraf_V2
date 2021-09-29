@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class FacturaPedido extends Pivot
 {
-  use HasFactory, SoftDeletes;
+  // use HasFactory, SoftDeletes;
 
   protected $table = 'factura_ots';
 

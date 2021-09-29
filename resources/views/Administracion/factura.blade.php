@@ -304,6 +304,7 @@
           $old_productos[] = $model;
       }
   }
+  // dd($old_productos);
   @endphp
 @endsection
 

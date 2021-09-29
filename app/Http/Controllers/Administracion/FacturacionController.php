@@ -162,19 +162,19 @@ class FacturacionController extends Controller
       $relation->delete();
     }
 
-    if (!isset($request['articulo']['cantidad'])) {
+    if (!isset($request['articulo_cantidad'])) {
       return 0;
     }
 
-    $cnt = count($request['articulo']['cantidad'] ?? []);
+    $cnt = count($request['articulo_cantidad'] ?? []);
     for ($i = 0; $i < $cnt; $i++) {
       $prod = new FactProd();
       $prod->factura_id = $model->id;
-      $prod->cantidad = $request['articulo']['cantidad'][$i];
-      $prod->detalle = $request['articulo']['detalle'][$i];
-      $prod->iva_id = $request['articulo']['iva_id'][$i];
-      $prod->valor_unitario = $request['articulo']['valor_unitario'][$i];
-      $prod->subtotal = $request['articulo']['subtotal'][$i];
+      $prod->cantidad = $request['articulo_cantidad'][$i];
+      $prod->detalle = $request['articulo_detalle'][$i];
+      $prod->iva_id = $request['articulo_iva_id'][$i];
+      $prod->valor_unitario = $request['articulo_valor_unitario'][$i];
+      $prod->subtotal = $request['articulo_subtotal'][$i];
       $prod->save();
     }
   }
