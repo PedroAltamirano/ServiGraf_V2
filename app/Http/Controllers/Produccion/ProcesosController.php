@@ -34,7 +34,7 @@ class ProcesosController extends Controller
   public function show()
   {
     $areas = Area::where('empresa_id', Auth::user()->empresa_id)->orderBy('orden')->get();
-    $procesos = Proceso::where('empresa_id', Auth::user()->empresa_id)->get();
+    $procesos = Proceso::where('empresa_id', Auth::user()->empresa_id)->with(['area', 'parent'])->get();
     return view('Produccion/procesos', compact('areas', 'procesos'));
   }
 

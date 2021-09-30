@@ -121,7 +121,7 @@ class Pedido extends Model
       if ($fecha) {
         $query->whereBetween('fecha_entrada', [date('Y-m-01', strtotime($fecha)), date('Y-m-t', strtotime($fecha))]);
       }
-    })->get();
+    })->with('cliente')->get();
   }
 
   /*

@@ -3,16 +3,16 @@
 @section('desktop-content')
 
   <x-path :items="[
-                          [
-                            'text' => 'Empresas de Facturación',
-                            'current' => true,
-                            'href' => '#',
-                          ]
-                        ]" />
+                              [
+                                'text' => 'Empresas de Facturación',
+                                'current' => true,
+                                'href' => '#',
+                              ]
+                            ]" />
 
   <x-blue-board title='Facturas' :foot="[
-                          ['text'=>'Nueva', 'href'=>'#modalFactura', 'id'=>'newFactura', 'tipo'=>'modal'],
-                        ]">
+                              ['text'=>'Nueva', 'href'=>'#modalFactura', 'id'=>'newFactura', 'tipo'=>'modal'],
+                            ]">
     <table id="table" class="table table-striped table-sm">
       <thead>
         <tr>
@@ -32,7 +32,6 @@
         @foreach ($facturas as $item)
           @php
             $logo = $item->logo ? asset("empresa_logo/$item->logo") : asset('logos/logo.svg');
-            $class = $item->status ? 'text-success' : 'text-danger';
           @endphp
           <tr>
             <td>{{ $item->empresa }}</td>
@@ -46,7 +45,7 @@
             </td>
             <td class="text-center">{{ $item->impresion ? 'A4' : 'A5' }}</td>
             <td class="text-center">
-              <x-crud routeEdit="#modalFactura" :modalEdit="$item" :classEdit="$class" />
+              <x-crud routeEdit="#modalFactura" :modalEdit="$item" :status="$item->status" />
           </tr>
         @endforeach
       </tbody>

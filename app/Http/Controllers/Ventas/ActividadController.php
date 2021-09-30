@@ -24,7 +24,7 @@ class ActividadController extends Controller
    */
   public function index()
   {
-    $actividades = Actividad::where('empresa_id', Auth::user()->empresa_id)->get();
+    $actividades = Actividad::where('empresa_id', Auth::user()->empresa_id)->with('plantilla')->get();
     return view('Ventas.actividades', compact('actividades'));
   }
 

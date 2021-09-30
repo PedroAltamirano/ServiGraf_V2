@@ -47,7 +47,8 @@
       <tr>
         <td>{{ $item-> }}</td>
         <td>
-          <x-crud :routeSee="route('.show', $item->id)" :modalSee="$model" :routeEdit="route('.edit', $item->id)" :modalEdit="$model" :routeDelete="route('.delete', $item->id)" :textDelete="$item->nombre" />
+          <!-- TODO: modificar componente, de classSee/classEdit a status -->
+          <x-crud :status="$item->status" :routeSee="route('.show', $item->id)" :modalSee="$model" :routeEdit="route('.edit', $item->id)" :modalEdit="$model" :routeDelete="route('.delete', $item->id)" :textDelete="$item->nombre" />
         </td>
       </tr>
       @endforeach

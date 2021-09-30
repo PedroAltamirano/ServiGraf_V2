@@ -20,7 +20,7 @@ class Usuarios extends Component
   {
     $this->id = $id;
     $this->name = $name;
-    $this->usuarios = Usuario::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
+    $this->usuarios = Usuario::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->with('nomina')->get();
   }
 
   /**

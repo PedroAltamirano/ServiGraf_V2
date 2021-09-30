@@ -2,16 +2,16 @@
 
 @section('desktop-content')
   <x-path :items="[
-      [
-        'text' => 'CRM',
-        'current' => true,
-        'href' => '#',
-      ]
-    ]" />
+        [
+          'text' => 'CRM',
+          'current' => true,
+          'href' => '#',
+        ]
+      ]" />
 
   <x-blue-board title='Tareas' :foot="[
-      ['text'=>'Nueva', 'href'=>'#modalTarea', 'id'=>'newTarea', 'tipo'=>'modal'],
-    ]">
+        ['text'=>'Nueva', 'href'=>'#modalTarea', 'id'=>'newTarea', 'tipo'=>'modal'],
+      ]">
     @if ($atrasadas->count())
       <x-aditional-info text='Atrasadas' />
       <div class="table-responsive">

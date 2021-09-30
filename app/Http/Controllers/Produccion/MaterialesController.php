@@ -34,7 +34,7 @@ class MaterialesController extends Controller
    */
   public function show()
   {
-    $materiales = Material::where('empresa_id', Auth::user()->empresa_id)->get();
+    $materiales = Material::where('empresa_id', Auth::user()->empresa_id)->with('categoria')->get();
     $tintas = Tinta::where('empresa_id', Auth::user()->empresa_id)->get();
     $categorias = Categoria::where('empresa_id', Auth::user()->empresa_id)->get();
     return view('Produccion/materiales', compact('materiales', 'tintas', 'categorias'));

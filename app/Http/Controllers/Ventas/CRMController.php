@@ -26,6 +26,7 @@ class CRMController extends Controller
   {
     $query = CRM::where('empresa_id', Auth::user()->empresa_id)
       ->where('estado', 0)
+      ->with(['actividad', 'asignado', 'contacto'])
       ->where(function ($query) {
         $query->orWhere('creador_id', Auth::id());
         $query->orWhere('asignado_id', Auth::id());

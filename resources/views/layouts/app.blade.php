@@ -27,7 +27,8 @@
   @include('layouts._header')
 
   <div id="wrapper">
-    @include('layouts._sidebar')
+    {{-- @include('layouts._sidebar') --}}
+    <x-sidebar />
 
     <div id="content-wrapper" class="d-flex flex-column p-0 m-0">
       <main id="content" style="padding:0 0 40px 0;">

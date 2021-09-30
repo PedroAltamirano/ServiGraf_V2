@@ -1,17 +1,18 @@
 @extends('layouts.app')
 
 @section('desktop-content')
+  <!-- TODO: formatear x-path component -->
   <x-path :items="[
-      [
-        'text' => 'Plantillas',
-        'current' => true,
-        'href' => '#',
-      ]
-    ]" />
+          [
+            'text' => 'Plantillas',
+            'current' => true,
+            'href' => '#',
+          ]
+        ]" />
 
   <x-blue-board title='Plantillas' :foot="[
-      ['text' => 'Nueva', 'href' => route('plantilla.create'), 'id' => 'nueva', 'tipo' => 'link'],
-    ]">
+          ['text' => 'Nueva', 'href' => route('plantilla.create'), 'id' => 'nueva', 'tipo' => 'link'],
+        ]">
     <table id="table" class="table table-striped table-sm">
       <thead>
         <tr>
