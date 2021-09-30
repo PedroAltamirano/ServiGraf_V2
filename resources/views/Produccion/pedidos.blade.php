@@ -1,17 +1,10 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[
-        [
-          'text' => 'Pedidos',
-          'current' => true,
-          'href' => route('pedidos'),
-        ]
-      ]" />
+  <x-path :items="[ ['text' => 'Pedidos', 'current' => true, 'href' => route('pedidos')] ]" />
 
-  <x-blue-board title='Pendientes' :foot="[
-        ['text'=>'Nuevo', 'href'=>route('pedido.create'), 'id'=>'nuevo', 'tipo'=>'link'],
-      ]">
+  <x-blue-board title='Pendientes'
+    :foot="[ ['text'=>'Nuevo', 'href'=>route('pedido.create'), 'id'=>'nuevo', 'tipo'=>'link'] ]">
     <table id="table" class="table table-striped table-sm">
       <thead>
         <tr>

@@ -1,13 +1,7 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[
-                    [
-                      'text' => 'Facturación',
-                      'current' => true,
-                      'href' => route('facturacion'),
-                    ]
-                  ]" />
+  <x-path :items="[ ['text' => 'Facturación', 'current' => true, 'href' => route('facturacion')] ]" />
 
   <x-filters :clientes="$clientes" cob=0>
     <div class="col-6 col-md form-group">

@@ -1,23 +1,11 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[
-      [
-        'text' => 'Contactos',
-        'current' => false,
-        'href' => route('contacto'),
-      ],
-      [
-        'text' => $contacto->full_name,
-        'current' => true,
-        'href' => '#',
-      ]
-    ]" />
+  <x-path
+    :items="[ ['text' => 'Contactos', 'current' => false, 'href' => route('contacto')], ['text' => $contacto->full_name, 'current' => true, 'href' => '#'] ]" />
 
-  <x-blue-board title='Contacto' :foot="[
-      ['text' => 'Nueva Tarea', 'href' => '#modalTarea', 'id' => 'newTarea', 'tipo' => 'modal'],
-      ['text' => 'Nuevo Comentario', 'href' => '#modalComentario', 'id' => 'newComentario', 'tipo' => 'modal'],
-    ]">
+  <x-blue-board title='Contacto'
+    :foot="[ ['text' => 'Nueva Tarea', 'href' => '#modalTarea', 'id' => 'newTarea', 'tipo' => 'modal'], ['text' => 'Nuevo Comentario', 'href' => '#modalComentario', 'id' => 'newComentario', 'tipo' => 'modal'] ]">
     @include('Ventas._contacto')
 
     <nav>

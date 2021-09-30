@@ -1,22 +1,11 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[
-                [
-                  'text' => 'Perfiles',
-                  'current' => false,
-                  'href' => route('perfiles'),
-                ],
-                [
-                  'text' => $text,
-                  'current' => true,
-                  'href' => $path,
-                ]
-              ]" />
+  <x-path
+    :items="[ ['text' => 'Perfiles', 'current' => false, 'href' => route('perfiles')], ['text' => $text, 'current' => true, 'href' => $path] ]" />
 
-  <x-blue-board title='{{ $text }}' :foot="[
-                ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=>'link']
-              ]">
+  <x-blue-board title='{{ $text }}'
+    :foot="[ ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=>'link'] ]">
     <form action='{{ $path }}' method="POST" id="form">
       @csrf
       @method($method)

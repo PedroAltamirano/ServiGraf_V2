@@ -2,17 +2,10 @@
 
 @section('desktop-content')
 
-  <x-path :items="[
-                              [
-                                'text' => 'Empresas de Facturación',
-                                'current' => true,
-                                'href' => '#',
-                              ]
-                            ]" />
+  <x-path :items="[ ['text' => 'Empresas de Facturación', 'current' => true, 'href' => '#'] ]" />
 
-  <x-blue-board title='Facturas' :foot="[
-                              ['text'=>'Nueva', 'href'=>'#modalFactura', 'id'=>'newFactura', 'tipo'=>'modal'],
-                            ]">
+  <x-blue-board title='Facturas'
+    :foot="[ ['text'=>'Nueva', 'href'=>'#modalFactura', 'id'=>'newFactura', 'tipo'=>'modal'] ]">
     <table id="table" class="table table-striped table-sm">
       <thead>
         <tr>

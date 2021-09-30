@@ -1,17 +1,9 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[
-      [
-        'text' => 'Procesos',
-        'current' => true,
-        'href' => route('procesos'),
-      ]
-    ]" />
+  <x-path :items="[ ['text' => 'Procesos', 'current' => true, 'href' => route('procesos')] ]" />
 
-  <x-blue-board title='Áreas' :foot="[
-      ['text'=>'Nueva', 'href'=>'#modalArea', 'id'=>'newArea', 'tipo'=>'modal'],
-    ]">
+  <x-blue-board title='Áreas' :foot="[ ['text'=>'Nueva', 'href'=>'#modalArea', 'id'=>'newArea', 'tipo'=>'modal'] ]">
     <div class="row">
       @foreach ($areas as $item)
         <div class="col-6 col-md-2">
@@ -23,9 +15,8 @@
     </div>
   </x-blue-board>
 
-  <x-blue-board title='Procesos' :foot="[
-      ['text'=>'Nuevo', 'href'=>route('proceso.create'), 'id'=>'nuevo', 'tipo'=>'link'],
-    ]">
+  <x-blue-board title='Procesos'
+    :foot="[ ['text'=>'Nuevo', 'href'=>route('proceso.create'), 'id'=>'nuevo', 'tipo'=>'link'] ]">
     <table id="tableProcesos" class="table table-striped table-sm">
       <thead>
         <tr>

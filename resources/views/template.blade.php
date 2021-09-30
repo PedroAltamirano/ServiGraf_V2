@@ -4,29 +4,12 @@
 {{-- <x-errors />
 <x-fab /> --}}
 
-<x-path
-  :items="[
-    [
-      'text' => 'Libro Diario',
-      'current' => false,
-      'href' => route('libro'),
-    ],
-    [
-      'text' => 'Entrada',
-      'current' => true,
-      'href' => '#',
-    ]
-  ]"
+<x-path :items="[ ['text' => 'Libro Diario', 'current' => false, 'href' => route('libro')], ['text' => 'Entrada', 'current' => true, 'href' => '#'] ]"
 />
 
 <x-blue-board
   title='Áreas'
-  :foot="[
-    ['text' => 'Modal', 'href' => '#modalName', 'id' => 'newModal', 'tipo' => 'modal', 'condition' => ''],
-    ['text' => 'Nuevo', 'href' => route(''), 'id' => 'nuevo', 'tipo' => 'link'],
-    ['text' => $action, 'href' => '#', 'id' => 'formSubmit', 'tipo' => 'link'],
-    ['text' => 'fas fa-print', 'href' => '#', 'id' => 'mes', 'tipo' => 'button', 'print-target' => 'table'],
-  ]"
+  :foot="[ ['text' => 'Modal', 'href' => '#modalName', 'id' => 'newModal', 'tipo' => 'modal', 'condition' => ''], ['text' => 'Nuevo', 'href' => route(''), 'id' => 'nuevo', 'tipo' => 'link'], ['text' => $action, 'href' => '#', 'id' => 'formSubmit', 'tipo' => 'link'], ['text' => 'fas fa-print', 'href' => '#', 'id' => 'mes', 'tipo' => 'button', 'print-target' => 'table'] ]"
   class="d-print-none"
 >
   <form action="{{ $path }}" method="POST" id="form">

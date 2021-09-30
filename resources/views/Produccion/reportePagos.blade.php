@@ -1,24 +1,14 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[
-      [
-        'text' => 'Pedidos',
-        'current' => false,
-        'href' => route('pedidos'),
-      ],
-      [
-        'text' => 'Reporte de pagos',
-        'current' => true,
-        'href' => '#',
-      ]
-    ]"></x-path>
+  <x-path
+    :items="[ ['text' => 'Pedidos', 'current' => false, 'href' => route('pedidos')], ['text' => 'Reporte de pagos','current' => true,'href' => '#'] ]">
+  </x-path>
 
   <x-filters :clientes="$clientes" cob=0 />
 
-  <x-blue-board title='Reporte' :foot="[
-      ['text'=>'fas fa-print', 'href'=>'', 'id'=>'print', 'tipo'=>'button', 'print-target'=>'table'],
-    ]">
+  <x-blue-board title='Reporte'
+    :foot="[ ['text'=>'fas fa-print', 'href'=>'', 'id'=>'print', 'tipo'=>'button', 'print-target'=>'table'] ]">
     <table id="table" class="table table-striped table-sm">
       <thead>
         <tr>

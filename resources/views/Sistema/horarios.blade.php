@@ -1,17 +1,10 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[
-      [
-        'text' => 'Horarios',
-        'current' => true,
-        'href' => '#',
-      ]
-    ]" />
+  <x-path :items="[ ['text' => 'Horarios', 'current' => true, 'href' => '#'] ]" />
 
-  <x-blue-board title='Horarios' :foot="[
-      ['text'=>'Nuevo', 'href'=>'#modalHorario', 'id'=>'newHorario', 'tipo'=>'modal'],
-    ]">
+  <x-blue-board title='Horarios'
+    :foot="[ ['text'=>'Nuevo', 'href'=>'#modalHorario', 'id'=>'newHorario', 'tipo'=>'modal'] ]">
     <table id="table" class="table table-striped table-sm">
       <thead>
         <tr>

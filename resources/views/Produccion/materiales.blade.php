@@ -1,17 +1,9 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[
-      [
-        'text' => 'Materiales',
-        'current' => true,
-        'href' => route('materiales'),
-      ]
-    ]" />
+  <x-path :items="[ ['text' => 'Materiales', 'current' => true, 'href' => route('materiales')] ]" />
 
-  <x-blue-board title='Categorias' :foot="[
-      ['text'=>'Nuevo', 'href'=>'#modalCat', 'id'=>'nuevo', 'tipo'=>'modal'],
-    ]">
+  <x-blue-board title='Categorias' :foot="[ ['text'=>'Nuevo', 'href'=>'#modalCat', 'id'=>'nuevo', 'tipo'=>'modal'] ]">
     <div class="row">
       @foreach ($categorias as $item)
         <div class="col-6 col-md-2">
@@ -23,9 +15,8 @@
     </div>
   </x-blue-board>
 
-  <x-blue-board title='Papeleria' :foot="[
-      ['text'=>'Nuevo', 'href'=>route('material.create'), 'id'=>'nuevo', 'tipo'=>'link'],
-    ]">
+  <x-blue-board title='Papeleria'
+    :foot="[ ['text'=>'Nuevo', 'href'=>route('material.create'), 'id'=>'nuevo', 'tipo'=>'link'] ]">
     <table id="tableMat" class="table table-striped table-sm">
       <thead>
         <tr>
@@ -63,9 +54,7 @@
     </table>
   </x-blue-board>
 
-  <x-blue-board title='Tintas' :foot="[
-      ['text'=>'Nuevo', 'href'=>'#modalTinta', 'id'=>'nuevo', 'tipo'=>'modal'],
-    ]">
+  <x-blue-board title='Tintas' :foot="[ ['text'=>'Nuevo', 'href'=>'#modalTinta', 'id'=>'nuevo', 'tipo'=>'modal'] ]">
     <div class="row">
       @foreach ($tintas as $item)
         <div class="col-6 col-md-2">

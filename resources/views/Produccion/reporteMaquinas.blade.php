@@ -1,24 +1,14 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[
-      [
-        'text' => 'Pedidos',
-        'current' => false,
-        'href' => route('pedidos'),
-      ],
-      [
-        'text' => 'Reporte de maquinas',
-        'current' => true,
-        'href' => '#',
-      ]
-    ]"></x-path>
+  <x-path
+    :items="[ ['text' => 'Pedidos', 'current' => false, 'href' => route('pedidos')], ['text' => 'Reporte de maquinas', 'current' => true, 'href' => '#'] ]">
+  </x-path>
 
   <x-filters :clientes="[]" cli=0 />
 
-  <x-blue-board title='Reporte' :foot="[
-      ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'print', 'tipo'=>'button', 'print-target'=>'table'],
-    ]">
+  <x-blue-board title='Reporte'
+    :foot="[ ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'print', 'tipo'=>'button', 'print-target'=>'table'] ]">
     <table id="table" class="table table-striped table-sm">
       <thead>
         <tr>
@@ -95,7 +85,8 @@
           "data": "detalle"
         },
         @foreach ($procesos as $proceso)
-          {"name":`{{ 'serv' . $proceso->id }}`, "data":"procesos", "defaultContent": "", "render": (data, type, full, meta) =>
+          {"name":`{{ 'serv' . $proceso->id }}`, "data":"procesos", "defaultContent": "", "render": (data, type, full, meta)
+          =>
           {
           let proceso = data.find(record => record.proceso_id == `{{ $proceso->id }}`);
           return proceso ? proceso.totalProceso : '';
@@ -153,8 +144,10 @@
         $("#clmtotal").html(totTotal.toFixed(4));
 
         @foreach ($procesos as $proceso)
-          let {{ 'dataserv' . $proceso->id }} = api.column(`{{ 'serv' . $proceso->id }}:name`, {search: 'applied'}).cache('search');
-          let {{ 'totserv' . $proceso->id }} = {{ 'dataserv' . $proceso->id }}.length ? {{ 'dataserv' . $proceso->id }}.sum() : 0;
+          let {{ 'dataserv' . $proceso->id }} = api.column(`{{ 'serv' . $proceso->id }}:name`, {search:
+          'applied'}).cache('search');
+          let {{ 'totserv' . $proceso->id }} = {{ 'dataserv' . $proceso->id }}.length ?
+          {{ 'dataserv' . $proceso->id }}.sum() : 0;
           $(`#{{ 'serv' . $proceso->id }}`).html({{ 'totserv' . $proceso->id }}.toFixed(4));
         @endforeach
       }

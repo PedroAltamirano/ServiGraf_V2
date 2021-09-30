@@ -1,22 +1,11 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[
-      [
-        'text' => 'Libro Diario',
-        'current' => false,
-        'href' => route('libro'),
-      ],
-      [
-        'text' => 'Referencias y Bancos',
-        'current' => true,
-        'href' => '#',
-      ]
-    ]" />
+  <x-path
+    :items="[ ['text' => 'Libro Diario', 'current' => false, 'href' => route('libro')], ['text' => 'Referencias y Bancos', 'current' => true, 'href' => '#'] ]" />
 
-  <x-blue-board title='Referencias' :foot="[
-      ['text'=>'Nueva', 'href'=>'#modalReferencia', 'id'=>'newReferencia', 'tipo'=>'modal']
-    ]">
+  <x-blue-board title='Referencias'
+    :foot="[ ['text'=>'Nueva', 'href'=>'#modalReferencia', 'id'=>'newReferencia', 'tipo'=>'modal'] ]">
     <table id="tableReferencias" class="table table-striped table-sm">
       <thead>
         <tr>
@@ -39,9 +28,7 @@
     </table>
   </x-blue-board>
 
-  <x-blue-board title='Bancos' :foot="[
-      ['text'=>'Nuevo', 'href'=>'#modalBanco', 'id'=>'newBanco', 'tipo'=>'modal']
-    ]">
+  <x-blue-board title='Bancos' :foot="[ ['text'=>'Nuevo', 'href'=>'#modalBanco', 'id'=>'newBanco', 'tipo'=>'modal'] ]">
     <table id="tableBancos" class="table table-striped table-sm">
       <thead>
         <tr>

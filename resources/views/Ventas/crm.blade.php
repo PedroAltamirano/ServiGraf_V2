@@ -1,17 +1,9 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[
-        [
-          'text' => 'CRM',
-          'current' => true,
-          'href' => '#',
-        ]
-      ]" />
+  <x-path :items="[ ['text' => 'CRM', 'current' => true, 'href' => '#'] ]" />
 
-  <x-blue-board title='Tareas' :foot="[
-        ['text'=>'Nueva', 'href'=>'#modalTarea', 'id'=>'newTarea', 'tipo'=>'modal'],
-      ]">
+  <x-blue-board title='Tareas' :foot="[ ['text'=>'Nueva', 'href'=>'#modalTarea', 'id'=>'newTarea', 'tipo'=>'modal'] ]">
     @if ($atrasadas->count())
       <x-aditional-info text='Atrasadas' />
       <div class="table-responsive">

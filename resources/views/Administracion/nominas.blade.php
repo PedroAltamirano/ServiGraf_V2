@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[ ['text' => 'Nomina', 'current' => true, 'href' => '#', ] ]" />
+  <x-path :items="[ ['text' => 'Nomina', 'current' => true, 'href' => '#'] ]" />
 
   <x-blue-board title='Nomina'
     :foot="[ ['text'=>'Nuevo', 'href'=>route('nomina.create'), 'id'=>'nuevo', 'tipo'=>'link'] ]">
@@ -38,7 +38,7 @@
   </x-blue-board>
 
   <x-blue-board title='Dotación'
-    :foot="[ ['text'=>'Nueva', 'href'=>'#modalDotacion', 'id'=>'newArea', 'tipo'=>'modal'], ]">
+    :foot="[ ['text'=>'Nueva', 'href'=>'#modalDotacion', 'id'=>'newArea', 'tipo'=>'modal'] ]">
     <div class="row">
       @foreach ($dotacion as $item)
         <div class="col-6 col-md-2">

@@ -1,13 +1,7 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[
-        [
-          'text' => 'Libro Diario',
-          'current' => true,
-          'href' => '#',
-        ]
-      ]" />
+  <x-path :items="[ ['text' => 'Libro Diario', 'current' => true, 'href' => '#'] ]" />
 
   <x-filters :clientes="[]" cli=0 cob=0>
     <div class="col-12 col-md form-group">
@@ -28,11 +22,8 @@
     </div>
   </x-filters>
 
-  <x-blue-board title='Flujo de activos' :foot="[
-        ['text'=>'Nueva Entrada', 'href'=>route('entrada.create'), 'id'=>'newEntrada', 'tipo'=>'link'],
-        ['text'=>'Nuevo Libro', 'href'=>'#modalLibro', 'id'=>'modal-libro', 'tipo'=>'modal'],
-        ['text'=>'Referencias y Bancos', 'href'=>route('referencias-bancos'), 'id'=>'referencias_bancos', 'tipo'=>'link']
-      ]">
+  <x-blue-board title='Flujo de activos'
+    :foot="[ ['text'=>'Nueva Entrada', 'href'=>route('entrada.create'), 'id'=>'newEntrada', 'tipo'=>'link'], ['text'=>'Nuevo Libro', 'href'=>'#modalLibro', 'id'=>'modal-libro', 'tipo'=>'modal'], ['text'=>'Referencias y Bancos', 'href'=>route('referencias-bancos'), 'id'=>'referencias_bancos', 'tipo'=>'link'] ]">
     <table id="table" class="table table-striped table-sm">
       <thead>
         <tr>
