@@ -127,17 +127,32 @@
               <td colspan="3"></td>
               <td colspan="2" class="text-right">Subtotal $</td>
               <td><input type="number" name="subtotal" id="subtotal"
-                  value="{{ old('subtotal', $factura->total_articulo) ?? '0.00' }}"
+                  value="{{ old('subtotal', $factura->subtotal) ?? '0.00' }}"
                   class="form-control form-control-sm text-right fixFloat" readonly></td>
             </tr>
             <tr class="font-weight-bold">
               <td colspan="3"></td>
-              <td colspan="2" class="text-right">Descuento <input type="number" id="descuento_p" name="descuento_p"
-                  value="0" class="form-control form-control-sm w-25" style="display:inline!important" min="0" max="100"
-                  onclick="sumartotal()"> $</td>
-              <td><input type="number" name="descuento" id="descuento"
+              <td colspan="2" class="text-right">
+                <div class="d-flex justify-content-end">
+                  Descuento
+                  <div class="w-40 mx-2">
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">%</span>
+                      </div>
+                      <input type="number" id="descuento_p" name="descuento_p" class="form-control form-control-sm"
+                        style="display:inline!important" min="0" max="100" onclick="sumartotal()"
+                        value="{{ old('descuento_p', $factura->descuento_p) ?? '0' }}">
+                    </div>
+                  </div>
+                  $
+                </div>
+              </td>
+              <td>
+                <input type="number" name="descuento" id="descuento"
                   value="{{ old('descuento', $factura->descuento) ?? '0.00' }}"
-                  class="form-control form-control-sm text-right fixFloat" readonly></td>
+                  class="form-control form-control-sm text-right fixFloat" readonly>
+              </td>
             </tr>
             <tr class="font-weight-bold">
               <td colspan="3"></td>

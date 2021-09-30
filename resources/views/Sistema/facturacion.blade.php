@@ -3,16 +3,16 @@
 @section('desktop-content')
 
   <x-path :items="[
-      [
-        'text' => 'Empresas de Facturación',
-        'current' => true,
-        'href' => '#',
-      ]
-    ]" />
+                          [
+                            'text' => 'Empresas de Facturación',
+                            'current' => true,
+                            'href' => '#',
+                          ]
+                        ]" />
 
   <x-blue-board title='Facturas' :foot="[
-      ['text'=>'Nueva', 'href'=>'#modalFactura', 'id'=>'newFactura', 'tipo'=>'modal'],
-    ]">
+                          ['text'=>'Nueva', 'href'=>'#modalFactura', 'id'=>'newFactura', 'tipo'=>'modal'],
+                        ]">
     <table id="table" class="table table-striped table-sm">
       <thead>
         <tr>
@@ -55,42 +55,35 @@
     </table>
   </x-blue-board>
 
-  <x-blue-board title='Ivas' :foot="[
-      ['text'=>'Nuevo', 'href'=>'#modalIva', 'id'=>'newIva', 'tipo'=>'modal'],
-    ]">
+  <x-blue-board title='Ivas' :foot="[ ['text'=>'Nuevo', 'href'=>'#modalIva', 'id'=>'newIva', 'tipo'=>'modal'] ]">
     <div class="row">
       @foreach ($ivas as $item)
         <div class="col-6 col-md-2">
-          <x-crud routeEdit="#modalIva" :modalEdit="$item" :classEdit="$item->status ? 'text-success' : 'text-danger'" />
+          <x-crud routeEdit="#modalIva" :modalEdit="$item" :status="$item->status" />
           &nbsp;&nbsp;{{ $item->porcentaje }}
         </div>
       @endforeach
     </div>
   </x-blue-board>
 
-  <x-blue-board title='Retenciones Iva' :foot="[
-      ['text'=>'Nueva', 'href'=>'#modalRetencion', 'id'=>'newRetencionIva', 'tipo'=>'modal'],
-    ]">
+  <x-blue-board title='Retenciones Iva'
+    :foot="[ ['text'=>'Nueva', 'href'=>'#modalRetencion', 'id'=>'newRetencionIva', 'tipo'=>'modal'] ]">
     <div class="row">
       @foreach ($ret_iva as $item)
         <div class="col-6 col-md-2">
-          <x-crud routeEdit="#modalRetencion" :modalEdit="$item"
-            :classEdit="$item->status ? 'text-success' : 'text-danger'" />
-
+          <x-crud routeEdit="#modalRetencion" :modalEdit="$item" :status="$item->status" />
           &nbsp;&nbsp;{{ $item->porcentaje }}
         </div>
       @endforeach
     </div>
   </x-blue-board>
 
-  <x-blue-board title='Retenciones Fuente' :foot="[
-      ['text'=>'Nueva', 'href'=>'#modalRetencion', 'id'=>'newRetencionFnt', 'tipo'=>'modal'],
-    ]">
+  <x-blue-board title='Retenciones Fuente'
+    :foot="[ ['text'=>'Nueva', 'href'=>'#modalRetencion', 'id'=>'newRetencionFnt', 'tipo'=>'modal'] ]">
     <div class="row">
       @foreach ($ret_fnt as $item)
         <div class="col-6 col-md-2">
-          <x-crud routeEdit="#modalRetencion" :modalEdit="$item"
-            :classEdit="$item->status ? 'text-success' : 'text-danger'" />
+          <x-crud routeEdit="#modalRetencion" :modalEdit="$item" :status="$item->status" />
           &nbsp;&nbsp;{{ $item->porcentaje }}
         </div>
       @endforeach

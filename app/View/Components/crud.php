@@ -9,10 +9,8 @@ class Crud extends Component
   public $status;
   public $routeSee;
   public $modalSee;
-  public $classSee;
   public $routeEdit;
   public $modalEdit;
-  public $classEdit;
   public $routeDelete;
   public $textDelete;
   /**
@@ -20,15 +18,13 @@ class Crud extends Component
    *
    * @return void
    */
-  public function __construct($status = 1, $routeSee = '#', $modalSee = null, $classSee = '', $routeEdit = '#', $modalEdit = null, $classEdit = '', $routeDelete = '#', $textDelete = '')
+  public function __construct($status = 1, $routeSee = '#', $modalSee = null, $routeEdit = '#', $modalEdit = null, $routeDelete = '#', $textDelete = '')
   {
     $this->status = $status;
     $this->routeSee = $routeSee;
     $this->modalSee = $modalSee;
-    $this->classSee = $classSee;
     $this->routeEdit = $routeEdit;
     $this->modalEdit = $modalEdit;
-    $this->classEdit = $classEdit;
     $this->routeDelete = $routeDelete;
     $this->textDelete = $textDelete;
   }
