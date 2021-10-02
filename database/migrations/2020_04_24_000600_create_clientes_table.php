@@ -22,6 +22,7 @@ class CreateClientesTable extends Migration
       $table->foreignId('contacto_id')->constrained('contactos')->onDelete('cascade');
       $table->foreignId('cliente_empresa_id')->constrained('cliente_empresas')->onDelete('cascade');
       $table->boolean('seguimiento')->default(0);
+      $table->unsignedTinyInt('tipo_contribuyente');
       $table->timestamps();
       $table->softDeletes();
     });

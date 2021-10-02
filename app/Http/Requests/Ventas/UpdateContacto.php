@@ -39,8 +39,9 @@ class UpdateContacto extends FormRequest
       'celular' => ['nullable', 'numeric', 'required_if:telefono,null'],
       'email' => ['required', 'email'],
       'web' => ['nullable', 'url'],
-      'seguimiento' => ['nullable', 'boolean'],
       'isCliente' => ['nullable', 'boolean'],
+      'tipo_contribuyente' => ['required', 'numeric'],
+      'seguimiento' => ['nullable', 'boolean'],
     ];
   }
 }

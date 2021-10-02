@@ -43,24 +43,24 @@ class ContactoController extends Controller
 
   public function store(StoreContacto $request)
   {
-    $validator = $request->validated();
-    $validator['empresa_id'] = Auth::user()->empresa_id;
-    $ex = Cliente_empresa::where('ruc', $validator['ruc']);
+    $validated = $request->validated();
+    $validated['empresa_id'] = Auth::user()->empresa_id;
+    $ex = Cliente_empresa::where('ruc', $validated['ruc']);
     if ($ex->exists()) {
       $cli_empresa = $ex->first();
     } else {
-      $cli_empresa = Cliente_empresa::create(['nombre' => $validator['empresa'], 'ruc' => $validator['ruc'], 'empresa_id' => $validator['empresa_id'],]);
+      $cli_empresa = Cliente_empresa::create(['nombre' => $validated['empresa'], 'ruc' => $validated['ruc'], 'empresa_id' => $validated['empresa_id'],]);
     }
-    $validator['usuario_id'] = Auth::id();
-    $validator['cliente_empresa_id'] = $cli_empresa->id;
+    $validated['usuario_id'] = Auth::id();
+    $validated['cliente_empresa_id'] = $cli_empresa->id;
 
     DB::beginTransaction();
     try {
-      if ($contacto = Contacto::create(Arr::except($validator, ['empresa', 'ruc', 'isCliente', 'seguimento']))) {
+      if ($contacto = Contacto::create(Arr::except($validated, ['empresa', 'ruc', 'isCliente', 'seguimento']))) {
         $mssg = 'Contacto creado con éxito';
-        if (isset($validator['isCliente'])) {
-          $validator['contacto_id'] = $contacto->id;
-          $cliente = Cliente::create(Arr::only($validator, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimento']));
+        if (isset($validated['isCliente'])) {
+          $validated['contacto_id'] = $contacto->id;
+          $cliente = Cliente::create(Arr::only($validated, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimento']));
           $mssg = 'Cliente creado con éxito';
         }
 
@@ -93,6 +93,50 @@ class ContactoController extends Controller
     //   'action' => 'Modificar',
     // ];
     // return view('Ventas.contacto', compact('contacto'))->with($data);
+  }
+
+  public function update(UpdateContacto $request, Contacto $contacto)
+  {
+    $validated = $request->validated();
+
+    $ex = Cliente_empresa::where('ruc', $validated['ruc']);
+    if ($ex->exists()) {
+      $cli_empresa = $ex->first();
+      $cli_empresa->update(Arr::only($validated, ['empresa', 'ruc']));
+    }
+    $validated['cliente_empresa_id'] = $cli_empresa->id;
+
+    DB::beginTransaction();
+    try {
+      if ($contacto->update(Arr::except($validated, ['empresa', 'ruc', 'isCliente', 'seguimento']))) {
+        $mssg = 'Contacto creado con éxito';
+        $cliente = $contacto->cliente;
+        if (isset($validated['isCliente'])) {
+          $validated['contacto_id'] = $contacto->id;
+          if ($cliente->count()) {
+            $cliente->update(Arr::only($validated, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimento']));
+            $mssg = 'Cliente modificado con éxito';
+          } else {
+            $cliente = Cliente::create(Arr::only($validated, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimento']));
+            $mssg = 'Cliente creado con éxito';
+          }
+        } else {
+          if ($cliente->count()) {
+            $cliente->delete();
+            $mssg = 'Cliente eliminado con éxito';
+          }
+        }
+
+        DB::commit();
+        Alert::success('Acción completada', $mssg);
+        return redirect()->back();
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Contacto no modificado');
+      return redirect()->back();
+    }
   }
 
   public function info(Request $request)

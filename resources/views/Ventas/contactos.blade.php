@@ -57,7 +57,7 @@
       let modal = $(event.target);
 
       let path = data ? routeEdit.replace('/0', `/${data.id}`) : routeStore;
-      modal.find('#tareaForm').attr('action', path);
+      modal.find('#contactoForm').attr('action', path);
       modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
       modal.find(".submitbtn").html(data ? 'Modificar' : 'Crear');
 

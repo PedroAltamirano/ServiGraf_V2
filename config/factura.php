@@ -16,4 +16,8 @@ return [
     3 => 'Anulado',
     4 => 'Canje',
   ],
+  'tipo_contribuyente' => [
+    1 => 'Persona natural',
+    2 => 'Persona juridica',
+  ],
 ];

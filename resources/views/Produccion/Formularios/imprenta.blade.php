@@ -31,7 +31,7 @@ $oldTintasRetiro =
       </div>
     </div>
     <div class="form-group col-8 col-md-4">
-      <label for="papel">Papel</label>
+      <label for="papel">Material</label>
       <textarea class="form-control form-control-sm" name="papel" id="papel"
         rows="1">{{ old('papel', $pedido->papel) }}</textarea>
     </div>
@@ -43,7 +43,7 @@ $oldTintasRetiro =
   </div>
   <div class="form-row">
     <div class="form-group col-6 col-md-3 order-1">
-      <label for="corte">Corte Final</label>
+      <label for="corte">Tamaño Final</label>
       <div class="form-row" id="corte">
         <div class="col-6">
           <input type="number" name="corte_ancho" id="corte_ancho" class="form-control form-control-sm fixFloat"
