@@ -20,8 +20,8 @@ class CreateMaterialsTable extends Migration
       $table->string('descripcion');
       $table->foreignId('categoria_id')->constrained('categorias')->onDelete('cascade');
       $table->boolean('color');
-      $table->unsignedDecimal('alto', 5, 2)->nullable();
-      $table->unsignedDecimal('ancho', 5, 2)->nullable();
+      $table->unsignedDecimal('alto', 8, 2)->nullable();
+      $table->unsignedDecimal('ancho', 8, 2)->nullable();
       $table->unsignedDecimal('precio', 5, 2)->nullable();
       $table->boolean('uv')->default(0);
       $table->boolean('plastificado')->default(0);

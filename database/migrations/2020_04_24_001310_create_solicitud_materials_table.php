@@ -20,8 +20,8 @@ class CreateSolicitudMaterialsTable extends Migration
       $table->foreignId('pedido_id')->constrained('pedidos')->onDelete('cascade');
       $table->foreignId('material_id')->constrained('materiales')->onDelete('cascade');
       $table->unsignedMediumInteger('cantidad');
-      $table->unsignedDecimal('corte_alto', 5, 2);
-      $table->unsignedDecimal('corte_ancho', 5, 2);
+      $table->unsignedDecimal('corte_alto', 8, 2);
+      $table->unsignedDecimal('corte_ancho', 8, 2);
       $table->unsignedMediumInteger('tamanos');
       $table->foreignId('proveedor_id')->constrained('proveedores')->onDelete('cascade');
       $table->unsignedMediumInteger('factura')->nullable();

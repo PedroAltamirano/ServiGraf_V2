@@ -36,8 +36,8 @@ class CreatePedidosTable extends Migration
       $table->string('detalle');
       $table->string('papel')->nullable();
       $table->unsignedMediumInteger('cantidad')->default(0);
-      $table->unsignedDecimal('corte_alto', 5, 2);
-      $table->unsignedDecimal('corte_ancho', 5, 2);
+      $table->unsignedDecimal('corte_alto', 8, 2);
+      $table->unsignedDecimal('corte_ancho', 8, 2);
       $table->unsignedInteger('numerado_inicio');
       $table->unsignedInteger('numerado_fin');
       $table->unsignedDecimal('total_material', 6, 2);
