@@ -21,7 +21,8 @@ class Cliente extends Model
   ];
 
   protected $fillable = [
-    'empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimiento'
+    'empresa_id', 'usuario_id', 'contacto_id',
+    'cliente_empresa_id', 'tipo_contribuyente', 'seguimiento'
   ];
 
   protected $hidden = [

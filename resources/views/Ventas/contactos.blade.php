@@ -78,8 +78,9 @@
       modal.find('#web').val(data ? data.web : '');
 
       let seguimiento = false;
-      if (data.cliente && data.cliente.seguimiento == '1') seguimiento = true;
-      modal.find('#isCliente').prop('checked', data.cliente ? true : false);
+      if (data?.cliente?.seguimiento == '1') seguimiento = true;
+      modal.find('#isCliente').prop('checked', data?.cliente ? true : false);
+      modal.find('#tipo_contribuyente').val(data?.cliente?.tipo_contribuyente ?? 1);
       modal.find('#seguimiento').prop('checked', seguimiento);
     });
   </script>

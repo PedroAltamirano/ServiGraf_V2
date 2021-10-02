@@ -88,7 +88,8 @@
     <select class="form-control" name="tipo_contribuyente" id="tipo_contribuyente">
       @foreach (config('factura.tipo_contribuyente') as $key => $val)
         <option value="{{ $key }}"
-          {{ old('tipo_contribuyente', $contacto->tipo_contribuyente) ? 'selected' : '' }}>{{ $val }}
+          {{ old('tipo_contribuyente', $contacto->tipo_contribuyente) == $key ? 'selected' : '' }}>
+          {{ $val }}
         </option>
       @endforeach
     </select>
@@ -96,7 +97,7 @@
   <div class="form-group col-6 col-md-2">
     <div class="form-check">
       <input type="checkbox" class="form-check-input @error('seguimiento') is-invalid @enderror" name="seguimiento"
-        id="seguimiento" value="0" {{ old('seguimiento', $contacto->seguimiento) ? 'checked' : '' }}>
+        id="seguimiento" value="1" {{ old('seguimiento', $contacto->seguimiento) ? 'checked' : '' }}>
       <label class="form-check-label" for="seguimiento">Seguimiento</label>
     </div>
   </div>

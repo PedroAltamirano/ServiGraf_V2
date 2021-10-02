@@ -60,7 +60,7 @@ class ContactoController extends Controller
         $mssg = 'Contacto creado con éxito';
         if (isset($validated['isCliente'])) {
           $validated['contacto_id'] = $contacto->id;
-          $cliente = Cliente::create(Arr::only($validated, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimento']));
+          $cliente = Cliente::create(Arr::only($validated, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'tipo_contribuyente', 'seguimiento']));
           $mssg = 'Cliente creado con éxito';
         }
 
@@ -114,10 +114,10 @@ class ContactoController extends Controller
         if (isset($validated['isCliente'])) {
           $validated['contacto_id'] = $contacto->id;
           if ($cliente->count()) {
-            $cliente->update(Arr::only($validated, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimento']));
+            $cliente->update(Arr::only($validated, ['cliente_empresa_id', 'tipo_contribuyente', 'seguimiento']));
             $mssg = 'Cliente modificado con éxito';
           } else {
-            $cliente = Cliente::create(Arr::only($validated, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'seguimento']));
+            $cliente = Cliente::create(Arr::only($validated, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'tipo_contribuyente', 'seguimiento']));
             $mssg = 'Cliente creado con éxito';
           }
         } else {
