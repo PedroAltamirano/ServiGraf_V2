@@ -28,15 +28,13 @@
       <thead>
         <tr>
           <th scope="col" class="w-10">Fecha</th>
-          <th scope="col" class="">Referencia</th>
-          <th scope=" col"
-            class="">Beneficiario</th>
-          <th scope=" col" class="w-20">Descripción</th>
-          <th scope="col" class="">Ingreso $</th>
-          <th scope=" col" class="">Egreso $</th>
-          <th scope="
-            col" class="">Saldo $</th>
-          <th scope=" col" class="w-2">Crud</th>
+          <th scope="col">Referencia</th>
+          <th scope="col">Beneficiario</th>
+          <th scope="col" class="w-20">Descripción</th>
+          <th scope="col">Ingreso $</th>
+          <th scope="col">Egreso $</th>
+          <th scope="col">Saldo $</th>
+          <th scope="col" class="w-2">Crud</th>
         </tr>
       </thead>
       <tbody>

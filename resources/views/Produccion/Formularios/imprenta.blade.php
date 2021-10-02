@@ -116,7 +116,7 @@ $oldTintasRetiro =
         <th scope="col" colspan="2" class="text-center">Corte</th>
         <th scope="col" class="text-center">Tamaños</th>
         <th scope="col" class="w-20">
-          <i data-toggle=" modal" data-target="#modalProveedor" class="fas fa-plus"></i> Proveedor
+          <i data-toggle="modal" data-target="#modalProveedor" class="fas fa-plus"></i> Proveedor
         </th>
         <th scope="col" class="text-center">Factura</th>
         <th scope="col" class="text-center">Total</th>
@@ -145,8 +145,8 @@ $oldTintasRetiro =
     <thead>
       <tr>
         <th scope="col" class="w-2"><i id="addProceso" class="fas fa-plus"></i></th>
-        <th scope="col" class="w-50""><b>Procesos</b></th>
-        <th scope=" col" class="text-center">T</th>
+        <th scope="col" class="w-50"><b>Procesos</b></th>
+        <th scope="col" class="text-center">T</th>
         <th scope="col" class="text-center">R</th>
         <th scope="col" class="text-center">Mill</th>
         <th scope="col" class="text-center">V/U</th>

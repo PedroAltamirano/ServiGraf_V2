@@ -20,7 +20,7 @@
             <select class="form-control" name="asignado_id" id="asignado_id">
               <option value="">Selecciona</option>
               @foreach ($usuarios as $item)
-              <option value="{{ $item->cedula }}">{{ $item->usuario }}</option>
+                <option value="{{ $item->cedula }}">{{ $item->usuario }}</option>
               @endforeach
             </select>
           </div>
@@ -40,22 +40,22 @@
 </div>
 
 @push('component-script')
-<script>
-  const routeStoreComentario = `{{ route('comentario.store') }}`;
-  const routeEditComentario = `{{ route('comentario.update', 0) }}`;
-  $('#modalComentario').on('show.bs.modal', event => {
-    let data = $(event.relatedTarget).data('modaldata');
-    let parent_id = $(event.relatedTarget).data('parent_id');
-    let modal = $(event.target);
+  <script>
+    const routeStoreComentario = `{{ route('comentario.store') }}`;
+    const routeEditComentario = `{{ route('comentario.update', 0) }}`;
+    $('#modalComentario').on('show.bs.modal', event => {
+      let data = $(event.relatedTarget).data('modaldata');
+      let parent_id = $(event.relatedTarget).data('parent_id');
+      let modal = $(event.target);
 
-    let path = data ? routeEditComentario.replace('/0', `/${data.id}`) : routeStoreComentario;
-    modal.find('#form').attr('action', path);
-    modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
-    modal.find(".submitbtn").html(data ? 'Modificar' : 'Crear');
+      let path = data ? routeEditComentario.replace('/0', `/${data.id}`) : routeStoreComentario;
+      modal.find('#form').attr('action', path);
+      modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
+      modal.find(".submitbtn").html(data ? 'Modificar' : 'Crear');
 
-    modal.find('#parent_id').val(data ? data.parent_id : parent_id);
-    modal.find('#asignado_id').val(data ? data.asignado_id : '').prop('disabled', (data ? 'disabled' : ''));
-    modal.find('#comentario').val(data ? data.comentario : '');
-  });
-</script>
+      modal.find('#parent_id').val(data ? data.parent_id : parent_id);
+      modal.find('#asignado_id').val(data ? data.asignado_id : '').prop('disabled', (data ? 'disabled' : ''));
+      modal.find('#comentario').val(data ? data.comentario : '');
+    });
+  </script>
 @endpush
