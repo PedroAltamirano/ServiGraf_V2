@@ -41,11 +41,13 @@
   </table>
 </x-blue-board>
 
+<x-cliente column='cliente_id' :old="old('cliente_id', $factura->cliente_id)" />
+
 <x-report :title="$cli->contacto->nombre.' '.$cli->contacto->apellido" :items="$items"></x-report>
 
 <x-add-contacto />
 
-<x-filters :clientes="$clientes" cli=1 cob=1>
+<x-filters cli=1 cob=1>
 
 <x-recibo />
 

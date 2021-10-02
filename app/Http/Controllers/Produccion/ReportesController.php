@@ -30,9 +30,8 @@ class ReportesController extends Controller
    */
   public function showPedidos()
   {
-    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
     $areas = Area::where('empresa_id', Auth::user()->empresa_id)->orderBy('orden')->get();
-    return view('Produccion.reportePedidos', compact('areas', 'clientes'));
+    return view('Produccion.reportePedidos', compact('areas'));
   }
 
   public static function ajaxPedidos(Request $request)
@@ -60,8 +59,7 @@ class ReportesController extends Controller
    */
   public function showPagos()
   {
-    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
-    return view('Produccion.reportePagos', compact('clientes'));
+    return view('Produccion.reportePagos');
   }
 
   public static function ajaxPagos(Request $request)

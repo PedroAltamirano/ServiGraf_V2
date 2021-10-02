@@ -20,23 +20,7 @@
         <hr>
         <div class="form-row">
           <div class="form-group col-12 col-md-3">
-            <label for="cliente">Cliente</label>
-            <select class="form-control form-control-sm select2Class @error('cliente_id') is-invalid @enderror"
-              name="cliente_id" id="cliente" data-tags="true">
-              <option disabled selected>Selecciona uno...</option>
-              {{ $group = $clientes->first()->cliente_empresa_id ?? 0 }}
-              <optgroup label="{{ $clientes->first()->empresa->nombre ?? 'Sin Clientes' }}">
-                @foreach ($clientes as $cli)
-                  @if ($group != $cli->cliente_empresa_id)
-                    {{ $group = $cli->cliente_empresa_id }}
-              <optgroup label="{{ $cli->empresa->nombre }}">
-                @endif
-                <option value="{{ $cli->id }}"
-                  {{ old('cliente_id', $factura->cliente_id) == $cli->id ? 'selected' : '' }}>
-                  {{ $cli->contacto->nombre . ' ' . $cli->contacto->apellido }}
-                </option>
-                @endforeach
-            </select>
+            <x-cliente column='cliente_id' :old="old('cliente_id', $factura->cliente_id)" />
           </div>
           <div class="form-group col-6 col-md-2">
             <label for="ruc">RUC</label>
@@ -334,9 +318,9 @@
     const fact_new = {{ $factura->id ?? 0 }};
 
     // const route = `{{ route('contacto.info') }}`;
-    const route = `{{ route('cliente.info') }}`;
+    const routeCliente = `{{ route('cliente.info') }}`;
     const getPhone = () => {
-      axios.post(route, {
+      axios.post(routeCliente, {
         cliente_id: $('#cliente').val(),
       }).then(res => {
         let data = res.data

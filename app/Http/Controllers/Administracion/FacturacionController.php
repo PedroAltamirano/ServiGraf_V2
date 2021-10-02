@@ -44,9 +44,8 @@ class FacturacionController extends Controller
 
   public function show()
   {
-    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
     $empresas = Fact_empr::where('empresa_id', Auth::user()->empresa_id)->get();
-    return view('Administracion.facturas', compact('clientes', 'empresas'));
+    return view('Administracion.facturas', compact('empresas'));
   }
 
   /**
@@ -61,7 +60,6 @@ class FacturacionController extends Controller
     $empresas = Fact_empr::where('empresa_id', Auth::user()->empresa_id)->get();
 
     $utilidad = Security::hasModule('19');
-    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
 
     $iva_p = '12'; //DEBE BBENIR DE CADA EMPRESA DE FACTURACION
     $ivas = Iva::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
@@ -76,7 +74,7 @@ class FacturacionController extends Controller
       'action' => 'Crear',
       'mod' => 0,
     ];
-    return view('Administracion.factura', compact('factura', 'fact_num', 'empresas', 'utilidad', 'clientes', 'iva_p', 'ivas', 'ret_iva', 'ret_fnt', 'pedidos', 'old_pedidos'))->with($data);
+    return view('Administracion.factura', compact('factura', 'fact_num', 'empresas', 'utilidad', 'iva_p', 'ivas', 'ret_iva', 'ret_fnt', 'pedidos', 'old_pedidos'))->with($data);
   }
 
   // crear nuevo
@@ -111,7 +109,6 @@ class FacturacionController extends Controller
     $empresas = Fact_empr::where('empresa_id', Auth::user()->empresa_id)->get();
 
     $utilidad = Security::hasModule('19');
-    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
 
     $iva_p = '12'; //DEBE SALIR DESDE EL SISTEMA
     $ivas = Iva::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
@@ -129,7 +126,7 @@ class FacturacionController extends Controller
       'method' => 'PUT',
       'action' => 'Modificar',
     ];
-    return view('Administracion.factura', compact('factura', 'fact_num', 'empresas', 'utilidad', 'clientes', 'iva_p', 'ivas', 'ret_iva', 'ret_fnt', 'pedidos', 'old_pedidos'))->with($data);
+    return view('Administracion.factura', compact('factura', 'fact_num', 'empresas', 'utilidad', 'iva_p', 'ivas', 'ret_iva', 'ret_fnt', 'pedidos', 'old_pedidos'))->with($data);
   }
 
   //modificar perfil

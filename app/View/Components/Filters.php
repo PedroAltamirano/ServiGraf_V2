@@ -3,10 +3,12 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\Ventas\Cliente;
 
 class Filters extends Component
 {
-  public $clientes;
   public $cli;
   public $cob;
 
@@ -15,9 +17,8 @@ class Filters extends Component
    *
    * @return void
    */
-  public function __construct($clientes, $cli = null, $cob = null)
+  public function __construct($cli = true, $cob = true)
   {
-    $this->clientes = $clientes;
     $this->cli = $cli;
     $this->cob = $cob;
   }

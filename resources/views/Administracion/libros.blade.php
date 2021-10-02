@@ -3,7 +3,7 @@
 @section('desktop-content')
   <x-path :items="[ ['text' => 'Libro Diario', 'current' => true, 'href' => '#'] ]" />
 
-  <x-filters :clientes="[]" cli=0 cob=0>
+  <x-filters cli=0 cob=0>
     <div class="col-12 col-md form-group">
       <label for="cliente">Usuarios</label>
       <select name="usuario" id="usuario" class="form-control form-control-sm">

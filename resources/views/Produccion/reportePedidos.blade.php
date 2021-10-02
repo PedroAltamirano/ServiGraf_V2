@@ -5,7 +5,7 @@
     :items="[ ['text' => 'Pedidos', 'current' => false, 'href' => route('pedidos')], ['text' => 'Reporte de pedidos', 'current' => true, 'href' => '#'] ]">
   </x-path>
 
-  <x-filters :clientes="$clientes" />
+  <x-filters />
 
   <x-blue-board title='Reporte'
     :foot="[ ['text'=>'fas fa-print', 'href'=>'', 'id'=>'print', 'tipo'=>'button', 'print-target'=>'table'] ]">
@@ -44,7 +44,7 @@
 @endsection
 
 @section('modals')
-  <div id="modalPedidoDiv"></div>
+  <x-modal-pedido />
 @endsection
 
 @section('scripts')
@@ -128,8 +128,9 @@
           "sortable": "false",
           "render": (data, type, full, meta) => {
             let router = route.replace("/0", "/" + data);
-            let crud = `<a class='fa fa-edit' href='${router}'></a>`;
-            crud += `<a class='fa fa-eye' href='#modalPedido' data-modaldata='${data}'></a>`;
+            let crud =
+              `<a class='fa fa-eye' href='#modalPedido' data-toggle='modal' data-modaldata='${data}'></a> `;
+            crud += `<a class='fa fa-edit' href='${router}'></a>`;
             return crud;
           }
         }

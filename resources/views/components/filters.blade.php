@@ -1,6 +1,4 @@
 <x-blue-board title='Filtros' :foot="[]" class="d-print-none">
-  @props(['cli' => true, 'cob' => true])
-
   <div class="form-row">
     <div class="col-6 col-md form-group">
       <label for="inicio">Fecha inicial</label>
@@ -12,39 +10,25 @@
       <input type="date" name="fin" id="fin" class="form-control form-control-sm refresh" value="{{ date('Y-m-d') }}">
     </div>
 
-    @if ($cli && $clientes != [])
+    @if ($cli)
       <div class="col-12 col-md form-group">
-        <label for="cliente">Cliente</label>
-        <select name="cliente" id="cliente" class="form-control form-control-sm refresh select2Class">
-          <option value="none" selected>Selecciona uno...</option>
-          {{ $group = $clientes->first()->cliente_empresa_id ?? 0 }}
-          <optgroup label="{{ $clientes->first()->empresa->nombre ?? 'Sin Clientes' }}">
-            @foreach ($clientes as $cli)
-              @if ($group != $cli->cliente_empresa_id)
-                {{ $group = $cli->cliente_empresa_id }}
-          <optgroup label="{{ $cli->empresa->nombre }}">
+        <x-cliente />
+      </div>
     @endif
-    <option value="{{ $cli->id }}">
-      {{ $cli->contacto->nombre . ' ' . $cli->contacto->apellido }}
-    </option>
-    @endforeach
-    </select>
-  </div>
-  @endif
 
-  @if ($cob)
-    <div class="col-6 col-md form-group">
-      <label for="cobro">Cobro</label>
-      <select class="form-control form-control-sm refresh" name="cobro" id="cobro">
-        <option value="none" selected>Todo</option>
-        @foreach (config('factura.estado') as $key => $val)
-          <option value="{{ $key }}">
-            {{ $val }}</option>
-        @endforeach
-      </select>
-    </div>
-  @endif
+    @if ($cob)
+      <div class="col-6 col-md form-group">
+        <label for="cobro">Cobro</label>
+        <select class="form-control form-control-sm refresh" name="cobro" id="cobro">
+          <option value="none" selected>Todo</option>
+          @foreach (config('factura.estado') as $key => $val)
+            <option value="{{ $key }}">
+              {{ $val }}</option>
+          @endforeach
+        </select>
+      </div>
+    @endif
 
-  {{ $slot }}
+    {{ $slot }}
   </div>
 </x-blue-board>

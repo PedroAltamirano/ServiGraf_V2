@@ -3,7 +3,7 @@
 @section('desktop-content')
   <x-path :items="[ ['text' => 'Facturación', 'current' => true, 'href' => route('facturacion')] ]" />
 
-  <x-filters :clientes="$clientes" cob=0>
+  <x-filters cob=0>
     <div class="col-6 col-md form-group">
       <label for="empresa">Empresa</label>
       <select name="empresa" id="empresa" class="form-control form-control-sm refresh">
