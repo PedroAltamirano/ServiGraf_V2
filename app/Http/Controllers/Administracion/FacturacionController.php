@@ -228,4 +228,9 @@ class FacturacionController extends Controller
 
     return response()->json(array('data' => $data));
   }
+
+  public function print(Factura $factura)
+  {
+    return view('Administracion.A5', compact('factura'));
+  }
 }

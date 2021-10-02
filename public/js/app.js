@@ -86411,6 +86411,17 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/sass/factura.scss":
+/*!*************************************!*\
+  !*** ./resources/sass/factura.scss ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/landing.scss":
 /*!*************************************!*\
   !*** ./resources/sass/landing.scss ***!
@@ -86445,9 +86456,9 @@ if (token) {
 /***/ }),
 
 /***/ 0:
-/*!********************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/landing.scss ./resources/sass/styles.scss ./resources/sass/trumbowyg.scss ***!
-  \********************************************************************************************************************************************************/
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/landing.scss ./resources/sass/styles.scss ./resources/sass/factura.scss ./resources/sass/trumbowyg.scss ***!
+  \**************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -86455,6 +86466,7 @@ __webpack_require__(/*! /Volumes/Pedro/WORK/ServiGraf_V2/resources/js/app.js */"
 __webpack_require__(/*! /Volumes/Pedro/WORK/ServiGraf_V2/resources/sass/app.scss */"./resources/sass/app.scss");
 __webpack_require__(/*! /Volumes/Pedro/WORK/ServiGraf_V2/resources/sass/landing.scss */"./resources/sass/landing.scss");
 __webpack_require__(/*! /Volumes/Pedro/WORK/ServiGraf_V2/resources/sass/styles.scss */"./resources/sass/styles.scss");
+__webpack_require__(/*! /Volumes/Pedro/WORK/ServiGraf_V2/resources/sass/factura.scss */"./resources/sass/factura.scss");
 module.exports = __webpack_require__(/*! /Volumes/Pedro/WORK/ServiGraf_V2/resources/sass/trumbowyg.scss */"./resources/sass/trumbowyg.scss");
 
 

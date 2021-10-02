@@ -1,0 +1,182 @@
+@page {
+  /* size: 210mm 297mm; */
+  size: A4;
+  margin: 5mm 5mm 5mm 5mm;
+}
+
+@media print {
+  @page {
+    margin: 0;
+  }
+
+  body {
+    margin: 0;
+  }
+}
+
+.clider {
+  position: absolute;
+  top: 54mm;
+  left: 138mm;
+}
+.cliizq {
+  position: absolute;
+  top: 45mm;
+  left: 30mm;
+}
+#clider {
+  border-collapse: collapse;
+  border: none;
+  padding: 0 0 0 0px;
+  margin: 0 0 0 0;
+  width: 100%;
+  height: 100%;
+}
+#cliizq {
+  border-collapse: collapse;
+  border: none;
+  padding: 0 0 0 4px;
+  margin: 0 0 0 0;
+  width: 100%;
+  height: 100%;
+}
+#clider td {
+  height: 6.1mm;
+}
+#cliizq td {
+  height: 5.6mm;
+}
+.check {
+  width: 50mm;
+  position: absolute;
+  top: 45mm;
+  left: 139mm;
+}
+.productos {
+  width: 188mm;
+  position: absolute;
+  top: 85mm;
+  left: 10mm;
+}
+.totales {
+  position: absolute;
+  top: 188mm;
+  left: 158mm;
+  width: 40mm;
+  height: 28mm;
+}
+#totales td {
+  height: 5mm;
+}
+.son {
+  position: absolute;
+  top: 221mm;
+  left: 23mm;
+  height: 8mm;
+}
+.debo {
+  position: absolute;
+  top: 230mm;
+  left: 86mm;
+  width: 100mm;
+  height: 3mm;
+}
+.firma {
+  position: absolute;
+  top: 257mm;
+  left: 30mm;
+  width: 50mm;
+}
+#prodtab {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  border: 0;
+}
+#prodtab td {
+  margin: 0;
+  border: 0;
+}
+td.prodata {
+  max-height: 46px;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+.footer {
+  height: 58mm;
+  width: 188mm;
+  margin: 0.75mm;
+}
+#firmastab {
+  width: 100%;
+  height: 100%;
+  border: 1px solid;
+  border-collapse: collapse;
+  margin: 0;
+}
+#firmastab td {
+  border: 1px solid transparent;
+}
+#ructab {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  text-align: right;
+  border: 0;
+}
+#ructab td {
+  border: 0;
+}
+table {
+  border: thick;
+}
+#prodtab td {
+  height: 23px;
+}
+td.header {
+  height: 26px;
+  max-height: 46px;
+}
+td.adjust {
+  padding: 0;
+}
+td.php {
+  padding-left: 5px;
+}
+td.rightpad {
+  text-align: right;
+  padding: 0 8px 0 0;
+}
+td.leftpad {
+  text-align: left;
+  padding: 0 0 0 8px;
+}
+.pto7 {
+  font-size: 55%;
+}
+.pto8 {
+  font-size: 70%;
+}
+.pto9 {
+  font-size: 75%;
+}
+.pto10 {
+  font-size: 80%;
+}
+.bold {
+  font-weight: bold;
+}
+.colorblack {
+  color: black;
+}
+input.adjust {
+  width: 90%;
+  height: 60%;
+  padding: 0px;
+  margin: 0px;
+  padding-left: 5px;
+}

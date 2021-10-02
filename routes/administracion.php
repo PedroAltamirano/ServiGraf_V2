@@ -10,6 +10,7 @@ Route::namespace('Administracion')
     Route::post('factura/crear', 'FacturacionController@store')->name('factura.store')->middleware('hasModRol:21,2');
     Route::get('factura/modificar/{factura}', 'FacturacionController@edit')->name('factura.edit')->middleware('hasModRol:21,3');
     Route::put('factura/modificar/{factura}', 'FacturacionController@update')->name('factura.update')->middleware('hasModRol:21,3');
+    Route::get('factura/imprimir/{factura}', 'FacturacionController@print')->name('factura.print')->middleware('hasModRol:21,1');
 
     // LIBROS
     Route::get('libro', 'LibroController@index')->name('libro')->middleware('hasModRol:23,1');

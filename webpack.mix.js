@@ -36,4 +36,5 @@ mix
   .sass("resources/sass/app.scss", "public/css")
   .sass("resources/sass/landing.scss", "public/css")
   .sass("resources/sass/styles.scss", "public/css")
+  .sass("resources/sass/factura.scss", "public/css")
   .sass("resources/sass/trumbowyg.scss", "public/css");

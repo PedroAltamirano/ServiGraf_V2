@@ -9,7 +9,7 @@
     </li>
   </x-path>
 
-  <x-blue-board :title=$text :foot="[ ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=>'link'] ]">
+  <x-blue-board :title=$text :foot="[ ['text' => $action, 'href' => '#', 'id' => 'formSubmit', 'tipo' => 'link'] ]">
     <form action="{{ $path }}" method="POST" id="form">
       @csrf
       @method($method)

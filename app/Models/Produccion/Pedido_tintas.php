@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pedido_tintas extends Model
 {
-  use SoftDeletes;
+  // use SoftDeletes;
 
   protected $table = 'pedido_tintas';
 }

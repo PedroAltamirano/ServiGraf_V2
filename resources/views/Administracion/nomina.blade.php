@@ -4,7 +4,7 @@
   <x-path
     :items="[ ['text' => 'Nomina', 'current' => false, 'href' => route('nomina')], ['text' => $text, 'current' => true, 'href' => '#'] ]" />
 
-  <x-blue-board :title=$text :foot="[ ['tipo'=>'link'] ]">
+  <x-blue-board :title=$text :foot="[]">
     <form action="{{ $path }}" method="POST" id="form" enctype="multipart/form-data">
       @csrf
       @method($method)

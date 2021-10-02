@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pedido_proceso extends Model
 {
-  use SoftDeletes;
+  // use SoftDeletes;
 
   protected $table = 'pedido_proceso';
 

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Ventas\Cliente;
 use App\Models\Produccion\Pedido;
 use App\Models\Administracion\FactProd;
+use App\Models\Usuarios\Usuario;
 
 class Factura extends Model
 {
@@ -23,6 +24,11 @@ class Factura extends Model
   public $attributes = [
     'tipo' => 1, 'estado' => 1,
   ];
+
+  public function usuario()
+  {
+    return $this->belongsTo(Usuario::class, 'usuario_id', 'cedula');
+  }
 
   public function cliente()
   {

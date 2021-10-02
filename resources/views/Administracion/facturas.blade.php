@@ -63,6 +63,7 @@
   <script>
     const routeAjax = `{{ route('getFacturacion') }}`;
     const routeEdit = `{{ route('factura.edit', 0) }}`;
+    const routePrint = `{{ route('factura.print', 0) }}`;
     var table = $('#table').DataTable({
       "paging": true,
       "ordering": true,
@@ -116,9 +117,10 @@
           "data": "id",
           "sortable": "false",
           "render": (data, type, full, meta) => {
-            let path = routeEdit.replace('/0', `/${data}`);
-            let crud = `<a class='fa fa-edit' href='${path}'></a>`;
-            crud += `<a class='fa fa-print' href='#'></a>`;
+            let route = routeEdit.replace('/0', `/${data}`);
+            let print_route = routePrint.replace('/0', `/${data}`);
+            let crud = `<a class='fa fa-edit' href='${route}'></a>`;
+            crud += `<a class='fa fa-print' href='${print_route}' target='_blank'></a>`;
             return crud;
           }
         }
@@ -126,7 +128,7 @@
       "columnDefs": [{
         targets: [5],
         className: 'text-right'
-      }, ],
+      }],
       "footerCallback": function(row, data, start, end, display) {
         var api = this.api(),
           data;
