@@ -15,7 +15,7 @@
   </x-filters>
 
   <x-blue-board title='Asistencia'
-    :foot="[ ['text'=>'Hoy', 'href'=>'#', 'id'=>'hoy', 'tipo'=>'link'], ['text'=>'Semana', 'href'=>'#', 'id'=>'semana', 'tipo'=>'link'], ['text'=>'Mes', 'href'=>'#', 'id'=>'mes', 'tipo'=>'link'], ['text'=>'Horarios', 'href'=>route('horarios'), 'id'=>'horarios', 'tipo'=>'link'], ['text'=>'fas fa-print', 'href'=>'#', 'id'=>'mes', 'tipo'=>'button', 'print-target'=>'table'] ]">
+    :foot="[ ['text' => 'Hoy', 'href' => '#', 'id' => 'hoy', 'tipo' => 'link'], ['text' => 'Semana', 'href' => '#', 'id' => 'semana', 'tipo' => 'link'], ['text' => 'Mes', 'href' => '#', 'id' => 'mes', 'tipo' => 'link'], ['text' => 'Horarios', 'href' => route('horarios'), 'id' => 'horarios', 'tipo' => 'link'], ['text' => 'fas fa-print', 'href' => '#', 'id' => 'mes', 'tipo' => 'button', 'print-target' => 'table'] ]">
     <table id="table" class="table table-striped table-sm">
       <thead>
         <tr>

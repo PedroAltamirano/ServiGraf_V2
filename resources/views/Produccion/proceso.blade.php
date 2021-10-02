@@ -4,7 +4,8 @@
   <x-path
     :items="[ ['text' => 'Procesos', 'current' => false, 'href' => route('procesos')], ['text' => $text, 'current' => true, 'href' => '#'] ]" />
 
-  <x-blue-board :title=$text :foot="[ ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=>'link'] ]">
+  <x-blue-board :title=$text
+    :foot="[ ['text'=>$action, 'href'=>'#', 'id'=>'formSubmit', 'tipo'=>'link'], ['text' => 'Nuevo', 'href' => route('proceso.create'), 'id' => 'new', 'tipo' => 'link', 'condition' => $proceso->id ?? 0] ]">
     <form action="{{ $path }}" method="POST" id="form">
       @csrf
       @method($method)
