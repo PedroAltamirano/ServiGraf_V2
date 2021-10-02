@@ -21,8 +21,8 @@
             <td>{{ $item->meta }}</td>
             <td>{{ $item->plantilla->nombre ?? '' }}</td>
             <td>
-              <x-crud :routeEdit="route('actividad.edit', [$item->id])"
-                :routeDelete="route('actividad.delete', [$item->id])" :textDelete="$item->nombre" />
+              <x-crud :routeEdit="route('actividad.edit', $item->id)" :routeDelete="route('actividad.delete', $item->id)"
+                :textDelete="$item->nombre" />
             </td>
           </tr>
         @endforeach

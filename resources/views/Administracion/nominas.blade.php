@@ -43,7 +43,7 @@
       @foreach ($dotacion as $item)
         <div class="col-6 col-md-2">
           <x-crud :status="$item->status" routeEdit="#modalDotacion" :modalEdit="$item"
-            :routeDelete="route('dotacion.delete', $item)" :textDelete="$item->dotacion" />
+            :routeDelete="route('dotacion.delete', $item->id)" :textDelete="$item->dotacion" />
           &nbsp;&nbsp;{{ $item->dotacion }}
         </div>
       @endforeach

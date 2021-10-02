@@ -65,8 +65,8 @@ class ReportesController extends Controller
   public static function ajaxPagos(Request $request)
   {
     $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->select('cliente_id', 'numero', 'id', 'fecha_entrada', 'fecha_cobro', 'detalle', 'usuario_cob_id', 'total_pedido', 'abono', 'saldo', 'estado')
-      ->Where(function ($query) use ($request) {
-        $query->orWhere(function ($query) use ($request) {
+      ->where(function ($query) use ($request) {
+        $query->where(function ($query) use ($request) {
           $query->whereBetween('fecha_entrada', [$request->fechaini, $request->fechafin])
             ->where('abono', '>', 0);
         })
@@ -80,7 +80,7 @@ class ReportesController extends Controller
       $pedidos->where('cliente_id', $request->cliente);
     }
 
-    $pedidos = $pedidos->get();
+    $pedidos = $pedidos->with(['cliente', 'user_cob.nomina'])->get();
 
     foreach ($pedidos as $pedido) {
       $pedido->cliente_nom = $pedido->cliente->full_name;

@@ -50,7 +50,7 @@
               <td>{{ $item->cantidad }}</td>
               <td>{{ implode(', ', $item->procesos_incompletos_nombre) }}</td>
               <td>
-                <x-crud routeSee="#modalPedido" :modalSee="$item->id" routeEdit="route('pedido.edit', $item->numero)" />
+                <x-crud routeSee="#modalPedido" :modalSee="$item->id" routeEdit="route('pedido.edit', $item->id)" />
               </td>
             </tr>
           @endforeach

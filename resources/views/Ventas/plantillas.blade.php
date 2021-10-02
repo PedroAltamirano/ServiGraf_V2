@@ -20,7 +20,6 @@
             <td>
               <x-crud :routeEdit="route('plantilla.edit', $item->id)" :routeDelete="route('plantilla.delete', $item->id)"
                 :textDelete="$item->nombre" />
-              {{-- <x-crud :routeSee="route('.show', $item->id)" :modalSee="$model" :routeEdit="route('plantilla.edit', $item->id)" :routeDelete="route('plantilla.delete', $item->id)" :textDelete="$item->nombre" /> --}}
             </td>
           </tr>
         @endforeach
