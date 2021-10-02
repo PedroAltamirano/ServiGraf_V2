@@ -35,8 +35,8 @@ class UpdateNomina extends FormRequest
       'cedula' => ['required', 'numeric', 'max:9999999999999'],
       'nombre' => ['required', 'string', 'max:30'],
       'apellido' => ['required', 'string', 'max:30'],
-      'telefono' => ['nullable', 'numeric', 'max:9999999'],
-      'celular' => ['required', 'numeric', 'max:999999999'],
+      'telefono' => ['nullable', 'numeric', 'max:9999999', 'required_if:celular,null'],
+      'celular' => ['required', 'numeric', 'max:999999999', 'required_if:telefono,null'],
       'correo' => ['required', 'string', 'max:250'],
       'cant_hijos' => ['nullable', 'numeric'],
 

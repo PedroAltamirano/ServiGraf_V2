@@ -163,6 +163,6 @@ class Nomina extends Model
   public function getAvatarAttribute()
   {
     if ($this->foto) return asset("avatars/$this->foto");
-    return;
+    return false;
   }
 }

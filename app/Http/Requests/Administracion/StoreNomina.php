@@ -25,7 +25,7 @@ class StoreNomina extends FormRequest
   {
     return [
       // Datos personales
-      'foto' => ['required', 'file', 'mimes:png,jpg,jpeg', 'max:2048'],
+      'foto' => ['nullable ', 'file', 'mimes:png,jpg,jpeg', 'max:2048'],
       'fecha_nacimiento' => ['required', 'date'],
       'lugar_nacimiento' => ['required', 'string', 'max:100'],
       'nacionalidad' => ['required', 'string', 'max:50'],
@@ -35,8 +35,8 @@ class StoreNomina extends FormRequest
       'cedula' => ['required', 'numeric', 'max:9999999999999'],
       'nombre' => ['required', 'string', 'max:30'],
       'apellido' => ['required', 'string', 'max:30'],
-      'telefono' => ['nullable', 'numeric', 'max:9999999'],
-      'celular' => ['required', 'numeric', 'max:999999999'],
+      'telefono' => ['nullable', 'numeric', 'max:9999999', 'required_if:celular,null'],
+      'celular' => ['required', 'numeric', 'max:999999999', 'required_if:telefono,null'],
       'correo' => ['required', 'email', 'max:250', 'unique:nomina,correo'],
       'cant_hijos' => ['nullable', 'numeric'],
 

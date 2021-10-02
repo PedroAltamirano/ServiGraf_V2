@@ -19,7 +19,7 @@ class CreateFacturasTable extends Migration
       $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
       $table->unsignedInteger('usuario_id');
       $table->foreign('usuario_id')->references('cedula')->on('usuarios')->onDelete('cascade');
-      $table->unsignedMediumInteger('numero')->unique();
+      $table->unsignedMediumInteger('numero');
       $table->foreignId('fact_emp_id')->constrained('fact_empresa')->onDelete('cascade');
       $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
       $table->date('emision');
