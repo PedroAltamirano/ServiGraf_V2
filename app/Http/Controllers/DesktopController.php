@@ -66,11 +66,11 @@ class DesktopController extends Controller
 
   public function show()
   {
+    $pedidos_array = Pedido::where('empresa_id', Auth::user()->empresa_id)->whereBetween('fecha_entrada', [date('Y-m-01'), date('Y-m-d')])->pluck('id')->toArray();
     Pedido::$own = true;
     $clientes = auth()->user()->clientes;
     $procesos = auth()->user()->procesos;
-    $proc = $procesos->pluck('id')->toArray();
     $pedidos = Pedido::incompletas();
-    return view('tablero', compact('pedidos', 'clientes', 'procesos'));
+    return view('tablero', compact('pedidos', 'clientes', 'procesos', 'pedidos_array'));
   }
 }

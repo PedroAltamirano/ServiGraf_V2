@@ -49,8 +49,71 @@
 
 @section('scripts')
   <script>
-    // let areas = @json($areas);
-    // console.log(areas.length);
+    const areas = JSON.parse(`@json($areas)`);
+    const start = [{
+        "name": "numero",
+        "data": "numero"
+      },
+      {
+        "name": "cliente",
+        "data": "cliente_nom"
+      },
+      {
+        "name": "detalle",
+        "data": "detalle"
+      },
+    ];
+    areas.map(area => {
+      start.push({
+        "name": `${area.area}`,
+        "data": "areas",
+        "defaultContent": "",
+        "render": (data, type, full, meta) => {
+          let aread = data.find(record => record.area_id == `${area.id}`);
+          return aread?.totalArea ?? '';
+        }
+      });
+    });
+    const final = [{
+        "name": "total",
+        "data": "total_pedido"
+      },
+      {
+        "name": "abonos",
+        "data": "abono"
+      },
+      {
+        "name": "saldo",
+        "data": "saldo"
+      },
+      {
+        "name": "estado",
+        "data": "estado",
+        "sortable": "false",
+        "render": (data, type, full, meta) => {
+          var rspt;
+          if (data == '1') rspt = "<em class='fa fa-times'></em>";
+          else if (data == '2') rspt = "<em class='fa fa-check'></em>";
+          else if (data == '3') rspt = "<em class='fas fa-trash'></em>";
+          else if (data == '4') rspt = "<em class='fas fa-exchange-alt'></em>";
+          else rspt = "<em class='fa fa-ban'></em>";
+          return rspt;
+        },
+      },
+      {
+        "name": "crud",
+        "data": "id",
+        "sortable": "false",
+        "render": (data, type, full, meta) => {
+          let router = route.replace("/0", "/" + data);
+          let crud =
+            `<a class='fa fa-eye' href='#modalPedido' data-toggle='modal' data-modaldata='${data}'></a> `;
+          crud += `<a class='fa fa-edit' href='${router}'></a>`;
+          return crud;
+        }
+      }
+    ];
+    const columns = [...start, ...final];
 
     const route = `{{ route('pedido.edit', 0) }}`;
     const routeAjax = `{{ route('reporte.pedidos.ajax') }}`;
@@ -77,64 +140,7 @@
           console.log(error);
         }
       },
-      "columns": [{
-          "name": "numero",
-          "data": "numero"
-        },
-        {
-          "name": "cliente",
-          "data": "cliente_nom"
-        },
-        {
-          "name": "detalle",
-          "data": "detalle"
-        },
-        @foreach ($areas as $area)
-          {"name":`{{ $area->area }}`, "data":"areas", "defaultContent": "",
-          "render":(data, type, full, meta) => {
-          let area = data.find(record => record.area_id === `{{ $area->id }}`);
-          return area ? area.totalArea : '';
-          }
-          },
-        @endforeach {
-          "name": "total",
-          "data": "total_pedido"
-        },
-        {
-          "name": "abonos",
-          "data": "abono"
-        },
-        {
-          "name": "saldo",
-          "data": "saldo"
-        },
-        {
-          "name": "estado",
-          "data": "estado",
-          "sortable": "false",
-          "render": (data, type, full, meta) => {
-            var rspt;
-            if (data == '1') rspt = "<em class='fa fa-times'></em>";
-            else if (data == '2') rspt = "<em class='fa fa-check'></em>";
-            else if (data == '3') rspt = "<em class='fas fa-trash'></em>";
-            else if (data == '4') rspt = "<em class='fas fa-exchange-alt'></em>";
-            else rspt = "<em class='fa fa-ban'></em>";
-            return rspt;
-          },
-        },
-        {
-          "name": "crud",
-          "data": "id",
-          "sortable": "false",
-          "render": (data, type, full, meta) => {
-            let router = route.replace("/0", "/" + data);
-            let crud =
-              `<a class='fa fa-eye' href='#modalPedido' data-toggle='modal' data-modaldata='${data}'></a> `;
-            crud += `<a class='fa fa-edit' href='${router}'></a>`;
-            return crud;
-          }
-        }
-      ],
+      "columns": columns,
       "columnDefs": [{
         "responsivePriority": 1,
         "targets": [0, 1, -2, -3]

@@ -20,7 +20,7 @@
       <div class="col-6 col-md form-group">
         <label for="cobro">Cobro</label>
         <select class="form-control form-control-sm refresh" name="cobro" id="cobro">
-          <option value="none" selected>Todo</option>
+          <option value="" selected>Todo</option>
           @foreach (config('factura.estado') as $key => $val)
             <option value="{{ $key }}">
               {{ $val }}</option>

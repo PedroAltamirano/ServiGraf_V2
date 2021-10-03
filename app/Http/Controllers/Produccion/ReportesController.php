@@ -36,15 +36,17 @@ class ReportesController extends Controller
 
   public static function ajaxPedidos(Request $request)
   {
-    $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->select('cliente_id', 'numero', 'id', 'detalle', 'total_pedido', 'abono', 'saldo', 'estado')->whereBetween('fecha_entrada', [$request->fechaini, $request->fechafin]);
+    $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)
+      ->select('cliente_id', 'numero', 'id', 'detalle', 'total_pedido', 'abono', 'saldo', 'estado')
+      ->whereBetween('fecha_entrada', [$request->fechaini, $request->fechafin]);
 
-    if ($request->cliente != 'none') {
+    if (isset($request->cliente)) {
       $pedidos->where('cliente_id', $request->cliente);
-    } elseif ($request->cobro != 'none') {
+    } elseif (isset($request->cobro)) {
       $pedidos->where('estado', $request->cobro);
     }
 
-    $pedidos = $pedidos->get();
+    $pedidos = $pedidos->with('cliente')->get();
 
     foreach ($pedidos as $pedido) {
       $pedido->cliente_nom = $pedido->cliente->full_name;
@@ -67,16 +69,14 @@ class ReportesController extends Controller
     $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->select('cliente_id', 'numero', 'id', 'fecha_entrada', 'fecha_cobro', 'detalle', 'usuario_cob_id', 'total_pedido', 'abono', 'saldo', 'estado')
       ->where(function ($query) use ($request) {
         $query->where(function ($query) use ($request) {
-          $query->whereBetween('fecha_entrada', [$request->fechaini, $request->fechafin])
-            ->where('abono', '>', 0);
+          $query->whereBetween('fecha_entrada', [$request->fechaini, $request->fechafin])->where('abono', '>', 0);
         })
           ->orWhere(function ($query) use ($request) {
-            $query->whereBetween('fecha_cobro', [$request->fechaini, $request->fechafin])
-              ->where('estado', 2);
+            $query->whereBetween('fecha_cobro', [$request->fechaini, $request->fechafin])->where('estado', 2);
           });
       });
 
-    if ($request->cliente != 'none') {
+    if (isset($request->cliente)) {
       $pedidos->where('cliente_id', $request->cliente);
     }
 
@@ -101,9 +101,9 @@ class ReportesController extends Controller
 
   public static function ajaxMaquinas(Request $request)
   {
-    $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->select('cliente_id', 'numero', 'id', 'detalle', 'total_pedido', 'estado')->whereBetween('fecha_entrada', [$request->fechaini, $request->fechafin]);
+    $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->select('cliente_id', 'numero', 'id', 'detalle', 'total_pedido', 'estado')->whereBetween('fecha_entrada', [$request->fechaini, $request->fechafin])->with('cliente');
 
-    if ($request->cobro != 'none') {
+    if (isset($request->cobro)) {
       $pedidos->where('estado', $request->cobro);
     }
 

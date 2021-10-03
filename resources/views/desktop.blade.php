@@ -82,7 +82,7 @@
       $Ed = $items->pluck('totalData');
       $El = $items->pluck('nombre');
     @endphp
-    <x-report title="Producción interna" :items="$items" />
+    <x-report title="Producción externa" :items="$items" />
   </div>
 
 

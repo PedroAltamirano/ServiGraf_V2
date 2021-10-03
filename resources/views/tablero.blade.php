@@ -10,8 +10,8 @@
     @foreach ($procesos as $item)
       @php
         $logrado = App\Models\Produccion\Pedido_proceso::where('status', 1)
-            ->whereBetween('created_at', [date('Y-m-01'), date('Y-m-d')])
             ->where('proceso_id', $item->id)
+            ->whereIn('pedido_id', $pedidos_array)
             ->sum('total');
         $prog = ($logrado * 100) / $item->meta;
         $ci = $loop->index % count($colors);

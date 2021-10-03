@@ -45,8 +45,63 @@
 
 @section('scripts')
   <script>
-    // let procesos = @json($procesos);
-    // console.log(areas.length);
+    const procesos = JSON.parse(`@json($procesos)`);
+    const start = [{
+        "name": "numero",
+        "data": "numero"
+      },
+      {
+        "name": "cliente",
+        "data": "cliente_nom"
+      },
+      {
+        "name": "detalle",
+        "data": "detalle"
+      },
+    ];
+    procesos.map(proceso => {
+      start.push({
+        "name": `serv${proceso.id}`,
+        "data": "procesos",
+        "defaultContent": "",
+        "render": (data, type, full, meta) => {
+          let process = data.find(record => record.proceso_id == `${proceso.id}`);
+          return process?.totalProceso ?? '';
+        }
+      });
+    });
+    const final = [{
+        "name": "total",
+        "data": "total_pedido"
+      },
+      {
+        "name": "estado",
+        "data": "estado",
+        "sortable": "false",
+        "render": (data, type, full, meta) => {
+          var rspt;
+          if (data == '1') rspt = "<em class='fa fa-times'></em>";
+          else if (data == '2') rspt = "<em class='fa fa-check'></em>";
+          else if (data == '3') rspt = "<em class='fas fa-trash'></em>";
+          else if (data == '4') rspt = "<em class='fas fa-exchange-alt'></em>";
+          else rspt = "<em class='fa fa-ban'></em>";
+          return rspt;
+        },
+      },
+      {
+        "name": "crud",
+        "data": "id",
+        "sortable": "false",
+        "render": (data, type, full, meta) => {
+          let router = route.replace('/0', `/${data}`);
+          let crud =
+            `<a class='fa fa-eye' href='#modalPedido' data-toggle='modal' data-modaldata='${data}'></a> `;
+          crud += `<a class='fa fa-edit' href='${router}'></a>`;
+          return crud;
+        }
+      }
+    ];
+    const columns = [...start, ...final];
 
     const route = `{{ route('pedido.edit', 0) }}`;
     const routeAjax = `{{ route('reporte.maquinas.ajax') }}`;
@@ -72,56 +127,7 @@
           console.log(error);
         }
       },
-      "columns": [{
-          "name": "numero",
-          "data": "numero"
-        },
-        {
-          "name": "cliente",
-          "data": "cliente_nom"
-        },
-        {
-          "name": "detalle",
-          "data": "detalle"
-        },
-        @foreach ($procesos as $proceso)
-          {"name":`{{ 'serv' . $proceso->id }}`, "data":"procesos", "defaultContent": "", "render": (data, type, full, meta)
-          =>
-          {
-          let proceso = data.find(record => record.proceso_id == `{{ $proceso->id }}`);
-          return proceso ? proceso.totalProceso : '';
-          }},
-        @endforeach {
-          "name": "total",
-          "data": "total_pedido"
-        },
-        {
-          "name": "estado",
-          "data": "estado",
-          "sortable": "false",
-          "render": (data, type, full, meta) => {
-            var rspt;
-            if (data == '1') rspt = "<em class='fa fa-times'></em>";
-            else if (data == '2') rspt = "<em class='fa fa-check'></em>";
-            else if (data == '3') rspt = "<em class='fas fa-trash'></em>";
-            else if (data == '4') rspt = "<em class='fas fa-exchange-alt'></em>";
-            else rspt = "<em class='fa fa-ban'></em>";
-            return rspt;
-          },
-        },
-        {
-          "name": "crud",
-          "data": "id",
-          "sortable": "false",
-          "render": (data, type, full, meta) => {
-            let router = route.replace('/0', `/${data}`);
-            let crud =
-              `<a class='fa fa-eye' href='#modalPedido' data-toggle='modal' data-modaldata='${data}'></a> `;
-            crud += `<a class='fa fa-edit' href='${router}'></a>`;
-            return crud;
-          }
-        }
-      ],
+      "columns": columns,
       "columnDefs": [{
         "responsivePriority": 1,
         "targets": [0, 1, -2, -3]
