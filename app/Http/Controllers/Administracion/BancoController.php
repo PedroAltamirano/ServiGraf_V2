@@ -24,9 +24,10 @@ class BancoController extends Controller
    */
   public function store(StoreBanco $request)
   {
+    $user = Auth::user();
     $validated = $request->validated();
-    $validated['empresa_id'] = Auth::user()->empresa_id;
-    $validated['usuario_id'] = Auth::id();
+    $validated['empresa_id'] = $user->empresa_id;
+    $validated['usuario_id'] = $user->cedula;
 
     DB::beginTransaction();
     try {

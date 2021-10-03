@@ -26,10 +26,11 @@ class FacturacionController extends Controller
    */
   public function index()
   {
-    $facturas = Fact_empr::where('empresa_id', Auth::user()->empresa_id)->get();
-    $ivas = Iva::where('empresa_id', Auth::user()->empresa_id)->get();
-    $ret_iva = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('tipo', 1)->get();
-    $ret_fnt = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('tipo', 0)->get();
+    $user = Auth::user();
+    $facturas = Fact_empr::where('empresa_id', $user->empresa_id)->get();
+    $ivas = Iva::where('empresa_id', $user->empresa_id)->get();
+    $ret_iva = Retencion::where('empresa_id', $user->empresa_id)->where('tipo', 1)->get();
+    $ret_fnt = Retencion::where('empresa_id', $user->empresa_id)->where('tipo', 0)->get();
     return view('Sistema.facturacion', compact('facturas', 'ivas', 'ret_iva', 'ret_fnt'));
   }
 

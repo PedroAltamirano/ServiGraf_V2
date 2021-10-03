@@ -11,6 +11,7 @@ use App\Models\Ventas\Cliente;
 use App\Models\Usuarios\Usuario;
 use App\Models\Produccion\Proceso;
 use App\Models\Produccion\Pedido_proceso;
+use App\Models\Ventas\Cliente_empresa;
 
 class Pedido extends Model
 {
@@ -20,7 +21,7 @@ class Pedido extends Model
   protected $table = 'pedidos';
 
   public $attributes = [
-    'total_material' => 0.00
+    'total_material' => 0.00, 'prioridad' => 1,
   ];
 
   protected $fillable = [
@@ -104,15 +105,15 @@ class Pedido extends Model
   {
 
     $incompletos = Pedido_proceso::where('empresa_id', auth()->user()->empresa_id)
-      ->where('status', '0')
-      ->groupBy('pedido_id')
       ->select('pedido_id')
+      ->where('status', '0')
       ->where(function ($query) {
         if (self::$own) {
           $own_processes = Auth::user()->procesos->pluck('id')->toArray();
           $query->whereIn('proceso_id', $own_processes);
         }
       })
+      ->groupBy('pedido_id')
       ->get()
       ->pluck('pedido_id')
       ->toArray();
@@ -121,7 +122,7 @@ class Pedido extends Model
       if ($fecha) {
         $query->whereBetween('fecha_entrada', [date('Y-m-01', strtotime($fecha)), date('Y-m-t', strtotime($fecha))]);
       }
-    })->with('cliente')->get();
+    })->with(['cliente.contacto', 'cliente.empresa', 'procesos_incompletos'])->get();
   }
 
   /*

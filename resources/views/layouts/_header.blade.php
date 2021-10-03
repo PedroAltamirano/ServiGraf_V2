@@ -4,11 +4,12 @@ $horario = session('userInfo.horario');
 $see_horario = false;
 $text = 'Trabajando...';
 if (!session('userInfo.horas')) {
+    $user = Auth::user();
     $asis_class = App\Models\Administracion\Asistencia::class;
     $asistencia =
         $asis_class
-            ::where('empresa_id', Auth::user()->empresa_id)
-            ->where('usuario_id', Auth::id())
+            ::where('empresa_id', $user->empresa_id)
+            ->where('usuario_id', $user->cedula)
             ->where('fecha', date('Y-m-d'))
             ->first() ?? new $asis_class();
 

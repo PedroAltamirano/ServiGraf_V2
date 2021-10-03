@@ -20,7 +20,7 @@ class Cliente extends Component
    */
   public function __construct($list = null, $column = 'cliente', $old = null)
   {
-    $this->clientes = $list ?? ClienteClass::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->get();
+    $this->clientes = $list ?? ClienteClass::where('empresa_id', Auth::user()->empresa_id)->with(['contacto', 'empresa'])->orderBy('cliente_empresa_id')->get();
     $this->column = $column;
     $this->old = $old;
   }

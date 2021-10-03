@@ -85,6 +85,7 @@ class KPIController extends Controller
 
   public function kpi_lob_facturacion(Request $request)
   {
+    $user = Auth::user();
     $date = $request->get('fecha');
     $dateInit = date('Y-m-01', strtotime($date));
     $dateFin = date('Y-m-t', strtotime($date));
@@ -94,8 +95,8 @@ class KPIController extends Controller
     $twoyears = new Carbon($date);
     $twoyears->startOfMonth()->subYear(2);
 
-    $prediccion = Factura::where('empresa_id', Auth::user()->empresa_id)->whereBetween('emision', [$twoyears, $lastmonth])->select(DB::raw('sum(total) as total'), DB::raw("DATE_FORMAT(emision,'%m') as months"))->groupBy('months')->get()->avg('total') ?? 0;
-    $actual = Factura::where('empresa_id', Auth::user()->empresa_id)->whereBetween('emision', [$dateInit, $dateFin])->sum('total');
+    $prediccion = Factura::where('empresa_id', $user->empresa_id)->whereBetween('emision', [$twoyears, $lastmonth])->select(DB::raw('sum(total) as total'), DB::raw("DATE_FORMAT(emision,'%m') as months"))->groupBy('months')->get()->avg('total') ?? 0;
+    $actual = Factura::where('empresa_id', $user->empresa_id)->whereBetween('emision', [$dateInit, $dateFin])->sum('total');
     $value = strval($actual) . ' / ' . strval($prediccion);
 
     $title = 'Utilidad Actual / Predicha';
@@ -109,14 +110,15 @@ class KPIController extends Controller
 
   public function kpi_maquinas(Request $request)
   {
+    $user = Auth::user();
     $date = $request->get('fecha');
     $dateInit = date('Y-m-01', strtotime($date));
     $dateFin = date('Y-m-t', strtotime($date));
 
-    $procesos = Proceso::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get()->map(function ($s) {
+    $procesos = Proceso::where('empresa_id', $user->empresa_id)->where('seguimiento', 1)->get()->map(function ($s) {
       return $s->id;
     })->toArray();
-    $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->get()->map(function ($p) {
+    $pedidos = Pedido::where('empresa_id', $user->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->get()->map(function ($p) {
       return $p->id;
     })->toArray();
     $value = Pedido_proceso::whereIn('pedido_id', $pedidos)->whereIn('proceso_id', $procesos)->sum('total');
@@ -151,6 +153,7 @@ class KPIController extends Controller
 
   public function kpi_lob_ots(Request $request)
   {
+    $user = Auth::user();
     $date = $request->get('fecha');
     $dateInit = date('Y-m-01', strtotime($date));
     $dateFin = date('Y-m-t', strtotime($date));
@@ -160,8 +163,8 @@ class KPIController extends Controller
     $twoyears = new Carbon($date);
     $twoyears->startOfMonth()->subYear(2);
 
-    $prediccion = Pedido::where('empresa_id', Auth::user()->empresa_id)->whereBetween('fecha_entrada', [$twoyears, $lastmonth])->select(DB::raw('sum(total_pedido) as total'), DB::raw("DATE_FORMAT(fecha_entrada,'%m') as months"))->groupBy('months')->get()->avg('total') ?? 0;
-    $actual = Pedido::where('empresa_id', Auth::user()->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->sum('total_pedido');
+    $prediccion = Pedido::where('empresa_id', $user->empresa_id)->whereBetween('fecha_entrada', [$twoyears, $lastmonth])->select(DB::raw('sum(total_pedido) as total'), DB::raw("DATE_FORMAT(fecha_entrada,'%m') as months"))->groupBy('months')->get()->avg('total') ?? 0;
+    $actual = Pedido::where('empresa_id', $user->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->sum('total_pedido');
     $value = strval($actual) . ' / ' . strval($prediccion);
 
     $title = 'Producción Actual / Predicha';

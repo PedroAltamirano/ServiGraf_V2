@@ -33,6 +33,7 @@ class DesktopController extends Controller
    */
   public function showAdmin(Request $request)
   {
+    $user = Auth::user();
     if ($request->get('fecha')) {
       $dateInit = date('Y-m-01', strtotime($request->get('fecha')));
       $dateFin = date('Y-m-t', strtotime($request->get('fecha')));
@@ -43,7 +44,7 @@ class DesktopController extends Controller
     $fecha = $request->get('fecha') ?? date('Y-m-d');
     // dd($dateInit, $dateFin);
 
-    $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->get();
+    $pedidos = Pedido::where('empresa_id', $user->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->get();
 
     $pedidos_terminados = $pedidos->count();
     $pedidos_incompletos = Pedido::incompletas($request->get('fecha'))->count();
@@ -53,11 +54,11 @@ class DesktopController extends Controller
 
     $materiales = Solicitud_material::whereIn('pedido_id', $pedidos_array)->get();
 
-    $procesos = Proceso::where('empresa_id', Auth::user()->empresa_id)->get();
+    $procesos = Proceso::where('empresa_id', $user->empresa_id)->get();
 
-    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->with('contacto')->orderBy('cliente_empresa_id')->get();
+    $clientes = Cliente::where('empresa_id', $user->empresa_id)->where('seguimiento', 1)->with('contacto')->orderBy('cliente_empresa_id')->get();
 
-    $utilidades = Pedido::where('empresa_id', Auth::user()->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->with('cliente')->where('cotizado', '>', 0)->get()->each(function ($u) {
+    $utilidades = Pedido::where('empresa_id', $user->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->with('cliente')->where('cotizado', '>', 0)->get()->each(function ($u) {
       $u->utilidad = $u->cotizado - $u->total_pedido;
     }); // TODO: modify query to raw
 

@@ -35,9 +35,10 @@ class ComentarioController extends Controller
    */
   public function store(StoreComentario $request)
   {
+    $user = Auth::user();
     $validated = $request->validated();
-    $validated['empresa_id'] = Auth::user()->empresa_id;
-    $validated['creador_id'] = Auth::id();
+    $validated['empresa_id'] = $user->empresa_id;
+    $validated['creador_id'] = $user->cedula;
 
     DB::beginTransaction();
     try {

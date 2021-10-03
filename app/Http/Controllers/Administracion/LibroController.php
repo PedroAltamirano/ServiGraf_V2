@@ -110,8 +110,9 @@ class LibroController extends Controller
 
   public function referencias_bancos()
   {
-    $referencias = Libro_ref::where('empresa_id', Auth::user()->empresa_id)->get();
-    $bancos = Banco::where('empresa_id', Auth::user()->empresa_id)->get();
+    $user = Auth::user();
+    $referencias = Libro_ref::where('empresa_id', $user->empresa_id)->get();
+    $bancos = Banco::where('empresa_id', $user->empresa_id)->get();
     return view('Administracion.referencias-bancos', compact('referencias', 'bancos'));
   }
 

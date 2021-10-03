@@ -63,17 +63,18 @@ class PedidosController extends Controller
   // crear nuevo
   public function store(StorePedidoImprenta $request)
   {
-    $num = Pedido::where('empresa_id', Auth::user()->empresa_id)->orderBy('numero', 'desc')->first()->numero ?? (DatosEmpresa::where('empresa_id', Auth::user()->empresa_id)->first()->inicio - 1);
+    $user = Auth::user();
+    $num = Pedido::where('empresa_id', $user->empresa_id)->orderBy('numero', 'desc')->first()->numero ?? (DatosEmpresa::where('empresa_id', $user->empresa_id)->first()->inicio - 1);
 
     $validator = $request->validated();
     $validator['numero'] = $num + 1;
-    $validator['empresa_id'] = Auth::user()->empresa_id;
-    $validator['usuario_id'] = Auth::id();
-    $validator['usuario_mod_id'] = Auth::id();
+    $validator['empresa_id'] = $user->empresa_id;
+    $validator['usuario_id'] = $user->cedula;
+    $validator['usuario_mod_id'] = $user->cedula;
     $fecha_salida = Carbon::create($validator['fecha_entrada'])->addDays(3)->format('Y-m-d');
     $validator['fecha_salida'] = $fecha_salida;
     if ($request->estado == 2) {
-      $validator['usuario_cob_id'] = Auth::id();
+      $validator['usuario_cob_id'] = $user->cedula;
       $validator['fecha_cobro'] = date('Y-m-d');
     }
 
@@ -112,12 +113,13 @@ class PedidosController extends Controller
   //modificar perfil
   public function update(UpdatePedidoImprenta $request, Pedido $pedido)
   {
+    $user = Auth::user();
     $validator = $request->validated();
-    $validator['usuario_mod_id'] = Auth::id();
+    $validator['usuario_mod_id'] = $user->cedula;
     $fecha_salida = Carbon::create($validator['fecha_entrada'])->addDays(3)->format('Y-m-d');
     $validator['fecha_salida'] = $fecha_salida;
     if ($request->estado == 2) {
-      $validator['usuario_cob_id'] = Auth::id();
+      $validator['usuario_cob_id'] = $user->cedula;
       $validator['fecha_cobro'] = date('Y-m-d');
     }
 
@@ -143,12 +145,13 @@ class PedidosController extends Controller
   // duplicar perfil
   public function duplicate(Pedido $pedido)
   {
-    $num = Pedido::where('empresa_id', Auth::user()->empresa_id)->orderBy('numero', 'desc')->first()->numero;
+    $user = Auth::user();
+    $num = Pedido::where('empresa_id', $user->empresa_id)->orderBy('numero', 'desc')->first()->numero;
 
     $new_pedido = $pedido->replicate();
     $new_pedido->numero = $num + 1;
-    $new_pedido->usuario_id = Auth::id();
-    $new_pedido->usuario_mod_id = Auth::id();
+    $new_pedido->usuario_id = $user->cedula;
+    $new_pedido->usuario_mod_id = $user->cedula;
     $new_pedido->save();
 
     app(ImprentaController::class)->duplicateTintas($pedido, $new_pedido);

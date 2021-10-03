@@ -21,9 +21,10 @@ class AddTarea extends Component
    */
   public function __construct()
   {
-    $this->empresas = Cliente_empresa::where('empresa_id', Auth::user()->empresa_id)->orderBy('nombre')->with('contactos')->get();
-    $this->actividades = Actividad::where('empresa_id', Auth::user()->empresa_id)->get();
-    $this->usuarios = Usuario::where('status', 1)->where('empresa_id', Auth::user()->empresa_id)->get();
+    $user = Auth::user();
+    $this->empresas = Cliente_empresa::where('empresa_id', $user->empresa_id)->orderBy('nombre')->with('contactos')->get();
+    $this->actividades = Actividad::where('empresa_id', $user->empresa_id)->get();
+    $this->usuarios = Usuario::where('status', 1)->where('empresa_id', $user->empresa_id)->get();
   }
 
   /**

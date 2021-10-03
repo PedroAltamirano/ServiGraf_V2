@@ -1,8 +1,5 @@
 @php
 $utilidad = App\Security::hasModule('19');
-$clientes = App\Models\Ventas\Cliente::where('empresa_id', Auth::user()->empresa_id)
-    ->orderBy('cliente_empresa_id')
-    ->get();
 @endphp
 <h1 class="text-center d-none d-print-block">{{ session('userInfo.empresa') }}</h1>
 <h3 class="d-none d-print-block">Orden de trabajo No. <span class="font-weight-bold">{{ $pedido->numero }}</span></h3>
@@ -17,23 +14,7 @@ $clientes = App\Models\Ventas\Cliente::where('empresa_id', Auth::user()->empresa
         value="{{ old('fecha_entrada', $pedido->fecha_entrada) ?? date('Y-m-d') }}">
     </div>
     <div class="form-group col-12 col-md-3 order-3 order-md-2">
-      <label for="cliente_id">Cliente</label>
-      <select class="form-control form-control-sm select2Class @error('cliente_id') is-invalid @enderror"
-        name="cliente_id" id="cliente_id" data-tags="true">
-        <option disabled selected>Selecciona uno...</option>
-        {{ $group = $clientes->first()->cliente_empresa_id ?? 0 }}
-        <optgroup label="{{ $clientes->first()->empresa->nombre ?? 'Sin Clientes' }}">
-          @foreach ($clientes as $cli)
-            @if ($group != $cli->cliente_empresa_id)
-              {{ $group = $cli->cliente_empresa_id }}
-        <optgroup label="{{ $cli->empresa->nombre }}">
-          @endif
-          <option value="{{ $cli->id }}"
-            {{ old('cliente_id', $pedido->cliente_id) == $cli->id ? 'selected' : '' }}>
-            {{ $cli->contacto->nombre . ' ' . $cli->contacto->apellido }}
-          </option>
-          @endforeach
-      </select>
+      <x-cliente column='cliente_id' :old="old('cliente_id', $pedido->cliente_id)" />
     </div>
     <div class="form-group col-12 col-md-2 order-4 order-md-3">
       <label for="telefono">Telefono</label>
@@ -43,12 +24,10 @@ $clientes = App\Models\Ventas\Cliente::where('empresa_id', Auth::user()->empresa
       <label for="prioridad">Prioridad</label>
       <select class="form-control form-control-sm @error('prioridad') is-invalid @enderror" name="prioridad"
         id="prioridad">
-        <option value="1" {{ old('prioridad', $pedido->prioridad) == '1' ? 'selected' : '' }}>
-          Normal
-        </option>
-        <option value="0" {{ old('prioridad', $pedido->prioridad) == '0' ? 'selected' : '' }}>
-          Urgente
-        </option>
+        @foreach (config('pedido.prioridad') as $key => $val)
+          <option value="{{ $key }}" {{ old('prioridad', $pedido->prioridad) == $key ? 'selected' : '' }}>
+            {{ $val }}</option>
+        @endforeach
       </select>
     </div>
     <div class="form-group col-6 col-md-2 order-6 order-md-5">

@@ -47,10 +47,11 @@ class TemplateController extends Controller
    */
   public function store(StoreTarea $request)
   {
+    $user = Auth::user();
     $validated = $request->validated();
-    $validated['empresa_id'] = Auth::user()->empresa_id;
-    $validated['creador_id'] = Auth::id();
-    // $validated['modificador_id'] = Auth::id();
+    $validated['empresa_id'] = $user->empresa_id;
+    $validated['creador_id'] = $user->cedula;
+    // $validated['modificador_id'] = $user->cedula;
 
     DB::beginTransaction();
     try {

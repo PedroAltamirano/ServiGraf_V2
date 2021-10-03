@@ -21,10 +21,11 @@ class EntradaController extends Controller
 {
   public function create()
   {
+    $user = Auth::user();
     $entrada = new Libro_movimientos();
-    $usuarios = Usuario::where('empresa_id', Auth::user()->empresa_id)->where('libro', 1)->get();
-    $referencias = Libro_ref::where('empresa_id', Auth::user()->empresa_id)->get();
-    $bancos = Banco::where('empresa_id', Auth::user()->empresa_id)->get();
+    $usuarios = Usuario::where('empresa_id', $user->empresa_id)->where('libro', 1)->get();
+    $referencias = Libro_ref::where('empresa_id', $user->empresa_id)->get();
+    $bancos = Banco::where('empresa_id', $user->empresa_id)->get();
     $data = [
       'text' => 'Nueva Entrada',
       'path' => route('entrada.store'),
@@ -74,9 +75,10 @@ class EntradaController extends Controller
    */
   public function edit(Libro_movimientos $entrada)
   {
-    $usuarios = Usuario::where('empresa_id', Auth::user()->empresa_id)->where('libro', 1)->get();
-    $referencias = Libro_ref::where('empresa_id', Auth::user()->empresa_id)->get();
-    $bancos = Banco::where('empresa_id', Auth::user()->empresa_id)->get();
+    $user = Auth::user();
+    $usuarios = Usuario::where('empresa_id', $user->empresa_id)->where('libro', 1)->get();
+    $referencias = Libro_ref::where('empresa_id', $user->empresa_id)->get();
+    $bancos = Banco::where('empresa_id', $user->empresa_id)->get();
     $data = [
       'text' => 'Modificar Entrada',
       'path' => route('entrada.update', $entrada),

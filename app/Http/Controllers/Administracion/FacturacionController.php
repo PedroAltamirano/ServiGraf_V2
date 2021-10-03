@@ -55,17 +55,18 @@ class FacturacionController extends Controller
    */
   public function create()
   {
+    $user = Auth::user();
     $factura = new Factura;
-    $fact_num = (Factura::where('tipo', 1)->where('empresa_id', Auth::user()->empresa_id)->select('numero')->orderBy('numero', 'DESC')->first()->numero ?? 0) + 1;
-    $empresas = Fact_empr::where('empresa_id', Auth::user()->empresa_id)->get();
+    $fact_num = (Factura::where('tipo', 1)->where('empresa_id', $user->empresa_id)->select('numero')->orderBy('numero', 'DESC')->first()->numero ?? 0) + 1;
+    $empresas = Fact_empr::where('empresa_id', $user->empresa_id)->get();
 
     $utilidad = Security::hasModule('19');
 
     $iva_p = '12'; //DEBE BBENIR DE CADA EMPRESA DE FACTURACION
-    $ivas = Iva::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
-    $ret_iva = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->where('tipo', 1)->get();
-    $ret_fnt = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->where('tipo', 0)->get();
-    $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->get();
+    $ivas = Iva::where('empresa_id', $user->empresa_id)->where('status', 1)->get();
+    $ret_iva = Retencion::where('empresa_id', $user->empresa_id)->where('status', 1)->where('tipo', 1)->get();
+    $ret_fnt = Retencion::where('empresa_id', $user->empresa_id)->where('status', 1)->where('tipo', 0)->get();
+    $pedidos = Pedido::where('empresa_id', $user->empresa_id)->get();
     $old_pedidos = [];
     $data = [
       'text' => 'Nueva Factura',
@@ -80,9 +81,10 @@ class FacturacionController extends Controller
   // crear nuevo
   public function store(StoreFactura $request)
   {
+    $user = Auth::user();
     $validator = $request->validated();
-    $validator['empresa_id'] = Auth::user()->empresa_id;
-    $validator['usuario_id'] = Auth::id();
+    $validator['empresa_id'] = $user->empresa_id;
+    $validator['usuario_id'] = $user->cedula;
 
     DB::beginTransaction();
     try {
@@ -105,17 +107,18 @@ class FacturacionController extends Controller
   //ver modificar
   public function edit(Factura $factura)
   {
+    $user = Auth::user();
     $fact_num = $factura->numero;
-    $empresas = Fact_empr::where('empresa_id', Auth::user()->empresa_id)->get();
+    $empresas = Fact_empr::where('empresa_id', $user->empresa_id)->get();
 
     $utilidad = Security::hasModule('19');
 
     $iva_p = '12'; //DEBE SALIR DESDE EL SISTEMA
-    $ivas = Iva::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
-    $ret_iva = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->where('tipo', 1)->get();
-    $ret_fnt = Retencion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->where('tipo', 0)->get();
+    $ivas = Iva::where('empresa_id', $user->empresa_id)->where('status', 1)->get();
+    $ret_iva = Retencion::where('empresa_id', $user->empresa_id)->where('status', 1)->where('tipo', 1)->get();
+    $ret_fnt = Retencion::where('empresa_id', $user->empresa_id)->where('status', 1)->where('tipo', 0)->get();
 
-    $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->get();
+    $pedidos = Pedido::where('empresa_id', $user->empresa_id)->get();
     $old_pedidos = $factura->pedidos->map(function ($p) {
       return $p->id;
     })->toArray();

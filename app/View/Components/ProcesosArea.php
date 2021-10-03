@@ -22,11 +22,12 @@ class ProcesosArea extends Component
    */
   public function __construct($name, $old, $id)
   {
+    $user = Auth::user();
     $this->id = $id;
     $this->name = $name;
     $this->old = $old;
-    // $this->list = Proceso::where('empresa_id', Auth::user()->empresa_id)->where('parent_id', null)->orderBy('proceso')->get()->groupBy('area_id');
-    $this->list = Area::where('empresa_id', Auth::user()->empresa_id)->orderBy('orden')->get()->map(function ($area) {
+    // $this->list = Proceso::where('empresa_id', $user->empresa_id)->where('parent_id', null)->orderBy('proceso')->get()->groupBy('area_id');
+    $this->list = Area::where('empresa_id', $user->empresa_id)->orderBy('orden')->get()->map(function ($area) {
       $area->procesos = $area->procesos()->orderBy('proceso')->get()->toTree();
       if ($area->procesos->count()) {
         return  $area;

@@ -17,9 +17,10 @@ class ProveedoresController extends Controller
 {
   public function store(StoreProveedor $request)
   {
+    $user = Auth::user();
     $validator = $request->validated();
-    $validator['empresa_id'] = Auth::user()->empresa_id;
-    $validator['usuario_id'] = Auth::id();
+    $validator['empresa_id'] = $user->empresa_id;
+    $validator['usuario_id'] = $user->cedula;
 
     DB::beginTransaction();
     try {

@@ -47,12 +47,13 @@ class UsuariosController extends Controller
   //crear usuario view
   public function create()
   {
+    $user = Auth::user();
     $usuario = new Usuario;
     $nomina = Nomina::availables();
-    $perfiles = Perfil::where('empresa_id', Auth::user()->empresa_id)->select('id', 'nombre')->get();
-    $procesos = Proceso::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
+    $perfiles = Perfil::where('empresa_id', $user->empresa_id)->select('id', 'nombre')->get();
+    $procesos = Proceso::where('empresa_id', $user->empresa_id)->where('seguimiento', 1)->get();
     $actividades = [];
-    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->where('seguimiento', 1)->get();
+    $clientes = Cliente::where('empresa_id', $user->empresa_id)->where('seguimiento', 1)->with(['contacto', 'empresa'])->orderBy('cliente_empresa_id')->get();
     $data = [
       'path' => route('usuario.store'),
       'text' => 'Nuevo usuario',
@@ -91,11 +92,12 @@ class UsuariosController extends Controller
   //ver modificar usuario
   public function edit(Usuario $usuario)
   {
+    $user = Auth::user();
     $nomina = Nomina::todos();
-    $perfiles = Perfil::where('empresa_id', Auth::user()->empresa_id)->select('id', 'nombre')->get();
-    $procesos = Proceso::where('empresa_id', Auth::user()->empresa_id)->where('seguimiento', 1)->get();
+    $perfiles = Perfil::where('empresa_id', $user->empresa_id)->select('id', 'nombre')->get();
+    $procesos = Proceso::where('empresa_id', $user->empresa_id)->where('seguimiento', 1)->get();
     $actividades = [];
-    $clientes = Cliente::where('empresa_id', Auth::user()->empresa_id)->orderBy('cliente_empresa_id')->where('seguimiento', 1)->get();
+    $clientes = Cliente::where('empresa_id', $user->empresa_id)->orderBy('cliente_empresa_id')->where('seguimiento', 1)->get();
     $data = [
       'path' => route('usuario.update', $usuario->cedula),
       'text' => 'Modificar usuario',

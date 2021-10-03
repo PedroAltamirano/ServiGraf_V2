@@ -24,12 +24,13 @@ class CRMController extends Controller
    */
   public function index()
   {
-    $query = CRM::where('empresa_id', Auth::user()->empresa_id)
+    $user = Auth::user();
+    $query = CRM::where('empresa_id', $user->empresa_id)
       ->where('estado', 0)
       ->with(['actividad', 'asignado', 'contacto'])
-      ->where(function ($query) {
-        $query->orWhere('creador_id', Auth::id());
-        $query->orWhere('asignado_id', Auth::id());
+      ->where(function ($query) use ($user) {
+        $query->orWhere('creador_id', $user->cedula);
+        $query->orWhere('asignado_id', $user->cedula);
       })
       ->orderBy('hora', 'asc');
 
@@ -69,9 +70,10 @@ class CRMController extends Controller
    */
   public function store(StoreTarea $request)
   {
+    $user = Auth::user();
     $validated = $request->validated();
-    $validated['empresa_id'] = Auth::user()->empresa_id;
-    $validated['creador_id'] = Auth::id();
+    $validated['empresa_id'] = $user->empresa_id;
+    $validated['creador_id'] = $user->cedula;
 
     DB::beginTransaction();
     try {

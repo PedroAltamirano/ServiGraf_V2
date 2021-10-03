@@ -49,13 +49,14 @@ class RRHHController extends Controller
    */
   public function marcar()
   {
-    $asistencia = Asistencia::where('empresa_id', Auth::user()->empresa_id)->where('usuario_id', Auth::id())->where('fecha', date('Y-m-d'))->first();
+    $user = Auth::user();
+    $asistencia = Asistencia::where('empresa_id', $user->empresa_id)->where('usuario_id', $user->cedula)->where('fecha', date('Y-m-d'))->first();
     $validated = [];
     DB::beginTransaction();
     try {
       if (!$asistencia) {
-        $validated['empresa_id'] = Auth::user()->empresa_id;
-        $validated['usuario_id'] = Auth::id();
+        $validated['empresa_id'] = $user->empresa_id;
+        $validated['usuario_id'] = $user->cedula;
         $validated['fecha'] = date('Y-m-d');
         $validated['llegada_mañana'] = date('H:i:s');
         if ($asistencia = Asistencia::create($validated)) {
@@ -93,9 +94,10 @@ class RRHHController extends Controller
    */
   public function store(StoreAsistencia $request)
   {
+    $user = Auth::user();
     $validated = $request->validated();
-    $validated['empresa_id'] = Auth::user()->empresa_id;
-    $validated['usuario_id'] = Auth::id();
+    $validated['empresa_id'] = $user->empresa_id;
+    $validated['usuario_id'] = $user->cedula;
     $horas = $this->manageHoras($validated['llegada_mañana'], $validated['salida_mañana'], $validated['llegada_tarde'], $validated['salida_tarde']);
     $validated['total'] = $horas['total'];
     $validated['extras'] = $horas['extras'];

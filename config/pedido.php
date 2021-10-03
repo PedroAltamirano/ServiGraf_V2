@@ -1,6 +1,10 @@
 <?php
 
 return [
+  'prioridad' => [
+    0 => 'Urgente',
+    1 => 'Normal',
+  ],
   'tipo_proceso' => [
     1 => 'Proceso Interno',
     0 => 'Proceso Externo',

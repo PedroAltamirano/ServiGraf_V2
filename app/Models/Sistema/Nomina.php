@@ -51,8 +51,9 @@ class Nomina extends Model
 
   public static function availables()
   {
-    $usuarios = Usuario::where('empresa_id', Auth::user()->empresa_id)->get();
-    $nomina = Nomina::where('empresa_id', Auth::user()->empresa_id)->select('nombre', 'apellido', 'cedula')->get();
+    $user = Auth::user();
+    $usuarios = Usuario::where('empresa_id', $user->empresa_id)->get();
+    $nomina = Nomina::where('empresa_id', $user->empresa_id)->select('nombre', 'apellido', 'cedula')->get();
 
     return $nomina->diff($usuarios);
   }

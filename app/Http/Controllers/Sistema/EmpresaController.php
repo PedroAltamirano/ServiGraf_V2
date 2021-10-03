@@ -19,16 +19,18 @@ class EmpresaController extends Controller
 {
   public function show()
   {
-    $empresa = Auth::user()->empresa->datos ?? new DatosEmpresa;
-    $ccostos = CentroCostos::where('empresa_id', Auth::user()->empresa_id)->get();
+    $user = Auth::user();
+    $empresa = $user->empresa->datos ?? new DatosEmpresa;
+    $ccostos = CentroCostos::where('empresa_id', $user->empresa_id)->get();
     return view('Sistema.empresa', compact('empresa', 'ccostos'));
   }
 
   public function store(StoreEmpresa $request)
   {
+    $user = Auth::user();
     $validated = $request->validated();
-    $validated['empresa_id'] = Auth::user()->empresa_id;
-    $validated['usuario_id_mod'] = Auth::id();
+    $validated['empresa_id'] = $user->empresa_id;
+    $validated['usuario_id_mod'] = $user->cedula;
 
     DB::beginTransaction();
     try {

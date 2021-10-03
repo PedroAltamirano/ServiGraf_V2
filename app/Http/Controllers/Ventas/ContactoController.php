@@ -43,15 +43,16 @@ class ContactoController extends Controller
 
   public function store(StoreContacto $request)
   {
+    $user = Auth::user();
     $validated = $request->validated();
-    $validated['empresa_id'] = Auth::user()->empresa_id;
+    $validated['empresa_id'] = $user->empresa_id;
     $ex = Cliente_empresa::where('ruc', $validated['ruc']);
     if ($ex->exists()) {
       $cli_empresa = $ex->first();
     } else {
       $cli_empresa = Cliente_empresa::create(['nombre' => $validated['empresa'], 'ruc' => $validated['ruc'], 'empresa_id' => $validated['empresa_id'],]);
     }
-    $validated['usuario_id'] = Auth::id();
+    $validated['usuario_id'] = $user->cedula;
     $validated['cliente_empresa_id'] = $cli_empresa->id;
 
     DB::beginTransaction();

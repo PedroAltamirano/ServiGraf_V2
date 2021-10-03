@@ -32,8 +32,9 @@ class NominaController extends Controller
    */
   public function index()
   {
-    $nominas = Nomina::where('empresa_id', Auth::user()->empresa_id)->get();
-    $dotacion = Dotacion::where('empresa_id', Auth::user()->empresa_id)->get();
+    $user = Auth::user();
+    $nominas = Nomina::where('empresa_id', $user->empresa_id)->get();
+    $dotacion = Dotacion::where('empresa_id', $user->empresa_id)->get();
     return view('Administracion.nominas', compact('nominas', 'dotacion'));
   }
 
@@ -44,10 +45,11 @@ class NominaController extends Controller
    */
   public function create()
   {
+    $user = Auth::user();
     $nomina = new Nomina();
-    $ccostos = CentroCostos::where('empresa_id', Auth::user()->empresa_id)->get();
-    $horarios = Horario::where('empresa_id', Auth::user()->empresa_id)->get();
-    $dotacion = Dotacion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
+    $ccostos = CentroCostos::where('empresa_id', $user->empresa_id)->get();
+    $horarios = Horario::where('empresa_id', $user->empresa_id)->get();
+    $dotacion = Dotacion::where('empresa_id', $user->empresa_id)->where('status', 1)->get();
     $docs = $nomina->documentos ?? new NominaDocs();
     $data = [
       'text' => 'Nueva Nomina',
@@ -116,9 +118,10 @@ class NominaController extends Controller
    */
   public function edit(Nomina $nomina)
   {
-    $ccostos = CentroCostos::where('empresa_id', Auth::user()->empresa_id)->get();
-    $horarios = Horario::where('empresa_id', Auth::user()->empresa_id)->get();
-    $dotacion = Dotacion::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
+    $user = Auth::user();
+    $ccostos = CentroCostos::where('empresa_id', $user->empresa_id)->get();
+    $horarios = Horario::where('empresa_id', $user->empresa_id)->get();
+    $dotacion = Dotacion::where('empresa_id', $user->empresa_id)->where('status', 1)->get();
     $docs = $nomina->documentos ?? new NominaDocs();
     $data = [
       'text' => 'Modificar Nomina',

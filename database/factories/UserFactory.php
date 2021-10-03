@@ -60,6 +60,7 @@ $factory->define(Cliente::class, function (Faker $faker) {
         'usuario_id' => 1010101010,
         'contacto_id' => $faker->unique()->numberBetween($min=1, $max=10),
         'cliente_empresa_id' => $faker->numberBetween(1, 3),
+        'tipo_contribuyente' => $faker->numberBetween(1, 2),
         'seguimiento' => $faker->boolean(25),
     ];
 });
@@ -117,7 +118,7 @@ $factory->define(Pedido::class, function (Faker $faker) {
 $factory->define(Pedido_proceso::class, function (Faker $faker) {
     return [
         'empresa_id' => 1709636664001,
-        'pedido_id' => $faker->numberBetween(1, 10),
+        'pedido_id' => $faker->numberBetween(1, 400),
         'proceso_id' => $faker->numberBetween(1, 10),
         'tiro'=> $faker->numberBetween(1, 5),
         'retiro' => $faker->numberBetween(0, 5),
