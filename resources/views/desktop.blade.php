@@ -155,7 +155,7 @@
   <hr class="m-2 m-md-3" />
   <h2 class="m-2 m-md-3">Utilidad por pedido</h2>
   <div class="m-2 m-md-3">
-    <table class="table table-striped table-sm">
+    <table id="utilidad" class="table table-striped table-sm">
       <thead>
         <tr>
           <th>Numero</th>
@@ -251,6 +251,9 @@
           borderWidth: 1
         }]
       },
+      options: {
+        maintainAspectRatio: false,
+      }
     });
 
     var externa = new Chart($('#externa'), {
@@ -263,6 +266,9 @@
           borderWidth: 1
         }]
       },
+      options: {
+        maintainAspectRatio: false,
+      }
     });
 
     var materiales = new Chart($('#materiales'), {
@@ -275,6 +281,9 @@
           borderWidth: 1
         }]
       },
+      options: {
+        maintainAspectRatio: false,
+      }
     });
 
     var pedidosC = new Chart($('#pedidosC'), {
@@ -288,6 +297,9 @@
           borderWidth: 1
         }]
       },
+      options: {
+        maintainAspectRatio: false,
+      }
     });
 
     var pedidosD = new Chart($('#pedidosD'), {
@@ -301,6 +313,17 @@
           borderWidth: 1
         }]
       },
+      options: {
+        maintainAspectRatio: false,
+      }
+    });
+  </script>
+  <script>
+    $('#utilidad').DataTable({
+      "paging": true,
+      "ordering": true,
+      "info": false,
+      "responsive": true,
     });
   </script>
   @stack('kpis-script')

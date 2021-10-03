@@ -41,10 +41,43 @@ class YearPred extends Component
     $years = Pedido::select(DB::raw("Year(fecha_entrada) as years"))->distinct()->get()->count() - 1;
 
     $this->actual = Pedido::whereBetween('fecha_entrada', [$start, $end])->select(DB::raw('(sum(total_pedido)) as total'), DB::raw("MONTH(fecha_entrada) as month"))->groupBy('month')->orderBy('month', 'asc')->get();
+    $this->actual = $this->actual
+      ->map(function ($e) {
+        return ['x' => $this->months[$e->month - 1], 'y' => $e->total];
+      })
+      ->toArray();
 
-    $this->average = Pedido::whereBetween('fecha_entrada', [$start_pred, $end_pred])->select(DB::raw("(sum(total_pedido) / {$years}) as total"), DB::raw("MONTH(fecha_entrada) as month"))->orderBy('month', 'asc')->groupBy('month')->get();
+    $this->average = Pedido::whereBetween('fecha_entrada', [$start_pred, $end_pred])->select(
+      DB::raw("(sum(total_pedido) / {$years}) as total"),
+      DB::raw("MONTH(fecha_entrada) as month")
+    )->orderBy('month', 'asc')
+      ->groupBy('month')
+      ->get();
 
-    $this->yearly = Pedido::whereBetween('fecha_entrada', [$start_pred, $end_pred])->select(DB::raw("(sum(total_pedido)) as total"), DB::raw("MONTH(fecha_entrada) as month"), DB::raw("Year(fecha_entrada) as year"))->orderBy('year', 'asc')->orderBy('month', 'asc')->groupBy('year', 'month')->get()->groupBy('year');
+    $this->average = $this->average
+      ->map(function ($e) {
+        return ['x' => $this->months[$e->month - 1], 'y' => $e->total];
+      })
+      ->toArray();
+
+    $this->yearly = Pedido::whereBetween('fecha_entrada', [$start_pred, $end_pred])
+      ->select(
+        DB::raw("(sum(total_pedido)) as total"),
+        DB::raw("MONTH(fecha_entrada) as month"),
+        DB::raw("Year(fecha_entrada) as year")
+      )->orderBy('year', 'asc')
+      ->orderBy('month', 'asc')
+      ->groupBy('year', 'month')
+      ->get()
+      ->groupBy('year');
+
+    $this->yearly = $this->yearly->map(function ($item) {
+      return $item
+        ->map(function ($item) {
+          return ['x' => $this->months[$item->month - 1], 'y' => $item->total];
+        })
+        ->toArray();
+    });
   }
 
   /**
