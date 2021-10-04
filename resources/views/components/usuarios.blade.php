@@ -2,7 +2,7 @@
   <option value="none" selected>Selecciona uno...</option>
   @foreach ($usuarios as $user)
     <option value="{{ $user->id }}" @if ($user->id == auth()->id()) selected @endif>
-      {{ $user->nomina->nombre_completo }}
+      {{ $user->nomina->full_name }}
     </option>
   @endforeach
 </select>

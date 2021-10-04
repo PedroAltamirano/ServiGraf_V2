@@ -1,117 +1,63 @@
 @extends('layouts.factura')
 
 @section('content')
-  <button onClick="imprimir()" style="width: 5%; position: fixed; top 0; left: 0;" id="printer"><em
-      class="fa fa-print"></em></button>
 
-  <div class="check">{{ $factura->numero }}</div>
+  @php
 
-  {{-- Datos del cliente --}}
-  <div class="cliizq pto9">
-    <table id="cliizq">
-      <tr>
-        <td class="adjust php colorblack colorblack">{{ $factura->cliente->full_name }}</td>
-      </tr>
-      <tr>
-        <td class="adjust php colorblack">{{ $factura->atencion }}</td>
-      </tr>
-      <tr>
-        <td class="adjust php colorblack">{{ $factura->ruc }}</td>
-      </tr>
-      <tr>
-        <td class="adjust php colorblack">{{ $factura->telefono }}</td>
-      </tr>
-      <tr>
-        <td class="adjust php colorblack">{{ $factura->direccion }}</td>
-      </tr>
-    </table>
+  @endphp
+
+  <div class="absolute" style="left: 159mm; top: 28mm; font-size: 14pt;">{{ $factura->numero }}</div>
+
+  {{-- Descripcion del Cliente (izq) --}}
+  <div class="absolute font-weight-bold" style="left: 34mm; top: 45mm">{{ $factura->cliente->empresa->nombre }}</div>
+  <div class="absolute" style="left: 34mm; top: 50mm"><small>{{ $factura->cliente->full_name }}</small></div>
+  <div class="absolute" style="left: 34mm; top: 55mm">{{ $factura->cliente->empresa->ruc }}</div>
+  <div class="absolute" style="left: 34mm; top: 60mm"><small>{{ $factura->cliente->contacto->movil }}</small></div>
+  <div class="absolute" style="left: 34mm; top: 65mm"><small>{{ $factura->cliente->contacto->direccion }}</small>
   </div>
 
-  <div class="check pto9 bold">{{ $factura->check }}</div>
-
-  <div class="clider pto9">
-    <table id="clider">
-      <tr>
-        <td class="adjust php colorblack">{{ $factura->fecha }}</td>
-      </tr>
-      <tr>
-        <td class="adjust php colorblack">{{ $factura->pago }}</td>
-      </tr>
-      <tr>
-        <td class="adjust php colorblack">{{ $factura->ots }}</td>
-      </tr>
-    </table>
+  {{-- Descripcion del Cliente (der) --}}
+  <div class="absolute" style="left: 142mm; top: 45mm">{{ $factura->emision }}</div>
+  <div class="absolute" style="left: 142mm; top: 55mm">{{ $factura->emision }}</div>
+  <div class="absolute" style="left: 142mm; top: 60mm">{{ config('factura.tipo_pago')[$factura->tipo_pago] }}</div>
+  <div class="absolute" style="left: 142mm; top: 65mm">{{ $factura->pedidos->count() ? $factura->pedidos : '' }}
   </div>
 
 
   {{-- Productos --}}
-  <div class="productos">
-    <table id="prodtab">
-      <tbody class="colorblack">
-        @foreach ($factura->productos as $item)
-          <tr>
-            <td class="leftpad" style="border-bottom:none; border-top: none; width: 14mm">
-              {{ $item->cantidad }}
-            </td>
-            <td class="leftpad" style="border-bottom:none; border-top: none; width: 114mm">
-              {{ $item->detalle }}
-            </td>
-            <td class="rightpad" style="border-bottom:none; border-top: none; width: 29mm">
-              {{ $item->valorunitario }}</td>
-            <td class="rightpad" style="border-bottom:none; border-top: none; width: 29mm">
-              {{ $item->subtotal }}
-            </td>
-          </tr>
-        @endforeach
-      </tbody>
-    </table>
-  </div>
+  <table class="absolute productos">
+    <tbody class="colorblack">
+      @foreach ($factura->productos as $item)
+        <tr>
+          <td class="leftpad" style="border-bottom:none; border-top: none; width: 14mm">
+            {{ $item->cantidad }}
+          </td>
+          <td class="leftpad" style="border-bottom:none; border-top: none; width: 114mm">
+            {{ $item->detalle }}
+          </td>
+          <td class="rightpad" style="border-bottom:none; border-top: none; width: 29mm">
+            {{ $item->valorunitario }}</td>
+          <td class="rightpad" style="border-bottom:none; border-top: none; width: 29mm">
+            {{ $item->subtotal }}
+          </td>
+        </tr>
+      @endforeach
+    </tbody>
+  </table>
 
-  <div class="totales">
-    <table style="text-align: right" id="totales">
-      <tr class="pto8">
-        <td style="width: 7mm"></td>
-        <td style="width: 33mm" class="bold rightpad colorblack" style="border-bottom: none">{{ $factura->subtotal }}
-        </td>
-      </tr>
-      <tr class="pto8 bold">
-        <td></td>
-        <td class="rightpad colorblack" style="border-bottom: none; border-top: none">{{ $factura->descuento }}</td>
-      </tr>
-      <tr class="pto8 bold">
-        <td style="border-left: none; border-bottom: none; border-top: none; text-align: center">{{ $factura->ivap }}
-        </td>
-        <td class="rightpad colorblack" style="border-bottom: none; border-top: none">{{ $factura->iva }}</td>
-      </tr>
-      <tr class="pto8 bold">
-        <td></td>
-        <td class="rightpad colorblack" style="border-bottom: none; border-top: none">{{ $factura->iva0 }}</td>
-      </tr>
-      <tr class="pto8 bold">
-        <td></td>
-        <td class="rightpad colorblack" style="border-top: none">{{ $factura->total }}</td>
-      </tr>
-    </table>
-  </div>
+  {{-- Totales --}}
+  <div class="absolute total" style="left: 163mm; top: 198mm">{{ $factura->iva_p }}</div>
+  <div class="absolute total" style="top: 188mm">{{ $factura->subtotal }}</div>
+  <div class="absolute total" style="top: 193mm">{{ $factura->descuento }}</div>
+  <div class="absolute total" style="top: 198mm">{{ $factura->iva }}</div>
+  <div class="absolute total" style="top: 203mm">{{ $factura->iva0 }}</div>
+  <div class="absolute total" style="top: 208mm">{{ $factura->total }}</div>
 
-  <div class="son">{{ numtowords($total) }}</div>
+  <div class="absolute son">{{ $total }}</div>
 
   <!-- DEBO Y PAGARE -->
-  <div class="debo pto8">
-    {{ numtowords($total) }}
-  </div>
+  <div class="absolute debo">{{ $total }}</div>
 
   <!-- FIRMA -->
-  <div style="text-align: center" class="firma colorblack pto9">{{ $factura->por }}</div>
-
-  <script>
-    // funcion de impresion
-    function imprimir() {
-      var reiniciarpagina = document.body.innerHTML;
-      var printer = document.getElementById('printer');
-      printer.style.display = 'none';
-      window.print();
-      document.body.innerHTML = reiniciarpagina;
-    }
-  </script>
+  <div class="absolute firma">{{ $factura->usuario->nomina->full_name }}</div>
 @endsection

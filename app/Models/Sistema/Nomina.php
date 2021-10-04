@@ -58,7 +58,7 @@ class Nomina extends Model
     return $nomina->diff($usuarios);
   }
 
-  public function getNombreCompletoAttribute()
+  public function getFullNameAttribute()
   {
     return $this->nombre . ' ' . $this->apellido;
   }

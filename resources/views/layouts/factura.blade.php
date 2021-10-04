@@ -19,4 +19,8 @@
   @yield('content')
 </body>
 
+<script>
+  // Imprimir
+</script>
+
 </html>

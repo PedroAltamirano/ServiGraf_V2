@@ -321,7 +321,7 @@
     const routeCliente = `{{ route('cliente.info') }}`;
     const getPhone = () => {
       axios.post(routeCliente, {
-        cliente_id: $('#cliente').val(),
+        cliente_id: $('#cliente_id').val(),
       }).then(res => {
         let data = res.data
         $('#ruc').val(data.ruc);
@@ -333,7 +333,7 @@
       });
     }
 
-    $('#cliente').change(() => getPhone());
+    $('#cliente_id').change(() => getPhone());
 
     $(() => {
       if (fact_new) getPhone()

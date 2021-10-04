@@ -17,7 +17,7 @@
             {{ $cedula = old('cedula', $usuario->cedula) }}
             @foreach ($nomina as $person)
               <option value="{{ $person->cedula }}" {{ $cedula == $person->cedula ? 'selected' : '' }}>
-                {{ $person->nombre_completo }}
+                {{ $person->full_name }}
               </option>
             @endforeach
           </select>

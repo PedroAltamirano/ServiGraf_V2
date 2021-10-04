@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use App\Helpers\NumToWords;
 use Exception;
 use App\Security;
 use Carbon\Carbon;
@@ -231,6 +232,8 @@ class FacturacionController extends Controller
 
   public function print(Factura $factura)
   {
-    return view('Administracion.A5', compact('factura'));
+    $total = NumToWords::numtowords($factura->total);
+    // $total = $factura->total;
+    return view('Administracion.A4', compact('factura', 'total'));
   }
 }

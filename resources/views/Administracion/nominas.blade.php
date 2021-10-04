@@ -21,7 +21,7 @@
         @foreach ($nominas as $item)
           <tr>
             <td>{{ $item->cedula }}</td>
-            <td>{{ $item->nombre_completo }}</td>
+            <td>{{ $item->full_name }}</td>
             <td>{{ $item->movil }}</td>
             <td>{{ $item->correo }}</td>
             <td>{{ $item->cargo }}</td>

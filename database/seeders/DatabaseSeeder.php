@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
       ClientesSeeder::class,
       AreasSeeder::class,
       PedidosSeeder::class,
+      IvasSeeder::class,
     ]);
   }
 }
