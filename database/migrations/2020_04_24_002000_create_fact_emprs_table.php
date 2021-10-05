@@ -20,6 +20,7 @@ class CreateFactEmprsTable extends Migration
       $table->string('empresa');
       $table->string('representante');
       $table->string('direccion');
+      $table->string('ciudad');
       $table->string('correo');
       $table->string('telefono');
       $table->string('celular', 15)->nullable();

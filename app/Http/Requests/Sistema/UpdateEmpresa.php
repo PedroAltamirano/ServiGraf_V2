@@ -29,6 +29,7 @@ class UpdateEmpresa extends FormRequest
       'ruc' => ['required', 'numeric', 'regex:/[0-9]{13}/'],
       'ciudad' => ['required', 'string', 'max:250'],
       'direccion' => ['required', 'string', 'max:250'],
+      'ciudad' => ['required', 'string', 'max:250'],
       'telefono' => ['required', 'numeric', 'regex:/[0-9]{7}/'],
       'celular' => ['required', 'numeric', 'regex:/[0-9]{10}/'],
       'web' => ['required', 'url', 'max:250'],
