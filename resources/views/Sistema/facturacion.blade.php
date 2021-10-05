@@ -116,6 +116,7 @@
       modal.find('#empresa').val(data ? data.empresa : '');
       modal.find('#representante').val(data ? data.representante : '');
       modal.find('#direccion').val(data ? data.direccion : '');
+      modal.find('#ciudad').val(data ? data.ciudad : '');
       modal.find('#correo').val(data ? data.correo : '');
       modal.find('#telefono').val(data ? data.telefono : '');
       modal.find('#celular').val(data ? data.celular : '');

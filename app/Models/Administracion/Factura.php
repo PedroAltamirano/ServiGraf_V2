@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Ventas\Cliente;
 use App\Models\Produccion\Pedido;
 use App\Models\Administracion\FactProd;
+use App\Models\Sistema\FactEmpr;
 use App\Models\Usuarios\Usuario;
 
 class Factura extends Model
@@ -28,6 +29,11 @@ class Factura extends Model
   public function usuario()
   {
     return $this->belongsTo(Usuario::class, 'usuario_id', 'cedula');
+  }
+
+  public function empresa()
+  {
+    return $this->belongsTo(FactEmpr::class, 'fact_emp_id');
   }
 
   public function cliente()

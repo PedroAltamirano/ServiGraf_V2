@@ -14,6 +14,10 @@
   }
 }
 
+body {
+  font-size: 10pt;
+}
+
 .absolute {
   position: absolute;
 }
@@ -23,6 +27,12 @@
   max-width: 187mm;
   left: 13mm;
   top: 82mm;
+}
+
+.iva {
+  left: 163mm;
+  top: 198mm;
+  width: 4mm;
 }
 
 .total {

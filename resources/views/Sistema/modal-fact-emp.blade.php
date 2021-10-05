@@ -27,6 +27,11 @@
                 class="form-control @error('representante') is-invalid @enderror" value="{{ old('direccion') }}">
             </div>
             <div class="form-group col-6 col-md-6">
+              <label for="ciudad">Ciudad</label>
+              <input type="text" name="ciudad" id="ciudad" class="form-control @error('ciudad') is-invalid @enderror"
+                value="{{ old('ciudad') }}">
+            </div>
+            <div class="form-group col-6 col-md-6">
               <label for="correo">Correo Electrónico</label>
               <input type="text" name="correo" id="correo"
                 class="form-control @error('representante') is-invalid @enderror" value="{{ old('correo') }}">
