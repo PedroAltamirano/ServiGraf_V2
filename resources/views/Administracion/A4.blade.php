@@ -2,7 +2,7 @@
 
 @section('content')
 
-  <div class="absolute" style="left: 159mm; top: 28mm; font-size: 14pt;">{{ $numero }}</div>
+  <div class="absolute" style="left: 159mm; top: 28mm; font-size: 14pt;">{{ $factura->numero }}</div>
 
   {{-- Descripcion del Cliente (izq) --}}
   <div class="absolute font-weight-bold" style="left: 34mm; top: 45mm">{{ $cliente->empresa->nombre }}</div>
@@ -13,8 +13,8 @@
   </div>
 
   {{-- Descripcion del Cliente (der) --}}
-  <div class="absolute" style="left: 142mm; top: 45mm">{{ $factura->emision }}</div>
-  <div class="absolute" style="left: 142mm; top: 55mm">{{ $emision }}</div>
+  <div class="absolute font-weight-bold" style="left: 142mm; top: 45mm; width: 55mm;">{{ $code }}</div>
+  <div class="absolute" style="left: 142mm; top: 55mm">{!! $emision !!}</div>
   <div class="absolute" style="left: 142mm; top: 60mm">{{ config('factura.tipo_pago')[$factura->tipo_pago] }}</div>
   <div class="absolute" style="left: 142mm; top: 65mm">{{ $factura->pedidos->count() ? $factura->pedidos : '' }}
   </div>
@@ -25,15 +25,15 @@
     <tbody class="table table-borderless ">
       @foreach ($factura->productos as $item)
         <tr>
-          <td style="width: 13mm; text-align: center;">
+          <td style="width: 14mm; text-align: center;">
             {{ $item->cantidad }}
           </td>
           <td style="width: 115mm">
             {{ $item->detalle }}
           </td>
-          <td style="width: 30mm; text-align: right;">
+          <td style="width: 29mm; text-align: right;">
             {{ $item->valor_unitario }}</td>
-          <td style="width: 30mm; text-align: right;">
+          <td style="width: 29mm; text-align: right;">
             {{ $item->subtotal }}
           </td>
         </tr>

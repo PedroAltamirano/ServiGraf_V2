@@ -1,7 +1,7 @@
 @page {
-  /* size: 210mm 297mm; */
+  size: 210mm 297mm;
   size: A4;
-  margin: 5mm 5mm 5mm 5mm;
+  margin: 0mm;
 }
 
 @media print {
@@ -37,7 +37,7 @@ body {
 
 .total {
   width: 29mm;
-  left: 172mm;
+  left: 171mm;
   text-align: right;
 }
 

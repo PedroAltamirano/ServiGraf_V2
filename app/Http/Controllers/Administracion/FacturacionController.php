@@ -234,10 +234,16 @@ class FacturacionController extends Controller
   {
     $empresa = $factura->empresa;
     $cliente = $factura->cliente;
-    $numero = $empresa->ruc . ' ' . $empresa->caja . '-' . number_format($factura->numero);
-    $emision =
-      $iva_p = $empresa->iva->porcentaje;
+
+    $code = $empresa->ruc . ' ' . $empresa->caja . '-' . number_format($factura->numero);
+
+    $date = new Carbon($factura->emision);
+    $emision = $empresa->ciudad . '&emsp;';
+    $emision .= $date->format('d / m / Y');
+
+    $iva_p = $empresa->iva->porcentaje;
     $total = NumToWords::numtowords($factura->total);
-    return view('Administracion.A4', compact('factura', 'empresa', 'cliente', 'numero', 'iva_p', 'total'));
+
+    return view('Administracion.A4', compact('factura', 'empresa', 'cliente', 'code', 'emision', 'iva_p', 'total'));
   }
 }

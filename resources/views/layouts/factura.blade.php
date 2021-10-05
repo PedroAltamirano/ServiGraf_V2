@@ -15,7 +15,7 @@
   <link href="{{ asset('css/factura.css') }}" rel="stylesheet">
 </head>
 
-<body class="A4">
+<body class="A4 m-0 p-0">
   @yield('content')
 </body>
 
