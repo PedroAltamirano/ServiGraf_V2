@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Administracion\Iva;
 use App\Models\Administracion\Retencion;
 
-class Fact_empr extends Model
+class FactEmpr extends Model
 {
   use SoftDeletes;
 
@@ -17,7 +17,7 @@ class Fact_empr extends Model
     'status' => 1,
   ];
   protected $fillable = [
-    'empresa_id', 'empresa', 'representante', 'ruc', 'direccion', 'correo', 'telefono', 'celular', 'caja', 'inicio', 'valido_de', 'valido_a', 'clave_sri', 'clave_firma_sri', 'iva_id', 'ret_iva_id', 'ret_fuente_id', 'impresion', 'logo', 'status',
+    'empresa_id', 'empresa', 'representante', 'ruc', 'direccion', 'ciudad', 'correo', 'telefono', 'celular', 'caja', 'inicio', 'valido_de', 'valido_a', 'clave_sri', 'clave_firma_sri', 'iva_id', 'ret_iva_id', 'ret_fuente_id', 'impresion', 'logo', 'status',
   ];
 
   public function iva()

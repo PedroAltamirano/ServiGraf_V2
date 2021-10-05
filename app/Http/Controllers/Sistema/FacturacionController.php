@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
 
-use App\Models\Sistema\Fact_empr;
+use App\Models\Sistema\FactEmpr;
 use App\Models\Administracion\Iva;
 use App\Models\Administracion\Retencion;
 
@@ -27,7 +27,7 @@ class FacturacionController extends Controller
   public function index()
   {
     $user = Auth::user();
-    $facturas = Fact_empr::where('empresa_id', $user->empresa_id)->get();
+    $facturas = FactEmpr::where('empresa_id', $user->empresa_id)->get();
     $ivas = Iva::where('empresa_id', $user->empresa_id)->get();
     $ret_iva = Retencion::where('empresa_id', $user->empresa_id)->where('tipo', 1)->get();
     $ret_fnt = Retencion::where('empresa_id', $user->empresa_id)->where('tipo', 0)->get();
@@ -60,7 +60,7 @@ class FacturacionController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($factura = Fact_empr::create($validated)) {
+      if ($factura = FactEmpr::create($validated)) {
         if (isset($file)) {
           $name = $factura->id;
           $imageName = Archivos::storeImagen($name, $file, 'facturas');
@@ -109,7 +109,7 @@ class FacturacionController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(UpdateFactura $request, Fact_empr $factura)
+  public function update(UpdateFactura $request, FactEmpr $factura)
   {
     $validated = $request->validated();
     $validated['status'] = $validated['status'] ?? 0;
@@ -143,7 +143,7 @@ class FacturacionController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy(Fact_empr $factura)
+  public function destroy(FactEmpr $factura)
   {
     DB::beginTransaction();
     try {

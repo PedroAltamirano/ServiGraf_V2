@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
 
 use App\Models\Ventas\Cliente;
-use App\Models\Sistema\Fact_empr;
+use App\Models\Sistema\FactEmpr;
 use App\Models\Produccion\Pedido;
 use App\Models\Administracion\Iva;
 use App\Models\Administracion\Factura;
@@ -45,7 +45,7 @@ class FacturacionController extends Controller
 
   public function show()
   {
-    $empresas = Fact_empr::where('empresa_id', Auth::user()->empresa_id)->get();
+    $empresas = FactEmpr::where('empresa_id', Auth::user()->empresa_id)->get();
     return view('Administracion.facturas', compact('empresas'));
   }
 
@@ -59,7 +59,7 @@ class FacturacionController extends Controller
     $user = Auth::user();
     $factura = new Factura;
     $fact_num = (Factura::where('tipo', 1)->where('empresa_id', $user->empresa_id)->select('numero')->orderBy('numero', 'DESC')->first()->numero ?? 0) + 1;
-    $empresas = Fact_empr::where('empresa_id', $user->empresa_id)->get();
+    $empresas = FactEmpr::where('empresa_id', $user->empresa_id)->get();
 
     $utilidad = Security::hasModule('19');
 
@@ -110,7 +110,7 @@ class FacturacionController extends Controller
   {
     $user = Auth::user();
     $fact_num = $factura->numero;
-    $empresas = Fact_empr::where('empresa_id', $user->empresa_id)->get();
+    $empresas = FactEmpr::where('empresa_id', $user->empresa_id)->get();
 
     $utilidad = Security::hasModule('19');
 
@@ -156,7 +156,7 @@ class FacturacionController extends Controller
     }
   }
 
-  public function manageProductos($request, Factura $model)
+  private function manageProductos($request, Factura $model)
   {
     $relation = $model->productos();
     if ($relation->count()) {
@@ -180,7 +180,7 @@ class FacturacionController extends Controller
     }
   }
 
-  public function managePedidos($request, Factura $model)
+  private function managePedidos($request, Factura $model)
   {
     $relation = $model->pedidos_id();
     if ($relation->count()) {
@@ -232,8 +232,12 @@ class FacturacionController extends Controller
 
   public function print(Factura $factura)
   {
+    $empresa = $factura->empresa;
+    $cliente = $factura->cliente;
+    $numero = $empresa->ruc . ' ' . $empresa->caja . '-' . number_format($factura->numero);
+    $emision =
+      $iva_p = $empresa->iva->porcentaje;
     $total = NumToWords::numtowords($factura->total);
-    // $total = $factura->total;
-    return view('Administracion.A4', compact('factura', 'total'));
+    return view('Administracion.A4', compact('factura', 'empresa', 'cliente', 'numero', 'iva_p', 'total'));
   }
 }
