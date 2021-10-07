@@ -127,7 +127,8 @@ class ContactoController extends Controller
       $cliente = Cliente::firstOrCreate(
         ['contacto_id' => $contacto->id],
         ['empresa_id' => $user->empresa_id, 'usuario_id' => $user->cedula, 'contacto_id' => $contacto->id, 'cliente_empresa_id' => $empresa->id, 'tipo_contribuyente' => $request['tipo_contribuyente'], 'seguimiento' => $request['seguimiento']]
-      );
+      )->withTrashed();
+      $cliente->restore();
       $cliente->update(Arr::only($request, ['cliente_empresa_id', 'tipo_contribuyente', 'seguimiento']));
     } else {
       if ($cliente = $contacto->cliente) {
