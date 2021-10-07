@@ -238,7 +238,7 @@ $oldTintasRetiro =
   </div>
   @php
   // SOLICITUD MATERIAL
-  $opts_mats = '<option disabled selected>Selecciona uno...</option>';
+  $opts_mats = "<option value='' selected>Selecciona uno...</option>";
   if ($materiales->count()) {
       $first_mat = $materiales->first();
       $group = $first_mat->categoria_id;
@@ -255,7 +255,7 @@ $oldTintasRetiro =
       }
   }
 
-  $opts_provs = '<option disabled selected>Selecciona uno...</option>';
+  $opts_provs = "<option value='' selected>Selecciona uno...</option>";
   foreach ($proveedores as $prov) {
       $opts_provs .= "<option value='$prov->id'>$prov->proveedor / $prov->telefono</option>";
   }
@@ -295,7 +295,7 @@ $oldTintasRetiro =
   }
 
   // ABONOS
-  $opts_pagos = '<option disabled selected>Selecciona uno...</option>';
+  $opts_pagos = "<option value='' selected>Selecciona uno...</option>";
   foreach (config('pedido.formas_pago') ?? [] as $key => $value) {
       $opts_pagos .= "<option value='$key'>$value</option>";
   }
@@ -306,17 +306,18 @@ $oldTintasRetiro =
           $abono->usuario_nombre = $abono->nomina->nombre;
       });
   }
-  // if($cnt = count(old('abono_fecha') ?? [])) {
-  //   for($i = 0; $i < $cnt; $i++){
-  //     $model = new \stdClass;
-  //     $model->fecha = old('abono_fecha')[$i];
-  //     $model->usuario_id = old('abono_usuario')[$i];
-  //     $model->usuario_name = null;
-  //     $model->forma_pago = old('abono_pago')[$i];
-  //     $model->valor = old('abono_valor')[$i];
-  //     $old_abonos[] = $model;
-  //   }
-  // }
+  if ($cnt = count(old('abono_fecha') ?? [])) {
+      $old_abonos = [];
+      for ($i = 0; $i < $cnt; $i++) {
+          $model = new \stdClass();
+          $model->fecha = old('abono_fecha')[$i];
+          $model->usuario_id = old('abono_usuario')[$i];
+          $model->usuario_name = session('userInfo.nomina');
+          $model->forma_pago = old('abono_pago')[$i];
+          $model->valor = old('abono_valor')[$i];
+          $old_abonos[] = $model;
+      }
+  }
   @endphp
 @endsection
 
@@ -559,7 +560,6 @@ $oldTintasRetiro =
     //ABONOS
     var index_abono = 0;
     const method = `{{ $method }}`;
-    // const usuarios = `x-usuarios name='abono_usuario[]' id='abono_usuarios' /`;
     const usuario_id = `{{ auth()->id() }}`;
     const usuario_nombre = `{{ session('userInfo.nomina') }}`;
     const opts_pagos = `@json($opts_pagos)`;
@@ -630,7 +630,7 @@ $oldTintasRetiro =
         swal('Oops!', 'Primero debes crear el pedido.', 'error');
         return;
       }
-      add_abono(abono_usuario = usuario_id, abono_usuario_nombre = usuario_nombre);
+      add_abono(null, abono_usuario = usuario_id, abono_usuario_nombre = usuario_nombre);
     })
     if (old_abonos != []) {
       old_abonos.map(item => {

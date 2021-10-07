@@ -4,21 +4,20 @@ namespace App\Http\Controllers\Produccion;
 
 use Exception;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
-
 use App\Http\Controllers\Produccion\ImprentaController;
 
-use App\Models\Produccion\Pedido;
 use App\Models\Produccion\Abono;
+use App\Models\Produccion\Pedido;
+use App\Models\Sistema\DatosEmpresa;
 
+use App\Http\Requests\Produccion\AbonoRequest;
 use App\Http\Requests\Produccion\StorePedidoImprenta;
 use App\Http\Requests\Produccion\UpdatePedidoImprenta;
-use App\Models\Sistema\DatosEmpresa;
 
 class PedidosController extends Controller
 {
@@ -162,26 +161,28 @@ class PedidosController extends Controller
     return redirect()->route('pedido.edit', $new_pedido->id);
   }
 
-  public function abonos(Request $request, $data_id)
+  public function abonos(AbonoRequest $request, Pedido $pedido)
   {
-    Abono::where('pedido_id', $data_id)->delete();
-    $aboSize = sizeof($request->abono_pago);
+    $validated = $request->validated();
+    Abono::where('pedido_id', $pedido->id)->delete();
+
+    $aboSize = sizeof($validated['abono_pago']);
     for ($i = 0; $i < $aboSize; $i++) {
       $model = new Abono;
-      $model->pedido_id = $data_id;
+      $model->pedido_id = $pedido->id;
       $model->usuario_id = Auth::id();
-      $model->fecha = $request->abono_fecha[$i];
-      $model->forma_pago = $request->abono_pago[$i];
-      $model->valor = $request->abono_valor[$i];
+      $model->fecha = $validated['abono_fecha'][$i];
+      $model->forma_pago = $validated['abono_pago'][$i];
+      $model->valor = $validated['abono_valor'][$i];
       $model->save();
     }
 
-    $model = Pedido::find($data_id);
-    $model->abono = $request->totalAbonos;
-    $model->saldo = $model->total_pedido - $request->totalAbonos;
+    $model = Pedido::find($pedido->id);
+    $model->abono = $validated['abono'];
+    $model->saldo = $model->total_pedido - $validated['abono'];
     $model->save();
 
-    Alert::success('Acción completada', 'Abono creado con éxito');
+    Alert::success('Acción completada', 'Abono guardado con éxito');
     return redirect()->back();
   }
 

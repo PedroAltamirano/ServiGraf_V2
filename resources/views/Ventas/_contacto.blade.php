@@ -1,10 +1,10 @@
 {{-- DATOS DE LA EMPRESA --}}
 <div class="form-row">
   <div class="form-group col-12 col-md-6">
-    <label for="empresa">Empresa</label>
+    <label for="nombre">Empresa</label>
     <div>
-      <input type="text" class="form-control form-control-sm @error('empresa') is-invalid @enderror" name="empresa"
-        id="empresa" value="{{ old('empresa', $empresa->nombre) }}">
+      <input type="text" class="form-control form-control-sm @error('nombre') is-invalid @enderror" name="nombre"
+        id="nombre" value="{{ old('nombre', $empresa->nombre) }}">
     </div>
   </div>
   <div class="form-group col-12 col-md-3">

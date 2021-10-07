@@ -46,24 +46,14 @@ class ContactoController extends Controller
     $user = Auth::user();
     $validated = $request->validated();
     $validated['empresa_id'] = $user->empresa_id;
-    $ex = Cliente_empresa::where('ruc', $validated['ruc']);
-    if ($ex->exists()) {
-      $cli_empresa = $ex->first();
-    } else {
-      $cli_empresa = Cliente_empresa::create(['nombre' => $validated['empresa'], 'ruc' => $validated['ruc'], 'empresa_id' => $validated['empresa_id'],]);
-    }
     $validated['usuario_id'] = $user->cedula;
-    $validated['cliente_empresa_id'] = $cli_empresa->id;
 
     DB::beginTransaction();
     try {
       if ($contacto = Contacto::create(Arr::except($validated, ['empresa', 'ruc', 'isCliente', 'seguimento']))) {
         $mssg = 'Contacto creado con éxito';
-        if (isset($validated['isCliente'])) {
-          $validated['contacto_id'] = $contacto->id;
-          $cliente = Cliente::create(Arr::only($validated, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'tipo_contribuyente', 'seguimiento']));
-          $mssg = 'Cliente creado con éxito';
-        }
+
+        $this->manageClient($validated, $contacto);
 
         DB::commit();
         Alert::success('Acción completada', $mssg);
@@ -100,33 +90,12 @@ class ContactoController extends Controller
   {
     $validated = $request->validated();
 
-    $ex = Cliente_empresa::where('ruc', $validated['ruc']);
-    if ($ex->exists()) {
-      $cli_empresa = $ex->first();
-      $cli_empresa->update(Arr::only($validated, ['empresa', 'ruc']));
-    }
-    $validated['cliente_empresa_id'] = $cli_empresa->id;
-
     DB::beginTransaction();
     try {
       if ($contacto->update(Arr::except($validated, ['empresa', 'ruc', 'isCliente', 'seguimento']))) {
-        $mssg = 'Contacto creado con éxito';
-        $cliente = $contacto->cliente;
-        if (isset($validated['isCliente'])) {
-          $validated['contacto_id'] = $contacto->id;
-          if ($cliente->count()) {
-            $cliente->update(Arr::only($validated, ['cliente_empresa_id', 'tipo_contribuyente', 'seguimiento']));
-            $mssg = 'Cliente modificado con éxito';
-          } else {
-            $cliente = Cliente::create(Arr::only($validated, ['empresa_id', 'usuario_id', 'contacto_id', 'cliente_empresa_id', 'tipo_contribuyente', 'seguimiento']));
-            $mssg = 'Cliente creado con éxito';
-          }
-        } else {
-          if ($cliente->count()) {
-            $cliente->delete();
-            $mssg = 'Cliente eliminado con éxito';
-          }
-        }
+        $mssg = 'Contacto modificado con éxito';
+
+        $this->manageClient($validated, $contacto);
 
         DB::commit();
         Alert::success('Acción completada', $mssg);
@@ -138,6 +107,35 @@ class ContactoController extends Controller
       Alert::error('Oops!', 'Contacto no modificado');
       return redirect()->back();
     }
+  }
+
+  private function manageClient($request, Contacto $contacto)
+  {
+    $user = Auth::user();
+    $empresa = Cliente_empresa::firstOrCreate(
+      ['ruc' => $request['ruc']],
+      ['nombre' => $request['nombre'], 'ruc' => $request['ruc'], 'empresa_id' => $user->empresa_id]
+    );
+    $request['cliente_empresa_id'] = $empresa->id;
+
+    $empresa->update(Arr::only($request, ['nombre', 'ruc']));
+
+    $contacto->cliente_empresa_id = $empresa->id;
+    $contacto->save();
+
+    if (isset($request['isCliente'])) {
+      $cliente = Cliente::firstOrCreate(
+        ['contacto_id' => $contacto->id],
+        ['empresa_id' => $user->empresa_id, 'usuario_id' => $user->cedula, 'contacto_id' => $contacto->id, 'cliente_empresa_id' => $empresa->id, 'tipo_contribuyente' => $request['tipo_contribuyente'], 'seguimiento' => $request['seguimiento']]
+      );
+      $cliente->update(Arr::only($request, ['cliente_empresa_id', 'tipo_contribuyente', 'seguimiento']));
+    } else {
+      if ($cliente = $contacto->cliente) {
+        $cliente->delete();
+      }
+    }
+
+    return 0;
   }
 
   public function info(Request $request)
