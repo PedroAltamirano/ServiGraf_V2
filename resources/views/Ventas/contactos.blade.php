@@ -63,6 +63,7 @@
 
       modal.find('#empresa').val(data ? data.empresa.nombre : '');
       modal.find('#ruc').val(data ? data.empresa.ruc : '');
+      modal.find('#ruc').prop('readonly', data ? true : false);
 
       modal.find('#actividad').val(data ? data.actividad : '');
       modal.find('#titulo').val(data ? data.titulo : '');
