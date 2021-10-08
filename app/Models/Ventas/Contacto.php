@@ -36,7 +36,7 @@ class Contacto extends Model
    */
   public function cliente()
   {
-    return $this->hasOne(Cliente::class);
+    return $this->hasOne(Cliente::class)->withTrashed();
   }
 
   public function getMovilAttribute()

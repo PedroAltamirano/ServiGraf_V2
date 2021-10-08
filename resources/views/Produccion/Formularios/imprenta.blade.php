@@ -289,7 +289,7 @@ $oldTintasRetiro =
           $model->millares = old('proceso_millar')[$i];
           $model->valor_unitario = old('proceso_valor')[$i];
           $model->total = old('proceso_total')[$i];
-          $model->status = old('proceso_terminado')[$i];
+          $model->status = old('proceso_terminado')[$i] ?? 0;
           $old_procesos[] = $model;
       }
   }
