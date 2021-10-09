@@ -6,9 +6,10 @@ return [
     0 => 'Egreso'
   ],
   'tipo_pago' => [
-    1 => 'Efectivo',
-    2 => 'Cheque',
-    3 => 'Canje',
+    1 => 'Transferencia',
+    2 => 'Efectivo',
+    3 => 'Cheque',
+    4 => 'Canje',
   ],
   'estado' => [
     1 => 'Pendiente',

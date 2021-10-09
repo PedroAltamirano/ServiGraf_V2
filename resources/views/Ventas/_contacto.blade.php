@@ -1,6 +1,6 @@
 {{-- DATOS DE LA EMPRESA --}}
 <div class="form-row">
-  <div class="form-group col-12 col-md-6">
+  <div class="form-group col-12 col-md-5">
     <label for="nombre">Empresa</label>
     <div>
       <input type="text" class="form-control form-control-sm @error('nombre') is-invalid @enderror" name="nombre"
@@ -12,7 +12,18 @@
     <input type="number" class="form-control form-control-sm @error('ruc') is-invalid @enderror" name="ruc" id="ruc"
       value="{{ old('ruc', $empresa->ruc) }}">
   </div>
-  <div class="form-group col-12 col-md-3">
+  <div class="form-group col-6 col-md-2">
+    <label for="tipo_contribuyente">Tipo de contribuyente</label>
+    <select class="form-control form-control-sm" name="tipo_contribuyente" id="tipo_contribuyente">
+      @foreach (config('factura.tipo_contribuyente') as $key => $val)
+        <option value="{{ $key }}"
+          {{ old('tipo_contribuyente', $contacto->tipo_contribuyente) == $key ? 'selected' : '' }}>
+          {{ $val }}
+        </option>
+      @endforeach
+    </select>
+  </div>
+  <div class="form-group col-6 col-md-2">
     <label for="actividad">Actividad</label>
     <input type="text" class="form-control form-control-sm @error('actividad') is-invalid @enderror" name="actividad"
       id="actividad" value="{{ old('actividad', $contacto->actividad) }}">
@@ -82,17 +93,6 @@
         id="isCliente" value="0" {{ old('isCliente', $contacto->isCliente) ? 'checked' : '' }}>
       <label class="form-check-label" for="isCliente">Cliente</label>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="tipo_contribuyente">Tipo de contribuyente</label>
-    <select class="form-control" name="tipo_contribuyente" id="tipo_contribuyente">
-      @foreach (config('factura.tipo_contribuyente') as $key => $val)
-        <option value="{{ $key }}"
-          {{ old('tipo_contribuyente', $contacto->tipo_contribuyente) == $key ? 'selected' : '' }}>
-          {{ $val }}
-        </option>
-      @endforeach
-    </select>
   </div>
   <div class="form-group col-6 col-md-2">
     <div class="form-check">

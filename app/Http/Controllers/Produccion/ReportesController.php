@@ -40,9 +40,9 @@ class ReportesController extends Controller
       ->select('cliente_id', 'numero', 'id', 'detalle', 'total_pedido', 'abono', 'saldo', 'estado')
       ->whereBetween('fecha_entrada', [$request->fechaini, $request->fechafin]);
 
-    if (isset($request->cliente)) {
+    if (isset($request->cliente) && $request->cliente != 'none') {
       $pedidos->where('cliente_id', $request->cliente);
-    } elseif (isset($request->cobro)) {
+    } elseif (isset($request->cobro) && $request->cobro != 'none') {
       $pedidos->where('estado', $request->cobro);
     }
 
@@ -76,7 +76,7 @@ class ReportesController extends Controller
           });
       });
 
-    if (isset($request->cliente)) {
+    if (isset($request->cliente) && $request->cliente != 'none') {
       $pedidos->where('cliente_id', $request->cliente);
     }
 

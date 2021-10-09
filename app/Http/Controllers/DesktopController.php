@@ -76,6 +76,8 @@ class DesktopController extends Controller
     return view('desktop', compact('clientes', 'pedidos', 'pedidos_terminados', 'pedidos_incompletos', 'progreso', 'pedidos_array', 'procesos', 'materiales', 'fecha', 'utilidades'));
   }
 
+  // private function 
+
   public function show()
   {
     $pedidos_array = Pedido::where('empresa_id', Auth::user()->empresa_id)->whereBetween('fecha_entrada', [date('Y-m-01'), date('Y-m-d')])->pluck('id')->toArray();
