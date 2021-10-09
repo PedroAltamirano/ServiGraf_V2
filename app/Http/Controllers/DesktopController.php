@@ -90,11 +90,10 @@ class DesktopController extends Controller
 
   private function interna($user, $pedidos_array)
   {
-    $procesos_array = Proceso::where('empresa_id', $user->empresa_id)->where('tipo', 1)->pluck('id')->toArray();
-
-    $items = Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))
+    $items = Pedido_proceso::where('empresa_id', $user->empresa_id)
+      ->select('proceso_id', DB::raw('sum(total) as totalData'))
       ->whereIn('pedido_id', $pedidos_array)
-      ->whereIn('proceso_id', $procesos_array)
+      ->whereRelation('proceso', 'tipo', 1)
       ->with('proceso')
       ->groupBy('proceso_id')
       ->get()
@@ -111,11 +110,10 @@ class DesktopController extends Controller
 
   private function externa($user, $pedidos_array)
   {
-    $procesos_array = Proceso::where('empresa_id', $user->empresa_id)->where('tipo', 0)->pluck('id')->toArray();
-
-    $items = Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))
+    $items = Pedido_proceso::where('empresa_id', $user->empresa_id)
+      ->select('proceso_id', DB::raw('sum(total) as totalData'))
       ->whereIn('pedido_id', $pedidos_array)
-      ->whereIn('proceso_id', $procesos_array)
+      ->whereRelation('proceso', 'tipo', 0)
       ->with('proceso')
       ->groupBy('proceso_id')
       ->get()
