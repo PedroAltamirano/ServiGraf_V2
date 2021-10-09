@@ -216,3 +216,10 @@ $widths: 2, 5, 10, 15, 30, 40, 60;
   width: 60px;
   height: 60px;
 }
+
+.select2-container--bootstrap .select2-selection {
+  height: calc(1.5em + 0.5rem + 2px);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.2rem;
+}
