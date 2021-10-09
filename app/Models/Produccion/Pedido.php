@@ -104,7 +104,7 @@ class Pedido extends Model
   public static function incompletas($fecha = null)
   {
 
-    $incompletos = Pedido_proceso::where('empresa_id', auth()->user()->empresa_id)
+    $incompletos = Pedido_proceso::where('empresa_id', Auth::user()->empresa_id)
       ->select('pedido_id')
       ->where('status', '0')
       ->where(function ($query) {
@@ -114,15 +114,18 @@ class Pedido extends Model
         }
       })
       ->groupBy('pedido_id')
-      ->get()
       ->pluck('pedido_id')
       ->toArray();
 
-    return Pedido::whereIn('id', $incompletos)->where('estado',  '!=', '3')->select('id', 'numero', 'cliente_id', 'detalle', 'cantidad')->where(function ($query) use ($fecha) {
+    $pedidos = Pedido::whereIn('id', $incompletos)->where('estado',  '!=', '3')->select('id', 'numero', 'cliente_id', 'detalle', 'cantidad')->where(function ($query) use ($fecha) {
       if ($fecha) {
-        $query->whereBetween('fecha_entrada', [date('Y-m-01', strtotime($fecha)), date('Y-m-t', strtotime($fecha))]);
+        $init = date('Y-m-01', strtotime($fecha));
+        $fin = date('Y-m-t', strtotime($fecha));
+        $query->whereBetween('fecha_entrada', [$init, $fin]);
       }
     })->with(['cliente.contacto', 'cliente.empresa', 'procesos_incompletos'])->get();
+
+    return $pedidos;
   }
 
   /*

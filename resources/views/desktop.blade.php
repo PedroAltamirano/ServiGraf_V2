@@ -8,12 +8,13 @@
   <div class="row">
     <div class="col-12 col-md-8">
       <div class="m-2 m-md-3">
-        <label for="meta">Pedidos por completar: {{ $pedidos_incompletos }}</label>
+        <label for="meta">Pedidos por completar: {{ $progreso['incompletos'] }}</label>
         <div class="progress" style="height: 30px;" id="meta">
           <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-            style="width: {{ $progreso }}%" aria-valuenow='{{ $pedidos_terminados - $pedidos_incompletos }}'
-            aria-valuemin="0" aria-valuemax="{{ $pedidos_terminados }}">
-            {{ $pedidos_terminados - $pedidos_incompletos }}
+            style="width: {{ $progreso['progreso'] }}%"
+            aria-valuenow='{{ $progreso['pedidos'] - $progreso['incompletos'] }}' aria-valuemin="0"
+            aria-valuemax="{{ $progreso['pedidos'] }}">
+            {{ $progreso['pedidos'] - $progreso['incompletos'] }}
           </div>
         </div>
       </div>
@@ -38,53 +39,15 @@
     <div class="col-12 col-md-9">
       <canvas id="interna" height="50"></canvas>
     </div>
-    @php
-      $procesos_internos_array = $procesos
-          ->where('tipo', 1)
-          ->pluck('id')
-          ->toArray();
-      $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))
-          ->whereIn('pedido_id', $pedidos_array)
-          ->whereIn('proceso_id', $procesos_internos_array)
-          ->with('proceso')
-          ->groupBy('proceso_id')
-          ->get()
-          ->each(function ($i) {
-              return $i->nombre = $i->proceso->proceso;
-          });
-      // Para JSON chart
-      $Id = $items->pluck('totalData');
-      $Il = $items->pluck('nombre');
-    @endphp
-    <x-report title="Producción interna" :items="$items" />
+    <x-report title="Producción interna" :items="$interna['items']" />
   </div>
-
 
   <div class="m-2 m-md-3 row">
     <div class="col-12 col-md-9">
       <canvas id="externa" height="50"></canvas>
     </div>
-    @php
-      $procesos_externos_array = $procesos
-          ->where('tipo', 0)
-          ->pluck('id')
-          ->toArray();
-      $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))
-          ->whereIn('pedido_id', $pedidos_array)
-          ->whereIn('proceso_id', $procesos_externos_array)
-          ->with('proceso')
-          ->groupBy('proceso_id')
-          ->get()
-          ->each(function ($i) {
-              return $i->nombre = $i->proceso->proceso;
-          });
-      // Para JSON chart
-      $Ed = $items->pluck('totalData');
-      $El = $items->pluck('nombre');
-    @endphp
-    <x-report title="Producción externa" :items="$items" />
+    <x-report title="Producción externa" :items="$externa['items']" />
   </div>
-
 
   <div class="m-2 m-md-3 row">
     <div class="col-12 col-md-9">
@@ -97,62 +60,18 @@
         </div>
       </div>
     </div>
-    @php
-      $pedidos_pendientes = $pedidos->where('estado', 1);
-      $pendientes = new Stdclass();
-      $pendientes->nombre = 'Pendientes';
-      $pendientes->totalData = $pedidos_pendientes->count();
-      $pendientes->economic = $pedidos_pendientes->sum('total_pedido');
-
-      $pedidos_pagadas = $pedidos->where('estado', 2);
-      $pagadas = new Stdclass();
-      $pagadas->nombre = 'Pagadas';
-      $pagadas->totalData = $pedidos_pagadas->count();
-      $pagadas->economic = $pedidos_pagadas->sum('total_pedido');
-
-      $pedidos_anuladas = $pedidos->where('estado', 3);
-      $anuladas = new Stdclass();
-      $anuladas->nombre = 'Anuladas';
-      $anuladas->totalData = $pedidos_anuladas->count();
-      $anuladas->economic = $pedidos_anuladas->sum('total_pedido');
-
-      $pedidos_canjes = $pedidos->where('estado', 4);
-      $canjes = new Stdclass();
-      $canjes->nombre = 'Canje';
-      $canjes->totalData = $pedidos_canjes->count();
-      $canjes->economic = $pedidos_canjes->sum('total_pedido');
-
-      $items = collect([$pendientes, $pagadas, $anuladas, $canjes]);
-      // Para JSON chart
-      $PCd = $items->pluck('totalData');
-      $PDd = $items->pluck('economic');
-      $Pl = $items->pluck('nombre');
-    @endphp
-    <x-report title="Pedidos" :items="$items" />
+    <x-report title="Pedidos" :items="$estado['items']" />
   </div>
-
 
   <div class="m-2 m-md-3 row">
     <div class="col-12 col-md-9">
       <canvas id="materiales" height="50"></canvas>
     </div>
-    @php
-      $items = App\Models\Produccion\Solicitud_material::select('material_id', DB::raw('sum(total) as totalData'))
-          ->whereIn('pedido_id', $pedidos_array)
-          ->with('material')
-          ->groupBy('material_id')
-          ->get()
-          ->each(function ($i) {
-              return $i->nombre = $i->material->descripcion;
-          });
-      $Md = $items->pluck('totalData');
-      $Ml = $items->pluck('nombre');
-    @endphp
-    <x-report title="Compra de materiales" :items="$items" />
+    <x-report title="Compra de materiales" :items="$material['items']" />
   </div>
 
-
   <hr class="m-2 m-md-3" />
+
   <h2 class="m-2 m-md-3">Utilidad por pedido</h2>
   <div class="m-2 m-md-3">
     <table id="utilidad" class="table table-striped table-sm">
@@ -241,43 +160,51 @@
   <script>
     $('#fecha').change(() => $('#fechaForm').submit());
 
-    var interna = new Chart($('#interna'), {
+    const interna_labels = @json($interna['labels']);
+    const interna_data = @json($interna['data']);
+    const interna_ratio = interna_data.length > 0 ? false : true;
+    const interna = new Chart($('#interna'), {
       type: 'horizontalBar',
       data: {
-        labels: @json($Il),
+        labels: interna_labels,
         datasets: [{
           label: 'Produccion Interna',
-          data: @json($Id),
+          data: interna_data,
           borderWidth: 1
         }]
       },
       options: {
-        maintainAspectRatio: false,
+        maintainAspectRatio: interna_ratio,
       }
     });
 
-    var externa = new Chart($('#externa'), {
+    const externa_labels = @json($externa['labels']);
+    const externa_data = @json($externa['data']);
+    const externa_ratio = externa_data.length > 0 ? false : true;
+    const externa = new Chart($('#externa'), {
       type: 'horizontalBar',
       data: {
-        labels: @json($El),
+        labels: externa_labels,
         datasets: [{
           label: 'Produccion externa',
-          data: @json($Ed),
+          data: externa_data,
           borderWidth: 1
         }]
       },
       options: {
-        maintainAspectRatio: false,
+        maintainAspectRatio: externa_ratio,
       }
     });
 
-    var materiales = new Chart($('#materiales'), {
+    const material_labels = @json($material['labels']);
+    const material_data = @json($material['data']);
+    const materiales = new Chart($('#materiales'), {
       type: 'horizontalBar',
       data: {
-        labels: @json($Ml),
+        labels: material_labels,
         datasets: [{
           label: 'Solicitud de material',
-          data: @json($Md),
+          data: material_data,
           borderWidth: 1
         }]
       },
@@ -286,13 +213,15 @@
       }
     });
 
-    var pedidosC = new Chart($('#pedidosC'), {
+    const pedidos_labels = @json($estado['labels']);
+    const pedidos_data = @json($estado['data']);
+    const pedidosC = new Chart($('#pedidosC'), {
       type: 'pie',
       data: {
-        labels: @json($Pl),
+        labels: pedidos_labels,
         datasets: [{
           label: 'Pedidos conteo',
-          data: @json($PCd),
+          data: pedidos_data,
           backgroundColor: ['red', 'green', 'blue', 'yellow'],
           borderWidth: 1
         }]
@@ -302,13 +231,14 @@
       }
     });
 
-    var pedidosD = new Chart($('#pedidosD'), {
+    const pedidos_data2 = @json($estado['data2']);
+    const pedidosD = new Chart($('#pedidosD'), {
       type: 'pie',
       data: {
-        labels: @json($Pl),
+        labels: pedidos_labels,
         datasets: [{
           label: 'Pedidos ganancia',
-          data: @json($PDd),
+          data: pedidos_data2,
           backgroundColor: ['red', 'green', 'blue', 'yellow'],
           borderWidth: 1
         }]
