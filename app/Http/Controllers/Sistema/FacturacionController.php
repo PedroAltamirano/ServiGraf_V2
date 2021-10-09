@@ -120,7 +120,7 @@ class FacturacionController extends Controller
       if ($factura->update($validated)) {
         if (isset($validated['logo'])) {
           $name = $factura->id;
-          $imageName = Archivos::storeImagen($name, $validated['logo'], 'facturas_imgs');
+          $imageName = Archivos::storeImagen($name, $validated['logo'], 'facturas');
           $factura->logo = $imageName;
           $factura->save();
         }
