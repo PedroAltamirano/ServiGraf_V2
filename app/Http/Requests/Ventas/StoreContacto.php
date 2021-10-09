@@ -34,7 +34,7 @@ class StoreContacto extends FormRequest
       'apellido' => ['required', 'string'],
       'direccion' => ['nullable', 'required_if:isCliente,true', 'string'],
       'sector' => ['nullable', 'string'],
-      'extencion' => ['nullable', 'numeric'],
+      'extencion' => ['nullable', 'numeric', 'max:9999'],
       'telefono' => ['nullable', 'numeric', 'required_if:celular,null'],
       'celular' => ['nullable', 'numeric', 'required_if:telefono,null'],
       'email' => ['nullable', 'email'],

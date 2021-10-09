@@ -47,10 +47,12 @@ class ContactoController extends Controller
     $validated = $request->validated();
     $validated['empresa_id'] = $user->empresa_id;
     $validated['usuario_id'] = $user->cedula;
+    $validated['isCliente'] = $validated['isCliente'] ?? 0;
+    $validated['seguimiento'] = $validated['seguimiento'] ?? 0;
 
     DB::beginTransaction();
     try {
-      if ($contacto = Contacto::create(Arr::except($validated, ['empresa', 'ruc', 'isCliente', 'seguimento']))) {
+      if ($contacto = Contacto::create(Arr::except($validated, ['empresa', 'ruc', 'isCliente', 'seguimiento']))) {
         $mssg = 'Contacto creado con éxito';
 
         $this->manageClient($validated, $contacto);
@@ -89,10 +91,12 @@ class ContactoController extends Controller
   public function update(UpdateContacto $request, Contacto $contacto)
   {
     $validated = $request->validated();
+    $validated['isCliente'] = $validated['isCliente'] ?? 0;
+    $validated['seguimiento'] = $validated['seguimiento'] ?? 0;
 
     DB::beginTransaction();
     try {
-      if ($contacto->update(Arr::except($validated, ['empresa', 'ruc', 'isCliente', 'seguimento']))) {
+      if ($contacto->update(Arr::except($validated, ['empresa', 'ruc', 'isCliente', 'seguimiento']))) {
         $mssg = 'Contacto modificado con éxito';
 
         $this->manageClient($validated, $contacto);
@@ -123,12 +127,14 @@ class ContactoController extends Controller
     $contacto->cliente_empresa_id = $empresa->id;
     $contacto->save();
 
-    if (isset($request['isCliente'])) {
-      $cliente = Cliente::firstOrCreate(
+    if ($request['isCliente']) {
+      $cliente = Cliente::withTrashed()->firstOrCreate(
         ['contacto_id' => $contacto->id],
         ['empresa_id' => $user->empresa_id, 'usuario_id' => $user->cedula, 'contacto_id' => $contacto->id, 'cliente_empresa_id' => $empresa->id, 'tipo_contribuyente' => $request['tipo_contribuyente'], 'seguimiento' => $request['seguimiento']]
-      )->withTrashed();
-      $cliente->restore();
+      );
+      if ($cliente->trashed()) {
+        $cliente->restore();
+      }
       $cliente->update(Arr::only($request, ['cliente_empresa_id', 'tipo_contribuyente', 'seguimiento']));
     } else {
       if ($cliente = $contacto->cliente) {

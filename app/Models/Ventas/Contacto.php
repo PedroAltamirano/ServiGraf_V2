@@ -19,6 +19,10 @@ class Contacto extends Model
     'created_at', 'updated_at'
   ];
 
+  protected $attribute = [
+    'seguimiento' => 0
+  ];
+
   /**
    * Get the empresa that owns the Contacto
    *

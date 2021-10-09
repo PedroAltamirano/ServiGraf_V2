@@ -4,7 +4,7 @@
     <label for="nombre">Empresa</label>
     <div>
       <input type="text" class="form-control form-control-sm @error('nombre') is-invalid @enderror" name="nombre"
-        id="nombre" value="{{ old('nombre', $empresa->nombre) }}">
+        id="empresa" value="{{ old('nombre', $empresa->nombre) }}">
     </div>
   </div>
   <div class="form-group col-12 col-md-3">
@@ -90,7 +90,7 @@
   <div class="form-group col-6 col-md-2">
     <div class="form-check">
       <input type="checkbox" class="form-check-input @error('isCliente') is-invalid @enderror" name="isCliente"
-        id="isCliente" value="0" {{ old('isCliente', $contacto->isCliente) ? 'checked' : '' }}>
+        id="isCliente" value="1" {{ old('isCliente', $contacto->isCliente) ? 'checked' : '' }}>
       <label class="form-check-label" for="isCliente">Cliente</label>
     </div>
   </div>
