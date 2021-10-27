@@ -25,15 +25,15 @@
     <tbody class="table table-borderless ">
       @foreach ($factura->productos as $item)
         <tr>
-          <td style="width: 14mm; text-align: center;">
+          <td class="p-0" style="width: 14mm; text-align: center;">
             {{ $item->cantidad }}
           </td>
-          <td style="width: 115mm">
+          <td class="p-0" style="width: 115mm">
             {{ $item->detalle }}
           </td>
-          <td style="width: 29mm; text-align: right;">
+          <td class="p-0" style="width: 29mm; text-align: right;">
             {{ $item->valor_unitario }}</td>
-          <td style="width: 29mm; text-align: right;">
+          <td class="p-0" style="width: 29mm; text-align: right;">
             {{ $item->subtotal }}
           </td>
         </tr>
@@ -50,11 +50,10 @@
   <div class="absolute total" style="top: 203mm">{{ $factura->iva0 }}</div>
   <div class="absolute total" style="top: 208mm">{{ $factura->total }}</div>
 
+  {{-- DEBO Y PAGARE --}}
   <div class="absolute son">{{ $total }}</div>
-
-  <!-- DEBO Y PAGARE -->
   <div class="absolute debo">{{ $total }}</div>
 
-  <!-- FIRMA -->
+  {{-- FIRMA --}}
   <div class="absolute firma">{{ $factura->usuario->nomina->full_name }}</div>
 @endsection

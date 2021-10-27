@@ -20,7 +20,9 @@
 </body>
 
 <script>
-  // Imprimir
+  setTimeout(() => {
+    window.print()
+  }, 200);
 </script>
 
 </html>

@@ -244,6 +244,10 @@ class FacturacionController extends Controller
     $iva_p = $empresa->iva->porcentaje;
     $total = NumToWords::numtowords($factura->total);
 
-    return view('Administracion.A4', compact('factura', 'empresa', 'cliente', 'code', 'emision', 'iva_p', 'total'));
+    if ($empresa->impresion) {
+      return view('Administracion.A4', compact('factura', 'empresa', 'cliente', 'code', 'emision', 'iva_p', 'total'));
+    } else {
+      return view('Administracion.A5', compact('factura', 'empresa', 'cliente', 'code', 'emision', 'iva_p', 'total'));
+    }
   }
 }

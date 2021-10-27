@@ -1,11 +1,10 @@
 @extends('layouts.factura')
 
 @section('content')
-  <button onClick="imprimir()" style="width: 5%; position: fixed; top 0; left: 0;" id="printer"><em
-      class="fa fa-print"></em></button>
-
-  @include('Administracion._A5')
-
-  @include('Administracion._A5')
-
+  <div class="absolute container_a5" style="top: 0mm; left: 0mm;">
+    @include('Administracion._A5')
+  </div>
+  <div class="absolute container_a5" style="top: 149mm; left: 0mm;">
+    @include('Administracion._A5')
+  </div>
 @endsection
