@@ -180,12 +180,12 @@ class PedidosController extends Controller
   public function abonos(AbonoRequest $request, Pedido $pedido)
   {
     $validated = $request->validated();
-    Abono::where('pedido_id', $pedido->id)->delete();
+    Abono::where('pedido_id', $validated['pedido_id'])->delete();
 
     $aboSize = sizeof($validated['abono_pago']);
     for ($i = 0; $i < $aboSize; $i++) {
       $model = new Abono;
-      $model->pedido_id = $pedido->id;
+      $model->pedido_id = $validated['pedido_id'];
       $model->usuario_id = Auth::id();
       $model->fecha = $validated['abono_fecha'][$i];
       $model->forma_pago = $validated['abono_pago'][$i];
@@ -193,7 +193,7 @@ class PedidosController extends Controller
       $model->save();
     }
 
-    $model = Pedido::find($pedido->id);
+    $model = Pedido::find($validated['pedido_id']);
     $model->abono = $validated['abono'];
     $model->saldo = $model->total_pedido - $validated['abono'];
     $model->save();

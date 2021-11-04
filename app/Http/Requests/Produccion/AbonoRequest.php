@@ -24,6 +24,7 @@ class AbonoRequest extends FormRequest
   public function rules()
   {
     return [
+      'pedido_id' => ['required', 'numeric', 'exists:pedidos,id'],
       'abono_fecha.*' => ['required', 'date'],
       'abono_usuario.*' => ['required', 'numeric', 'exists:usuarios,cedula'],
       'abono_pago.*' => ['required', 'numeric'],

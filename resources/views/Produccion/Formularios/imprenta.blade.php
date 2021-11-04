@@ -187,6 +187,90 @@ $oldTintasRetiro =
       </tr>
     </tfoot>
   </table>
+
+  @php
+    // SOLICITUD MATERIAL
+    $opts_mats = "<option value='' selected>Selecciona uno...</option>";
+    if ($materiales->count()) {
+        $first_mat = $materiales->first();
+        $group = $first_mat->categoria_id;
+        $cat = $first_mat->categoria->categoria;
+        $opts_mats .= "<optgroup label='$cat'>";
+        foreach ($materiales as $mat) {
+            if ($group != $mat->categoria_id) {
+                $group = $mat->categoria_id;
+                $opts_mats .= '</optgroup>';
+                $cat = $mat->categoria->categoria;
+                $opts_mats .= "<optgroup label='$cat'>";
+            }
+            $opts_mats .= "<option value='$mat->id'>$mat->descripcion</option>";
+        }
+    }
+
+    $opts_provs = "<option value='' selected>Selecciona uno...</option>";
+    foreach ($proveedores as $prov) {
+        $opts_provs .= "<option value='$prov->id'>$prov->proveedor / $prov->telefono</option>";
+    }
+
+    $old_material = $pedido->material_id;
+    if ($cnt = count(old('material_id') ?? [])) {
+        $old_material = [];
+        for ($i = 0; $i < $cnt; $i++) {
+            $model = new \stdClass();
+            $model->material_id = old('material_id')[$i];
+            $model->cantidad = old('material_cantidad')[$i];
+            $model->corte_alto = old('material_corte_alt')[$i];
+            $model->corte_ancho = old('material_corte_anc')[$i];
+            $model->tamanos = old('material_tamanios')[$i];
+            $model->proveedor_id = old('material_proveedor')[$i];
+            $model->factura = old('material_factura')[$i];
+            $model->total = old('material_total')[$i];
+            $old_material[] = $model;
+        }
+    }
+
+    // PROCESOS
+    $old_procesos = $pedido->procesos_id;
+    if ($cnt = count(old('proceso_id') ?? [])) {
+        $old_procesos = [];
+        for ($i = 0; $i < $cnt; $i++) {
+            $model = new \stdClass();
+            $model->proceso_id = old('proceso_id')[$i];
+            $model->tiro = old('proceso_tiro')[$i];
+            $model->retiro = old('proceso_retiro')[$i];
+            $model->millares = old('proceso_millar')[$i];
+            $model->valor_unitario = old('proceso_valor')[$i];
+            $model->total = old('proceso_total')[$i];
+            $model->status = old('proceso_terminado')[$i] ?? 0;
+            $old_procesos[] = $model;
+        }
+    }
+
+    // ABONOS
+    $opts_pagos = "<option value='' selected>Selecciona uno...</option>";
+    foreach (config('pedido.formas_pago') ?? [] as $key => $value) {
+        $opts_pagos .= "<option value='$key'>$value</option>";
+    }
+
+    $old_abonos = $pedido->abonos;
+    if ($old_abonos->count()) {
+        $pedido->abonos->each(function ($abono) {
+            $abono->usuario_nombre = $abono->nomina->nombre;
+        });
+    }
+    if ($cnt = count(old('abono_fecha') ?? [])) {
+        $old_abonos = [];
+        for ($i = 0; $i < $cnt; $i++) {
+            $model = new \stdClass();
+            $model->fecha = old('abono_fecha')[$i];
+            $model->usuario_id = old('abono_usuario')[$i];
+            $model->usuario_name = session('userInfo.nomina');
+            $model->forma_pago = old('abono_pago')[$i];
+            $model->valor = old('abono_valor')[$i];
+            $old_abonos[] = $model;
+        }
+    }
+  @endphp
 </section>
 
 
@@ -205,8 +289,9 @@ $oldTintasRetiro =
           </button>
         </div>
         <div class="modal-body">
-          <form action="{{ route('abonos', isset($pedido->id)) }}" method="POST" role="form">
+          <form action="{{ route('abonos') }}" method="POST" role="form">
             @csrf
+            <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
             <table id="table-abonos" class="table table-sm table-responsive">
               <thead>
                 <tr>
@@ -236,89 +321,6 @@ $oldTintasRetiro =
       </div>
     </div>
   </div>
-  @php
-  // SOLICITUD MATERIAL
-  $opts_mats = "<option value='' selected>Selecciona uno...</option>";
-  if ($materiales->count()) {
-      $first_mat = $materiales->first();
-      $group = $first_mat->categoria_id;
-      $cat = $first_mat->categoria->categoria;
-      $opts_mats .= "<optgroup label='$cat'>";
-      foreach ($materiales as $mat) {
-          if ($group != $mat->categoria_id) {
-              $group = $mat->categoria_id;
-              $opts_mats .= '</optgroup>';
-              $cat = $mat->categoria->categoria;
-              $opts_mats .= "<optgroup label='$cat'>";
-          }
-          $opts_mats .= "<option value='$mat->id'>$mat->descripcion</option>";
-      }
-  }
-
-  $opts_provs = "<option value='' selected>Selecciona uno...</option>";
-  foreach ($proveedores as $prov) {
-      $opts_provs .= "<option value='$prov->id'>$prov->proveedor / $prov->telefono</option>";
-  }
-
-  $old_material = $pedido->material_id;
-  if ($cnt = count(old('material_id') ?? [])) {
-      $old_material = [];
-      for ($i = 0; $i < $cnt; $i++) {
-          $model = new \stdClass();
-          $model->material_id = old('material_id')[$i];
-          $model->cantidad = old('material_cantidad')[$i];
-          $model->corte_alto = old('material_corte_alt')[$i];
-          $model->corte_ancho = old('material_corte_anc')[$i];
-          $model->tamanos = old('material_tamanios')[$i];
-          $model->proveedor_id = old('material_proveedor')[$i];
-          $model->factura = old('material_factura')[$i];
-          $model->total = old('material_total')[$i];
-          $old_material[] = $model;
-      }
-  }
-
-  // PROCESOS
-  $old_procesos = $pedido->procesos_id;
-  if ($cnt = count(old('proceso_id') ?? [])) {
-      $old_procesos = [];
-      for ($i = 0; $i < $cnt; $i++) {
-          $model = new \stdClass();
-          $model->proceso_id = old('proceso_id')[$i];
-          $model->tiro = old('proceso_tiro')[$i];
-          $model->retiro = old('proceso_retiro')[$i];
-          $model->millares = old('proceso_millar')[$i];
-          $model->valor_unitario = old('proceso_valor')[$i];
-          $model->total = old('proceso_total')[$i];
-          $model->status = old('proceso_terminado')[$i] ?? 0;
-          $old_procesos[] = $model;
-      }
-  }
-
-  // ABONOS
-  $opts_pagos = "<option value='' selected>Selecciona uno...</option>";
-  foreach (config('pedido.formas_pago') ?? [] as $key => $value) {
-      $opts_pagos .= "<option value='$key'>$value</option>";
-  }
-
-  $old_abonos = $pedido->abonos;
-  if ($old_abonos->count()) {
-      $pedido->abonos->each(function ($abono) {
-          $abono->usuario_nombre = $abono->nomina->nombre;
-      });
-  }
-  if ($cnt = count(old('abono_fecha') ?? [])) {
-      $old_abonos = [];
-      for ($i = 0; $i < $cnt; $i++) {
-          $model = new \stdClass();
-          $model->fecha = old('abono_fecha')[$i];
-          $model->usuario_id = old('abono_usuario')[$i];
-          $model->usuario_name = session('userInfo.nomina');
-          $model->forma_pago = old('abono_pago')[$i];
-          $model->valor = old('abono_valor')[$i];
-          $old_abonos[] = $model;
-      }
-  }
-  @endphp
 @endsection
 
 @section('after.after.scripts')
