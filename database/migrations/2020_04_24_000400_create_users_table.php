@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
       $table->boolean('reservarot')->default(0);
       $table->boolean('libro')->default(0);
       $table->boolean('utilidad')->default(1);
+      $table->boolean('is_superadmin')->default(0);
       $table->timestamps();
       $table->softDeletes();
     });
