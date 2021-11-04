@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers\Sistema;
 
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+
 use App\Models\Sistema\Empresas;
 use App\Models\Sistema\Tipo_empresa;
-use Illuminate\Http\Request;
+
+use App\Http\Requests\Sistema\StoreEmpresaAdmin;
+use App\Http\Requests\Sistema\UpdateEmpresaAdmin;
 
 class EmpresasController extends Controller
 {
@@ -32,68 +39,76 @@ class EmpresasController extends Controller
   }
 
   /**
-   * Show the form for creating a new resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function create()
-  {
-    //
-  }
-
-  /**
    * Store a newly created resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param  \Illuminate\Http\StoreEmpresaAdmin  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(StoreEmpresaAdmin $request)
   {
-    //
-  }
+    $validated = $request->validated();
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function show($id)
-  {
-    //
-  }
-
-  /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function edit($id)
-  {
-    //
+    DB::beginTransaction();
+    try {
+      if ($empresa = Empresas::create($validated)) {
+        DB::commit();
+        Alert::success('Acción completada', 'Empresa creada con éxito');
+        return redirect()->back();
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Empresa no creada');
+      return redirect()->back()->withInput();
+    }
   }
 
   /**
    * Update the specified resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
+   * @param  \Illuminate\Http\UpdateEmpresaAdmin  $request
+   * @param  Empresas $empresa
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(UpdateEmpresaAdmin $request, Empresas $empresa)
   {
-    //
+    $validated = $request->validated();
+
+    DB::beginTransaction();
+    try {
+      if ($empresa->update($validated)) {
+        DB::commit();
+        Alert::success('Acción completada', 'Empresa modificada con éxito');
+        return redirect()->back();
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Empresa no modificada');
+      return redirect()->back()->withInput();
+    }
   }
 
   /**
    * Remove the specified resource from storage.
    *
-   * @param  int  $id
+   * @param  Empresas $empresa
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy(Empresas $empresa)
   {
-    //
+    DB::beginTransaction();
+    try {
+      if ($empresa->delete()) {
+        DB::commit();
+        Alert::success('Acción completada', 'Empresa eliminada con éxito');
+        return redirect()->back();
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Empresa no eliminada');
+      return redirect()->back()->withInput();
+    }
   }
 }
