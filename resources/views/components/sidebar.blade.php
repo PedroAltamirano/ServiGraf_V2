@@ -160,6 +160,9 @@
           <a class="dropdown-item confirmModal" href="#confirmModal" data-route="{{ route('claves') }}"
             data-toggle="modal">Claves</a>
         @endif
+        @if (auth()->user()->is_superadmin)
+          <a class="dropdown-item" href="{{ route('empresas') }}">Empresas</a>
+        @endif
       </div>
     </li>
   @endif

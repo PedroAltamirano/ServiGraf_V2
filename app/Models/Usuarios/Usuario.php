@@ -26,11 +26,12 @@ class Usuario extends Authenticatable
 
   public $attributes = [
     'status' => 1,
+    'is_superadmin' => 0,
     // 'reservarot' => 1, 'libro' => 1
   ];
 
   protected $fillable = [
-    'cedula', 'empresa_id', 'usuario', 'perfil_id', 'reservarot', 'libro', 'status', 'password', 'utilidad',
+    'cedula', 'empresa_id', 'usuario', 'perfil_id', 'reservarot', 'libro', 'status', 'password', 'utilidad', 'is_superadmin'
   ];
 
   protected $hidden = [

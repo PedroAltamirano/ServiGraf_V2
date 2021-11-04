@@ -40,7 +40,7 @@ class Empresas extends Model
     return $this->hasMany(Usuario::class, 'empresa_id');
   }
 
-  public function tipoEmpresa()
+  public function tipo_empresa()
   {
     return $this->belongsTo(Tipo_empresa::class);
   }

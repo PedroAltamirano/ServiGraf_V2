@@ -31,4 +31,10 @@ Route::namespace('Sistema')
     Route::post('centro-costos/crear', 'CentroCostosController@store')->name('centro-costos.store')->middleware('hasModRol:81,2');
     Route::put('centro-costos/modificar/{centro}', 'CentroCostosController@update')->name('centro-costos.update')->middleware('hasModRol:81,3');
     Route::delete('centro-costos/eliminar/{centro}', 'CentroCostosController@delete')->name('centro-costos.delete')->middleware('hasModRol:81,4');
+
+    // EMPRESAS
+    Route::get('empresas', 'EmpresasController@index')->name('empresas');
+    Route::post('empresas/crear', 'EmpresasController@store')->name('empresas.store');
+    Route::put('empresas/modificar/{empresa}', 'EmpresasController@update')->name('empresas.update');
+    Route::delete('empresas/eliminar/{empresa}', 'EmpresasController@delete')->name('empresas.delete');
   });

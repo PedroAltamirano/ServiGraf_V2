@@ -127,6 +127,17 @@
             <label class="custom-control-label" for="libro"></label>
           </div>
         </div>
+        @if (auth()->user()->is_superadmin)
+          <div class="form-group col-3 col-md-2">
+            <label for="is_superadminDiv">Super Admin</label>
+            <div class="custom-control custom-switch d-flex justify-content-center" name="is_superadminDiv">
+              <input type="checkbox" class="custom-control-input @error('is_superadmin') is-invalid @enderror"
+                id="is_superadmin" name="is_superadmin"
+                {{ old('is_superadmin', $usuario->is_superadmin) == '1' ? 'checked' : '' }} value='1'>
+              <label class="custom-control-label" for="is_superadmin"></label>
+            </div>
+          </div>
+        @endif
       </div>
     </form>
   </x-blue-board>
