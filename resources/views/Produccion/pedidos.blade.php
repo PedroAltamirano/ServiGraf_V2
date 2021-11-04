@@ -4,7 +4,7 @@
   <x-path :items="[ ['text' => 'Pedidos', 'current' => true, 'href' => route('pedidos')] ]" />
 
   <x-blue-board title='Pendientes'
-    :foot="[ ['text'=>'Nuevo', 'href'=>route('pedido.create'), 'id'=>'nuevo', 'tipo'=>'link'] ]">
+    :foot="[ ['text'=>'Nuevo', 'href'=>route('pedido.create'), 'id'=>'nuevo', 'tipo'=>'link'], ['text'=>'Buscar', 'href'=>'#modalBuscar', 'id'=>'buscar', 'tipo'=>'modal'] ]">
     <table id="table" class="table table-striped table-sm">
       <thead>
         <tr>
@@ -38,6 +38,7 @@
 
 @section('modals')
   <x-modal-pedido />
+  <x-modal-buscar />
 @endsection
 
 @section('scripts')

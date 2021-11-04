@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Produccion;
 
 use Exception;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -93,6 +94,21 @@ class PedidosController extends Controller
       Log::error($error);
       Alert::error('Oops!', 'Pedido no creado');
       return redirect()->back()->withInput();
+    }
+  }
+
+  /**
+   * busca un pedido y redirecciona a edit, si no error
+   */
+  public function buscar(Request $request)
+  {
+    $pedido = Pedido::where('empresa_id', Auth::user()->empresa_id)->where('numero', $request->input('pedido_num'));
+    if ($pedido->exists()) {
+      $pedido = $pedido->first();
+      return redirect()->route('pedido.edit', $pedido);
+    } else {
+      Alert::error('Oops!', 'Pedido no encontrado');
+      return redirect()->back();
     }
   }
 
