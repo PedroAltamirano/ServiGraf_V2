@@ -24,7 +24,7 @@ class UpdateContacto extends FormRequest
   public function rules()
   {
     return [
-      'nombre' => ['nullable', 'string'], //nombre de la empresa
+      'empresa' => ['nullable', 'string'], //nombre de la empresa
       'ruc' => ['nullable', 'required_if:isCliente,true', 'numeric'], //ruc de la empresa
 
       'actividad' => ['nullable', 'string'],

@@ -3,8 +3,8 @@
   <div class="form-group col-12 col-md-5">
     <label for="nombre">Empresa</label>
     <div>
-      <input type="text" class="form-control form-control-sm @error('nombre') is-invalid @enderror" name="nombre"
-        id="empresa" value="{{ old('nombre', $empresa->nombre) }}">
+      <input type="text" class="form-control form-control-sm @error('empresa') is-invalid @enderror" name="empresa"
+        id="empresa" value="{{ old('empresa', $empresa->nombre) }}">
     </div>
   </div>
   <div class="form-group col-12 col-md-3">

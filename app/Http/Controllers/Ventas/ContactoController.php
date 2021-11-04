@@ -118,10 +118,12 @@ class ContactoController extends Controller
     $user = Auth::user();
     $empresa = Cliente_empresa::firstOrCreate(
       ['ruc' => $request['ruc']],
-      ['nombre' => $request['nombre'], 'ruc' => $request['ruc'], 'empresa_id' => $user->empresa_id]
+      ['nombre' => $request['empresa'], 'ruc' => $request['ruc'], 'empresa_id' => $user->empresa_id]
     );
+
     $request['cliente_empresa_id'] = $empresa->id;
 
+    $request['nombre'] = $request['empresa'];
     $empresa->update(Arr::only($request, ['nombre', 'ruc']));
 
     $contacto->cliente_empresa_id = $empresa->id;
