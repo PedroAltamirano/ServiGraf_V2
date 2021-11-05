@@ -47,6 +47,7 @@
           @method('POST')
           <div class="modal-body">
             <div class="form-row">
+              <x-aditional-info text='Empresa' />
               <div class="form-group col-12 col-md-6">
                 <label for="id">Ruc</label>
                 <input type="text" name="id" id="id" class="form-control @error('id') is-invalid @enderror"
@@ -73,6 +74,34 @@
                     name="status" value='1'>
                   <label class="custom-control-label" for="status"></label>
                 </div>
+              </div>
+
+              <x-aditional-info text='Usuario' />
+              {{-- monbre, apellido, cedula, correo --}}
+              <div class="form-group col-12 col-md-6">
+                <label for="name">Nombre</label>
+                <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror"
+                  value="{{ old('name') }}">
+              </div>
+              <div class="form-group col-12 col-md-6">
+                <label for="apellido">Apellido</label>
+                <input type="text" name="apellido" id="apellido"
+                  class="form-control @error('apellido') is-invalid @enderror" value="{{ old('apellido') }}">
+              </div>
+              <div class="form-group col-12 col-md-6">
+                <label for="usuario">Usuario</label>
+                <input type="text" name="usuario" id="usuario" class="form-control @error('usuario') is-invalid @enderror"
+                  value="{{ old('usuario') }}">
+              </div>
+              <div class="form-group col-12 col-md-6">
+                <label for="cedula">Cedula</label>
+                <input type="number" min="0" name="cedula" id="cedula"
+                  class="form-control @error('cedula') is-invalid @enderror" value="{{ old('cedula') }}">
+              </div>
+              <div class="form-group col-12 col-md-6">
+                <label for="correo">Correo</label>
+                <input type="text" name="correo" id="correo" class="form-control @error('correo') is-invalid @enderror"
+                  value="{{ old('correo') }}">
               </div>
             </div>
           </div>
@@ -107,10 +136,19 @@
       modal.find('.modal-path').attr('action', path);
       modal.find("input[name='_method']").val(data ? 'PUT' : 'POST');
 
+      // empresa
       modal.find('#id').val(data?.id || '');
       modal.find('#nombre').val(data?.nombre || '');
       modal.find('#tipo_empresa_id').val(data?.tipo_empresa_id || '');
       modal.find('#status').prop('checked', data?.status || 1);
+
+      // usuario
+      nomina = data?.root?.nomina
+      modal.find('#name').val(nomina?.nombre || '').prop('disabled', data ? 1 : 0);
+      modal.find('#apellido').val(nomina?.apellido || '').prop('disabled', data ? 1 : 0);
+      modal.find('#cedula').val(nomina?.cedula || '').prop('disabled', data ? 1 : 0);
+      modal.find('#correo').val(nomina?.correo || '').prop('disabled', data ? 1 : 0);
+      modal.find('#usuario').val(data?.root?.usuario || '').prop('disabled', data ? 1 : 0);
     });
   </script>
 @endsection

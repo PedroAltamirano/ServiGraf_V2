@@ -24,10 +24,17 @@ class StoreEmpresaAdmin extends FormRequest
   public function rules()
   {
     return [
+      // empresa
       'id' => ['required', 'numeric'],
       'nombre' => ['required', 'string', 'max:250'],
       'tipo_empresa_id' => ['required', 'exists:tipo_empresa,id'],
       'status' => ['required', 'boolean'],
+      // usuario
+      'name' => ['required', 'string', 'max:250'],
+      'apellido' => ['required', 'string', 'max:250'],
+      'cedula' => ['required', 'numeric'],
+      'correo' => ['required', 'string', 'email', 'max:250'],
+      'usuario' => ['required', 'string', 'max:250'],
     ];
   }
 }

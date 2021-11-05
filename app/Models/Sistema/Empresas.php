@@ -44,4 +44,9 @@ class Empresas extends Model
   {
     return $this->belongsTo(Tipo_empresa::class);
   }
+
+  public function root()
+  {
+    return $this->hasOne(Usuario::class, 'empresa_id')->orderBy('created_at', 'asc')->with('nomina');
+  }
 }
