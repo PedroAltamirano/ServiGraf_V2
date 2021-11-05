@@ -1,4 +1,4 @@
-<!-- Modal proveedor -->
+<!-- Modal Proveedor -->
 <div class="modal fade" id="modalProveedor" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
   aria-hidden="true">
   <div class="modal-dialog" role="document">

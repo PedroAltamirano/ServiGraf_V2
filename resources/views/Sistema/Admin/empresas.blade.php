@@ -34,7 +34,7 @@
 @endsection
 
 @section('modals')
-  <!-- Modal CATEGORIA -->
+  <!-- Modal Empresa -->
   <div id="modalEmpresas" class="modal fade">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">

@@ -47,7 +47,7 @@
 @endsection
 
 @section('modals')
-  <!-- Modal CATEGORIA -->
+  <!-- Modal RRHH -->
   <div id="modalHorario" class="modal fade">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">

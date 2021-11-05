@@ -37,7 +37,7 @@
 @endsection
 
 @section('modals')
-  <!-- Modal CATEGORIA -->
+  <!-- Modal Clave -->
   <div id="modalClave" class="modal fade">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">

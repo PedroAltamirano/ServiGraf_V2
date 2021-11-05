@@ -1,4 +1,4 @@
-<!-- Modal pedido -->
+<!-- Modal Pedido -->
 <div class="modal fade" id="modalPedido" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
   aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">

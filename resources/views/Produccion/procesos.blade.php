@@ -56,7 +56,7 @@
 @endsection
 
 @section('modals')
-  <!-- Modal AREAS -->
+  <!-- Modal Area -->
   <div id="modalArea" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">

@@ -68,7 +68,7 @@
 @endsection
 
 @section('modals')
-  <!-- Modal TINTA -->
+  <!-- Modal Tinta -->
   <div id="modalTinta" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -94,7 +94,7 @@
     </div>
   </div>
 
-  <!-- Modal CATEGORIA -->
+  <!-- Modal Categoria -->
   <div id="modalCat" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">
