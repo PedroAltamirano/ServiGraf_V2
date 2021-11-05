@@ -40,7 +40,8 @@ $(".confirmModal").click(event => {
 });
 
 $(".deleteModal").click(event => {
-  let button = $(event.target);
+  let button = $(event.currentTarget);
+  console.log(button);
   $("#deleteText").html(button.data("text"));
   $("#deleteForm").attr("action", button.data("route"));
 });

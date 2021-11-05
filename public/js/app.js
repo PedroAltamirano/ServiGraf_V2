@@ -86291,7 +86291,8 @@ $(".confirmModal").click(function (event) {
   $("#confirmForm").attr("action", button.data("route"));
 });
 $(".deleteModal").click(function (event) {
-  var button = $(event.target);
+  var button = $(event.currentTarget);
+  console.log(button);
   $("#deleteText").html(button.data("text"));
   $("#deleteForm").attr("action", button.data("route"));
 });
