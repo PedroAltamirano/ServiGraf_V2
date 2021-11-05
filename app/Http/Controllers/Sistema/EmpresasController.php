@@ -73,6 +73,7 @@ class EmpresasController extends Controller
   public function update(UpdateEmpresaAdmin $request, Empresas $empresa)
   {
     $validated = $request->validated();
+    $validated['status'] = $validated['status'] ?? 0;
 
     DB::beginTransaction();
     try {

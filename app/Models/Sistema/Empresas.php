@@ -22,7 +22,7 @@ class Empresas extends Model
   ];
 
   protected $fillable = [
-    'id', 'nombre', 'status'
+    'id', 'nombre', 'tipo_empresa_id', 'status'
   ];
 
   public function datos()

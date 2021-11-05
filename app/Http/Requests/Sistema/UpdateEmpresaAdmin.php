@@ -27,7 +27,7 @@ class UpdateEmpresaAdmin extends FormRequest
       'id' => ['required', 'numeric'],
       'nombre' => ['required', 'string', 'max:250'],
       'tipo_empresa_id' => ['required', 'exists:tipo_empresa,id'],
-      'status' => ['required', 'boolean'],
+      'status' => ['nullable', 'boolean'],
     ];
   }
 }
