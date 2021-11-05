@@ -36,5 +36,5 @@ Route::namespace('Sistema')
     Route::get('empresas', 'EmpresasController@index')->name('empresas');
     Route::post('empresas/crear', 'EmpresasController@store')->name('empresas.store');
     Route::put('empresas/modificar/{empresa}', 'EmpresasController@update')->name('empresas.update');
-    Route::delete('empresas/eliminar/{empresa}', 'EmpresasController@delete')->name('empresas.delete');
+    Route::delete('empresas/eliminar/{empresa}', 'EmpresasController@destroy')->name('empresas.delete');
   });
