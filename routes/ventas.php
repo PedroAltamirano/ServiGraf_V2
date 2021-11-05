@@ -35,7 +35,7 @@ Route::namespace('Ventas')
     Route::post('contacto/crear', 'ContactoController@store')->name('contacto.store')->middleware('hasModRol:50,2');
     Route::get('contacto/ver/{contacto}', 'ContactoController@show')->name('contacto.show')->middleware('hasModRol:50,3');
     Route::put('contacto/modificar/{contacto}', 'ContactoController@update')->name('contacto.update')->middleware('hasModRol:50,3');
-    Route::delete('contacto/eliminar/{contacto}', 'ContactoController@delete')->name('contacto.delete')->middleware('hasModRol:50,4');
+    Route::delete('contacto/eliminar/{contacto}', 'ContactoController@destroy')->name('contacto.delete')->middleware('hasModRol:50,4');
 
     // COMENTARIOS
     Route::post('comentario/crear', 'ComentarioController@store')->name('comentario.store')->middleware('hasModRol:50,2');

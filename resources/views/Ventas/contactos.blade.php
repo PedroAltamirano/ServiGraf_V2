@@ -25,7 +25,8 @@
             <td>{{ $item->direccion }}</td>
             <td>{{ $item->email }}</td>
             <td>
-              <x-crud :routeSee="route('contacto.show', $item->id)" routeEdit="#modalContacto" :modalEdit="$item" />
+              <x-crud :routeSee="route('contacto.show', $item->id)" routeEdit="#modalContacto" :modalEdit="$item"
+                :routeDelete="route('contacto.delete', $item->id)" :textDelete="$item->full_name" />
             </td>
           </tr>
         @endforeach

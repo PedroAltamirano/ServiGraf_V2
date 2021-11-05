@@ -53,12 +53,11 @@ class ContactoController extends Controller
     DB::beginTransaction();
     try {
       if ($contacto = Contacto::create(Arr::except($validated, ['empresa', 'ruc', 'isCliente', 'seguimiento']))) {
-        $mssg = 'Contacto creado con éxito';
 
         $this->manageClient($validated, $contacto);
 
         DB::commit();
-        Alert::success('Acción completada', $mssg);
+        Alert::success('Acción completada', 'Contacto creado con éxito');
         return redirect()->back();
       }
     } catch (Exception $error) {
@@ -99,7 +98,7 @@ class ContactoController extends Controller
       if ($contacto->update(Arr::except($validated, ['empresa', 'ruc', 'isCliente', 'seguimiento']))) {
         $mssg = 'Contacto modificado con éxito';
 
-        $this->manageClient($validated, $contacto);
+        $this->manageClient($validated, $contacto, 1);
 
         DB::commit();
         Alert::success('Acción completada', $mssg);
@@ -113,7 +112,31 @@ class ContactoController extends Controller
     }
   }
 
-  private function manageClient($request, Contacto $contacto)
+  public function destroy(Contacto $contacto)
+  {
+    $empresa = $contacto->empresa;
+    $contacto->cliente->delete();
+
+    DB::beginTransaction();
+    try {
+      if ($contacto->delete()) {
+        if ($empresa->contactos->count() < 1) {
+          $empresa->delete();
+        }
+
+        DB::commit();
+        Alert::success('Acción completada', 'Contacto eliminado con éxito');
+        return redirect()->back();
+      }
+    } catch (Exception $error) {
+      DB::rollBack();
+      Log::error($error);
+      Alert::error('Oops!', 'Contacto no eliminado');
+      return redirect()->back();
+    }
+  }
+
+  private function manageClient($request, Contacto $contacto, $update = 0)
   {
     $user = Auth::user();
     $empresa = Cliente_empresa::firstOrCreate(
@@ -124,7 +147,9 @@ class ContactoController extends Controller
     $request['cliente_empresa_id'] = $empresa->id;
 
     $request['nombre'] = $request['empresa'];
-    $empresa->update(Arr::only($request, ['nombre', 'ruc']));
+    if ($update) {
+      $empresa->update(Arr::only($request, ['nombre', 'ruc']));
+    }
 
     $contacto->cliente_empresa_id = $empresa->id;
     $contacto->save();
