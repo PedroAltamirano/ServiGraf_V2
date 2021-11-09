@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers\Tienda;
 
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Models\Producto;
-use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
-class TiendaController extends Controller
+use App\Models\Tienda\Categoria;
+
+use App\Http\Requests\Tienda\StoreCategoria;
+use App\Http\Requests\Tienda\UpdateCategoria;
+
+class CategoriaController extends Controller
 {
   /**
    * Display a listing of the resource.
@@ -15,8 +23,7 @@ class TiendaController extends Controller
    */
   public function index()
   {
-    $productos = Producto::all();
-    return view('Tienda.index', compact('productos'));
+    //
   }
 
   /**
@@ -35,7 +42,7 @@ class TiendaController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(StoreCategoria $request)
   {
     //
   }
@@ -43,10 +50,10 @@ class TiendaController extends Controller
   /**
    * Display the specified resource.
    *
-   * @param  int  $id
+   * @param  Categoria $categoria
    * @return \Illuminate\Http\Response
    */
-  public function show($id)
+  public function show(Categoria $categoria)
   {
     //
   }
@@ -54,10 +61,10 @@ class TiendaController extends Controller
   /**
    * Show the form for editing the specified resource.
    *
-   * @param  int  $id
+   * @param  Categoria $categoria
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function edit(Categoria $categoria)
   {
     //
   }
@@ -66,10 +73,10 @@ class TiendaController extends Controller
    * Update the specified resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
+   * @param  Categoria $categoria
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(UpdateCategoria $request, Categoria $categoria)
   {
     //
   }
@@ -77,10 +84,10 @@ class TiendaController extends Controller
   /**
    * Remove the specified resource from storage.
    *
-   * @param  int  $id
+   * @param  Categoria $categoria
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy(Categoria $categoria)
   {
     //
   }

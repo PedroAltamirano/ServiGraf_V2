@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Tienda;
 
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Models\Producto;
-use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+
+use App\Models\Tienda\Producto;
 
 use App\Http\Requests\Tienda\StoreProducto;
 use App\Http\Requests\Tienda\UpdateProducto;
@@ -18,7 +23,8 @@ class ProductoController extends Controller
    */
   public function index()
   {
-    //
+    $productos = Producto::all();
+    return view('Tienda.index', compact('productos'));
   }
 
   /**

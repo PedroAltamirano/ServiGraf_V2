@@ -5,5 +5,5 @@ Route::as('tienda.')
   ->middleware('hasModRol:60,1')
   ->prefix('tienda')
   ->group(function () {
-    Route::get('/', 'TiendaController@index')->name('index');
+    Route::get('/', 'ProductoController@index')->name('index');
   });
