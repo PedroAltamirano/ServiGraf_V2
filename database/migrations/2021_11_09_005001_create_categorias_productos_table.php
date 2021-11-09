@@ -15,6 +15,7 @@ class CreateCategoriasProductosTable extends Migration
   {
     Schema::create('categorias_productos', function (Blueprint $table) {
       $table->id();
+      $table->string('nombre');
       $table->nestedSet();
       $table->timestamps();
     });

@@ -118,7 +118,7 @@
   <!-- tienda -->
   @if (in_array('60', $modulos))
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('tienda.index') }}">
+      <a class="nav-link" href="{{ route('productos') }}">
         <i class="fas fa-fw fa-store"></i>
         <span>Tienda</span></a>
     </li>

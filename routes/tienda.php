@@ -1,9 +1,7 @@
 <?php
 
-Route::as('tienda.')
-  ->namespace('Tienda')
+Route::namespace('Tienda')
   ->middleware('hasModRol:60,1')
-  ->prefix('tienda')
   ->group(function () {
-    Route::get('/', 'ProductoController@index')->name('index');
+    Route::get('productos', 'ProductoController@index')->name('productos');
   });

@@ -32,6 +32,10 @@ Route::get('contact', function () {
 })->name('contact');
 Route::post('contact', 'contactMail@send')->name('contact.send');
 
+Route::get('tienda', function () {
+  return view('Landing.tienda');
+})->name('tienda');
+
 //PHP TEST
 Route::get('test', function () {
   return view('test');
