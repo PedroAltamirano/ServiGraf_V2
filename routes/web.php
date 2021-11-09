@@ -57,6 +57,9 @@ Route::middleware('auth')
       return view('mail');
     })->name('mail');
 
+    // TIENDA
+    include('tienda.php');
+
     // KPIs
     include('kpis.php');
 
