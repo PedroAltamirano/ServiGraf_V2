@@ -128,11 +128,6 @@
       "ordering": true,
       "info": false,
       "responsive": true,
-      "buttons": [{
-        extend: 'print',
-        text: 'Imprimir Asistencia',
-        autoPrint: false
-      }],
       "ajax": {
         "url": routeAjax,
         "method": 'post',
@@ -200,37 +195,29 @@
         "responsivePriority": 1,
         "targets": [0, 2, 4, 5]
       }],
-      "rowCallback": function(row, data, index) {
-        // cabio de olor por fecha
-        // let fecha = data.fecha;
-        // let dato_color;
+      // "rowCallback": function(row, data, index) {
+      // cabio de olor por fecha
+      // let fecha = data.fecha;
+      // let dato_color;
 
-        // if (dato_fecha != fecha) {
-        //   dato_fecha = fecha;
-        //   cambio_color = !cambio_color;
-        // }
-        // dato_color = (cambio_color) ? '#6E85B1' : '#69A9C3';
-        // $(row).css({'color':''+dato_color +''});
-
-        // // sumas de saldo
-        // let debe = parseFloat(data.ingreso);
-        // let haber = parseFloat(data.egreso);
-        // saldo += debe;
-        // saldo -= haber;
-
-        // let texto = (saldo < 0) ? '<font color="red">'+Math.abs(saldo).toFixed(4)+'</font>' : saldo.toFixed(4);
-
-        // $('td:eq(6)', row).html(texto);
-      }
+      // if (dato_fecha != fecha) {
+      //   dato_fecha = fecha;
+      //   cambio_color = !cambio_color;
+      // }
+      // dato_color = (cambio_color) ? '#6E85B1' : '#69A9C3';
+      // $(row).css({'color':''+dato_color +''});
+      // }
     });
 
-    $('.refresh').change(() => {
+    const tableReload = () => {
       saldo = 0;
       dato_fecha = '';
       dato_color = '';
       cambio_color = false;
       table.ajax.reload(null, false);
-    });
+    }
+
+    $('.refresh').change(() => tableReload());
 
     var route = `{{ route('asistencia.update', 0) }}`;
     $("#modalAsistencia").on('show.bs.modal', event => {
@@ -254,17 +241,17 @@
 
     $('#hoy').click(() => {
       $('#inicio').val(moment().format('Y-MM-DD'));
-      $('.refresh').change();
+      tableReload();
     });
 
     $('#semana').click(() => {
       $('#inicio').val(moment().startOf('isoWeek').format('Y-MM-DD'));
-      $('.refresh').change();
+      tableReload();
     });
 
     $('#mes').click(() => {
       $('#inicio').val(moment().format('Y-MM-01'));
-      $('.refresh').change();
+      tableReload();
     });
   </script>
 @endsection

@@ -68,6 +68,93 @@
 @endsection
 
 @section('scripts')
+<script>
+    const routeAjax = `{{ route('') }}`;
+    const routeEdit = `{{ route('.edit', 0) }}`;
+    var table = $('#table').DataTable({
+      paging: true,
+      ordering: true,
+      info: false,
+      responsive: true,
+      buttons: [{
+        extend: 'print',
+        text: 'Imprimir',
+        title: 'Nomina',
+        exportOptions: {
+          columns: [0, 1, 2, 3, 4, 5]
+        }
+      }, ],
+      ajax: {
+        "url": routeAjax,
+        "method": 'get',
+        "data": {
+          "fechaini": () => $('#inicio').val(),
+          "fechafin": () => $('#fin').val(),
+          "cliente": () => $('#cliente').val(),
+          "empresa": () => $('#empresa').val(),
+          "tipo": () => $('#tipo').val(),
+          "estado": () => $('#estado').val(),
+        },
+        "error": error => {
+          swal('Oops!', 'Ha ocurrido un error al cargar los datos!', 'error');
+          console.log(error);
+        }
+      },
+      columns: [{
+          "name": "numero",
+          "data": "numero"
+        },
+        {
+          "name": "tipo",
+          "data": "tipo",
+          "render": (data, type, full, meta) => {
+            return data ? 'Ingreso' : 'Egreso';
+          }
+        },
+        {
+          "name": "crud",
+          "data": "id",
+          "sortable": "false",
+          "render": (data, type, full, meta) => {
+            let route = routeEdit.replace('/0', `/${data}`);
+            let print_route = routePrint.replace('/0', `/${data}`);
+            let crud = `<a class='fa fa-edit' href='${route}'></a>`;
+            crud += `<a class='fa fa-print' href='${print_route}' target='_blank'></a>`;
+            return crud;
+          }
+        }
+      ],
+      columnDefs: [{
+        targets: [5],
+        className: 'text-right'
+      }],
+      footerCallback: function(row, data, start, end, display) {
+        var api = this.api(),
+          data;
+        // Remove the formatting to get integer data for summation
+        var intVal = i => {
+          return typeof i === 'string' ?
+            i.replace(/[\$,]/g, '') * 1 :
+            typeof i === 'number' ?
+            i : 0;
+        };
+
+        // Total over this page
+        var totTotal = api.column('valor:name', {
+          search: 'applied'
+        }).data().sum();
+
+        // Update footer
+        $("#clmtotal").html(totTotal.toFixed(4));
+      }
+    });
+
+    const tableReload = () => {
+      table.ajax.reload(null, false)
+    }
+
+    $('.refresh').change(() => tableReload());
+  </script>
 @endsection
 
 @section('after.scripts')

@@ -12,8 +12,8 @@
           <th scope="col">Nombre</th>
           <th scope="col">Telefono</th>
           <th scope="col">Correo</th>
-          <th scope="col">Cargo</th>
           <th scope="col">Contrato</th>
+          <th scope="col">Cargo</th>
           <th scope="col" class="w-2">Crud</th>
         </tr>
       </thead>
@@ -24,8 +24,8 @@
             <td>{{ $item->full_name }}</td>
             <td>{{ $item->movil }}</td>
             <td>{{ $item->correo }}</td>
-            <td>{{ $item->cargo }}</td>
             <td>{{ $item->inicio_labor }}</td>
+            <td>{{ $item->cargo }}</td>
             <td>
               <x-crud :routeEdit="route('nomina.edit', $item->cedula)" />
             </td>
@@ -86,10 +86,19 @@
 @section('scripts')
   <script>
     var table = $('#table').DataTable({
-      "info": false,
-      "paging": true,
-      "ordering": true,
-      "responsive": true,
+      info: false,
+      paging: true,
+      ordering: true,
+      responsive: true,
+      dom: "<'row'<'col'l><'col'f>>rt<'row'<'col'B><'col'ip>>",
+      buttons: [{
+        extend: 'print',
+        text: 'Imprimir',
+        title: 'Nomina',
+        exportOptions: {
+          columns: [0, 1, 2, 3, 4, 5]
+        }
+      }],
     });
 
     // AREAS
