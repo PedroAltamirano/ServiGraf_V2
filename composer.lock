@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c37e638459e5e16628544d644dbb612",
+    "content-hash": "ccff47ec109405c0d8f4ff441b0bba06",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -471,6 +471,54 @@
                 }
             ],
             "time": "2020-12-29T14:50:06+00:00"
+        },
+        {
+            "name": "elgibor-solution/laravel-database-encryption",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/elgibor-solution/laravel-database-encryption.git",
+                "reference": "e74082885ecab8dd126c40e9acd844d43bc5a25a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elgibor-solution/laravel-database-encryption/zipball/e74082885ecab8dd126c40e9acd844d43bc5a25a",
+                "reference": "e74082885ecab8dd126c40e9acd844d43bc5a25a",
+                "shasum": ""
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^9.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ESolution\\DBEncryption\\Providers\\DBEncryptionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ESolution\\DBEncryption\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "E-Solution",
+                    "email": "info@elgibor-solution.com"
+                }
+            ],
+            "description": "Auto Encrypt and Decrypt Database through Eloquent",
+            "support": {
+                "issues": "https://github.com/elgibor-solution/laravel-database-encryption/issues",
+                "source": "https://github.com/elgibor-solution/laravel-database-encryption/tree/1.1.0"
+            },
+            "time": "2021-08-30T01:21:49+00:00"
         },
         {
             "name": "fideloper/proxy",
@@ -7948,5 +7996,5 @@
         "php": "^7.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }

@@ -20,8 +20,8 @@
           <tr>
             <td>{{ $item->cuenta }}</td>
             <td>{{ $item->usuario }}</td>
-            <td>{{ Crypt::decryptString($item->clave) }}</td>
-            <td>{{ $item->refuerzo ? Crypt::decryptString($item->refuerzo) : '' }}</td>
+            <td>{{ $item->clave }}</td>
+            <td>{{ $item->refuerzo }}</td>
             <td>{{ $item->url }}</td>
             <td>
               <x-crud routeEdit="#modalClave" :modalEdit="$item" :routeDelete="route('clave.delete', $item->id)"

@@ -27,10 +27,10 @@ class ClavesController extends Controller
   {
     $validated = $request->validated();
     $validated['empresa_id'] = Auth::user()->empresa_id;
-    $validated['clave'] = Crypt::encryptString($validated['clave']);
-    if (isset($validated['refuerzo'])) {
-      $validated['refuerzo'] = Crypt::encryptString($validated['refuerzo']);
-    }
+    // $validated['clave'] = Crypt::encryptString($validated['clave']);
+    // if (isset($validated['refuerzo'])) {
+    //   $validated['refuerzo'] = Crypt::encryptString($validated['refuerzo']);
+    // }
 
     DB::beginTransaction();
     try {
@@ -43,17 +43,17 @@ class ClavesController extends Controller
       DB::rollBack();
       Log::error($error);
       Alert::error('Oops!', 'Clave no creada');
-      return redirect()->back()->withInput();
+      return redirect()->route('tablero');
     }
   }
 
   public function update(UpdateClave $request, Clave $clave)
   {
     $validated = $request->validated();
-    $validated['clave'] = Crypt::encryptString($validated['clave']);
-    if (isset($validated['refuerzo'])) {
-      $validated['refuerzo'] = Crypt::encryptString($validated['refuerzo']);
-    }
+    // $validated['clave'] = Crypt::encryptString($validated['clave']);
+    // if (isset($validated['refuerzo'])) {
+    //   $validated['refuerzo'] = Crypt::encryptString($validated['refuerzo']);
+    // }
 
     DB::beginTransaction();
     try {
@@ -66,7 +66,7 @@ class ClavesController extends Controller
       DB::rollBack();
       Log::error($error);
       Alert::error('Oops!', 'Clave no modificada');
-      return redirect()->back()->withInput();
+      return redirect()->route('tablero');
     }
   }
 
@@ -83,7 +83,7 @@ class ClavesController extends Controller
       DB::rollBack();
       Log::error($error);
       Alert::error('Oops!', 'Clave no eliminada');
-      return redirect()->back()->withInput();
+      return redirect()->route('tablero');
     }
   }
 }

@@ -24,7 +24,7 @@ Route::namespace('Sistema')
     Route::post('claves', 'ClavesController@show')->name('claves')->middleware('hasModRol:81,1')->middleware('password.confirm');
     Route::post('clave/crear', 'ClavesController@store')->name('clave.store')->middleware('hasModRol:81,2');
     Route::put('clave/modificar/{clave}', 'ClavesController@update')->name('clave.update')->middleware('hasModRol:81,3');
-    Route::delete('clave/delete/{clave}', 'ClavesController@delete')->name('clave.delete')->middleware('hasModRol:81,4');
+    Route::delete('clave/eliminar/{clave}', 'ClavesController@delete')->name('clave.delete')->middleware('hasModRol:81,4');
 
     // CENTRO DE COSTOS
     Route::get('centro-costos', 'CentroCostosController@index')->name('centro-costos.get')->middleware('hasModRol:81,1');
