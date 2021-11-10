@@ -166,4 +166,15 @@ class Nomina extends Model
     if ($this->foto) return asset("avatars/$this->foto");
     return false;
   }
+
+  public function getFullEmergenciaAttribute()
+  {
+    $res = $this->contacto_emergencia_nombre ?? '';
+    if ($res != '' && $this->contacto_emergencia_celular) {
+      $res .= ' \ ';
+      $res .= $this->contacto_emergencia_celular;
+    }
+
+    return $res;
+  }
 }

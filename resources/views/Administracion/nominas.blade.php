@@ -14,6 +14,7 @@
           <th scope="col">Correo</th>
           <th scope="col">Contrato</th>
           <th scope="col">Cargo</th>
+          <th scope="col">Contacto Emergencia</th>
           <th scope="col" class="w-2">Crud</th>
         </tr>
       </thead>
@@ -26,6 +27,8 @@
             <td>{{ $item->correo }}</td>
             <td>{{ $item->inicio_labor }}</td>
             <td>{{ $item->cargo }}</td>
+            <td>{{ $item->fullEmergencia }}
+            </td>
             <td>
               <x-crud :routeEdit="route('nomina.edit', $item->cedula)" />
             </td>
@@ -93,12 +96,17 @@
       dom: "<'row'<'col'l><'col'f>>rt<'row'<'col'B><'col'ip>>",
       buttons: [{
         extend: 'print',
-        text: 'Imprimir',
+        text: 'Imprimir Todo',
         title: 'Nomina',
         exportOptions: {
-          columns: [0, 1, 2, 3, 4, 5]
+          columns: [0, 1, 2, 3, 4, 5, 6]
         }
       }],
+      columnDefs: [{
+        "targets": [6],
+        "visible": false,
+        "searchable": false
+      }, ]
     });
 
     // AREAS
