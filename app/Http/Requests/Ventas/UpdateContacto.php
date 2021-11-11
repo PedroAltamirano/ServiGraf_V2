@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Ventas;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\CI;
 
 class UpdateContacto extends FormRequest
 {
@@ -25,7 +26,7 @@ class UpdateContacto extends FormRequest
   {
     return [
       'empresa' => ['nullable', 'string'], //nombre de la empresa
-      'ruc' => ['nullable', 'required_if:isCliente,true', 'numeric'], //ruc de la empresa
+      'ruc' => ['nullable', 'required_if:isCliente,true', 'numeric', new CI], //ruc de la empresa
 
       'actividad' => ['nullable', 'string'],
       'cargo' => ['nullable', 'string'],

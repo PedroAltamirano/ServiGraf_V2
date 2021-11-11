@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Administracion;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\CI;
 
 class StoreFactura extends FormRequest
 {
@@ -27,7 +28,7 @@ class StoreFactura extends FormRequest
       'numero' => ['required', 'numeric'],
       'fact_emp_id' => ['required', 'numeric'],
       'cliente_id' => ['required', 'numeric'],
-      'ruc' => ['required', 'string'],
+      'ruc' => ['required', 'numeric', new CI],
       'telefono' => ['required', 'string'],
       'direccion' => ['required', 'string'],
       'emision' => ['required', 'date'],

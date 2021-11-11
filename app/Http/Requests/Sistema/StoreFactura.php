@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Sistema;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\CI;
 
 class StoreFactura extends FormRequest
 {
@@ -31,7 +32,7 @@ class StoreFactura extends FormRequest
       'correo' => ['required', 'string', 'max:250'],
       'telefono' => ['required', 'numeric', 'regex:/[0-9]{7}/'],
       'celular' => ['required', 'numeric', 'regex:/[0-9]{10}/'],
-      'ruc' => ['required', 'numeric', 'regex:/[\d]{13}/i'],
+      'ruc' => ['required', 'numeric', new CI],
       'valido_de' => ['required', 'date'],
       'valido_a' => ['nullable', 'date'],
       'clave_sri' => ['nullable', 'string'],

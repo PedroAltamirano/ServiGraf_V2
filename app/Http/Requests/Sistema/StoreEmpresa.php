@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Sistema;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\CI;
 
 class StoreEmpresa extends FormRequest
 {
@@ -26,7 +27,7 @@ class StoreEmpresa extends FormRequest
     return [
       'nombre' => ['required', 'string', 'max:50'],
       'representante' => ['required', 'string', 'max:50'],
-      'ruc' => ['required', 'numeric', 'regex:/[0-9]{13}/'],
+      'ruc' => ['required', 'numeric', new CI],
       'ciudad' => ['required', 'string', 'max:250'],
       'direccion' => ['required', 'string', 'max:250'],
       'ciudad' => ['required', 'string', 'max:250'],
