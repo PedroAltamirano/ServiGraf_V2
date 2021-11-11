@@ -252,3 +252,10 @@ a {
   margin: 0 !important;
 }
 
+@media print {
+  .form-container {
+    width: 1080px;
+    min-width: 1080px;
+  }
+}
+

@@ -10891,7 +10891,7 @@ a.text-dark:focus {
   }
 
 @page {
-    size: a3;
+    size: auto;
 }
 
   body {

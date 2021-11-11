@@ -61,6 +61,7 @@ window.newRow = ($table, cols, col_id) => {
 $("#print").click(event => {
   let target = "#" + $("#print").data("target");
   $(".select2Class").select2("destroy");
+  $(target).width(1080);
   $(target).print();
   $(".select2Class").select2();
 });
@@ -71,7 +72,7 @@ $("body").delegate("#printer", "click", () => {
 });
 
 $(".select2Class").select2({
-  width: '100%',
+  width: "100%"
 });
 
 window.add_error = (mssg, type) => {
@@ -80,18 +81,21 @@ window.add_error = (mssg, type) => {
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span></button>
     </div>`;
-  $('#errorDiv').append(alert);
-}
+  $("#errorDiv").append(alert);
+};
 
-window.change_select = (selector, val) => $(selector).val(val).trigger("change.select2");
+window.change_select = (selector, val) =>
+  $(selector)
+    .val(val)
+    .trigger("change.select2");
 
-$('.modal').on('show.bs.modal', () => $('.modal').modal('hide'));
+$(".modal").on("show.bs.modal", () => $(".modal").modal("hide"));
 
 // Submit for blue board component
-$('#formSubmit').click(() => $('#form').submit());
+$("#formSubmit").click(() => $("#form").submit());
 
 // Submit for modals and others
-$('.submitbtn').click(event => {
-  let form = $(event.target).data('form');
+$(".submitbtn").click(event => {
+  let form = $(event.target).data("form");
   $(form).submit();
 });

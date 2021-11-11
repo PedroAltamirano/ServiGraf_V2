@@ -9,11 +9,11 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" id="modalContent">
+      <div class="modal-body">
         @include('Produccion.formPedido')
       </div>
       <div class="modal-footer">
-        <a class="fas fa-print" id="printer" data-target="modalContent"></a>
+        <a class="fas fa-print" id="printer" data-target="pedido-container"></a>
       </div>
     </div>
   </div>

@@ -6,7 +6,7 @@
 
   @php
   $route_duplicate = $pedido->id ? route('pedido.duplicate', [$pedido->id]) : '#';
-  $foot = [['text' => $action, 'href' => '#', 'id' => 'formSubmit', 'tipo' => 'link'], ['text' => 'Nuevo', 'href' => route('pedido.create'), 'id' => 'new', 'tipo' => 'link', 'condition' => $pedido->id ?? 0], ['text' => 'Duplicar', 'href' => $route_duplicate, 'id' => 'duplicarPedido', 'tipo' => 'link', 'condition' => App\Security::hasModule('31')], ['text' => 'fas fa-print', 'href' => '#', 'id' => 'print', 'tipo' => 'button', 'print-target' => 'form']];
+  $foot = [['text' => $action, 'href' => '#', 'id' => 'formSubmit', 'tipo' => 'link'], ['text' => 'Nuevo', 'href' => route('pedido.create'), 'id' => 'new', 'tipo' => 'link', 'condition' => $pedido->id ?? 0], ['text' => 'Duplicar', 'href' => $route_duplicate, 'id' => 'duplicarPedido', 'tipo' => 'link', 'condition' => App\Security::hasModule('31')], ['text' => 'fas fa-print', 'href' => '#', 'id' => 'print', 'tipo' => 'button', 'print-target' => 'pedido-container']];
   @endphp
   <x-blue-board :title=$text :foot=$foot>
     <form action="{{ $path }}" method="POST" id="form">

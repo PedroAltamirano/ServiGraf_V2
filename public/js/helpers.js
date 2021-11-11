@@ -150,6 +150,7 @@ window.newRow = function ($table, cols, col_id) {
 $("#print").click(function (event) {
   var target = "#" + $("#print").data("target");
   $(".select2Class").select2("destroy");
+  $(target).width(1080);
   $(target).print();
   $(".select2Class").select2();
 });
@@ -158,28 +159,28 @@ $("body").delegate("#printer", "click", function () {
   $(target).print();
 });
 $(".select2Class").select2({
-  width: '100%'
+  width: "100%"
 });
 
 window.add_error = function (mssg, type) {
   var alert = "<div class=\"alert alert-".concat(type, "\" role=\"alert\">\n      ").concat(mssg, "&nbsp&nbsp\n      <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n      <span aria-hidden=\"true\">&times;</span></button>\n    </div>");
-  $('#errorDiv').append(alert);
+  $("#errorDiv").append(alert);
 };
 
 window.change_select = function (selector, val) {
   return $(selector).val(val).trigger("change.select2");
 };
 
-$('.modal').on('show.bs.modal', function () {
-  return $('.modal').modal('hide');
+$(".modal").on("show.bs.modal", function () {
+  return $(".modal").modal("hide");
 }); // Submit for blue board component
 
-$('#formSubmit').click(function () {
-  return $('#form').submit();
+$("#formSubmit").click(function () {
+  return $("#form").submit();
 }); // Submit for modals and others
 
-$('.submitbtn').click(function (event) {
-  var form = $(event.target).data('form');
+$(".submitbtn").click(function (event) {
+  var form = $(event.target).data("form");
   $(form).submit();
 });
 
