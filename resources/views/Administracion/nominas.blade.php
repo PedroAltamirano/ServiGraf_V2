@@ -4,17 +4,20 @@
   <x-path :items="[ ['text' => 'Nomina', 'current' => true, 'href' => '#'] ]" />
 
   <x-blue-board title='Nomina'
-    :foot="[ ['text'=>'Nuevo', 'href'=>route('nomina.create'), 'id'=>'nuevo', 'tipo'=>'link'], ['text' => 'fas fa-print', 'href' => '#', 'id' => 'print', 'tipo' => 'button', 'print-target' => 'table'] ]">
+    :foot="[ ['text'=>'Nuevo', 'href'=>route('nomina.create'), 'id'=>'nuevo', 'tipo'=>'link'], ]">
     <table id="table" class="table table-striped table-sm">
       <thead>
         <tr>
           <th scope="col">Cédula</th>
           <th scope="col">Nombre</th>
+          <th scope="col">Cumpleaños</th>
           <th scope="col">Telefono</th>
           <th scope="col">Correo</th>
           <th scope="col">Contrato</th>
+          <th scope="col">Salida</th>
           <th scope="col">Cargo</th>
           <th scope="col">Contacto Emergencia</th>
+          <th scope="col">Status</th>
           <th scope="col" class="w-2">Crud</th>
         </tr>
       </thead>
@@ -23,12 +26,14 @@
           <tr>
             <td>{{ $item->cedula }}</td>
             <td>{{ $item->full_name }}</td>
+            <td>{{ $item->fecha_nacimiento }}</td>
             <td>{{ $item->movil }}</td>
             <td>{{ $item->correo }}</td>
             <td>{{ $item->inicio_labor }}</td>
+            <td>{{ $item->fin_labor }}</td>
             <td>{{ $item->cargo }}</td>
-            <td>{{ $item->fullEmergencia }}
-            </td>
+            <td>{{ $item->fullEmergencia }}</td>
+            <td>{{ config('empresa.status')[$item->status] }}</td>
             <td>
               <x-crud :routeEdit="route('nomina.edit', $item->cedula)" />
             </td>
@@ -96,14 +101,15 @@
       dom: "<'row'<'col'l><'col'f>>rt<'row'<'col'B><'col'ip>>",
       buttons: [{
         extend: 'print',
-        text: 'Imprimir Todo',
+        text: '',
+        className: 'fa fa-print',
         title: 'Nomina',
         exportOptions: {
-          columns: [0, 1, 2, 3, 4, 5, 6]
+          columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
         }
       }],
       columnDefs: [{
-        "targets": [6],
+        "targets": [2, 8, 9],
         "visible": false,
         "searchable": false
       }, ]
