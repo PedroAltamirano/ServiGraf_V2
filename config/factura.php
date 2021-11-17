@@ -20,5 +20,6 @@ return [
   'tipo_contribuyente' => [
     1 => 'Persona natural',
     2 => 'Persona juridica',
+    3 => 'Publico',
   ],
 ];
