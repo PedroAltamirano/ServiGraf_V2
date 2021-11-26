@@ -16,7 +16,10 @@ class Archivos
    */
   public static function storeImagen($nombre, $archivo, $disk)
   {
-    $nombreArchivo = strtotime("now") . '_' . str_replace(" ", "_", $nombre) . '.' . $archivo->getClientOriginalExtension();
+    $nombreArchivo = strtotime("now") . '_';
+    $nombreArchivo .= str_replace(" ", "_", $nombre) . '.';
+    $nombreArchivo .= $archivo->getClientOriginalExtension();
+
     Storage::disk($disk)->put($nombreArchivo, file_get_contents($archivo->getRealPath()));
     return $nombreArchivo;
   }
