@@ -2,55 +2,27 @@
 
 namespace App\Helpers;
 
+use NumberFormatter;
+
 class NumToWords
 {
-  public static function numtowords($num)
+  public function numtowords(float $num)
   {
-    $num = str_replace(array(',', ' '), '', trim($num));
-    if (!$num) {
+    $decimal = (int)explode('.', number_format(fmod($num, 1), 2))[1];
+    $entero = (int)$num;
+    if (!$entero) {
       return false;
     }
-    $num = (int) $num;
 
-    $words = [];
+    $word = '';
 
-    $list1 = [
-      '', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciseis', 'diecisite', 'dieciocho', 'diecinueve'
-    ];
+    $formatter = new NumberFormatter("es", NumberFormatter::SPELLOUT);
+    $entero = $formatter->format($entero);
+    $decimal = $formatter->format($decimal);
 
-    $list2 = [
-      '', 'diez', 'veinte', 'trienta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa', 'cien'
-    ];
+    $word .= $entero . ' dólares';
+    $word .= ' con ' . $decimal . ' centavos';
 
-    $list3 = [
-      '', 'cientos', 'milliones', 'billones', 'trillones', 'cuatrillones', 'quintillones'
-    ];
-
-    $num_length = strlen($num);
-    $levels = (int) (($num_length + 2) / 3);
-    $max_length = $levels * 3;
-    $num = substr('00' . $num, -$max_length);
-    $num_levels = str_split($num, 3);
-    for ($i = 0; $i < count($num_levels); $i++) {
-      $levels--;
-      $hundreds = (int) ($num_levels[$i] / 100);
-      $hundreds = ($hundreds ? ' ' . $list1[$hundreds] . ' cientos' . ' ' : '');
-      $tens = (int) ($num_levels[$i] % 100);
-      $singles = '';
-      if ($tens < 20) {
-        $tens = ($tens ? ' ' . $list1[$tens] . ' ' : '');
-      } else {
-        $tens = (int)($tens / 10);
-        $tens = ' ' . $list2[$tens] . ' ';
-        $singles = (int) ($num_levels[$i] % 10);
-        $singles = ' ' . $list1[$singles] . ' ';
-      }
-      $words[] = $hundreds . $tens . $singles . (($levels && (int) ($num_levels[$i])) ? ' ' . $list3[$levels] . ' ' : '');
-    } //end for loop
-    $commas = count($words);
-    if ($commas > 1) {
-      $commas = $commas - 1;
-    }
-    return implode(' ', $words);
+    return $word;
   }
 }
