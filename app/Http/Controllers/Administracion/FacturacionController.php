@@ -58,7 +58,13 @@ class FacturacionController extends Controller
   {
     $user = Auth::user();
     $factura = new Factura;
+
     $fact_num = (Factura::where('tipo', 1)->where('empresa_id', $user->empresa_id)->select('numero')->orderBy('numero', 'DESC')->first()->numero ?? 0) + 1;
+    $inicio = FactEmpr::where('empresa_id', $user->empresa_id)->value('inicio');
+    if ($fact_num < $inicio) {
+      $fact_num = $inicio;
+    }
+
     $empresas = FactEmpr::where('empresa_id', $user->empresa_id)->get();
 
     $utilidad = Security::hasModule('19');
