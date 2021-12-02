@@ -27,7 +27,7 @@ class UpdateEmpresa extends FormRequest
     return [
       'nombre' => ['required', 'string', 'max:50'],
       'representante' => ['required', 'string', 'max:50'],
-      'ruc' => ['required', 'numeric', new CI],
+      'ruc' => ['required', 'string', new CI],
       'ciudad' => ['required', 'string', 'max:250'],
       'direccion' => ['required', 'string', 'max:250'],
       'ciudad' => ['required', 'string', 'max:250'],

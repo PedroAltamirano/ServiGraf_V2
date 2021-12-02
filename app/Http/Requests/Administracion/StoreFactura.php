@@ -28,7 +28,7 @@ class StoreFactura extends FormRequest
       'numero' => ['required', 'numeric'],
       'fact_emp_id' => ['required', 'numeric'],
       'cliente_id' => ['required', 'numeric'],
-      'ruc' => ['required', 'numeric', new CI],
+      'ruc' => ['required', 'string', new CI],
       'telefono' => ['required', 'string'],
       'direccion' => ['required', 'string'],
       'emision' => ['required', 'date'],

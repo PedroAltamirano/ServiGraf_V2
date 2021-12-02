@@ -26,7 +26,7 @@ class StoreContacto extends FormRequest
   {
     return [
       'empresa' => ['nullable', 'string'], //nombre de la empresa
-      'ruc' => ['nullable', 'required_if:isCliente,true', 'numeric', new CI], //ruc de la empresa
+      'ruc' => ['nullable', 'required_if:isCliente,true', 'string', new CI], //ruc de la empresa
 
       'actividad' => ['nullable', 'string'],
       'cargo' => ['nullable', 'string'],

@@ -42,7 +42,7 @@ class CIValidation
     return ($res == $last);
   }
 
-  public function validate(int $ci): bool
+  public function validate(string $ci): bool
   {
     $regex = "/^(\d{2})(\d)(\d{5,6})(\d)(00[1-9])?$/";
     $match = preg_match_all($regex, (string) $ci, $matches);
@@ -74,10 +74,3 @@ class CIValidation
     }
   }
 }
-
-var_dump((new CIValidation)->validate(1719953282));
-var_dump((new CIValidation)->validate(1719953281));
-var_dump((new CIValidation)->validate(1709636664001));
-var_dump((new CIValidation)->validate(1790727203001));
-var_dump((new CIValidation)->validate(176815353001));
-// var_dump((new CIValidation)->validate());

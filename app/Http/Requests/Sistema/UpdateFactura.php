@@ -32,7 +32,7 @@ class UpdateFactura extends FormRequest
       'correo' => ['required', 'string', 'max:250'],
       'telefono' => ['required', 'numeric', 'regex:/[0-9]{7}/'],
       'celular' => ['required', 'numeric', 'regex:/[0-9]{10}/'],
-      'ruc' => ['required', 'numeric', new CI],
+      'ruc' => ['required', 'string', new CI],
       'valido_de' => ['required', 'date'],
       'valido_a' => ['nullable', 'date'],
       'clave_sri' => ['nullable', 'string'],
