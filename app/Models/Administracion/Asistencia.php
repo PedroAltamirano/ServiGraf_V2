@@ -5,7 +5,7 @@ namespace App\Models\Administracion;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\models\Sistema\Nomina;
+use App\Models\Sistema\Nomina;
 
 class Asistencia extends Model
 {

@@ -219,7 +219,7 @@ class RRHHController extends Controller
         if ($request->usuario != 'none') {
           $query->where('usuario_id', $request->usuario);
         }
-      })->get();
+      })->with('nomina')->get();
     return response()->json(RRHHResource::collection($res), 200);
   }
 }
