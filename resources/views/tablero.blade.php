@@ -13,7 +13,10 @@
             ->where('proceso_id', $item->id)
             ->whereIn('pedido_id', $pedidos_array)
             ->sum('total');
-        $prog = ($logrado * 100) / $item->meta;
+        $prog = 100;
+        if ($item->meta > 0) {
+            $prog = ($logrado * 100) / $item->meta;
+        }
         $ci = $loop->index % count($colors);
       @endphp
       <div class="m-2 m-md-3">
