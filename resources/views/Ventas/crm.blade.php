@@ -15,7 +15,11 @@
               <tr>
                 <td class="w-10">{{ $item->fecha }}</td>
                 <td class="w-10">{{ $item->hora }}</td>
-                <td><a href="{{ route('contacto.show', $item->id) }}">{{ $item->contacto_formated }}</a></td>
+                <td>
+                  <a href="{{ route('contacto.show', $item->contacto->id) }}">
+                    {{ $item->contacto_formated }}
+                  </a>
+                </td>
                 <td>{{ $item->actividad->nombre }}</td>
                 <td>{{ $item->asignado->usuario }}</td>
                 <td class="w-2">
@@ -40,7 +44,11 @@
             <tr>
               <td class="w-10">{{ $item->fecha }}</td>
               <td class="w-10">{{ $item->hora }}</td>
-              <td><a href="{{ route('contacto.show', $item->id) }}">{{ $item->contacto_formated }}</a></td>
+              <td>
+                <a href="{{ route('contacto.show', $item->contacto->id) }}">
+                  {{ $item->contacto_formated }}
+                </a>
+              </td>
               <td>{{ $item->actividad->nombre }}</td>
               <td>{{ $item->asignado->usuario }}</td>
               <td class="w-2">
@@ -64,7 +72,11 @@
             <tr>
               <td class="w-10">{{ $item->fecha }}</td>
               <td class="w-10">{{ $item->hora }}</td>
-              <td><a href="{{ route('contacto.show', $item->id) }}">{{ $item->contacto_formated }}</a></td>
+              <td>
+                <a href="{{ route('contacto.show', $item->contacto->id) }}">
+                  {{ $item->contacto_formated }}
+                </a>
+              </td>
               <td>{{ $item->actividad->nombre }}</td>
               <td>{{ $item->asignado->usuario }}</td>
               <td class="w-2">
@@ -88,7 +100,11 @@
             <tr>
               <td class="w-10">{{ $item->fecha }}</td>
               <td class="w-10">{{ $item->hora }}</td>
-              <td><a href="{{ route('contacto.show', $item->id) }}">{{ $item->contacto_formated }}</a></td>
+              <td>
+                <a href="{{ route('contacto.show', $item->contacto->id) }}">
+                  {{ $item->contacto_formated }}
+                </a>
+              </td>
               <td>{{ $item->actividad->nombre }}</td>
               <td>{{ $item->asignado->usuario }}</td>
               <td class="w-2">
