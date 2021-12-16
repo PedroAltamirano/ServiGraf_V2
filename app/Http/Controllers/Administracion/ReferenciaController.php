@@ -11,8 +11,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 use App\Models\Administracion\Libro_ref;
 
-use App\HTTP\Requests\Administracion\StoreReferencia;
-use App\HTTP\Requests\Administracion\UpdateReferencia;
+use App\Http\Requests\Administracion\StoreReferencia;
+use App\Http\Requests\Administracion\UpdateReferencia;
 
 class ReferenciaController extends Controller
 {

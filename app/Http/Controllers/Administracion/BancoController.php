@@ -11,8 +11,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 use App\Models\Administracion\Banco;
 
-use App\HTTP\Requests\Administracion\StoreBanco;
-use App\HTTP\Requests\Administracion\UpdateBanco;
+use App\Http\Requests\Administracion\StoreBanco;
+use App\Http\Requests\Administracion\UpdateBanco;
 
 class BancoController extends Controller
 {
