@@ -11,4 +11,5 @@ Route::as('kpi.')
     Route::get('maquinas', 'KPIController@kpi_maquinas')->name('maquinas');
     Route::get('ots', 'KPIController@kpi_ots')->name('ots');
     Route::get('lob_ots', 'KPIController@kpi_lob_ots')->name('lob_ots');
+    Route::get('cotizado', 'KPIController@kpi_cotizado')->name('cotizado');
   });
