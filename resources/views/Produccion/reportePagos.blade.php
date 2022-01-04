@@ -18,6 +18,7 @@
           <th scope="col">Pago</th>
           <th scope="col">Detalle</th>
           <th scope="col">Cobro</th>
+          <th scope="col">Cotizado $</th>
           <th scope="col">Total $</th>
           <th scope="col">Abonos $</th>
           <th scope="col">Saldo $</th>
@@ -30,6 +31,7 @@
       <tfoot>
         <tr>
           <td colspan="6" class="text-right">Total $</td>
+          <td id="clmcotizado"></td>
           <td id="clmtotal"></td>
           <td id="clmabonos"></td>
           <td id="clmsaldo"></td>
@@ -96,6 +98,10 @@
           "data": "usuario_cobro"
         },
         {
+          "name": "cotizado",
+          "data": "cotizado"
+        },
+        {
           "name": "total",
           "data": "total_pedido"
         },
@@ -150,6 +156,9 @@
         };
 
         // Total over this page
+        var cotTotal = api.column('cotizado:name', {
+          search: 'applied'
+        }).data().sum();
         var totTotal = api.column('total:name', {
           search: 'applied'
         }).data().sum();
@@ -161,6 +170,7 @@
         }).data().sum();
 
         // Update footer
+        $("#clmcotizado").html(cotTotal.toFixed(4));
         $("#clmtotal").html(totTotal.toFixed(4));
         $("#clmabonos").html(aboTotal.toFixed(4));
         $("#clmsaldo").html(salTotal.toFixed(4));

@@ -181,6 +181,26 @@ class KPIController extends Controller
     return view('components.kpi', compact('title', 'value', 'icon', 'color'));
   }
 
+  public function kpi_cotizado(Request $request)
+  {
+    $user = Auth::user();
+    $date = $request->get('fecha');
+    $dateInit = date('Y-m-01', strtotime($date));
+    $dateFin = date('Y-m-t', strtotime($date));
+
+    $cotizado = Pedido::where('empresa_id', $user->empresa_id)
+      ->whereBetween('fecha_entrada', [$dateInit, $dateFin])
+      ->sum('cotizado');
+
+    $title = 'Cotizado Total';
+    $value = $cotizado;
+    $icon = 'fa-file-invoice-dollar';
+    $color = 'success';
+
+    // return response()->json($data, 200);
+    return view('components.kpi', compact('title', 'value', 'icon', 'color'));
+  }
+
   // public function kpi_(Request $request) {
 
   //   $title = '';

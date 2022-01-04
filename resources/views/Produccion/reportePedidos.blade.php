@@ -18,6 +18,7 @@
           @foreach ($areas as $area)
             <th scope="col">{{ $area->area }}</th>
           @endforeach
+          <th scope="col">Cotizado $</th>
           <th scope="col">Total $</th>
           <th scope="col">Abonos $</th>
           <th scope="col">Saldo $</th>
@@ -33,6 +34,7 @@
             $count = count($areas ?? []) + 3;
           @endphp
           <td colspan="{{ $count }}" class="text-right">Total $</td>
+          <td id="clmcotizado"></td>
           <td id="clmtotal"></td>
           <td id="clmabonos"></td>
           <td id="clmsaldo"></td>
@@ -75,6 +77,10 @@
       });
     });
     const final = [{
+        "name": "cotizado",
+        "data": "cotizado"
+      },
+      {
         "name": "total",
         "data": "total_pedido"
       },
@@ -157,6 +163,9 @@
         };
 
         // Total over this page
+        var cotizadoTotal = api.column('cotizado:name', {
+          search: 'applied'
+        }).data().sum();
         var totTotal = api.column('total:name', {
           search: 'applied'
         }).data().sum();
@@ -168,6 +177,7 @@
         }).data().sum();
 
         // Update footer
+        $("#clmcotizado").html(cotizadoTotal.toFixed(4));
         $("#clmtotal").html(totTotal.toFixed(4));
         $("#clmabonos").html(aboTotal.toFixed(4));
         $("#clmsaldo").html(salTotal.toFixed(4));
