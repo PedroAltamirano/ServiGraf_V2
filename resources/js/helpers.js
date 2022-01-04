@@ -61,7 +61,6 @@ window.newRow = ($table, cols, col_id) => {
 $("#print").click(event => {
   let target = "#" + $("#print").data("target");
   $(".select2Class").select2("destroy");
-  $(target).width(1080);
   $(target).print();
   $(".select2Class").select2();
 });
