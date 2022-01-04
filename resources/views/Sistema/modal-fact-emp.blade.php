@@ -106,8 +106,8 @@
               </select>
             </div>
             <div class="form-group col-6 col-md-2">
-              <label for="ret_fnt_id">Ret. Fuente</label>
-              <select class="form-control" name="ret_fuente_id" id="ret_fnt_id">
+              <label for="ret_fuente_id">Ret. Fuente</label>
+              <select class="form-control" name="ret_fuente_id" id="ret_fuente_id">
                 @foreach ($ret_fnt as $ret)
                   <option value="{{ $ret->id }}" {{ old('ret_fuente_id') == $ret->id ? 'selected' : '' }}>
                     {{ $ret->porcentaje }}</option>

@@ -27,7 +27,7 @@ class FacturacionController extends Controller
   public function index()
   {
     $user = Auth::user();
-    $facturas = FactEmpr::where('empresa_id', $user->empresa_id)->get();
+    $facturas = FactEmpr::where('empresa_id', $user->empresa_id)->where('status', 1)->get();
     $ivas = Iva::where('empresa_id', $user->empresa_id)->get();
     $ret_iva = Retencion::where('empresa_id', $user->empresa_id)->where('tipo', 1)->get();
     $ret_fnt = Retencion::where('empresa_id', $user->empresa_id)->where('tipo', 0)->get();

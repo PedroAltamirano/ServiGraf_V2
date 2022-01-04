@@ -10,7 +10,7 @@
   </x-path>
 
   <x-blue-board :title=$text
-    :foot="[ ['text' => $action, 'href' => '#', 'id' => 'formSubmit', 'tipo' => 'link'], ['text' => 'Nueva', 'href' => route('factura.create'), 'id' => 'new', 'tipo' => 'link', 'condition' => $factura->id ?? 0] ]">
+    :foot="[ ['text' => $action, 'href' => '#', 'id' => 'formSubmit', 'tipo' => 'link'], ['text' => 'Nueva', 'href' => route('factura.create'), 'id' => 'new', 'tipo' => 'link', 'condition' => $factura->id ?? 0], ['text' => 'fas fa-print', 'href' => '#', 'id' => 'print', 'tipo' => 'button', 'print-target' => 'form'] ]">
     <form action="{{ $path }}" method="POST" id="form">
       @csrf
       @method($method)

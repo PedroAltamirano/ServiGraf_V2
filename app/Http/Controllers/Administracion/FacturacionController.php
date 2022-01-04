@@ -45,7 +45,7 @@ class FacturacionController extends Controller
 
   public function show()
   {
-    $empresas = FactEmpr::where('empresa_id', Auth::user()->empresa_id)->get();
+    $empresas = FactEmpr::where('empresa_id', Auth::user()->empresa_id)->where('status', 1)->get();
     return view('Administracion.facturas', compact('empresas'));
   }
 
@@ -60,12 +60,12 @@ class FacturacionController extends Controller
     $factura = new Factura;
 
     $fact_num = (Factura::where('tipo', 1)->where('empresa_id', $user->empresa_id)->select('numero')->orderBy('numero', 'DESC')->first()->numero ?? 0) + 1;
-    $inicio = FactEmpr::where('empresa_id', $user->empresa_id)->value('inicio');
+    $inicio = FactEmpr::where('empresa_id', $user->empresa_id)->where('status', 1)->value('inicio');
     if ($fact_num < $inicio) {
       $fact_num = $inicio;
     }
 
-    $empresas = FactEmpr::where('empresa_id', $user->empresa_id)->get();
+    $empresas = FactEmpr::where('empresa_id', $user->empresa_id)->where('status', 1)->get();
 
     $utilidad = Security::hasModule('19');
 
@@ -116,7 +116,7 @@ class FacturacionController extends Controller
   {
     $user = Auth::user();
     $fact_num = $factura->numero;
-    $empresas = FactEmpr::where('empresa_id', $user->empresa_id)->get();
+    $empresas = FactEmpr::where('empresa_id', $user->empresa_id)->where('status', 1)->get();
 
     $utilidad = Security::hasModule('19');
 
