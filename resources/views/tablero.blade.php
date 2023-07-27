@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[ ['text' => session('userInfo.nomina'), 'current' => true, 'href' => '#'] ]" />
+  <x-path :items="[['text' => session('userInfo.nomina'), 'current' => true, 'href' => '#']]" />
 
   @if (count($procesos) > 0)
     @php
@@ -31,8 +31,7 @@
   @endif
 
   @if (count($procesos) > 0)
-    <x-blue-board title='Pendientes'
-      :foot="[ ['text'=>'Nuevo', 'href'=>route('pedido.create'), 'id'=>'nuevo', 'tipo'=>'link'] ]">
+    <x-blue-board title='Pendientes' :foot="[['text' => 'Nuevo', 'href' => route('pedido.create'), 'id' => 'nuevo', 'tipo' => 'link']]">
       <table id="table" class="table table-striped table-sm">
         <thead>
           <tr>
@@ -74,7 +73,7 @@
               ->whereBetween('fecha_entrada', [date('Y-m-01'), date('Y-m-d')])
               ->pluck('id')
               ->toArray();
-          $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))
+          $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as "totalData"'))
               ->whereIn('pedido_id', $pedidos_id)
               ->groupBy('proceso_id')
               ->get()

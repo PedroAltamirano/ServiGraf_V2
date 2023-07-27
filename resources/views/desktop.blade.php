@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('desktop-content')
-  <x-path :items="[ ['text' => session('userInfo.empresa'), 'current' => true, 'href' => '#'] ]" />
+  <x-path :items="[['text' => session('userInfo.empresa'), 'current' => true, 'href' => '#']]" />
 
   @include('kpis')
 
@@ -24,8 +24,8 @@
         <form action="{{ route('desktop') }}" method="GET" id="fechaForm">
           <div class="form-group">
             {{-- <label for=""></label> --}}
-            <input type="date" class="form-control form-control-sm" name="fecha" id="fecha" aria-describedby="helpId"
-              value="{{ $fecha }}">
+            <input type="date" class="form-control form-control-sm" name="fecha" id="fecha"
+              aria-describedby="helpId" value="{{ $fecha }}">
             <small id="helpId" class="form-text text-muted">Se tomara el mes y año de la fecha seleccionada</small>
           </div>
         </form>
@@ -112,7 +112,7 @@
               ->where('cliente_id', $cli->id)
               ->pluck('id')
               ->toArray();
-          $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))
+          $items = App\Models\Produccion\Pedido_proceso::select('proceso_id', DB::raw('sum(total) as "totalData"'))
               ->whereIn('pedido_id', $pedidos_id)
               ->with('proceso')
               ->groupBy('proceso_id')
@@ -136,7 +136,7 @@
               ->where('cliente_id', $cli->id)
               ->pluck('id')
               ->toArray();
-          $items = App\Models\Produccion\Solicitud_material::select('material_id', DB::raw('sum(total) as totalData'))
+          $items = App\Models\Produccion\Solicitud_material::select('material_id', DB::raw('sum(total) as "totalData"'))
               ->whereIn('pedido_id', $pedidos_array)
               ->with('material')
               ->groupBy('material_id')

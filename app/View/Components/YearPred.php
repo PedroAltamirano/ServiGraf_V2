@@ -38,9 +38,9 @@ class YearPred extends Component
 
     // $this->prediction = ;
 
-    $years = Pedido::select(DB::raw("Year(fecha_entrada) as years"))->distinct()->get()->count() - 1;
+    $years = Pedido::select(DB::raw("DATE_PART('Year', fecha_entrada) as years"))->distinct()->get()->count() - 1;
 
-    $this->actual = Pedido::whereBetween('fecha_entrada', [$start, $end])->select(DB::raw('(sum(total_pedido)) as total'), DB::raw("MONTH(fecha_entrada) as month"))->groupBy('month')->orderBy('month', 'asc')->get();
+    $this->actual = Pedido::whereBetween('fecha_entrada', [$start, $end])->select(DB::raw('(sum(total_pedido)) as total'), DB::raw("DATE_PART('MONTH', fecha_entrada) as month"))->groupBy('month')->orderBy('month', 'asc')->get();
     $this->actual = $this->actual
       ->map(function ($e) {
         return ['x' => $this->months[$e->month - 1], 'y' => $e->total];
@@ -49,7 +49,7 @@ class YearPred extends Component
 
     $this->average = Pedido::whereBetween('fecha_entrada', [$start_pred, $end_pred])->select(
       DB::raw("(sum(total_pedido) / {$years}) as total"),
-      DB::raw("MONTH(fecha_entrada) as month")
+      DB::raw("DATE_PART('MONTH', fecha_entrada) as month")
     )->orderBy('month', 'asc')
       ->groupBy('month')
       ->get();
@@ -63,8 +63,8 @@ class YearPred extends Component
     $this->yearly = Pedido::whereBetween('fecha_entrada', [$start_pred, $end_pred])
       ->select(
         DB::raw("(sum(total_pedido)) as total"),
-        DB::raw("MONTH(fecha_entrada) as month"),
-        DB::raw("Year(fecha_entrada) as year")
+        DB::raw("DATE_PART('MONTH', fecha_entrada) as month"),
+        DB::raw("DATE_PART('YEAR', fecha_entrada) as year")
       )->orderBy('year', 'asc')
       ->orderBy('month', 'asc')
       ->groupBy('year', 'month')

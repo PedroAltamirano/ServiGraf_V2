@@ -91,7 +91,7 @@ class DesktopController extends Controller
   private function interna($user, $pedidos_array)
   {
     $items = Pedido_proceso::where('empresa_id', $user->empresa_id)
-      ->select('proceso_id', DB::raw('sum(total) as totalData'))
+      ->select('proceso_id', DB::raw('sum(total) as "totalData"'))
       ->whereIn('pedido_id', $pedidos_array)
       ->whereRelation('proceso', 'tipo', 1)
       ->with('proceso')
@@ -111,7 +111,7 @@ class DesktopController extends Controller
   private function externa($user, $pedidos_array)
   {
     $items = Pedido_proceso::where('empresa_id', $user->empresa_id)
-      ->select('proceso_id', DB::raw('sum(total) as totalData'))
+      ->select('proceso_id', DB::raw('sum(total) as "totalData"'))
       ->whereIn('pedido_id', $pedidos_array)
       ->whereRelation('proceso', 'tipo', 0)
       ->with('proceso')
@@ -166,7 +166,7 @@ class DesktopController extends Controller
 
   private function material($user, $pedidos_array)
   {
-    $items = Solicitud_material::select('material_id', DB::raw('sum(total) as totalData'))
+    $items = Solicitud_material::select('material_id', DB::raw('sum(total) as "totalData"'))
       ->whereIn('pedido_id', $pedidos_array)
       ->with('material')
       ->groupBy('material_id')
@@ -189,7 +189,7 @@ class DesktopController extends Controller
     //   ->pluck('id')
     //   ->toArray();
 
-    // $items = Pedido_proceso::select('proceso_id', DB::raw('sum(total) as totalData'))
+    // $items = Pedido_proceso::select('proceso_id', DB::raw('sum(total) as "totalData"'))
     //   ->whereIn('pedido_id', $pedidos_id)
     //   ->with('proceso')
     //   ->groupBy('proceso_id')
@@ -206,7 +206,7 @@ class DesktopController extends Controller
     //   ->pluck('id')
     //   ->toArray();
 
-    // $items = Solicitud_material::select('material_id', DB::raw('sum(total) as totalData'))
+    // $items = Solicitud_material::select('material_id', DB::raw('sum(total) as "totalData"'))
     //   ->whereIn('pedido_id', $pedidos_array)
     //   ->with('material')
     //   ->groupBy('material_id')

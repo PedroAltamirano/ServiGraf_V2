@@ -98,7 +98,7 @@ class KPIController extends Controller
     $twoyears = new Carbon($date);
     $twoyears->startOfMonth()->subYear(2);
 
-    $prediccion = Factura::where('empresa_id', $user->empresa_id)->whereBetween('emision', [$twoyears, $lastmonth])->select(DB::raw('sum(total) as total'), DB::raw("DATE_FORMAT(emision,'%m') as months"))->groupBy('months')->get()->avg('total') ?? 0;
+    $prediccion = Factura::where('empresa_id', $user->empresa_id)->whereBetween('emision', [$twoyears, $lastmonth])->select(DB::raw('sum(total) as total'), DB::raw("DATE_PART('MONTH', emision) as months"))->groupBy('months')->get()->avg('total') ?? 0;
     $actual = Factura::where('empresa_id', $user->empresa_id)->whereBetween('emision', [$dateInit, $dateFin])->sum('total');
     $value = strval($actual) . ' / ' . strval($prediccion);
 
@@ -166,7 +166,7 @@ class KPIController extends Controller
     $twoyears = new Carbon($date);
     $twoyears->startOfMonth()->subYear(2);
 
-    $prediccion = Pedido::where('empresa_id', $user->empresa_id)->whereBetween('fecha_entrada', [$twoyears, $lastmonth])->select(DB::raw('sum(total_pedido) as total'), DB::raw("DATE_FORMAT(fecha_entrada,'%m') as months"))->groupBy('months')->get()->avg('total') ?? 0;
+    $prediccion = Pedido::where('empresa_id', $user->empresa_id)->whereBetween('fecha_entrada', [$twoyears, $lastmonth])->select(DB::raw('sum(total_pedido) as total'), DB::raw("DATE_PART('MONTH', fecha_entrada) as months"))->groupBy('months')->get()->avg('total') ?? 0;
 
     $actual = Pedido::where('empresa_id', $user->empresa_id)->whereBetween('fecha_entrada', [$dateInit, $dateFin])->sum('total_pedido');
 
