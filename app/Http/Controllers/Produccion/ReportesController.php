@@ -103,7 +103,7 @@ class ReportesController extends Controller
   {
     $pedidos = Pedido::where('empresa_id', Auth::user()->empresa_id)->select('cliente_id', 'numero', 'id', 'detalle', 'total_pedido', 'cotizado', 'estado')->whereBetween('fecha_entrada', [$request->fechaini, $request->fechafin])->with('cliente');
 
-    if (isset($request->cobro)) {
+    if (isset($request->cobro) && $request->cobro != 'none') {
       $pedidos->where('estado', $request->cobro);
     }
 
