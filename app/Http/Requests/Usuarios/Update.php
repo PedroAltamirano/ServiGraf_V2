@@ -27,7 +27,7 @@ class Update extends FormRequest
       'cedula' => 'required|numeric',
       'usuario' => 'required|string|max:20',
       'perfil_id' => 'required|numeric|exists:perfiles,id',
-      'procesos.*' => 'nullable|numeric|exists:Procesos,id',
+      'procesos.*' => 'nullable|numeric|exists:procesos,id',
       'actividades.*' => 'nullable|numeric',
       'clientes.*' => 'nullable|numeric|exists:clientes,id',
       'status' => 'required|boolean',
