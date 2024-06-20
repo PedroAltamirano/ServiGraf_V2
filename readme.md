@@ -13,9 +13,9 @@ Montar ambiente
 
 ## Requisitos
 
-- php7.4^ + composer
-- node12^ + npm
-- postgresql12 + php-pgsql o mysql8
+- php8.2^ + composer
+- node20^ + npm
+- postgresql14 + php-pgsql
 - laravel requirements https://laravel.com/docs/7.x/
 - nginx + php-fpm
 
